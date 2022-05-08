@@ -1,0 +1,7 @@
+{
+  "name": "Nebula",
+  "description": "A site to bypass web filters, uses harmony proxy made by jango.",
+  "repository": "https://github.com/jangodev",
+  "logo": "https://avatars.githubusercontent.com/u/86420004?v=4",
+  "keywords": ["educational", "science", "math"]
+}

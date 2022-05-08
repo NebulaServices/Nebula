@@ -1,0 +1,22 @@
+{
+  "name": "nebula",
+  "version": "2.3.0",
+  "description": "Proxy by jango",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "educational",
+    "math",
+    "science"
+  ],
+  "author": "Jango",
+  "license": "ISC",
+  "dependencies": {
+    "bare-server-node": "github:tomphttp/bare-server-node",
+    "node-static": "^0.7.11"
+  }
+}
