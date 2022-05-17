@@ -1,19 +1,19 @@
 {
-  "name": "nebula",
-  "version": "2.3.0",
-  "description": "Proxy by jango",
+  "name": "Nebula ",
+  "version": "5.1.5",
+  "description": "Nebula is one of the biggest web proxies to date, with supports several hundred sites, it's stunning and clean with constant updates. We also feature our NoGG technique which prevents legalized spyware from accessing or viewing your private online history. Right now, we use the UltraViolet by TitaniumNetwork, but this coming June, we impliment our very first complete proxy: AERO",
   "type": "module",
-  "main": "index.js",
+  "main": "appe.js",
   "scripts": {
     "test": "test",
-    "start": "node index.js"
+    "start": "proxysocks node index.js"
   },
   "keywords": [
     "educational",
     "math",
     "science"
   ],
-  "author": "Jango",
+  "author": "Nebula Services",
   "license": "ISC",
   "dependencies": {
     "bare-server-node": "github:tomphttp/bare-server-node",
