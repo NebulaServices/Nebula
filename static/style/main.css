@@ -1,0 +1,122 @@
+a {
+    color: white;
+    text-decoration: none !important;
+}
+a:hover {
+    color: grey;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+#navbar ul {
+	font-family: 'Helvetica';
+
+    background-color: rgb(90, 24, 154);
+    color: white;
+
+    list-style-type: none;;
+
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#navbar ul li {
+    float: left;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+
+    padding: 1rem;
+}
+
+#navbar ul p {
+    font-weight: bold;
+}
+
+#navbar ul li ul {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    margin-top: 1rem;
+    left: 0;
+    display: none;
+}
+
+#navbar ul li ul {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease;
+    margin-top: 1rem;
+    left: 0;
+    display: none;
+}
+
+#navbar ul li:hover > ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+#navbar ul li ul li {
+    clear: both;
+    width: 100%;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    color: white;
+
+    flex-direction: column;
+
+    font-family: 'Roboto';
+}
+
+#content h1 {
+    padding-bottom: .5em;
+}
+
+#content img {
+    padding-left: .5em;
+    filter: brightness(0) invert(1);
+}
+
+#content input {
+	font-size: 20px;
+	text-align: center;
+	font-family: 'Roboto';
+
+    border-style: none;
+    border-width: 0;
+    border-radius: 10px;
+
+    background-color: black;
+    color: white;
+
+    outline: none !important;
+
+    width: 300px;
+    height: 50px;
+}
+
+canvas {
+    display: block;
+    vertical-align: bottom;
+    z-index: -1 !important;
+}
+
+.options {
+    display: none;
+}
+
+
+.options a:hover {background-color: #ddd;}
+
+.options:hover .options {display: block;}
