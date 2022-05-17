@@ -38,7 +38,7 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 
 ## Demo
 
-[Click here to see a demo of Nebula](https://visualmath.art/)
+[Click here to see a demo of Nebula](https://tutorialread.beauty/)
 
 
 ## Acknowledgements
