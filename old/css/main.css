@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap');
+
+* {
+   -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */      
+}
+body {
+background-color: rgb(60, 9, 108);
+margin:0; 
+-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    overflow-x: hidden; 
+   overflow-y: hidden; 
+}
+
+
+input {
+  text-align: center;
+  display: block;
+  margin : 0 auto;
+  font-family: "Roboto";
+  font-weight: 90px;
+  width: 300px;
+  height: 50px;
+  animation-name: inputwide;
+  animation-duration: 2s;
+  color: white;
+  transition-duration: 0.5s;
+  background-color: black;
+  border-color: white;
+  border-style: none;
+  border-radius: 10px;
+  font-size: 20px;
+  z-index: 99999 !important;
+}
+
+
+#cont {
+  animation-name: fadein;
+  animation-duration: 2s;
+  padding:23% 0;
+  font-family: "Roboto";
+
+ 
+}
+
+h1 {
+  font-family: "Roboto";
+  text-align: center;
+  animation-name: colorthing;
+  animation-duration: 3s;
+  color: #e9f5db;
+ 
+ 
+}
+h4 {
+  font-family: "Roboto";
+  text-align: right;
+  animation-name: colorthing;
+  animation-duration: 3s;
+  color: #e9f5db;
+
+ 
+}
+.header_section_top {
+  position: fixed;
+    animation-name: fadein;
+    animation-duration: 2s;
+    width: 100%;
+    float: left;
+    background-color: rgb(90, 24, 154);
+    clip-path: polygon(0 0, 100% 0, 96% 100%, 3% 100%);
+    height: auto;
+    padding: 10px 0px;
+    color: white;
+}
+
+.row {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    color: white;
+}
+
+.custom_menu {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.custom_menu ul {
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+}
+
+.custom_menu li {
+    float: left;
+    font-size: 16px;
+    color: #f1f1f1;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+ ul, li, ol {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    color: white;
+} 
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    
+}
+li {
+   color: white;
+  font-family: "Helvetica";
+  /* background-color: #210535; */
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+
+a {
+  color: white;
+  font-family: "Helvetica";
+  /* background-color: #210535; */
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+a:hover {
+  color: grey;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+#ad {
+  
+  
+}
+
+button {
+  background-color: transparent;
+  border-color: #e9f5db;
+  color: white;
+  border-style: solid;
+  border-width: 2px;
+  transition: 0.5s;
+  font-family: "Roboto";
+}
+
+button:hover {
+  background-color: #e9f5db;
+  border-color: #e9f5db;
+  color: white;
+  border-style: solid;
+  border-width: 2px;
+  transition: 0.5s;
+}
+
+canvas {
+  display: block;
+  vertical-align: bottom;
+   z-index: -1 !important;
+}
+
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1 !important;
+}
+
+
+
+@keyframes inputwide {
+  0% {
+    width: 0px;
+      transition-duration: 0.5s;
+  }
+
+  50% {
+    width: 200px;
+      transition-duration: 0.5s;
+  }
+
+  100% {
+    width: 300px;
+      transition-duration: 0.5s;
+  }
+}
+
+@keyframes colorthing {
+  0% {
+    color: #87986a;
+      transition-duration: 0.5s;
+  }
+
+  50% {
+    color: #b5c99a;
+      transition-duration: 0.5s;
+  }
+
+  100% {
+    color: #cfe1b9;
+      transition-duration: 0.5s;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+  input:focus, textarea:focus, select:focus{
+        outline: none;
+    }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nebula</title>
+		<link rel="stylesheet" href="/css/themes.css">
+		<link rel="icon" type="image/x-icon" href="/images/fav.png">
+	</head>
+	<body>
+		<!-- particles.js container -->
+		<div id="particles-js"></div>
+		<!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+		<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+		<a href='/'>
+			<button id='back' onclick="redirect()">Back</button>
+		</a>
+		<h1>Themes</h1>
+		<button id="galaxy" onclick="galaxy()">Galaxy Mode</button>
+		<button id="ocean" onclick="ocean()">Ocean Mode</button>
+		<button id="classic" onclick="classic()">Classic Mode</button>
+		<script src="script.js">
+			function redirect() {
+				window.location.href = "/";
+			}
+		</script>
+	</body>
+	<html>
