@@ -44,7 +44,7 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 ## Acknowledgements
 
  - [UV (the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
- - [Partical.JS (v4, 5, 6 only)](github.com/VincentGarreau/particles.js)
+ - [Partical.JS (v4, 5, 6.1 &< only)](github.com/VincentGarreau/particles.js)
 
 ## License
 
