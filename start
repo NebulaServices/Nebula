@@ -1,0 +1,3 @@
+#/bin/bash
+
+nohup proxychains node app.js &
