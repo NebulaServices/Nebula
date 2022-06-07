@@ -1,3 +1,8 @@
+/*
+Copyright Nebula Services 2021 - Present
+All Rights Reserved
+*/
+
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
 :root {
     --background-primary: #191724;
@@ -20,6 +25,8 @@
     user-select: none;
     overflow: hidden;
 }
+
+
 /*
 body {
   background-color: var(--background-primary);
@@ -115,10 +122,10 @@ li {
 
 .setting-input {
     display: none;
-  }
-  @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap');
+}
 
-  .toogle-button {
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap');
+.toogle-button {
     font-weight: bold;
     font-size: 10PX;
     display: inline-block;
@@ -128,10 +135,9 @@ li {
     border-radius: 30px;
     position: relative;
     cursor: pointer;
+}
 
-  }
-  
-  .toogle-button::after {
+.toogle-button::after {
     content: 'Off';
     width: 40px;
     height: 40px;
@@ -149,13 +155,13 @@ li {
     transition: all .5s;
     transform: 1s ease-in;
     font-family: 'Mulish', sans-serif;
-  }
-  
-  .setting-input:checked + .toogle-button::after {
+}
+
+.setting-input:checked+.toogle-button::after {
     content: 'On';
     background-color: #53b357;
     transform: translateX(35px) rotate(360deg);
-  }
+}
 
 ul li {
     float: left;
@@ -193,74 +199,73 @@ ul li {
         opacity: 1;
     }
 }
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
 .notification-container {
-	position: fixed;
-	top: 15px;
-	right: 15px;
-	width: 500px;
-	max-width: calc(100% - 30px);
-	font-family: 'Roboto', sans-serif;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 500px;
+    max-width: calc(100% - 30px);
+    font-family: 'Roboto', sans-serif;
 }
 
 .notification {
-	background-color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-	color: #fff;
-	font-size: 16px;
-	padding: 15px 20px;
-	line-height: 20px;
-	margin-bottom: 15px;
-	animation: grow 0.5s ease-in forwards;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    color: #fff;
+    font-size: 16px;
+    padding: 15px 20px;
+    line-height: 20px;
+    margin-bottom: 15px;
+    animation: grow 0.5s ease-in forwards;
 }
 
 @keyframes grow {
-	from {
-		opacity: 0;
-		transform: scale(0.8);
-	}
-	to {
-		opacity: 1;
-		transform: scale(1);
-	}
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .notification.hide {
-	animation: shrink 0.3s ease-out forwards;
+    animation: shrink 0.3s ease-out forwards;
 }
 
 @keyframes shrink {
-	to {
-		opacity: 0;
-		transform: scale(0.8);
-	}
+    to {
+        opacity: 0;
+        transform: scale(0.8);
+    }
 }
 
 .notification strong {
-	font-size: 12px;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	text-transform: uppercase;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .notification-info {
-	background-color: #00cae3;
+    background-color: #00cae3;
 }
 
 .notification-success {
-	background-color: #55b559;
+    background-color: #55b559;
 }
 
 .notification-warning {
-	background-color: #ff9e0f;
+    background-color: #ff9e0f;
 }
 
 .notification-danger {
-	background-color: #f55145;
+    background-color: #f55145;
 }
-
 
 @keyframes fade-in {
     0% {
@@ -276,12 +281,14 @@ ul li {
     position: fixed;
     bottom: 0;
 }
+
 .bk-btn {
     height: 52px;
     width: 52px;
     background-color: black;
     border-radius: 50%;
 }
+
 .bk-btn .bk-btn-triangle {
     position: relative;
     top: 13px;
@@ -292,6 +299,7 @@ ul li {
     border-bottom: 13px solid transparent;
     border-right: 13px solid white;
 }
+
 .bk-btn .bk-btn-bar {
     position: relative;
     background-color: white;
@@ -309,7 +317,6 @@ ul li {
     border: 2px solid rgb(121 103 221);
     border-radius: 9px;
     margin-top: 20px;
-
 }
 
 .name {
@@ -317,7 +324,6 @@ ul li {
     font-size: 2vmax;
     margin: 0;
     font-family: var(--setting-name-font);
-
 }
 
 .description {

@@ -1,10 +1,13 @@
+// Copyright Nebula Services 2021 - Present
+// All Rights Reserved
+
 var option = localStorage.getItem('nogg');
 
 
 
 window.addEventListener('load', () => {
-  
-      
+
+
     function isUrl(val = '') {
         if (/^http(s?):\/\//.test(val) || val.includes('.') && val.substr(0, 1) !== ' ') return true;
         return false;
@@ -31,47 +34,48 @@ window.addEventListener('load', () => {
             if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
             const redirectTo = __uv$config.prefix + __uv$config.encodeUrl(url);
             const option = localStorage.getItem('nogg');
-            if (option === 'on') { 
+            if (option === 'on') {
                 stealthEngine(redirectTo);
-             } else location.href = redirectTo;
+            } else location.href = redirectTo;
         });
     });
 
-// NoGG Engine 
-function stealthEngine(encodedURL){
-    // The URL must be encoded ^ 
-    let inFrame
-  
-  try {
-      inFrame = window !== top
-  } catch (e) {
-      inFrame = true
-  }
-  
-  if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-  const popup = open("about:blank", "_blank")
-  if (!popup || popup.closed) {
-    alert("Popups are disabled!")
-  } else {
-    const doc = popup.document
-    const iframe = doc.createElement("iframe")
-    const style = iframe.style
-    const img = doc.createElement("link")
-    const link = location.href 
-    img.rel = "icon"
-    img.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
-    doc.title = "Google Drive"
-  
-    var currentLink = link.slice(0, link.length - 1);
+    // NoGG Engine 
+    function stealthEngine(encodedURL) {
+        // The URL must be encoded ^ 
+        let inFrame
 
-    iframe.src = currentLink + encodedURL
+        try {
+            inFrame = window !== top
+        } catch (e) {
+            inFrame = true
+        }
 
-    style.position = "fixed"
-    style.top = style.bottom = style.left = style.right = 0
-    style.border = style.outline = "none"
-    style.width = style.height = "100%"
-  
-    doc.body.appendChild(iframe)
-      }
-  }
-}});
+        if (!inFrame && !navigator.userAgent.includes("Firefox")) {
+            const popup = open("about:blank", "_blank")
+            if (!popup || popup.closed) {
+                alert("Popups are disabled!")
+            } else {
+                const doc = popup.document
+                const iframe = doc.createElement("iframe")
+                const style = iframe.style
+                const img = doc.createElement("link")
+                const link = location.href
+                img.rel = "icon"
+                img.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+                doc.title = "Google Drive"
+
+                var currentLink = link.slice(0, link.length - 1);
+
+                iframe.src = currentLink + encodedURL
+
+                style.position = "fixed"
+                style.top = style.bottom = style.left = style.right = 0
+                style.border = style.outline = "none"
+                style.width = style.height = "100%"
+
+                doc.body.appendChild(iframe)
+            }
+        }
+    }
+});

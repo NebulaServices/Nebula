@@ -1,3 +1,8 @@
+/*
+Copyright Nebula Services 2021 - Present
+All Rights Reserved
+*/
+
 importScripts('./uv/uv.sw.js');
 
 const sw = new UVServiceWorker();

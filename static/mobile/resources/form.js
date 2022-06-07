@@ -1,3 +1,6 @@
+// Copyright Nebula Services 2021 - Present
+// All Rights Reserved
+
 var option = localStorage.getItem('nogg');
 var nogg = document.getElementById('nogg');
 
@@ -31,7 +34,7 @@ window.addEventListener('load', () => {
 
         if (typeof navigator.serviceWorker === 'undefined')
             alert('Your browser does not support service workers or you are in private browsing!');
-            console.log("Your Browser does not support ServiceWorkers and responded Undefined.")
+        console.log("Your Browser does not support ServiceWorkers and responded Undefined.")
 
         navigator.serviceWorker.register('./sw.js', {
             scope: __uv$config.prefix
