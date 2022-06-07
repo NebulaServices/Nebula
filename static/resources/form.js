@@ -12,29 +12,43 @@ window.addEventListener('load', () => {
 
     // NOGG
     const useNoGG = false;
+    const proxy = localStorage.getItem("proxy") || "uv"
+
     const form = document.querySelector('form');
     form.addEventListener('submit', event => {
         event.preventDefault();
 
         if (typeof navigator.serviceWorker === 'undefined')
             alert('Your browser does not support service workers or you are in private browsing!');
-
+        if (proxy == 'uv'){
         navigator.serviceWorker.register('./sw.js', {
             scope: __uv$config.prefix
         }).then(() => {
             const value = event.target.firstElementChild.value;
 
             let url = value.trim();
-            if (!isUrl(url))
-                url = 'https://www.google.com/search?q=' + url;
-            else
+            if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url;
             if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
-            const redirectTo = __uv$config.prefix + __uv$config.encodeUrl(url);
+            let redirectTo = __uv$config.prefix + __uv$config.encodeUrl(url);
             const option = localStorage.getItem('nogg');
             if (option === 'on') { 
                 stealthEngine(redirectTo);
              } else location.href = redirectTo;
         });
+    } else if (proxy == 'cyclone') {
+     
+            const value = event.target.firstElementChild.value;
+
+            let url = value.trim();
+            if (!isUrl(url)) url = 'www.google.com/search?q=' + url;
+          if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
+            let redirectTo = '/service/' + url;
+            const option = localStorage.getItem('nogg');
+            if (option === 'on') { 
+                stealthEngine(redirectTo);
+             } else location.href = redirectTo;
+      
+    }
     });
 
 // NoGG Engine 
