@@ -1,8 +1,3 @@
-/*
-Copyright Nebula Services 2021 - Present
-All Rights Reserved
-*/
-
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
 :root {
     --background-primary: #191724;
@@ -37,7 +32,7 @@ body {
 body {
     background-color: var(--background-primary);
     color: var(--text-color-primary);
-    animation: fadeInAnimation ease 3s;
+    animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }

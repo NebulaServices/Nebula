@@ -1,6 +1,3 @@
-// Copyright Nebula Services 2021 - Present
-// All Rights Reserved
-
 // Set the option 
 var option = localStorage.getItem('nogg')
 
@@ -24,7 +21,7 @@ function saveIc() {
     var notification = `
             <div class="notification-container" id="notification-container">
             <div class="notification notification-success">
-                <strong>Success:</strong> Your settings have been saved!
+                <strong>Success!</strong> Your settings have been saved! 
             </div>
         </div>
         `;
@@ -35,6 +32,20 @@ function saveIc() {
     }, 2000);
 };
 
+function unsavedChanges() {
+    var notification = `
+    <div class="notification-container" id="notification-container">
+    <div class="notification notification-danger" id="notification-container">
+    <strong>Danger!</strong> You have unsaved changes!
+</div>
+</div>
+        `;
+    document.getElementById('navbar').innerHTML = notification
+    setTimeout(() => {
+        var NotificationOBJ = document.getElementById('notif')
+
+    }, 2000);
+};
 
 // Update the CheckBox to match the settings 
 window.onload = function() {
@@ -49,3 +60,14 @@ window.onload = function() {
 
     }
 };
+
+
+
+function switchProxy() {
+    var selecter = document.getElementById("proxySwitcher");
+    var selectedOption = selecter.value
+    localStorage.setItem("proxy", selectedOption);
+    var storedChoice = localStorage.getItem('proxy');
+    console.log(selectedOption)
+
+}

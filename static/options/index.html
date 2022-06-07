@@ -1,5 +1,3 @@
-<!-- Copyright Nebula Services 2021 - Present -->
-<!-- All Rights Reserved.   -->
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
@@ -42,7 +40,7 @@
         </div>
 
         <div class="settings-cont">
-            <p class="name"> Stealth Mode <b style="font-size:19px; color: rgb(226, 68, 68);"> NEW </b> </p>
+            <p class="name"> Stealth Mode <b class='new-tag'> NEW </b> </p>
             <p class="description"> Prevents teachers, administrators and analytic collection extensions from gathering information, viewing your screen via Browser extension, or browser recording (history) </p>
 
             <input class="setting-input" id="undefined" type="checkbox" onclick="saveIc();toggleNoGG()">
@@ -50,12 +48,17 @@
         </div>
     </div>
     <div class="settings-cont" style="display: inline-block;">
-        <p class="name"> Proxy <b style="font-size:19px; color: rgb(226, 68, 68);"> NEW </b> </p>
+        <p class="name"> Proxy <b class='new-tag'> NEW </b> </p>
         <p class="description"> Choose the proxy that fits you! </p>
 
-        <input class="setting-input" type="checkbox" onclick="saveIc();">
-        <label for="undefined" class="toogle-button"></label>
-
+        <span class="custom-dropdown big">
+         <a onclick="unsavedChanges();"> <select id="proxySwitcher">    
+                <option value="uv">UltraViolet</option>
+                <option value="cyclone">Cyclone</option>  
+            </select>
+        </a>  
+        </span>
+        <button onclick="saveIc();switchProxy()" class="button-save"> Save! </button>
     </div>
     </div>
 

@@ -1,8 +1,3 @@
-/*
-Copyright Nebula Services 2021 - Present
-All Rights Reserved
-*/
-
 :root {
     --background-primary: #191724;
     --navbar-color: #26233a;
@@ -175,17 +170,7 @@ ul li ul:hover {
     animation-duration: 2s;
 }
 
-
-/*
-   --input-text-color: #e0def4;
-	--input-placeholder-color: #6e6a86;
-	--input-background-color: #1f1d2e;
-	--input-border-color: #eb6f92;
-	--input-border-size: 0.1em;
-  */
-
 #content input:focus {
-    /*  outline: 1.3px solid #eb6f9; !important;*/
     outline: none;
     box-shadow: none !important;
 }
