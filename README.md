@@ -6,8 +6,8 @@ _this readme is 95% done_
 
 - Stunning UI with multiple themes 
 - Supports sites like Discord, Google, Youtube, Netflix, PM+, and so so much more. Partial support for GeforceNow
-- Mobile support 
-- NoGG (buffed `about:blank` cloaking)
+- Full Mobile support 
+- StealthMode (buffed `about:blank` cloaking)
 
 
 ## Deployment
