@@ -1,0 +1,230 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap");
+:root {
+    --background-primary: #191724;
+    --sidebar-color: #191724;
+    --sidebar-text-color: #e0def4;
+    --text-color-primary: #e0def4;
+    --text-color-secondary: #6e6a86;
+    --focus-color: #eb6f92;
+    --header-height: 10vh;
+    --section-font-size: 20pt;
+    --section-font: 'Calibri';
+    --section-padding: 0.5em;
+    --setting-distance-from-sidebar: 1em;
+    --setting-distance-from-right: 1em;
+    --setting-name-font: 'Calibri';
+    --setting-desc-font: 'Calibri';
+}
+
+
+/*
+body {
+  background-color: var(--background-primary);
+}*/
+
+#sidebar {
+    animation: fadeIn 750ms ease-in 300ms forwards;
+    -webkit-animation: fadeIn 750ms ease-in 300ms forwards;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    background-color: var(--sidebar-color);
+    transition: width 0.5s;
+    width: var(--sidebar-width);
+}
+
+.setting li a {
+    background-color: #2e2828;
+    padding: 10px 16px;
+    border-radius: 5px;
+}
+
+.settings-div li a ul {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    visibility: hidden;
+    opacity: 0;
+    margin-top: 10px;
+    left: 0 !important;
+    display: none;
+}
+
+.settings-div li a:hover ul,
+ul li:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}
+
+
+/*
+.settings-div ul li p{
+  color: white;
+    font-family: 'Calibri';
+    z-index: 3 !important;
+
+}*/
+
+li {
+    list-style-type: none;
+}
+
+.settings-div li a ul li {
+    clear: both;
+    width: 100%;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: transparent;
+    color: var(--sidebar-text-color);
+    font-size: var(--section-font-size);
+    font-family: var(--section-font);
+    width: 100%;
+    transition: background-color 0.5s;
+    padding-top: var(--section-padding);
+    padding-bottom: var(--section-padding);
+}
+
+.section:hover {
+    background-color: #ffffff20;
+}
+
+.settings-div {
+    position: absolute;
+    left: calc(var(--sidebar-width) + var(--setting-distance-from-sidebar));
+    top: 0;
+    width: calc(100vw - var(--sidebar-width) - var(--setting-distance-from-sidebar));
+    padding-top: 5%;
+}
+
+.name {
+    color: var(--text-color-primary);
+    font-size: 2vmax;
+    margin: 0;
+    font-family: var(--setting-name-font);
+}
+
+.description {
+    color: var(--text-color-secondary);
+    margin: 0;
+    font-size: 2vmax;
+    font-family: var(--setting-desc-font);
+}
+
+.setting-input {
+    /* left: 100%; */
+    color: black !important;
+    position: relative;
+    /* right: 0; */
+    transform: translateY(-1.5em);
+    float: right;
+    margin-right: 5%;
+}
+
+ul li {
+    float: left;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding: 1rem;
+}
+
+.button {
+    width: 30px;
+    height: 30px;
+    transform: translateY(-30px);
+    justify-self: end;
+    font-family: var(--setting-desc-font);
+    align-self: flex-end;
+    color: white;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0.01;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.01;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    justify-content: left;
+    align-items: left;
+}
+
+.rectangle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 50px;
+    margin-left: auto;
+    margin-top: auto;
+    height: 50px;
+    background: #380848;
+    transform: scale(0);
+    border-radius: 50%;
+    color: white;
+    opacity: 0;
+    overflow: hidden;
+    animation: scale-in 0.3s ease-out forwards, expand 0.35s 0.25s ease-out forwards;
+}
+
+.notification-text {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    animation: fade-in 0.65s ease-in forwards;
+}
+
+@keyframes scale-in {
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes expand {
+    50% {
+        width: 350px;
+        border-radius: 6px;
+    }
+    100% {
+        width: 300px;
+        border-radius: 4px;
+        box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 3px 3px -1px rgba(0, 0, 0, .12);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+.stamp {
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+}

@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
+:root {
+    --background-primary: #191724;
+    --text-color-primary: #31748f;
+    --text-color-secondary: #9ccfd8;
+    --header-color: #26233a;
+    --header-height: 4em;
+    --header-text-color: #e0def4;
+    --input-text-color: white;
+    --input-placeholder-color: #6e6a86;
+    --input-background-color: #1f1d2e;
+    --input-border-color: #eb6f92;
+    --input-border-size: 0.1em;
+}
+
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: var(--background-primary);
+    color: var(--text-color-primary);
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+#navbar #thumbImg {
+    transition: width 2s, height 2s, transform 2s;
+}
+
+#navbar #thumbImg:hover {
+    transform: rotate(360deg);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,100&display=swap');
+.stamp {
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: lighter;
+    color: whitesmoke;
+    opacity: 38%;
+    user-select: none;
+    font-size: 13px;
+}
