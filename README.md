@@ -48,5 +48,5 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 
 ## License
 
-This project uses the [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/#)
-
+Copyright Nebula Services 2021 - Present
+All rights reserved. 
