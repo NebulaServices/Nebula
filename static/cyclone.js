@@ -275,12 +275,22 @@ class Cyclone {
     nwtb(url, target, features)
   }
   window.open = openNewTab
-  
-  htmlRewriter.rewriteDocument();
+ /* 
   setInterval(function() {
     htmlRewriter.rewriteDocument();
   }, 10000)
-  
+  */
+  htmlRewriter.rewriteDocument();
+
+ let mutationE = new MutationObserver((mutationList,observer) => {
+     for (const mutation of mutationList) {
+        mutation.addedNodes.forEach(node => htmlRewriter.rewriteElement(node));
+        htmlRewriter.rewriteElement(mutation.target);
+     }
+ }).observe(document,{
+     childList: true,
+     subtree: true
+ })
   //For intercepting all requests
   if (!document.serviceWorkerRegistered) {
     if ('serviceWorker' in navigator) {
