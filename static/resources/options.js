@@ -57,8 +57,11 @@ window.onload = function() {
             var item = document.getElementById("undefined");
             document.getElementById("undefined").checked = true;
         }, 600);
-
     }
+    var selecter = document.getElementById("proxySwitcher");
+    var storedChoice = localStorage.getItem('proxy');
+    selecter.value = storedChoice;
+   
 };
 
 
@@ -66,6 +69,7 @@ window.onload = function() {
 function switchProxy() {
     var selecter = document.getElementById("proxySwitcher");
     var selectedOption = selecter.value
+
     localStorage.setItem("proxy", selectedOption);
     var storedChoice = localStorage.getItem('proxy');
     console.log(selectedOption)

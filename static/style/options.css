@@ -421,3 +421,12 @@ ul li {
     -webkit-appearance: button;
     cursor: pointer;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+.expiramental {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: rgb(184, 0, 0);
+    font-weight: 400;
+    text-decoration: underline;
+}

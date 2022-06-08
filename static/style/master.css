@@ -60,7 +60,7 @@ input:focus::placeholder {
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,100&display=swap');
 .stamp {
-    text-align: left;
+    text-align: right;
     position: fixed;
     bottom: 0;
     font-family: 'Montserrat', sans-serif;
@@ -70,4 +70,25 @@ input:focus::placeholder {
     opacity: 38%;
     user-select: none;
     font-size: 13px;
+}
+
+.github {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding-right: 10px;
+}
+
+.tos {
+    position: fixed;
+    right: 67px;
+    bottom: 0;
+    padding-right: 15px;
+}
+
+.privacy {
+    position: fixed;
+    right: 114px;
+    bottom: 0;
+    padding-right: 15px;
 }
