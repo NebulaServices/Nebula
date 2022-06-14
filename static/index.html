@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Stylesheets -->
+    <script src="resources/options.js"></script>
     <link rel="stylesheet" href="style/master.css">
     <link rel="stylesheet" href="style/main.css">
     <!-- Embed -->
@@ -21,21 +22,20 @@
     <script src="uv/uv.bundle.js"></script>
     <script src="uv/uv.config.js"></script>
     <div id="navbar">
-        <img src='/images/logo.png' id="thumbImg" style='height: 90%; margin-left: 5%; border-radius: 5px; '>
-        <h1 style='margin-left: .5%; font-family: "Roboto"; color: #4de0fa'>nebula</h1>
+        <img src='images/logo.png' id="thumbImg" style='height: 90%; margin-left: 5%; border-radius: 5px; '>
+        <h1 class="nebHeader" style='margin-left: .5%; font-family: "Roboto"; color: #4de0fa'>nebula.</h1>
 
         <ul>
-            <!--
-				<li>
-					<a onclick="href = '/go/' + __uv$config.encodeUrl('https://discord.gg/neb')">C <ubr>hat </a>
-				</li>
-				-->
+
             <li>
-                <a href="options">Settings</a>
+                <a class="a-navbutton" onclick="href = '/go/' + __uv$config.encodeUrl('https://hamburgerham.tk/games/')">Games</a>
+            </li>
+            <li>
+                <a class="a-navbutton" href="options">Settings</a>
             </li>
 
             <li>
-                <a href="https://discord.gg/bZQxg6SkVp">Need Support?</a>
+                <a class="a-navbutton" href="https://discord.gg/bZQxg6SkVp">Need Support?</a>
             </li>
         </ul>
     </div>
@@ -44,7 +44,7 @@
     <script src="resources/deviceHandler.js"></script>
     <div id="content">
         <form class="url" action="" method="POST" id="unblocker-form">
-            <input type="text" id="url" name="url" autocomplete="off" placeholder="Explore the web freely">
+            <input class="omnibox" type="text" id="url" name="url" autocomplete="off" placeholder="Explore the web freely">
         </form>
 
     </div>

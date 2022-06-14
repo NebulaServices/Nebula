@@ -27,6 +27,16 @@ body {
   background-color: var(--background-primary);
 }*/
 
+.container {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-top: 75px;
+}
+
 #sidebar {
     animation: fadeIn 700ms ease-in 30ms forwards;
     -webkit-animation: fadeIn 700ms ease-in 300ms forwards;
@@ -80,9 +90,6 @@ li {
 }
 
 .section {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     background-color: transparent;
     color: var(--sidebar-text-color);
     font-size: var(--section-font-size);
@@ -171,9 +178,7 @@ ul li {
     width: 30px;
     height: 30px;
     transform: translateY(-30px);
-    justify-self: end;
     font-family: var(--setting-desc-font);
-    align-self: flex-end;
     color: white;
 }
 
@@ -198,8 +203,8 @@ ul li {
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap');
 .notification-container {
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: 4px;
+    right: 5px;
     width: 500px;
     max-width: calc(100% - 30px);
     font-family: 'Roboto', sans-serif;
@@ -263,7 +268,6 @@ ul li {
 }
 
 .stamp {
-    text-align: left;
     position: fixed;
     bottom: 0;
 }
@@ -304,6 +308,11 @@ ul li {
     border: 2px solid rgb(121 103 221);
     border-radius: 9px;
     margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .name {
@@ -335,7 +344,6 @@ ul li {
     width: .7em;
     height: .7em;
     margin: .5em;
-    display: inline-block;
 }
 
 
@@ -425,7 +433,7 @@ ul li {
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 .expiramental {
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 10px;
     color: rgb(184, 0, 0);
     font-weight: 400;
     text-decoration: underline;

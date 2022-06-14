@@ -70,6 +70,8 @@ input:focus::placeholder {
     opacity: 38%;
     user-select: none;
     font-size: 13px;
+    padding-left: 5px;
+    padding-bottom: 1px;
 }
 
 .github {

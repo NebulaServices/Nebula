@@ -62,7 +62,6 @@ a:hover {
 
 #navbar ul:not(.down) {
     font-family: 'Helvetica';
-    background-color: var(--navbar-color);
     /* box-shadow: 2px 2px rgb(0 0 0 / 20%); */
     color: white;
     margin-left: auto;

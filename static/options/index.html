@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Stylesheets -->
+
     <link rel="stylesheet" href="../style/master.css">
     <link rel="stylesheet" href="../style/main.css">
     <link rel="stylesheet" href="../style/options.css">
@@ -25,45 +26,71 @@
 <body>
     <!-- Scripts -->
     <script src="../uv/uv.bundle.js"></script>
+
     <script src="../uv/uv.config.js"></script>
+
     <div>
-    </div>
-    <div id="navbar" style='background: none;'>
-        <div>
 
-        </div>
     </div>
-    <div class="setting">
-        <div onclick="window.location ='/';" class="bk-btn">
-            <div onclick="window.location ='/';" class="bk-btn-triangle"></div>
-            <div onclick="window.location ='/';" class="bk-btn-bar"></div>
-        </div>
 
+    <div class="container">
+
+        <div id="navbar" style='background: none;'>
+            <div id="notifhere">
+
+            </div>
+            <div onclick="window.location ='/';" class="bk-btn">
+                <div onclick="window.location ='/';" class="bk-btn-triangle"></div>
+                <div onclick="window.location ='/';" class="bk-btn-bar"></div>
+            </div>
+            <img src='../images/logo.png' id="thumbImg" style='height: 90%; margin-left: 2%; border-radius: 5px; '>
+            <h1 class="nebHeader" style='margin-left: .5%; font-family: "Roboto"; color: #4de0fa'>nebula.</h1>
+        </div>
+        <div class="setting">
+
+
+            <div class="settings-cont">
+                <p class="name"> Stealth Mode</p>
+                <p class="description">Stops extensions from peeping</p>
+
+                <input class="setting-input" id="undefined" type="checkbox" onclick="saveIc();toggleNoGG()">
+                <label for="undefined" class="toogle-button"></label>
+            </div>
+        </div>
         <div class="settings-cont">
-            <p class="name"> Stealth Mode <b class='new-tag'> NEW </b> </p>
-            <p class="description"> Prevents teachers, administrators and analytic collection extensions from gathering information, viewing your screen via Browser extension, or browser recording (history) </p>
-
-            <input class="setting-input" id="undefined" type="checkbox" onclick="saveIc();toggleNoGG()">
-            <label for="undefined" class="toogle-button"></label>
-        </div>
-    </div>
-    <div class="settings-cont" style="display: inline-block;">
-        <p class="name"> Proxy <b class='new-tag'> NEW </b> </p>
-        <p class="description"> Choose the proxy that fits you! </p>
-
-        <span class="custom-dropdown big">
-         <a onclick="unsavedChanges();"> <select id="proxySwitcher">    
+            <p class="name"> Proxy <b class='new-tag'> NEW </b> </p>
+            <p class="description"> Choose the proxy that fits you! </p>
+            <p class="expiramental"><b>This feature is extremely experimental </b></p>
+            <span class="custom-dropdown big">
+         <a onclick="unsavedChanges();"> <select class="dropdown" id="proxySwitcher">    
                 <option value="uv">UltraViolet</option>
                 <option value="cyclone">Cyclone</option>  
             </select>
         </a>  
        
         </span>
-        <button onclick="saveIc();switchProxy()" class="button-save"> Save! </button>
-        <p class="expiramental"><b>This feature is extremely experimental </b></p>
+            <button onclick="saveIc();switchProxy()" class="button-save"> Save! </button>
 
 
-    </div>
+
+        </div>
+        <div class="settings-cont">
+            <p class="name"> Theme <b class='new-tag'> NEW </b> </p>
+            <p class="description"> Choose from our themes so your eyes don't hate us. </p>
+
+            <span class="custom-dropdown big">
+         <a onclick="unsavedChanges();"> <select  class="dropdown" id="themeSwitcher">    
+                <option value="dark">Shades</option>
+                <option value="light">Blizzard</option>  
+                <option value="hacker">Hacker</option>  
+            </select>
+        </a>  
+       
+        </span>
+            <button onclick="saveIc();switchTheme();" class="button-save"> Save! </button>
+
+
+        </div>
     </div>
 
 
@@ -87,7 +114,7 @@
             site: 'AZa75ZyiRRZ'
         });
     </script>
-
+    </div>
 
 </body>
 
