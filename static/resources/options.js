@@ -298,7 +298,7 @@ window.onload = function() {
     };
     var storedTheme = localStorage.getItem('theme');
     if (storedTheme == "light") {
-
+        document.getElementById('connecterText').style.color = "black"
         document.getElementById('navbar').style.backgroundColor = "#a2a2a2";
         document.body.style.backgroundColor = " #d8d8d8";
         const navbuttons = document.getElementsByClassName('a-navbutton');
@@ -323,6 +323,7 @@ window.onload = function() {
 
 
     } else if (storedTheme == 'hacker') {
+        document.getElementById('connecterText').style.color = "rgb(0, 255, 11)"
         console.log("loaded theme:", storedChoice);
         document.body.style.backgroundColor = "#000";
         const descriptions = document.getElementsByClassName('description');
@@ -369,5 +370,7 @@ window.onload = function() {
             element.style.backgroundColor = "black";
         }
         document.getElementById('navbar').style.backgroundColor = "#000";
+        var placeholderOmniBox = document.getElementById("url");
+        document.getElementById("url").style.color = "red";
     }
 };
