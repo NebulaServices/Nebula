@@ -95,7 +95,7 @@ async function fetchBare(url, res, req) {
 async function route(req, res) {
   var path = req.url;
 
-  if (path.startsWith(config.prefix + "/")) {
+  if (isBare(req,res)) {
 
     try {
       var url = new URL(path.split(config.prefix + "/")[1])
@@ -105,13 +105,6 @@ async function route(req, res) {
 
     fetchBare(url, res, req);
 
-  } else if (path.startsWith('/cyclone.js')) {
-    var cyclone = fs.readFileSync(__dirname + '/static/cyclone.js', 'utf8');
-    res.writeHead(200, "Sucess", {
-      "content-type": "application/javascript"
-    })
-    res.write(cyclone);
-    res.end();
   }
 }
 
