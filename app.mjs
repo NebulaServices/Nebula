@@ -10,7 +10,7 @@ const serve = new nodeStatic.Server('static/');
 const patronServe = new nodeStatic.Server('static/');
 const fakeServe = new nodeStatic.Server('fakeStatic/');
 
-const server = https.createServer();
+const server = http.createServer();
 
 fs.readdir('/etc/letsencrypt/live', { withFileTypes: true }, (err, files) => {
     if (!err)
@@ -39,4 +39,4 @@ server.on('upgrade', (req, socket, head) => {
     socket.end();
 });
 
-server.listen(443);
+server.listen(process.env.PORT || 443);
