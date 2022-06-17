@@ -1,8 +1,20 @@
-const fetch = require('node-fetch');
-const fs = require('fs');
+import fetch from 'node-fetch';
+import { URL } from 'url';
+import fs from 'fs';
 
 const config = {
-  prefix: "/service"
+  prefix: "/service",
+  requireSSL: true, // Requires SSL?
+  proxy: {
+    host: "162.159.134.234",
+    port: "443"
+  } //HTTP Proxy
+}
+
+if (config.requireSSL) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
+} else {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 }
 
 function rewriteJavascript(js) {
@@ -16,7 +28,7 @@ function insertScript(html, origin) {
   var res = `<!DOCTYPE html>
 <html>
 <head>
-<script preload type="module" src="${origin}/cyclone.js"></script>
+<script preload type="module" src="/cyclone/cyclone.js"></script>
 </head>
 <body>
 ${html}
@@ -27,7 +39,7 @@ ${html}
 
 async function fetchBare(url, res, req) {
   try {
-    var origin = 'https' + "://" + req.rawHeaders[1]
+    var origin = 'https' + "://" + req.rawHeaders[1];
 
     var options = {
       method: req.method,
@@ -38,8 +50,19 @@ async function fetchBare(url, res, req) {
       credentials: "same-origin"
     }
 
-    var request = await fetch(url.href, options);
+    try {
+      var request = await fetch(url.href, options);
+    } catch (e) {
+      var request = {
+        text() {
+          return 'Error: '+e;
+        },
+        
+      }
+    }
+    
     var contentType = request.headers.get('content-type') || 'application/javascript'
+    var output = null;
 
     if (contentType.includes('html') || contentType.includes('javascript')) {
       var doc = await request.text();
@@ -51,10 +74,12 @@ async function fetchBare(url, res, req) {
 
     if (contentType.includes('html')) {
       output = insertScript(doc, origin);
-      res.end(output)
+      res.write(output);
+      res.end();
     } else if (contentType.includes('javascript')) {
       output = rewriteJavascript(doc)
-      res.end(output)
+      res.write(output);
+      res.end()
     } else {
       request.body.pipe(res)
     }
@@ -80,32 +105,21 @@ async function route(req, res) {
 
     fetchBare(url, res, req);
 
-  } else {
-    if (path === "/cyclone.js") {
-      var file = fs.readFileSync(__dirname + '/cyclone.js', 'utf8')
-      res.writeHead(200, 'Sucess', {
-        "content-type": 'application/javascript'
-      })
-      res.end(file)
-    }
-    if (path === "/sw.js") {
-      var file = fs.readFileSync(__dirname + '/sw.js', 'utf8')
-      res.writeHead(200, 'Sucess', {
-        "content-type": 'application/javascript'
-      })
-      res.end(file)
-    }
+  } else if (path.startsWith('/cyclone.js')) {
+    var cyclone = fs.readFileSync(__dirname + '/static/cyclone.js', 'utf8');
+    res.writeHead(200, "Sucess", {
+      "content-type": "application/javascript"
+    })
+    res.write(cyclone);
+    res.end();
   }
 }
 
 function isBare(req, res) {
-  res.writeHead(200, "Sucess", {
-    "Cros-Origin": "Access-Control-Allow-Origin"
-  })
-  return (req.url === "/cyclone.js" || req.url === "/cySw.js") || req.url.startsWith(config.prefix);
+  return (req.url.startsWith(config.prefix));
 }
 
-module.exports = {
+export {
   route,
   isBare
 }
