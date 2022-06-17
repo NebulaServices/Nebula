@@ -26,9 +26,8 @@ fs.readdir('/etc/letsencrypt/live', { withFileTypes: true }, (err, files) => {
 });
 
 server.on('request', (request, response) => {
-    if (custombare.isBare(request, response)) {
-        custombare.route(request,response);
-    }
+    if (custombare.route(request, response)) return true;
+    
     if (bare.route_request(request, response)) return true;
     serve.serve(request, response);
 });
