@@ -2,7 +2,7 @@ import Server from 'bare-server-node';
 import http from 'http';
 import nodeStatic from 'node-static';
 import fs from 'fs';
-const custombare = require('./static/customBare.js');
+import * as custombare from './static/customBare.js';
 
 const bare = new Server('/bare/', '');
 
