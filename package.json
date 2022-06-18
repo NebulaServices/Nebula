@@ -6,7 +6,7 @@
     "main": "app.js",
     "scripts": {
         "test": "test",
-        "start": "proxysocks node index.js"
+        "start": "proxychains node app.js"
     },
     "keywords": [
         "educational",
