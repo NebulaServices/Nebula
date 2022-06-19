@@ -1,5 +1,5 @@
 import Server from 'bare-server-node';
-import http from 'http';
+import https from 'https';
 import nodeStatic from 'node-static';
 import fs from 'fs';
 import * as custombare from './static/customBare.mjs';
@@ -10,7 +10,7 @@ const serve = new nodeStatic.Server('static/');
 const patronServe = new nodeStatic.Server('static/');
 const fakeServe = new nodeStatic.Server('fakeStatic/');
 
-const server = http.createServer();
+const server = https.createServer();
 
 fs.readdir('/etc/letsencrypt/live', { withFileTypes: true }, (err, files) => {
     if (!err)
