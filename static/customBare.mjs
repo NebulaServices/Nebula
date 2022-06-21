@@ -92,7 +92,7 @@ async function fetchBare(url, res, req) {
   }
 }
 
-async function route(req, res) {
+function route(req, res) {
   var path = req.url;
 
   if (isBare(req,res)) {
@@ -105,6 +105,9 @@ async function route(req, res) {
 
     fetchBare(url, res, req);
 
+    return true;
+  } else {
+    return false;
   }
 }
 
