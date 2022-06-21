@@ -1,4 +1,5 @@
 import Server from 'bare-server-node';
+import http from 'http';
 import https from 'https';
 import nodeStatic from 'node-static';
 import fs from 'fs';
@@ -10,7 +11,8 @@ const serve = new nodeStatic.Server('static/');
 const patronServe = new nodeStatic.Server('static/');
 const fakeServe = new nodeStatic.Server('fakeStatic/');
 
-const server = https.createServer();
+const httpServer = http.createServer();
+const httpsServer = https.createServer();
 
 fs.readdir('/etc/letsencrypt/live', { withFileTypes: true }, (err, files) => {
     if (!err)
@@ -18,25 +20,31 @@ fs.readdir('/etc/letsencrypt/live', { withFileTypes: true }, (err, files) => {
         .filter(file => file.isDirectory())
         .map(folder => folder.name)
         .forEach(dir => {
-            server.addContext(dir, {
+            httpsServer.addContext(dir, {
                 key: fs.readFileSync(`/etc/letsencrypt/live/${dir}/privkey.pem`),
                 cert: fs.readFileSync(`/etc/letsencrypt/live/${dir}/fullchain.pem`)
             });
         });
 });
 
-server.on('request', (request, response) => {
+httpServer.on('request', request);
+httpsServer.on('request', request);
+httpServer.on('upgrade', upgrade);
+httpsServer.on('upgrade', upgrade);
+
+function request (request, response) {
     if (custombare.route(request, response)) return true;
     
     if (bare.route_request(request, response)) return true;
     serve.serve(request, response);
-});
+}
 
-server.on('upgrade', (req, socket, head) => {
+function upgrade (req, socket, head) {
     if (bare.route_upgrade(req, socket, head))
         return;
 
     socket.end();
-});
+}
 
-server.listen(process.env.PORT || 443);
+httpServer.listen(80);
+httpsServer.listen(443);
