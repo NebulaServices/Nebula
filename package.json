@@ -17,6 +17,7 @@
     "license": "Copyright Nebula Services. All Rights Reserved.",
     "dependencies": {
         "bare-server-node": "github:tomphttp/bare-server-node",
+        "node-fetch": "^3.2.6",
         "node-static": "^0.7.11"
     }
 }
