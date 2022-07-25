@@ -5,8 +5,7 @@
     "type": "module",
     "main": "app.js",
     "scripts": {
-        "test": "test",
-        "start": "proxychains node app.js"
+        "start": "node app.js"
     },
     "keywords": [
         "educational",
@@ -16,7 +15,7 @@
     "author": "Nebula Services",
     "license": "Copyright Nebula Services. All Rights Reserved.",
     "dependencies": {
-        "bare-server-node": "github:tomphttp/bare-server-node",
+        "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
         "node-fetch": "^3.2.6",
         "node-static": "^0.7.11"
     }
