@@ -1,14 +1,19 @@
 import fetch from 'node-fetch';
 import { URL } from 'url';
 import fs from 'fs';
+import * as csstree from 'css-tree';
+import * as ws from 'ws';
 
 const config = {
   prefix: "/service",
   requireSSL: true, // Requires SSL?
-  proxy: {
-    host: "162.159.134.234",
-    port: "443"
-  } //HTTP Proxy
+  defaultHeaders: {
+    'X-Content-Type-Options': 'no-sniff',
+  },
+  //proxy: {    
+  //  host: "3.211.17.212",
+  //  port: "80"
+  //} // HTTP Proxy
 }
 
 if (config.requireSSL) {
@@ -24,11 +29,11 @@ function rewriteJavascript(js) {
   return javascript
 }
 
-function insertScript(html, origin) {
+function insertScript(html) {
   var res = `<!DOCTYPE html>
 <html>
 <head>
-<script preload type="module" src="/cyclone.js"></script>
+<script preload src="/cyclone/cyclone.js"></script>
 </head>
 <body>
 ${html}
@@ -39,15 +44,13 @@ ${html}
 
 async function fetchBare(url, res, req) {
   try {
-    var origin = 'https' + "://" + req.rawHeaders[1];
-
     var options = {
       method: req.method,
       headers: {
+        "Refer": url.href,
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36",
-        cookies: req.cookies
+        "cookies": req.cookies,
       },
-      credentials: "same-origin"
     }
 
     try {
@@ -61,19 +64,25 @@ async function fetchBare(url, res, req) {
       }
     }
     
-    var contentType = request.headers.get('content-type') || 'application/javascript'
+    try {
+      var contentType = request.headers.get('content-type') || 'application/javascript'
+    } catch {
+      var contentType = 'application/javascript';
+    }
+
+    if (url.href.endsWith('.js')||url.href.endsWith(".js")) contentType = "application/javascript";
+    if (url.href.endsWith('.css')||url.href.endsWith(".css")) contentType = "text/css";
+    
     var output = null;
 
     if (contentType.includes('html') || contentType.includes('javascript')) {
       var doc = await request.text();
     }
 
-    res.writeHead(200, "Sucess", {
-      "content-type": contentType
-    })
+    res.setHeader('content-type', contentType);
 
     if (contentType.includes('html')) {
-      output = insertScript(doc, origin);
+      output = insertScript(doc);
       res.write(output);
       res.end();
     } else if (contentType.includes('javascript')) {
@@ -87,25 +96,29 @@ async function fetchBare(url, res, req) {
 
   } catch (e) {
     console.log(e);
-
+    res.writeHead(500, 'Error', {
+      'content-type': 'application/javascript'
+    })
     res.end(e)
   }
+}
+
+function websocketIntercept(req,res) {
+  console.log(req);
 }
 
 function route(req, res) {
   var path = req.url;
 
-  if (isBare(req,res)) {
-
+  if (path.startsWith(config.prefix + "/")) {
     try {
       var url = new URL(path.split(config.prefix + "/")[1])
     } catch {
       var url = new URL("https://" + path.split(config.prefix + "/")[1])
     }
+    
+    fetchBare(url, res,req);
 
-    fetchBare(url, res, req);
-
-    return true;
   } else {
     return false;
   }
@@ -115,7 +128,20 @@ function isBare(req, res) {
   return (req.url.startsWith(config.prefix));
 }
 
+function routeSocket(req, socket) {
+  var path = req.url;
+
+  try {
+    var url = new URL(path.split(config.prefix + "/")[1])
+  } catch {
+    var url = new URL("wss://" + path.split(config.prefix + "/")[1])
+  }
+
+  console.log(url);
+}
+
 export {
   route,
-  isBare
+  routeSocket,
+  isBare,
 }
