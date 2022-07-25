@@ -16,7 +16,7 @@
     <meta property="og:image" content="/images/logo.png">
     <meta property="og:description" content="">
     <script>
-        if (location.protocol === "http:") location.protocol = "https:";
+        if (location.protocol === "http:" && location.host !== "localhost") location.protocol = "https:";
     </script>
 
 </head>
