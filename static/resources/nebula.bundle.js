@@ -4,6 +4,7 @@
 // #################################################################################################################################################
 //                      Copyright Nebula Services 2021-2022
 //                                  Form.js 
+//                      For the submission of the URL form to the server. 
 // #################################################################################################################################################
 // #################################################################################################################################################
 // #################################################################################################################################################
@@ -131,7 +132,8 @@ window.addEventListener('load', () => {
 // #################################################################################################################################################
 // #################################################################################################################################################
 //                      Copyright Nebula Services 2021-2022
-//                              Options.js 
+//                              settings.js
+//                     For the settings of the application.
 // #################################################################################################################################################
 // #################################################################################################################################################
 // #################################################################################################################################################
@@ -154,37 +156,6 @@ function toggleNoGG() {
 }
 
 
-// Notification Banner
-function saveIc() {
-    console.log("Checked")
-    var notification = `
-            <div class="notification-container" id="notification-container">
-            <div class="notification notification-success">
-                <strong>Success!</strong> Your settings have been saved - Reloading.
-            </div>
-        </div>
-        `;
-    document.getElementById('notifhere').innerHTML = notification
-    setTimeout(() => {
-        var NotificationOBJ = document.getElementById('notifhere')
-
-    }, 2000);
-};
-
-function unsavedChanges() {
-    var notification = `
-    <div class="notification-container" id="notification-container">
-    <div class="notification notification-danger" id="notification-container">
-    <strong>Danger!</strong> You have unsaved changes!
-</div>
-</div>
-        `;
-    document.getElementById('notifhere').innerHTML = notification
-    setTimeout(() => {
-        var NotificationOBJ = document.getElementById('notifhere')
-
-    }, 2000);
-};
 
 
 
@@ -203,324 +174,108 @@ function switchProxy() {
 function switchTheme() {
     var selecter = document.getElementById("themeSwitcher");
     var selectedOption = selecter.value
+    if (selectedOption == "dark") {
+        changeCSS('--background-primary', '#191724', true);
+        changeCSS('--navbar-color', '#26233a', true);
+        changeCSS('--navbar-height', '60px', true);
+        changeCSS('--navbar-text-color', '#4de0fa', true);
+        changeCSS('--input-text-color', '#e0def4', true);
+        changeCSS('--input-placeholder-color', '#6e6a86', true);
+        changeCSS('--input-background-color', '#1f1d2e', true);
+        changeCSS('--input-placeholder-color', 'white', true);
+        changeCSS('--input-border-color', '#eb6f92', true);
+        changeCSS('--input-border-size', '1.3px', true);
+        changeCSS('--navbar-link-color', '#e0def4', true);
+        changeCSS('--navbar-font', '"Roboto"', true);
+        changeCSS('--navbar-logo-filter', 'invert(0%)', true);
+        changeCSS('--text-color-primary', '#e0def4', true);
+    }
+    if (selectedOption == "light") {
+        changeCSS('--background-primary', '#d8d8d8', true);
+        changeCSS('--navbar-color', '#a2a2a2', true);
+        changeCSS('--navbar-height', '4em', true);
+        changeCSS('--navbar-text-color', '#000000', true);
+        changeCSS('--input-text-color', '#e0def4', true);
+        changeCSS('--input-placeholder-color', 'white', true);
+        changeCSS('--input-background-color', 'black', true);
+        changeCSS('--input-border-color', '#eb6f92', true);
+        changeCSS('--input-border-size', '1.3px', true);
+        changeCSS('--navbar-link-color', '#000000', true);
+        changeCSS('--navbar-font', '"Roboto"', true);
+        changeCSS('--navbar-logo-filter', 'invert(30%)', true);
+        changeCSS('--text-color-primary', '#303030', true);
 
-    localStorage.setItem("theme", selectedOption);
-    var storedChoice = localStorage.getItem('theme');
-    console.log(selectedOption)
-    if (storedChoice == 'light') {
-        //LIGHT
-        console.log("loaded theme:", storedChoice);
-        document.body.style.backgroundColor = " #d8d8d8";
-        const descriptions = document.getElementsByClassName('description');
-        for (const element of descriptions) {
-            element.style.color = "#000000";
-        }
-        const names = document.getElementsByClassName('name');
-        for (const element of names) {
-            element.style.color = "#000000";
-        }
-        const dropdowns = document.getElementsByClassName('dropdown');
-        for (const element of dropdowns) {
-            element.style.backgroundColor = "#606b69";
-        }
-        const buttons = document.getElementsByClassName('button-save');
-        for (const element of buttons) {
-            element.style.backgroundColor = "#606b69";
-        }
-        const switches = document.getElementsByClassName('toogle-button');
-        for (const element of switches) {
-            element.style.backgroundColor = "#606b69";
-        }
-        //DARK
-    } else if (storedChoice == 'dark') {
-        console.log("loaded theme:", storedChoice);
-        document.body.style.backgroundColor = "#191724";
-        const descriptions = document.getElementsByClassName('description');
-        for (const element of descriptions) {
-            element.style.color = "#6e6a86";
-        }
-        const names = document.getElementsByClassName('name');
-        for (const element of names) {
-            element.style.color = "#e0def4";
-        }
-        const dropdowns = document.getElementsByClassName('dropdown');
-        for (const element of dropdowns) {
-            element.style.backgroundColor = "#1abc9c";
-        }
-        const buttons = document.getElementsByClassName('button-save');
-        for (const element of buttons) {
-            element.style.backgroundColor = "#1abc9c";
-        }
-        const switches = document.getElementsByClassName('toogle-button');
-        for (const element of switches) {
-            element.style.backgroundColor = "#1abc9c";
-
-        }
-        document.getElementById('navbar').style.backgroundColor = "#26233a";
-        var storedChoice = localStorage.getItem('theme');
-    } else if (storedChoice == 'hacker') {
-        console.log("loaded theme:", storedChoice);
-        document.body.style.backgroundColor = "#000";
-        const descriptions = document.getElementsByClassName('description');
-        for (const element of descriptions) {
-            element.style.color = "#00ff0b";
-        }
-        const names = document.getElementsByClassName('name');
-        for (const element of names) {
-            element.style.color = "#00ff0b";
-        }
-        const dropdowns = document.getElementsByClassName('dropdown');
-        for (const element of dropdowns) {
-            element.style.backgroundColor = "#00ff0b";
-        }
-        const buttons = document.getElementsByClassName('button-save');
-        for (const element of buttons) {
-            element.style.backgroundColor = "#00ff0b";
-        }
-        const switches = document.getElementsByClassName('toogle-button');
-        for (const element of switches) {
-            element.style.backgroundColor = "#00ff0b";
-
-        }
-        const boxes = document.getElementsByClassName('settings-cont');
-        for (const element of boxes) {
-            element.style.border = "2px solid rgb(0, 255, 11)";
-
-        }
-        const newTags = document.getElementsByClassName('new-tag');
-        for (const element of newTags) {
-            element.style.color = "#00ff0b";
-
-        }
-        document.getElementById('navbar').style.backgroundColor = "#000";
-        const navbuttons = document.getElementsByClassName('a-navbutton');
-        for (const element of navbuttons) {
-            element.style.color = "#00ff0b";
-        }
-        const nebheader = document.getElementsByClassName('nebHeader');
-        for (const element of nebheader) {
-            element.style.color = "#00ff0b";
-        }
-        const Obox = document.getElementsByClassName('omnibox');
-        for (const element of Obox) {
-            element.style.backgroundColor = "black";
-        }
+    }
+    if (selectedOption == "custom") {
+        let response = prompt('Please enter the code for a custom theme:', '')
+        alert('This feature is not ready yet. Please try again later.')
     };
-    location.reload()
-
-
 };
 
-function getOption(option) {
-    console.log(localStorage.getItem(option));
+function defaultThemes() {
+
 }
 
+// write a function that will change css variables based on the arguments passed in the function
+function changeCSS(variable, value, saveBool) {
+    document.documentElement.style.setProperty(variable, value);
+    console.log(`Sucessfully changed CSS variable: ${variable} to ${value}`)
+    if (saveBool === true) {
+        saveCSS(variable, value);
+    }
+}
+
+function saveCSS(variable, value) {
+    localStorage.setItem(variable, value);
+    console.log(`Updated CSS LocalStorage: ${localStorage.getItem(variable)}`)
+
+}
+
+
 window.onload = function() {
-    // Update the CheckBox to match the settings 
+    let background = localStorage.getItem('--background-primary');
+    let navbar = localStorage.getItem('--navbar-color');
+    let navbarHeight = localStorage.getItem('--navbar-height');
+    let navbarText = localStorage.getItem('--navbar-text-color');
+    let inputText = localStorage.getItem('--input-text-color');
+    let inputPlaceholder = localStorage.getItem('--input-placeholder-color');
+    let inputBackground = localStorage.getItem('--input-background-color');
+    let inputBorder = localStorage.getItem('--input-border-color');
+    let inputBorderSize = localStorage.getItem('--input-border-size');
+    let navbarFont = localStorage.getItem('--navbar-font');
+    let navbarLink = localStorage.getItem('--navbar-link-color');
+    let navbarLogoFilter = localStorage.getItem('--navbar-logo-filter');
+    let textColorPrimary = localStorage.getItem('--text-color-primary');
+    changeCSS('--background-primary', background);
+    changeCSS('--navbar-color', navbar);
+    changeCSS('--navbar-height', navbarHeight);
+    changeCSS('--navbar-text-color', navbarText);
+    changeCSS('--input-text-color', inputText);
+    changeCSS('--input-placeholder-color', inputPlaceholder);
+    changeCSS('--input-background-color', inputBackground);
+    changeCSS('--input-border-color', inputBorder);
+    changeCSS('--input-border-size', inputBorderSize);
+    changeCSS('--navbar-link-color', navbarLink);
+    changeCSS('--navbar-font', navbarFont);
+    changeCSS('--navbar-logo-filter', navbarLogoFilter);
+    changeCSS('--text-color-primary', textColorPrimary);
+}
 
-    if (localStorage.getItem('proxy') == "null" || localStorage.getItem('nogg') == "null") {
-
-        console.ch("Applied Settings: ", "NoGG is ", localStorage.getItem('nogg'), " | Proxy set to", localStorage.getItem('proxy'))
-    } else {
-
-        console.warn("Applied Settings: ", "NoGG is ", localStorage.getItem('nogg'), " | Proxy set to", localStorage.getItem('proxy'))
-        console.warn("If these values are 'null', there was an error getting a localstorage item. ")
-    };
-    if (window.location.pathname == '/static/options/' || window.location.pathname == 'options/' || window.location.pathname == '/options/') {
-        if (localStorage.getItem('nogg') == 'on') {
-            setTimeout(() => {
-                var item = document.getElementById("undefined");
-                document.getElementById("undefined").checked = true;
-            }, 600);
-        }
-
-        // Update the front end to match option localstorage
-        var selecter = document.getElementById("proxySwitcher");
-        var storedChoice = localStorage.getItem('proxy');
-        selecter.value = storedChoice;
-
-        // ThemeSet
-        var themeSelector = document.getElementById("themeSwitcher");
-        var storedTheme = localStorage.getItem('theme');
-        themeSelector.value = storedTheme;
-    }
-    if (window.location.pathname == '/static/options/' || window.location.pathname == 'options/' || window.location.pathname == '/options/') {
-        if (storedTheme == 'light') {
-            console.log("loaded theme:", storedTheme);
-            document.body.style.backgroundColor = " #d8d8d8";
-            const descriptions = document.getElementsByClassName('description');
-            for (const element of descriptions) {
-                element.style.color = "#000000";
-            }
-            const names = document.getElementsByClassName('name');
-            for (const element of names) {
-                element.style.color = "#000000";
-            }
-            const dropdowns = document.getElementsByClassName('dropdown');
-            for (const element of dropdowns) {
-                element.style.backgroundColor = "#606b69";
-            }
-            const buttons = document.getElementsByClassName('button-save');
-            for (const element of buttons) {
-                element.style.backgroundColor = "#606b69";
-            }
-            const switches = document.getElementsByClassName('toogle-button');
-            for (const element of switches) {
-                element.style.backgroundColor = "#606b69";
-            }
-        } else if (storedTheme == 'dark') {
-            console.log("loaded theme:", storedTheme);
-            document.body.style.backgroundColor = "#191724";
-            const descriptions = document.getElementsByClassName('description');
-            for (const element of descriptions) {
-                element.style.color = "#6e6a86";
-            }
-            const names = document.getElementsByClassName('name');
-            for (const element of names) {
-                element.style.color = "#e0def4";
-            }
-            const dropdowns = document.getElementsByClassName('dropdown');
-            for (const element of dropdowns) {
-                element.style.backgroundColor = "#1abc9c";
-            }
-            const buttons = document.getElementsByClassName('button-save');
-            for (const element of buttons) {
-                element.style.backgroundColor = "#1abc9c";
-            }
-            const switches = document.getElementsByClassName('toogle-button');
-            for (const element of switches) {
-                element.style.backgroundColor = "#1abc9c";
-
-            }
-            document.getElementById('navbar').style.backgroundColor = "#26233a";
-        } else if (storedTheme == 'hacker') {
-            console.log("loaded theme:", storedChoice);
-            document.body.style.backgroundColor = "#000";
-            const descriptions = document.getElementsByClassName('description');
-            for (const element of descriptions) {
-                element.style.color = "#00ff0b";
-            }
-            const names = document.getElementsByClassName('name');
-            for (const element of names) {
-                element.style.color = "#00ff0b";
-            }
-            const dropdowns = document.getElementsByClassName('dropdown');
-            for (const element of dropdowns) {
-                element.style.backgroundColor = "#00ff0b";
-            }
-            const buttons = document.getElementsByClassName('button-save');
-            for (const element of buttons) {
-                element.style.backgroundColor = "#00ff0b";
-            }
-            const switches = document.getElementsByClassName('toogle-button');
-            for (const element of switches) {
-                element.style.backgroundColor = "#00ff0b";
-
-            }
-            const boxes = document.getElementsByClassName('settings-cont');
-            for (const element of boxes) {
-                element.style.border = "2px solid rgb(0, 255, 11)";
-
-            }
-            const newTags = document.getElementsByClassName('new-tag');
-            for (const element of newTags) {
-                element.style.color = "#00ff0b";
-
-            }
-            document.getElementById('navbar').style.backgroundColor = "#000";
-            const navbuttons = document.getElementsByClassName('a-navbutton');
-            for (const element of navbuttons) {
-                element.style.color = "#00ff0b";
-            }
-            const nebheader = document.getElementsByClassName('nebHeader');
-            for (const element of nebheader) {
-                element.style.color = "#00ff0b";
-            }
-            const Obox = document.getElementsByClassName('omnibox');
-            for (const element of Obox) {
-                element.style.backgroundColor = "black";
-            }
-        };
-    };
-    var storedTheme = localStorage.getItem('theme');
-    if (storedTheme == "light") {
-        document.getElementById('connecterText').style.color = "black"
-        document.getElementById('navbar').style.backgroundColor = "#a2a2a2";
-        document.body.style.backgroundColor = " #d8d8d8";
-        const navbuttons = document.getElementsByClassName('a-navbutton');
-        for (const element of navbuttons) {
-            element.style.color = "#000000";
-        }
-        const nebheader = document.getElementsByClassName('nebHeader');
-        for (const element of nebheader) {
-            element.style.color = "#000000";
-        }
-        const Obox = document.getElementsByClassName('omnibox');
-        for (const element of Obox) {
-            element.style.backgroundColor = "#000000";
-        }
-        const stamp = document.getElementsByClassName('stamp');
-        for (const element of stamp) {
-            element.style.color = "#000";
-        }
-    } else if (storedTheme == 'dark') {
-        document.getElementById('navbar').style.backgroundColor = "#26233a";
-        document.body.style.backgroundColor = "#191724";
-
-
-    } else if (storedTheme == 'hacker') {
-        document.getElementById('connecterText').style.color = "rgb(0, 255, 11)"
-        console.log("loaded theme:", storedChoice);
-        document.body.style.backgroundColor = "#000";
-        const descriptions = document.getElementsByClassName('description');
-        for (const element of descriptions) {
-            element.style.color = "#00ff0b";
-        }
-        const names = document.getElementsByClassName('name');
-        for (const element of names) {
-            element.style.color = "#00ff0b";
-        }
-        const dropdowns = document.getElementsByClassName('dropdown');
-        for (const element of dropdowns) {
-            element.style.backgroundColor = "#00ff0b";
-        }
-        const buttons = document.getElementsByClassName('button-save');
-        for (const element of buttons) {
-            element.style.backgroundColor = "#00ff0b";
-        }
-        const switches = document.getElementsByClassName('toogle-button');
-        for (const element of switches) {
-            element.style.backgroundColor = "#00ff0b";
-
-        }
-        const boxes = document.getElementsByClassName('settings-cont');
-        for (const element of boxes) {
-            element.style.border = "2px solid rgb(0, 255, 11)";
-
-        }
-        const newTags = document.getElementsByClassName('new-tag');
-        for (const element of newTags) {
-            element.style.color = "#00ff0b";
-        }
-        document.getElementById('navbar').style.backgroundColor = "#000";
-        const navbuttons = document.getElementsByClassName('a-navbutton');
-        for (const element of navbuttons) {
-            element.style.color = "#00ff0b";
-        }
-        const nebheader = document.getElementsByClassName('nebHeader');
-        for (const element of nebheader) {
-            element.style.color = "#00ff0b";
-        }
-        const Obox = document.getElementsByClassName('omnibox');
-        for (const element of Obox) {
-            element.style.backgroundColor = "black";
-        }
-        document.getElementById('navbar').style.backgroundColor = "#000";
-        var placeholderOmniBox = document.getElementById("url");
-        document.getElementById("url").style.color = "red";
-    }
-};
-
+function resetViews() {
+    changeCSS('--background-primary', '#191724', true);
+    changeCSS('--navbar-color', '#26233a', true);
+    changeCSS('--navbar-height', '60px', true);
+    changeCSS('--navbar-text-color', '#4de0fa', true);
+    changeCSS('--navbar-link-color', '#e0def4', true);
+    changeCSS('--navbar-font', '"Roboto"', true);
+    changeCSS('--input-text-color', '#e0def4', true);
+    changeCSS('--input-placeholder-color', '#6e6a86', true);
+    changeCSS('--input-background-color', '#1f1d2e', true);
+    changeCSS('--input-placeholder-color', 'white', true);
+    changeCSS('--input-border-color', '#eb6f92', true);
+    changeCSS('--input-border-size', '1.3px', true);
+    return "All views reset"
+}
 
 // #################################################################################################################################################
 // #################################################################################################################################################
@@ -585,3 +340,35 @@ function induce(inductor) {
     }
 }
 log();
+
+// Notification Banner
+function saveIc() {
+    console.log("Checked")
+    var notification = `
+            <div class="notification-container" id="notification-container">
+            <div class="notification notification-success">
+                <strong>Success!</strong> Your settings have been saved - Reloading.
+            </div>
+        </div>
+        `;
+    document.getElementById('notifhere').innerHTML = notification
+    setTimeout(() => {
+        var NotificationOBJ = document.getElementById('notifhere')
+
+    }, 2000);
+};
+
+function unsavedChanges() {
+    var notification = `
+    <div class="notification-container" id="notification-container">
+    <div class="notification notification-danger" id="notification-container">
+    <strong>Danger!</strong> You have unsaved changes!
+</div>
+</div>
+        `;
+    document.getElementById('notifhere').innerHTML = notification
+    setTimeout(() => {
+        var NotificationOBJ = document.getElementById('notifhere')
+
+    }, 2000);
+};

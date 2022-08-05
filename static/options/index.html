@@ -55,8 +55,8 @@
                 <p class="name"> Stealth Mode</p>
                 <p class="description">Stops extensions from peeping</p>
 
-                <input class="setting-input" id="undefined" type="checkbox" onclick="saveIc();toggleNoGG()">
-                <label for="undefined" class="toogle-button"></label>
+                <input id="undefined" type="checkbox" onclick="saveIc();toggleNoGG()">
+                <label for="undefined"></label>
             </div>
         </div>
         <div class="settings-cont">
@@ -66,7 +66,8 @@
             <span class="custom-dropdown big">
          <a onclick="unsavedChanges();"> <select class="dropdown" id="proxySwitcher">    
                 <option value="uv">UltraViolet</option>
-                <option value="cyclone">Cyclone</option>  
+                <option value="cyclone">Cyclone (BETA)</option>  
+                <option value="osana" disabled>Osana (BETA)</option>
             </select>
         </a>  
        
@@ -85,7 +86,7 @@
          <a onclick="unsavedChanges();"> <select  class="dropdown" id="themeSwitcher">    
                 <option value="dark">Shades</option>
                 <option value="light">Blizzard</option>  
-                <option value="hacker">Hacker</option>  
+                <option value="custom">Custom (Beta)</option>  
             </select>
         </a>  
        
@@ -101,7 +102,7 @@
     <div id='sidebar'>
     </div>
 
-    <p class="stamp"> Version 7.1 (Public Release) | &copy; Nebula Services 2021 - Present</p>
+    <p class="stamp"> Version 7.1.1 (Public Release) | Nebula Copyright (&copy;) Nebula Services 2022 </p>
 
     <!-- Panelbear -->
     <script async src="https://cdn.panelbear.com/analytics.js?site=AZa75ZyiRRZ">

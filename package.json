@@ -15,10 +15,12 @@
     "author": "Nebula Services",
     "license": "Copyright Nebula Services. All Rights Reserved.",
     "dependencies": {
+        "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
         "bare-server-node": "github:tomphttp/bare-server-node",
         "css-tree": "^2.1.0",
         "node-fetch": "^3.2.6",
         "node-static": "^0.7.11",
-        "ws": "^8.8.1"
+        "ws": "^8.8.1",
+        "crypto-js": "4.1.1"
     }
 }
