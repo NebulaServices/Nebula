@@ -55,5 +55,4 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 ## License
 
 Copyright Nebula Services 2021 - Present
-<br> 
-All rights reserved. 
+This project uses the MIT license.
