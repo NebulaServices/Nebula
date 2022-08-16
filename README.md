@@ -42,7 +42,6 @@ $ npm start
 - Partical.JS 
 - UV Backend Proxy 
 - Cyclone Backend Proxy
-- 
 - **Server:** Bare server on Node  
 
 
