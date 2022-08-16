@@ -60,7 +60,7 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
  - [UV (one of the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
  - [Cyclone (one of the back-end proxy we use)](https://github.com/NebulaServices/Cyclone)
  - [Bare Server](https://github.com/tomphttp/bare-server-node)
- - [Partical.JS (v4, 5, 6.1 &< only)](github.com/VincentGarreau/particles.js)
+ - [Partical.JS (v4, 5, 6.1 &< only)](https://github.com/VincentGarreau/particles.js)
 
 ## License
 
