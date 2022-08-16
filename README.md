@@ -41,7 +41,9 @@ $ npm start
 - HTML, JS, CSS
 - Partical.JS 
 - UV Backend Proxy 
-- **Server:** Node 
+- Cyclone Backend Proxy
+- 
+- **Server:** Bare server on Node  
 
 
 ## Support
@@ -56,7 +58,9 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 
 ## Acknowledgements
 
- - [UV (the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
+ - [UV (one of the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
+ - [Cyclone (one of the back-end proxy we use)](https://github.com/NebulaServices/Cyclone)
+ - [Bare Server](https://github.com/tomphttp/bare-server-node)
  - [Partical.JS (v4, 5, 6.1 &< only)](github.com/VincentGarreau/particles.js)
 
 ## License
