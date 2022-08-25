@@ -5,8 +5,10 @@ _this readme is 95% done_
 ## Features
 
 - Stunning UI with multiple themes 
-- Supports sites like Discord, Google, Youtube, Netflix, PM+, and so so much more. Partial support for GeforceNow
-- Full Mobile support 
+- XOR/b64 Encrypts all traffic sent from Nebula
+- Hides your IP from sites
+- check list of officially supported sites
+- *limited* mobile support
 - StealthMode (buffed `about:blank` cloaking)
 
 ## Deployment
