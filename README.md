@@ -7,7 +7,7 @@ _this readme is 95% done_
 - Stunning UI with multiple themes 
 - XOR/b64 Encrypts all traffic sent from Nebula
 - Hides your IP from sites
-- check list of officially supported sites
+- [List of officially supported sites](https://github.com/NebulaServices/Nebula/blob/main/docs/officially-supported-sites.md)
 - *limited* mobile support
 - StealthMode (buffed `about:blank` cloaking)
 
