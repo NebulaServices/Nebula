@@ -7,13 +7,9 @@
     "scripts": {
         "start": "node app.js"
     },
-    "keywords": [
-        "educational",
-        "math",
-        "science"
-    ],
+    "keywords": ["proxy"],
     "author": "Nebula Services",
-    "license": "Copyright Nebula Services. All Rights Reserved.",
+    "license": "MIT",
     "dependencies": {
         "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
         "bare-server-node": "github:tomphttp/bare-server-node",
