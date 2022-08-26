@@ -1,5 +1,7 @@
 import createBareServer from '@tomphttp/bare-server-node';
 import http from 'http';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import nodeStatic from 'node-static';
 import * as custombare from './static/customBare.mjs';
 
@@ -9,7 +11,10 @@ const bareServer = createBareServer('/bare/', {
   localAddress: undefined
 });
 
-const serve = new nodeStatic.Server('static/');
+const serve = new nodeStatic.Server(join(
+  dirname(fileURLToPath(import.meta.url)),
+  'static/'
+));
 
 const server = http.createServer();
 
