@@ -2,7 +2,7 @@
 # Nebula - Documentation
 
 Hello and welcome to the Nebula Documentation!
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/)
 [![Build Passing](https://img.shields.io/badge/build-passing-brightgreen)]()
 [![docs status]( https://img.shields.io/badge/docs-20%25%20complete-yellow)]()
 
