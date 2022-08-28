@@ -45,9 +45,9 @@ async function fetchBare(url, res, req) {
         var options = {
             method: req.method,
             headers: {
-                "Refer": url.href,
-                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36",
-                "cookies": req.cookies,
+                "Referer": url.href,
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36",
+                "Cookie": req.headers.cookie,
             },
         }
 
