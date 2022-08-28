@@ -90,11 +90,10 @@ async function fetchBare(url, res, req) {
             request.body.pipe(res)
         }
     } catch (e) {
-        console.log(e);
         res.writeHead(500, 'Error', {
             'content-type': 'application/javascript'
         })
-        res.end(e);
+        res.end(e.stack);
     }
 }
 
