@@ -27,8 +27,8 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-importScripts(`./osana.bundle.js?1`);
-importScripts(`./osana.config.js?1`);
+importScripts(`../osana/osana.bundle.js`);
+importScripts(`../osana/osana.config.js`);
 self.OsanaServiceWorker = class OsanaServiceWorker {
     constructor() {
         this.config = self.__osana$config;
