@@ -51,15 +51,7 @@ async function fetchBare(url, res, req) {
             },
         }
 
-        try {
-            var request = await fetch(url.href, options);
-        } catch (e) {
-            var request = {
-                text() {
-                    return 'Error: ' + e;
-                },
-            }
-        }
+        var request = await fetch(url.href, options);
 
         try {
             var contentType = request.headers.get('content-type') || 'application/javascript'
