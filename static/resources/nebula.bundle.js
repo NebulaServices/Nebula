@@ -55,16 +55,16 @@ window.addEventListener('load', () => {
 
         if (typeof navigator.serviceWorker === 'undefined')
             alert('Your browser does not support service workers or you are in private browsing!');
-        if (proxy == 'uv') {
+        if (proxy == 'uv' || 'osana') {
             navigator.serviceWorker.register('./sw.js', {
-                scope: __uv$config.prefix
+                scope: '/service/'
             }).then(() => {
                 const value = event.target.firstElementChild.value;
 
                 let url = value.trim();
                 if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url;
                 if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
-                let redirectTo = __uv$config.prefix + __uv$config.encodeUrl(url);
+                let redirectTo = localStorage.getItem('proxy') === 'uv' ? __uv$config.prefix + __uv$config.encodeUrl(url) : __osana$config.prefix + __osana$config.codec.encode(url);
                 const option = localStorage.getItem('nogg');
                 if (option === 'on') {
                     stealthEngine(redirectTo);
@@ -157,7 +157,6 @@ function toggleNoGG() {
         localStorage.setItem('nogg', 'on');
     }
 }
-
 
 
 

@@ -1,5 +1,10 @@
 importScripts('./uv/uv.sw.js');
+importScripts('./osana/osana.worker.js');
 
-const sw = new UVServiceWorker();
+const UV = new UVServiceWorker();
+const Osana = new OsanaServiceWorker();
 
-self.addEventListener('fetch', event => event.respondWith(sw.fetch(event)));
+self.addEventListener('fetch', (event) => {
+  if (event.request.url.startsWith(location.origin + '/service/go/')) event.respondWith(UV.fetch(event));
+  if (event.request.url.startsWith(location.origin + '/service/~osana/')) event.respondWith(Osana.fetch(event));
+});
