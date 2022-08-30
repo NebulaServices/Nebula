@@ -19,12 +19,19 @@ const serve = new nodeStatic.Server(join(
 const server = http.createServer();
 
 server.on('request', (request, response) => {
-  if (custombare.route(request, response)) return true;
-  
-  if (bareServer.shouldRoute(request)) {
-    bareServer.routeRequest(request, response);
-  } else {
-    serve.serve(request, response);
+  try {
+    if (custombare.route(request, response)) return true;
+
+    if (bareServer.shouldRoute(request)) {
+      bareServer.routeRequest(request, response);
+    } else {
+      serve.serve(request, response);
+    }
+  } catch (e) {
+    response.writeHead(500, "Internal Server Error", {
+      "Content-Type": "text/plain"
+    })
+    response.end(e.stack)
   }
 });
 server.on('upgrade', (req, socket, head) => {
