@@ -24,7 +24,7 @@ self.__osana$config = {
     codec: self.__osana$bundle.codecs.none,
     files: {
         config: "/osana/osana.config.js",
-        client: "/osana/osana/osana.client.js",
+        client: "/osana/osana.client.js",
         bundle: "/osana/osana.bundle.js",
         worker: "/osana/osana.worker.js"
     },
