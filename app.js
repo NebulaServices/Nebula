@@ -44,4 +44,12 @@ server.on('upgrade', (req, socket, head) => {
 
 server.listen(PORT);
 
+if (process.env.UNSAFE_CONTINUE)
+  process.on("uncaughtException", (err, origin) => {
+    console.error(`Critical error (${origin}):`)
+    console.error(err)
+    console.error("UNSAFELY CONTINUING EXECUTION")
+    console.error()
+  })
+
 console.log(`Server running at http://localhost:${PORT}/.`);
