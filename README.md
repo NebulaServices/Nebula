@@ -1,4 +1,7 @@
-# Nebula
+<div align=center>
+
+<img src='https://nebulaproxy.nebula.bio/images/logo.png' width="100px" height="100px">
+<h1>  Nebula </h1>
 Nebula Web is an official flagship of Nebula Services. Nebula Web is a stunning and sleak webproxy with support for hundreds of popular sites, and partial support for WebRTC, used in GfN. With Nebula Web, the sky is the limit. Enjoy. 
 
 _this readme is 95% done_
@@ -43,6 +46,7 @@ $ npm start
 - HTML, JS, CSS
 - Partical.JS 
 - UV Backend Proxy 
+- Osana Backend Proxy
 - Cyclone Backend Proxy
 - **Server:** Bare server on Node  
 
@@ -61,6 +65,7 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 
  - [UV (one of the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
  - [Cyclone (one of the back-end proxy we use)](https://github.com/NebulaServices/Cyclone)
+ - [Osana (one of the back-end proxy we use)](https://github.com/NebulaServices/Osana)
  - [Bare Server](https://github.com/tomphttp/bare-server-node)
  - [Partical.JS (v4, 5, 6.1 &< only)](https://github.com/VincentGarreau/particles.js)
 
@@ -68,4 +73,5 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 
 Copyright Nebula Services 2021 - Present
 <br>
-This project uses the MIT license.
+This project uses the MIT license. 
+<div align=center>
