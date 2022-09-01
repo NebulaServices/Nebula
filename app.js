@@ -2,7 +2,7 @@ import createBareServer from '@tomphttp/bare-server-node';
 import http from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import nodeStatic from 'node-static';
+import serveStatic from 'serve-static';
 import * as custombare from './static/customBare.mjs';
 
 const PORT = process.env.PORT || 3000;
@@ -11,10 +11,10 @@ const bareServer = createBareServer('/bare/', {
   localAddress: undefined
 });
 
-const serve = new nodeStatic.Server(join(
+const serve = serveStatic(join(
   dirname(fileURLToPath(import.meta.url)),
   'static/'
-));
+), {fallthrough: false});
 
 const server = http.createServer();
 
@@ -25,7 +25,12 @@ server.on('request', (request, response) => {
     if (bareServer.shouldRoute(request)) {
       bareServer.routeRequest(request, response);
     } else {
-      serve.serve(request, response);
+      serve(request, response, err => {
+        response.writeHead(err?.statusCode || 500, null, {
+          "Content-Type": "text/plain"
+        })
+        response.end(err?.stack)
+      });
     }
   } catch (e) {
     response.writeHead(500, "Internal Server Error", {
