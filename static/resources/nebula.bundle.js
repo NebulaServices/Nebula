@@ -55,7 +55,7 @@ window.addEventListener('load', () => {
 
         if (typeof navigator.serviceWorker === 'undefined')
             alert('Your browser does not support service workers or you are in private browsing!');
-        if (proxy == 'uv' || 'osana') {
+        if (proxy === 'uv' || proxy === 'osana') {
             navigator.serviceWorker.register('./sw.js', {
                 scope: '/service/'
             }).then(() => {
