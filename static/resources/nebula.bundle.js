@@ -64,7 +64,7 @@ window.addEventListener('load', () => {
                 let url = value.trim();
                 if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url;
                 if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
-                let redirectTo = localStorage.getItem('proxy') === 'uv' ? __uv$config.prefix + __uv$config.encodeUrl(url) : __osana$config.prefix + __osana$config.codec.encode(url);
+                let redirectTo = proxy ? __uv$config.prefix + __uv$config.encodeUrl(url) : __osana$config.prefix + __osana$config.codec.encode(url);
                 const option = localStorage.getItem('nogg');
                 if (option === 'on') {
                     stealthEngine(redirectTo);
