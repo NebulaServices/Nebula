@@ -7,7 +7,7 @@ import filter from './cyclone/filter.cyclone.mjs';
 import * as security from './cyclone/security.cyclone.mjs';
 
 const config = {
-    prefix: "/service",
+    prefix: "/service/next",
     requireSSL: true, // Requires SSL?
     defaultHeaders: {
         'X-Content-Type-Options': 'no-sniff',

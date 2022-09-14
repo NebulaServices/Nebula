@@ -14,7 +14,6 @@
     "license": "MIT",
     "dependencies": {
         "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
-        "bare-server-node": "github:tomphttp/bare-server-node",
         "crypto-js": "4.1.1",
         "css-tree": "^2.1.0",
         "node-fetch": "^3.2.6",
