@@ -15,7 +15,7 @@ _this readme is 95% done_
 - StealthMode (buffed `about:blank` cloaking)
 
 ## Deployment
-
+(Nebula's license is now GNU AGPL V3 as of v7.10)
 ### Quick Deployment
 [![Deploy to Heroku](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/NebulaServices/Nebula)
 <br>

@@ -4,7 +4,7 @@
     --background-primary: #191724;
     --navbar-color: #26233a;
     --navbar-height: 60px;
-    --navbar-text-color: #4de0fa;
+    --navbar-text-color: #7967dd;
     --navbar-link-color: #e0def4;
     --navbar-font: "Roboto";
     --input-text-color: #e0def4;
@@ -72,7 +72,9 @@ a:hover {
     margin-left: auto;
     list-style-type: none;
     float: right !important;
-    margin-right: 5%;
+    margin-right: 2.3%;
+  display: flex;
+    align-items: center;
 }
 
 #navbar ul li {
@@ -95,6 +97,8 @@ input[type='text'] {
 #navbar ul p,
 ul a {
     font-weight: bold;
+  display: flex;
+    align-items: center;
 }
 
 */
@@ -169,8 +173,7 @@ ul li ul:hover {
     outline: none;
     text-align: center;
     font-family: 'Roboto';
-    animation-name: inputwide;
-    animation-duration: 2s;
+   
 }
 
 #content input:focus {
@@ -223,6 +226,13 @@ svg rect {
     margin-left: .5%;
     font-family: var(--navbar-font);
     color: var(--navbar-text-color);
+      display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+
 }
 
 html,
@@ -270,11 +280,28 @@ input:focus::placeholder {
     font-style: italic;
     font-weight: lighter;
     color: whitesmoke;
+    opacity: 90%;
+    user-select: none;
+    font-size: 13px;
+    padding-left: 5px;
+    padding-bottom: 1px;
+   cursor: default;
+  
+}
+.stamp:hover {
+   text-align: right;
+    position: fixed;
+    bottom: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: lighter;
+    color: whitesmoke;
     opacity: 38%;
     user-select: none;
     font-size: 13px;
     padding-left: 5px;
     padding-bottom: 1px;
+   cursor: default;
 }
 
 .github {
@@ -296,4 +323,96 @@ input:focus::placeholder {
     right: 114px;
     bottom: 0;
     padding-right: 15px;
+}
+.modal-window {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+font-family: 'Montserrat', sans-serif;;
+}
+.modal-window:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window > div {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  background: white;
+}
+.modal-window header {
+  font-weight: bold;
+}
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 15px;
+}
+
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+.modal-close:hover {
+  color: black;
+}
+
+
+
+.modal-window > div {
+  border-radius: 1rem;
+}
+
+.modal-window div:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+
+.logo {
+  max-width: 150px;
+  display: block;
+}
+
+small {
+  color: lightgray;
+}
+
+.btn {
+  background-color: white;
+  padding: 1em 1.5em;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+.btn i {
+  padding-right: 0.3em;
+}
+
+.clockColon {
+  opacity: 100%;
+  
+  animation: blink .5s step-end infinite alternate;
+  transition: 0.2s; 
+  
+}
+@keyframes blink {
+  50% {
+    opacity: 0%
+  }
 }

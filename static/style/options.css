@@ -18,7 +18,7 @@
 
 * {
     user-select: none;
-    overflow: hidden;
+    
 }
 
 
@@ -31,7 +31,7 @@ body {
     display: flex;
     flex-direction: row;
     align-content: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: flex-end;
     margin-top: 75px;
@@ -256,7 +256,7 @@ ul li {
 }
 
 .notification-success {
-    background-color: #55b559;
+    background-color: #3d3571;
 }
 
 .notification-warning {
@@ -301,11 +301,12 @@ ul li {
 
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 .settings-cont {
+  background: #45454521; 
     box-sizing: border-box;
     width: 300px;
     height: 246px;
     padding: 30px;
-    border: 2px solid rgb(121 103 221);
+    border: 2px solid rgb(0 0 0 / 64%);
     border-radius: 9px;
     margin-top: 20px;
     display: flex;
@@ -330,7 +331,8 @@ ul li {
     font-size: 17px;
     font-family: 'Ubuntu', sans-serif;
     font-weight: 300;
-    font-style: Italic;
+        /* font-style: Italic; */
+    text-align: center;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap');
@@ -358,7 +360,7 @@ ul li {
 }
 
 .custom-dropdown select {
-    background-color: #1abc9c;
+    background-color: rgb(121 103 221);
     color: var(--text-color-primary);
     font-size: inherit;
     padding: .5em;
@@ -370,6 +372,7 @@ ul li {
     text-overflow: '';
     -webkit-appearance: button;
     /* hide default arrow in chrome OSX */
+      -webkit-appearance: none;
 }
 
 .custom-dropdown::before,
@@ -416,7 +419,7 @@ ul li {
 }
 
 .button-save {
-    background-color: #1abc9c;
+    background-color: #5e18eb;
     color: #fff;
     font-size: inherit;
     padding: 0.5em;
@@ -450,7 +453,7 @@ label {
     /* text-indent: -10049px; */
     width: 85px;
     height: 37px;
-    background: #ff5c5c;
+    background:#504e58;
     display: block;
     border-radius: 100px;
     position: relative;
@@ -463,13 +466,14 @@ label:after {
     left: 5px;
     width: 35px;
     height: 28px;
-    background: #fff;
+    background: #3d3571;
     border-radius: 90px;
     transition: 0.3s;
 }
 
 input:checked+label {
-    background: #bada55;
+  background: #7967dd;
+
 }
 
 input:checked+label:after {
