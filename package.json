@@ -13,7 +13,7 @@
     "author": "Nebula Services",
     "license": "GNU AGPL V3",
     "dependencies": {
-        "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
+        "@tomphttp/bare-server-node": "1.0.2-beta-readme5",
         "crypto-js": "4.1.1",
         "css-tree": "^2.1.0",
         "node-fetch": "^3.2.6",
