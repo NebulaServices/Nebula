@@ -35,6 +35,70 @@
     right: 0;
     background-color: var(--navbar-color);
 }
+.sidenav-btn {
+    display: none;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #232133;
+    padding-top: 60px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.sidenav a {
+  padding: 8px 16px 16px 32px;
+  text-decoration: none;
+  width: 100vw;
+  font-size: 24px;
+  color: #cfcfcf;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  z-index: 2;
+  left: 140px;
+}
+
+@media only screen and (max-width: 690px) { /* funny number */
+
+    #navbar > ul > li {
+        display: none;
+    }
+
+    .sidenav-btn {
+        display: flex;
+
+        align-items: center;
+        position: absolute;
+        left: 90vw;
+        width: var(--navbar-height);
+        height: var(--navbar-height);
+    }
+    .sidenav-btn > svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    #digitalCLOContainerLI {
+        display: none;
+    }
+    #navbar > ul > li > a > svg {
+        min-width: 24px;
+    }
+}
 
 a {
     color: var(--navbar-link-color);
@@ -73,7 +137,7 @@ a:hover {
     list-style-type: none;
     float: right !important;
     margin-right: 2.3%;
-  display: flex;
+    display: flex;
     align-items: center;
 }
 
@@ -223,7 +287,6 @@ svg rect {
 }
 
 .nebHeader {
-    margin-left: .5%;
     font-family: var(--navbar-font);
     color: var(--navbar-text-color);
       display: flex;
@@ -232,6 +295,7 @@ svg rect {
     align-content: center;
     flex-wrap: nowrap;
     flex-direction: row;
+    margin-left: .5%;
 
 }
 
@@ -402,6 +466,12 @@ small {
 }
 .btn i {
   padding-right: 0.3em;
+}
+
+@media only screen and (max-width: 1100px) {
+    #digitalClock {
+        display: none;
+    }
 }
 
 .clockColon {
