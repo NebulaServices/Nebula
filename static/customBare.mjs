@@ -31,7 +31,7 @@ function insertScript(html) {
     var res = `<!DOCTYPE html>
   <html>
   <head>
-  <script preload src="/cyclone.js"></script>
+  <script preload src="/cyclone/cyclone.js"></script>
   </head>
   <body>
   ${html}
