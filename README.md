@@ -31,7 +31,6 @@ $ npm start
 - Partical.JS 
 - UV Backend Proxy 
 - Osana Backend Proxy
-- Cyclone Backend Proxy
 - **Server:** Bare server on Node  
 
 
@@ -116,7 +115,6 @@ sudo nohup PORT=80 node . &
 ## Acknowledgements
 
  - [UV (one of the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
- - [Cyclone (one of the back-end proxy we use)](https://github.com/NebulaServices/Cyclone)
  - [Osana (one of the back-end proxy we use)](https://github.com/NebulaServices/Osana)
  - [Bare Server](https://github.com/tomphttp/bare-server-node)
  - [Partical.JS (v4, 5, 6.1 &< only)](https://github.com/VincentGarreau/particles.js)

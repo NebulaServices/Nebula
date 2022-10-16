@@ -3,7 +3,6 @@ import http from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import serveStatic from 'serve-static';
-import * as custombare from './static/customBare.mjs';
 
 const PORT = process.env.PORT || 3000;
 const bareServer = createBareServer('/bare/', {
@@ -23,7 +22,6 @@ const server = http.createServer();
 
 server.on('request', (request, response) => {
   try {
-    if (custombare.route(request, response)) return true;
 
     if (bareServer.shouldRoute(request)) {
       bareServer.routeRequest(request, response);

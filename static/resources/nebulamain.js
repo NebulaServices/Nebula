@@ -154,19 +154,6 @@ scope: '/service/'
              }, 1000);
                }
       });
-    } else if (proxy == 'cyclone') {
-      const value = event.target.firstElementChild.value;
-
-      let url = value.trim();
-      if (!isUrl(url)) url = 'www.google.com/search?q=' + url;
-      if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
-      let redirectTo = '/service/next/' + url;
-      
-      const option = localStorage.getItem('nogg');
-      if (option === 'on') {
-        stealthEngine(redirectTo);
-      } else location.pathname = redirectTo;
-
     }
   });
 
@@ -1311,7 +1298,7 @@ console.log(day + ", " + formatAMPM(new Date))
 //           Search Result.
 
 const suggestFromString = async(input) => {
-  var request = await fetch("https://tomphttp-bare.jimmynuetron.repl.co/v1/", { headers: { 'x-bare-host': 'duckduckgo.com', 'x-bare-protocol': 'https:', 'x-bare-path': '/ac/?q=' + encodeURIComponent(input), 'x-bare-port': '443', 'x-bare-headers': JSON.stringify({ Host: 'duckduckgo.com' }), 'x-bare-forward-headers': '[]' } });
+  var request = await fetch("/bare/v1", { headers: { 'x-bare-host': 'duckduckgo.com', 'x-bare-protocol': 'https:', 'x-bare-path': '/ac/?q=' + encodeURIComponent(input), 'x-bare-port': '443', 'x-bare-headers': JSON.stringify({ Host: 'duckduckgo.com' }), 'x-bare-forward-headers': '[]' } });
   var json = await request.json();
   return json;
 }
