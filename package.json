@@ -1,6 +1,6 @@
 {
     "name": "nebula-web",
-    "version": "7.10",
+    "version": "7.10.0",
     "description": "Explore the web. Freely.",
     "type": "module",
     "main": "app.js",
@@ -13,11 +13,14 @@
     "author": "Nebula Services",
     "license": "GNU AGPL V3",
     "dependencies": {
-        "@tomphttp/bare-server-node": "1.0.2-beta-readme5",
+        "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
         "crypto-js": "4.1.1",
         "css-tree": "^2.1.0",
         "node-fetch": "^3.2.6",
         "serve-static": "^1.15.0",
         "ws": "^8.8.1"
+    },
+    "engines": {
+        "node": ">=16.0.0"
     }
 }
