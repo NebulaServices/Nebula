@@ -123,5 +123,5 @@ sudo nohup PORT=80 node . &
 
 Copyright Nebula Services 2021 - Present
 <br>
-This project uses the MIT license. 
+This project uses the AGLP GNU V3 license. 
 
