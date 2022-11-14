@@ -2,50 +2,31 @@
 <div align=center> 
 <img src='https://nebulaproxy.nebula.bio/images/logo.png' width="100px" height="100px">
 <h1>  Nebula </h1>
-Nebula Web is an official flagship of Nebula Services. Nebula Web is a stunning and sleak webproxy with support for hundreds of popular sites, and partial support for WebRTC, used in GfN. With Nebula Web, the sky is the limit. Enjoy. 
+NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleak, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 </div>
 
 
 ## Features
 
-- Stunning UI with multiple themes 
+- Stunning highly functional UI with multiple themes 
 - XOR/b64 Encrypts all traffic sent from Nebula
 - Hides your IP from sites
 - [List of officially supported sites](https://github.com/NebulaServices/Nebula/blob/main/docs/officially-supported-sites.md)
 - *limited* mobile support
 - StealthMode (buffed `about:blank` cloaking)
+- Advanced cloaking options
+- **NEW** Deployment option - Email OTP Verification (tutorial can be found below)
 
-
-
-### Self Hosting
-```bash
-$ git clone https://github.com/NebulaServices/Nebula.git
-$ cd Nebula
-$ npm ci
-$ npm start
-```
-
-## Tech Stack
-
-- HTML, JS, CSS
-- Partical.JS 
-- UV Backend Proxy 
-- Osana Backend Proxy
-- **Server:** Bare server on Node  
-
-
-## Support
-
-For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
-
-
-## Demo
-
-[Click here to see a demo of Nebula](https://tutorialread.beauty/)
 
 # Deployment
 
-## Quick Deployment Options
+Table of contents 
+- Quick & easy deployment
+- how to use email OTP Verification mode
+- Advanced Deployment 
+
+
+## Quick & Easy Deployment Options
 [![Deploy to Heroku](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/NebulaServices/Nebula)
 <br>
 [![Run on Replit](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg)](https://replit.com/github/NebulaServices/Nebula)
@@ -63,6 +44,13 @@ For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
 [![Deploy To Koyeb](https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/NebulaServices/Nebula&branch=main&name=NebulaProxy)
 
 ---
+## how to use email OTP Verification mode
+* change `"verification":false,` to `"verification":true,`
+* Make an account with Sendgrid (https://app.sendgrid.com/)
+* verify email
+* get API key
+* fill out information in `deployment.config.json`
+  
 ## Advanced Deployment 
 
 ### Initial configuration
@@ -111,6 +99,25 @@ sudo nohup PORT=80 node . &
 **Make sure your firewall is configured to let through port 80 traffic!** \
 *Note: Server will need to run` cd Nebula && sudo nohup PORT=80 node . &` on reboot*
 (Nebula's license is now GNU AGPL V3 as of v7.10)
+
+
+## Tech Stack
+
+- HTML, JS, CSS
+- Partical.JS 
+- UV Backend Proxy 
+- Osana Backend Proxy
+- **Server:** Bare server on Node 
+
+## Support
+
+For support, email chloe@nebula.bio or join our discord: discord.nebula.bio
+
+
+## Demo
+
+[Click here to see a demo of Nebula](https://tutorialread.beauty/)
+
 
 ## Acknowledgements
 

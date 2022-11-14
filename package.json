@@ -17,6 +17,8 @@
         "crypto-js": "4.1.1",
         "css-tree": "^2.1.0",
         "node-fetch": "^3.2.6",
+        "nodemailer": "^6.8.0",
+        "nodemailer-sendgrid-transport": "^0.2.0",
         "serve-static": "^1.15.0",
         "ws": "^8.8.1"
     },

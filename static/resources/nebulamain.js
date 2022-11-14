@@ -1,195 +1,266 @@
+// Welcome to the main Nebula script
+// This script handles all the tasks neccesary for a proxy.
+// What this doesn't include is the actual proxies, just the neccesary tasks in order for the proxies to be able to preform, such as registering the service worker required by Interception proxies.
 
-//                      Copyright Nebula Services 2021-2022
+// Documentation Writers/Contributors:
+// GreenWorld#0001 (Discord) / GreenyDev (Github)
+// If you would like to contribute, feel free to open a pull request.
+// These docs are not finished
 
-
-var option = localStorage.getItem('nogg');
-
+// Navigation controls for smaller devices
+// Executed in the inline HTML
 function openNav() {
-  document.getElementById("sidenav").style.width = "260px";
+  document.getElementById("sidenav").style.width = "260px"
 }
-
 function closeNav() {
-    document.getElementById("sidenav").style.width = "0px";
+  document.getElementById("sidenav").style.width = "0px"
 }
 
-window.addEventListener('load', () => {
-// register UV sw
+window.addEventListener("load", () => {
+  // Register the service workers for Osana and Ultraviolet proxy protocols
+  // This is a better method than registering onsubmit because this allows the ability to use proxied links on the main page.
+  navigator.serviceWorker.register("./sw.js", {
+    scope: "/service/",
+  })
 
-navigator.serviceWorker.register('./sw.js', {
-scope: '/service/'
-});
-
-
-// const _protector = document.getElementById('_protect'); 
-// _protector.innerHTML = "Nebula &copy; Nebula Services 2022"
-
+  // Get's the current day using the Date function built in.
+  // A dependency for displaying time - displayTime(void)
   function getDayName(dateStr, locale) {
-    var date = new Date(dateStr);
-    return date.toLocaleDateString(locale, { weekday: 'long' });
+    var date = new Date(dateStr)
+    return date.toLocaleDateString(locale, { weekday: "long" })
   }
 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-
-  today = mm + '/' + dd + '/' + yyyy;
-
-
-
-  var day = getDayName(today, "us-US");
-
-  var td = new Date();
-
-  function showTime() {
-    var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    var s = date.getSeconds(); // 0 - 59
-
-    var session = "AM";
-
+  // The main function to show the time on the main page
+  // needs to be initialized by a call (only one)
+  // Dependent on getDayName function
+  function displayTime() {
+    var date = new Date()
+    var h = date.getHours() // 0 - 23
+    var m = date.getMinutes() // 0 - 59
+    var s = date.getSeconds() // 0 - 59
+    var session = "AM"
     if (h == 0) {
-      h = 12;
+      h = 12
     }
-
     if (h > 12) {
-      h = h - 12;
-      session = "PM";
+      h = h - 12
+      session = "PM"
     }
+    h = h < 10 ? "0" + h : h
+    m = m < 10 ? "0" + m : m
+    s = s < 10 ? "0" + s : s
+    // Repeat itself every second
+    setTimeout(displayTime, 1000)
+    // Get today's date
+    var today = new Date()
+    var dd = String(today.getDate()).padStart(2, "0")
+    var mm = String(today.getMonth() + 1).padStart(2, "0") //January is 0!
+    var yyyy = today.getFullYear()
+    today = mm + "/" + dd + "/" + yyyy
+    var time = h + "<span style='opacity:100%;' class='clockColon'>:</span>" + m
+    document.getElementById("digitalClock").innerHTML =
+      getDayName(today, "us-US") + ", " + time + " " + session + "."
 
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    s = (s < 10) ? "0" + s : s;
-    setTimeout(showTime, 1000);
-    var time = h + "<span style='opacity:100%;' class='clockColon'>:</span>" + m;
-    document.getElementById('digitalClock').innerHTML = getDayName(today, "us-US") + ", " + time + " " + session + ".";
+    return time
+  }
+  // initialize the time function
+  displayTime()
 
-    return time;
+  // Link evaluation
+  // This functions' purpose is to check a string of text (the argument)
+  // it recognizes whether a string is a URL or not, and it returns a true or false value
+  function isUrl(val = "") {
+    if (
+      /^http(s?):\/\//.test(val) ||
+      (val.includes(".") && val.substr(0, 1) !== " ")
+    )
+      return true
+    return false
   }
 
-  showTime();
-
-  function isUrl(val = '') {
-    if (/^http(s?):\/\//.test(val) || val.includes('.') && val.substr(0, 1) !== ' ') return true;
-    return false;
-  };
-
-  // NOGG
-
-  //
-
-  const useNoGG = false;
+  const useNoGG = false
   const proxy = localStorage.getItem("proxy") || "uv"
-  const inpbox = document.querySelector('form');
-  inpbox.addEventListener('submit', event => {
+  const inpbox = document.querySelector("form")
+  // Display the "loading" indicators on the main page, looks much better than a static/still screen.
+  inpbox.addEventListener("submit", (event) => {
+    // Prevents the default event tasks
     event.preventDefault()
-    
-    console.log("Connecting to service -> loading");
-    const loader = document.getElementById("lpoader");
-    const texts = document.getElementById("connecterText");
-    const loadConstructer = loader.style;
-    const textConstructer = texts.style;
-    loadConstructer.display = "flex";
-    loadConstructer.justifyContent = "center";
+    console.log("Connecting to service -> loading")
+    const loader = document.getElementById("lpoader")
+    const texts = document.getElementById("connecterText")
+    // Adjust size as neccesary
+    const loadConstructer = loader.style
+    const textConstructer = texts.style
+    loadConstructer.display = "flex"
+    loadConstructer.justifyContent = "center"
+    // Changing the text over multiple periods of time creates character, and aliveness (is that even a word?)
     setTimeout(() => {
       document.getElementById("connecterText").style.fontSize = "12px"
-      document.getElementById("connecterText").innerHTML = "Due to high server load, this may take a while.";
-    }, 3200);
-
+      document.getElementById("connecterText").innerHTML =
+        "Due to high server load, this may take a while."
+    }, 3200)
     setTimeout(() => {
       document.getElementById("connecterText").style.fontSize = "14px"
-      document.getElementById("connecterText").innerHTML = "Hmmm.. Something isn't right..";
-    }, 17000);
+      document.getElementById("connecterText").innerHTML =
+        "Hmmm.. Something isn't right.."
+    }, 17000)
+  })
 
+  // Form submission
+  const form = document.querySelector("form")
+  form.addEventListener("submit", (event) => {
+    event.preventDefault()
+    // Check if the service worker (commonly called SW) is registered
+    if (typeof navigator.serviceWorker === "undefined")
+      alert(
+        "An error occured registering your service worker. Please contact support - discord.gg/unblocker"
+      )
+    //
+    if (proxy === "uv" || proxy === "osana") {
+      // Re-register the service worker incase it failed to onload
+      navigator.serviceWorker
+        .register("./sw.js", {
+          scope: "/service/",
+        })
+        .then(() => {
+          const value = event.target.firstElementChild.value
+          let url = value.trim()
+          if (!isUrl(url)) url = "https://www.google.com/search?q=" + url
+          if (!(url.startsWith("https://") || url.startsWith("http://")))
+            url = "http://" + url
+          // encode the URL for UltraViolet
+          let redirectTo =
+            proxy === "uv"
+              ? __uv$config.prefix + __uv$config.encodeUrl(url)
+              : __osana$config.prefix + __osana$config.codec.encode(url)
+          const option = localStorage.getItem("nogg")
+          if (option === "on") {
+            stealthEngine(redirectTo)
+          } else {
+            setTimeout(() => {
+              // If StealthMode is off, this is the enabled option.
+              const _popout = window.open("/blob", "_self")
+              const blob = _popout.document
+              // Write all of the neccesary page elements, and the Options including the cloak (if enabled)
+              // The blob writing is just the background elements, like the "Nebula is loading your content, please wait" screen. It does not carry proxied content, or even the iframe.
+              blob.write(`
+           <script> 
+           function handleTabLeave(activeInfo) {
+  var link = document.querySelector("link[rel~='icon']");
+  if (localStorage.getItem('ADVcloak') == "on") {
+  if (document.title == "Nebula") {
+    if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+link.href = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo7AE3IF34XPGyseQjkXIOsWXpkZiLlMjSAwySjcJSPAwlv3hnGKi1&usqp=CAU';
+    document.title = "Google"
+  } else if (document.title == "Google") {
+    document.title = "Nebula"
+    if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+link.href = 'data:image/png;base64,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';
+  } else {
+    return false;
+  }
+}
+}
+document.addEventListener("visibilitychange", handleTabLeave)
+</script> 
+          
+           <style>@import "https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap";/* CSSTidy 1.5.2: Fri, 11 Nov 2022 17:13:44 +0000 */body{background:#191724;color:#fff}div{margin-top:30px;font-size:100px;text-align:center;font-family:"Roboto";font-weight:700}.loader .b1{left:42%}.loader .b2{left:50%;animation-delay:100ms}.loader .b3{left:58%;animation-delay:200ms;color:#eb6f92}.loader .b1,.loader .b2,.loader .b3{width:10px;height:30px;position:absolute;top:50%;transform:rotate(0);animation-name:spinify;animation-duration:1600ms;animation-iteration-count:infinite;color:#eb6f92;background-color:#eb6f92}@keyframes spinify{0%{transform:translate(0px,0px)}33%{transform:translate(0px,24px);border-radius:100%;width:10px;height:10px}66%{transform:translate(0px,-16px)}88%{transform:translate(0px,4px)}100%{transform:translate(0px,0px)}}</style> 
+           <div class="loader">
+  <div>Nebula is loading your content!</div>
+  <div style='font-size:35px;'>Please wait</div>
+  <div class="b1"></div> 
+  <div class="b2"></div>
+  <div class="b3"></div>
+</div> 
+`)
+              // inside of the blob, create and append the Iframe element which WILL carry the proxied content.
+              const iframe = blob.createElement("iframe")
+              const style = iframe.style
+              const img = blob.createElement("link")
+              const link = location.href
+              // We attach ARC because it supports us, keeping our arc link there would be greatly appreciated :)
+              const arcSrc = blob.createElement("script")
+              arcSrc.setAttribute(
+                "src",
+                "https://arc.io/widget.min.js#BgaWcYfi"
+              )
+              // Arc requires the Async attribute
+              // Async means not running parallel to other tasks, so it loads seperately to everything else (in a sense)
+              // Aysnchronous and Synchronous are somewhat difficult topics, so we recommend you
+              arcSrc.setAttribute("async", "")
+              blob.head.appendChild(arcSrc)
+              img.rel = "icon"
+              img.href =
+                "https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png"
+              blob.title = "Nebula"
+              // slice the link like some nice fruit :)
+              // Removing the '/' from 'whateverthislinkis.gay/'
+              //                                              ^
+              var currentLink = link.slice(0, link.length - 1)
+              // To attribute the iframe to a source, we need to + the current link (post-slice) to the requested website, which is passed through the functions argument
+              iframe.src = currentLink + redirectTo
 
-  });
-  const form = document.querySelector('form');
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (typeof navigator.serviceWorker === 'undefined')
-      alert('An error occured registering your service worker. Please contact support - discord.gg/unblocker ');
-    if (proxy === 'uv' || proxy === 'osana') {
-      navigator.serviceWorker.register('./sw.js', {
-        scope: '/service/'
-      }).then(() => {
-        const value = event.target.firstElementChild.value;
-        let url = value.trim();
-        if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url;
-        if (!(url.startsWith('https://') || url.startsWith('http://'))) url = 'http://' + url;
-        let redirectTo = proxy === 'uv' ? __uv$config.prefix + __uv$config.encodeUrl(url) : __osana$config.prefix + __osana$config.codec.encode(url);
-        const option = localStorage.getItem('nogg');
-        if (option === 'on') {
-          stealthEngine(redirectTo);
-        } else { 
-          setTimeout(() => {
-          const _popout = window.open('/blob', '_self');
-          const blob = _popout.document;
-           blob.write("<h1> Nebula is loading your content ! </h1> ")
-          const iframe = blob.createElement("iframe")
-          const style = iframe.style
-          const img = blob.createElement("link")
-          const link = location.href
-          const arcSrc = blob.createElement('script');
-          arcSrc.setAttribute(
-  'src',
-  'https://arc.io/widget.min.js#BgaWcYfi',
-);
-          arcSrc.setAttribute('async', '');
-          blob.head.appendChild(arcSrc);
-          img.rel = "icon"
-          img.href = "https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png"
-          blob.title = "Nebula"
-
-          var currentLink = link.slice(0, link.length - 1);
-
-          iframe.src = currentLink + redirectTo
-
-          style.position = "fixed"
-          style.top = style.bottom = style.left = style.right = 0
-          style.border = style.outline = "none"
-          style.width = style.height = "100%"
-
-          blob.body.appendChild(iframe)
-             }, 1000);
-               }
-      });
+              // Style the Iframe to fill the entire screen and remove the bessels.
+              style.position = "fixed"
+              style.top = style.bottom = style.left = style.right = 0
+              style.border = style.outline = "none"
+              style.width = style.height = "100%"
+              // finally, append the iframe to the blob's (window) body
+              blob.body.appendChild(iframe)
+            }, 1000)
+          }
+        })
     }
-  });
+  })
 
-  // NoGG Engine 
+  // Stealth engine, a dependency for everything above.
   function stealthEngine(encodedURL) {
-    // The URL must be encoded ^ 
-    let inFrame
+    // Remember that the EncodedURL argument must be pre-encoded, or encoded before the function is called.
+    // This function does not encode the argument at all!
 
+    // Initialize the variable
+    let inFrame
+    // make sure there isn't a window open already
     try {
       inFrame = window !== top
     } catch (e) {
       inFrame = true
     }
     setTimeout(() => {
+      // Basically, a checklist to make sure that an error won't occur.
+      // In this if statement, we're checking if an iframe is already being opened, if popups are disabled, and if the user agent IS NOT firefox (firefox sucks, sorry Moz)
       if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         const popup = open("about:blank", "_blank")
         if (!popup || popup.closed) {
-          alert("Popups are disabled!")
+          alert(
+            "StealthEngine was unable to open a popup. (do you have popups disabled?)"
+          )
         } else {
           const doc = popup.document
           const iframe = doc.createElement("iframe")
           const style = iframe.style
+          // Favicon attachment
           const img = doc.createElement("link")
-          const arcSrc = doc.createElement('script');
-          arcSrc.setAttribute(
-  'src',
-  'https://arc.io/widget.min.js#BgaWcYfi',
-);
-          arcSrc.setAttribute('async', '');
-          doc.head.appendChild(arcSrc);
+          const arcSrc = doc.createElement("script")
+          // We attach ARC because it supports us, keeping our arc link there would be greatly appreciated :)
+          arcSrc.setAttribute("src", "https://arc.io/widget.min.js#BgaWcYfi")
+          arcSrc.setAttribute("async", "")
+          doc.head.appendChild(arcSrc)
           const link = location.href
           img.rel = "icon"
-          img.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+          img.href =
+            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
           doc.title = getRandomName()
 
-          var currentLink = link.slice(0, link.length - 1);
+          var currentLink = link.slice(0, link.length - 1)
 
           iframe.src = currentLink + encodedURL
 
@@ -200,198 +271,246 @@ scope: '/service/'
 
           doc.body.appendChild(iframe)
         }
-
       }
-    }, 1500);
+    }, 1500)
   }
-});
+})
 
-
-
-// Set the option 
-var option = localStorage.getItem('nogg')
+// Set the option
+var option = localStorage.getItem("nogg")
 
 function toggleNoGG() {
-  if (option === 'on') {
-
-    option = 'off';
-    localStorage.setItem('nogg', 'off');
+  if (option === "on") {
+    option = "off"
+    localStorage.setItem("nogg", "off")
   } else {
-
-    option = 'on';
-    localStorage.setItem('nogg', 'on');
+    option = "on"
+    localStorage.setItem("nogg", "on")
+  }
+}
+var option2 = localStorage.getItem("ADVcloak")
+function toggleClickoff() {
+  if (option2 === "on") {
+    option2 = "off"
+    localStorage.setItem("ADVcloak", "off")
+  } else {
+    option2 = "on"
+    localStorage.setItem("ADVcloak", "on")
   }
 }
 
-
-
-const storedSetTheme = localStorage.getItem('theme')
+const storedSetTheme = localStorage.getItem("theme")
 
 function switchProxy() {
-  var selecter = document.getElementById("proxySwitcher");
+  var selecter = document.getElementById("proxySwitcher")
   var selectedOption = selecter.value
 
-  localStorage.setItem("proxy", selectedOption);
-  var storedChoice = localStorage.getItem('proxy');
+  localStorage.setItem("proxy", selectedOption)
+  var storedChoice = localStorage.getItem("proxy")
   console.log(selectedOption)
-
 }
 
 if (storedSetTheme == null) {
-  localStorage.setItem('theme', 'dark')
+  localStorage.setItem("theme", "dark")
 }
 
 function switchTheme() {
-  var selecter = document.getElementById("themeSwitcher");
+  var selecter = document.getElementById("themeSwitcher")
   var selectedOption = selecter.value
   if (selectedOption == "dark") {
-    changeCSS('--background-primary', '#191724', true);
-    changeCSS('--navbar-color', '#26233a', true);
-    changeCSS('--navbar-height', '60px', true);
-    changeCSS('--navbar-text-color', '#7967dd', true);
-    changeCSS('--input-text-color', '#e0def4', true);
-    changeCSS('--input-placeholder-color', '#6e6a86', true);
-    changeCSS('--input-background-color', '#1f1d2e', true);
-    changeCSS('--input-placeholder-color', 'white', true);
-    changeCSS('--input-border-color', '#eb6f92', true);
-    changeCSS('--input-border-size', '1.3px', true);
-    changeCSS('--navbar-link-color', '#e0def4', true);
-    changeCSS('--navbar-font', '"Roboto"', true);
-    changeCSS('--navbar-logo-filter', 'invert(0%)', true);
-    changeCSS('--text-color-primary', '#e0def4', true);
-    localStorage.setItem('theme', 'dark')
+    changeCSS("--background-primary", "#191724", true)
+    changeCSS("--navbar-color", "#26233a", true)
+    changeCSS("--navbar-height", "60px", true)
+    changeCSS("--navbar-text-color", "#7967dd", true)
+    changeCSS("--input-text-color", "#e0def4", true)
+    changeCSS("--input-placeholder-color", "#6e6a86", true)
+    changeCSS("--input-background-color", "#1f1d2e", true)
+    changeCSS("--input-placeholder-color", "white", true)
+    changeCSS("--input-border-color", "#eb6f92", true)
+    changeCSS("--input-border-size", "1.3px", true)
+    changeCSS("--navbar-link-color", "#e0def4", true)
+    changeCSS("--navbar-font", '"Roboto"', true)
+    changeCSS("--navbar-logo-filter", "invert(0%)", true)
+    changeCSS("--text-color-primary", "#e0def4", true)
+    localStorage.setItem("theme", "dark")
   }
   if (selectedOption == "light") {
-    changeCSS('--background-primary', '#d8d8d8', true);
-    changeCSS('--navbar-color', '#a2a2a2', true);
-    changeCSS('--navbar-height', '4em', true);
-    changeCSS('--navbar-text-color', '#000000', true);
-    changeCSS('--input-text-color', '#e0def4', true);
-    changeCSS('--input-placeholder-color', 'white', true);
-    changeCSS('--input-background-color', 'black', true);
-    changeCSS('--input-border-color', '#eb6f92', true);
-    changeCSS('--input-border-size', '1.3px', true);
-    changeCSS('--navbar-link-color', '#000000', true);
-    changeCSS('--navbar-font', '"Roboto"', true);
-    changeCSS('--navbar-logo-filter', 'invert(30%)', true);
-    changeCSS('--text-color-primary', '#303030', true);
-    localStorage.setItem('theme', 'light')
+    changeCSS("--background-primary", "#d8d8d8", true)
+    changeCSS("--navbar-color", "#a2a2a2", true)
+    changeCSS("--navbar-height", "4em", true)
+    changeCSS("--navbar-text-color", "#000000", true)
+    changeCSS("--input-text-color", "#e0def4", true)
+    changeCSS("--input-placeholder-color", "white", true)
+    changeCSS("--input-background-color", "black", true)
+    changeCSS("--input-border-color", "#eb6f92", true)
+    changeCSS("--input-border-size", "1.3px", true)
+    changeCSS("--navbar-link-color", "#000000", true)
+    changeCSS("--navbar-font", '"Roboto"', true)
+    changeCSS("--navbar-logo-filter", "invert(30%)", true)
+    changeCSS("--text-color-primary", "#303030", true)
+    localStorage.setItem("theme", "light")
   }
   if (selectedOption == "custom") {
-    let response = prompt('Please enter the code for a custom theme:', '')
-    alert('This feature is not ready yet. Please try again later.')
-  };
-};
-
-function defaultThemes() {
-
+    let response = prompt("Please enter the code for a custom theme:", "")
+    alert("This feature is not ready yet. Please try again later.")
+  }
 }
 
+function defaultThemes() {}
+
 function changeCSS(variable, value, saveBool) {
-  document.documentElement.style.setProperty(variable, value);
-  
+  document.documentElement.style.setProperty(variable, value)
+
   if (saveBool === true) {
-    saveCSS(variable, value);
+    saveCSS(variable, value)
   }
 }
 
 function saveCSS(variable, value) {
-  localStorage.setItem(variable, value);
-  
-
+  localStorage.setItem(variable, value)
 }
 
+window.onload = function () {
+  function setCookie(cname, cvalue, exdays) {
+    const d = new Date()
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
+    let expires = "expires=" + d.toUTCString()
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"
+  }
 
-window.onload = function() {
-  let background = localStorage.getItem('--background-primary');
-  let navbar = localStorage.getItem('--navbar-color');
-  let navbarHeight = localStorage.getItem('--navbar-height');
-  let navbarText = localStorage.getItem('--navbar-text-color');
-  let inputText = localStorage.getItem('--input-text-color');
-  let inputPlaceholder = localStorage.getItem('--input-placeholder-color');
-  let inputBackground = localStorage.getItem('--input-background-color');
-  let inputBorder = localStorage.getItem('--input-border-color');
-  let inputBorderSize = localStorage.getItem('--input-border-size');
-  let navbarFont = localStorage.getItem('--navbar-font');
-  let navbarLink = localStorage.getItem('--navbar-link-color');
-  let navbarLogoFilter = localStorage.getItem('--navbar-logo-filter');
-  let textColorPrimary = localStorage.getItem('--text-color-primary');
-  changeCSS('--background-primary', background);
-  changeCSS('--navbar-color', navbar);
-  changeCSS('--navbar-height', navbarHeight);
-  changeCSS('--navbar-text-color', navbarText);
-  changeCSS('--input-text-color', inputText);
-  changeCSS('--input-placeholder-color', inputPlaceholder);
-  changeCSS('--input-background-color', inputBackground);
-  changeCSS('--input-border-color', inputBorder);
-  changeCSS('--input-border-size', inputBorderSize);
-  changeCSS('--navbar-link-color', navbarLink);
-  changeCSS('--navbar-font', navbarFont);
-  changeCSS('--navbar-logo-filter', navbarLogoFilter);
-  changeCSS('--text-color-primary', textColorPrimary);
+  function getCookie(cname) {
+    let name = cname + "="
+    let decodedCookie = decodeURIComponent(document.cookie)
+    let ca = decodedCookie.split(";")
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i]
+      while (c.charAt(0) == " ") {
+        c = c.substring(1)
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length)
+      }
+    }
+    return ""
+  }
+  function httpGet(theUrl) {
+    var xmlHttp = new XMLHttpRequest()
+    xmlHttp.open("GET", theUrl, false) // false for synchronous request
+    xmlHttp.send(null)
+    return xmlHttp.responseText
+  }
+  if (httpGet("/verification") == "true") {
+    if (getCookie("verifiedAccess") == "") {
+      console.log("COOKIE NOT FOUND - ENTRY NOT PERMITTED")
+      window.location = "/unv.html"
+    } else {
+      console.log("COOKIE RECOGNIZED - ENTRY PERMITTED ")
+    }
+  }
+  let background = localStorage.getItem("--background-primary")
+  let navbar = localStorage.getItem("--navbar-color")
+  let navbarHeight = localStorage.getItem("--navbar-height")
+  let navbarText = localStorage.getItem("--navbar-text-color")
+  let inputText = localStorage.getItem("--input-text-color")
+  let inputPlaceholder = localStorage.getItem("--input-placeholder-color")
+  let inputBackground = localStorage.getItem("--input-background-color")
+  let inputBorder = localStorage.getItem("--input-border-color")
+  let inputBorderSize = localStorage.getItem("--input-border-size")
+  let navbarFont = localStorage.getItem("--navbar-font")
+  let navbarLink = localStorage.getItem("--navbar-link-color")
+  let navbarLogoFilter = localStorage.getItem("--navbar-logo-filter")
+  let textColorPrimary = localStorage.getItem("--text-color-primary")
+  changeCSS("--background-primary", background)
+  changeCSS("--navbar-color", navbar)
+  changeCSS("--navbar-height", navbarHeight)
+  changeCSS("--navbar-text-color", navbarText)
+  changeCSS("--input-text-color", inputText)
+  changeCSS("--input-placeholder-color", inputPlaceholder)
+  changeCSS("--input-background-color", inputBackground)
+  changeCSS("--input-border-color", inputBorder)
+  changeCSS("--input-border-size", inputBorderSize)
+  changeCSS("--navbar-link-color", navbarLink)
+  changeCSS("--navbar-font", navbarFont)
+  changeCSS("--navbar-logo-filter", navbarLogoFilter)
+  changeCSS("--text-color-primary", textColorPrimary)
 }
 
+// Resets themes
 function resetViews() {
-  changeCSS('--background-primary', '#191724', true);
-  changeCSS('--navbar-color', '#26233a', true);
-  changeCSS('--navbar-height', '60px', true);
-  changeCSS('--navbar-text-color', 'rgb(121 103 221)', true);
-  changeCSS('--navbar-link-color', '#e0def4', true);
-  changeCSS('--navbar-font', '"Roboto"', true);
-  changeCSS('--input-text-color', '#e0def4', true);
-  changeCSS('--input-placeholder-color', '#6e6a86', true);
-  changeCSS('--input-background-color', '#1f1d2e', true);
-  changeCSS('--input-placeholder-color', 'white', true);
-  changeCSS('--input-border-color', '#eb6f92', true);
-  changeCSS('--input-border-size', '1.3px', true);
+  changeCSS("--background-primary", "#191724", true)
+  changeCSS("--navbar-color", "#26233a", true)
+  changeCSS("--navbar-height", "60px", true)
+  changeCSS("--navbar-text-color", "rgb(121 103 221)", true)
+  changeCSS("--navbar-link-color", "#e0def4", true)
+  changeCSS("--navbar-font", '"Roboto"', true)
+  changeCSS("--input-text-color", "#e0def4", true)
+  changeCSS("--input-placeholder-color", "#6e6a86", true)
+  changeCSS("--input-background-color", "#1f1d2e", true)
+  changeCSS("--input-placeholder-color", "white", true)
+  changeCSS("--input-border-color", "#eb6f92", true)
+  changeCSS("--input-border-size", "1.3px", true)
   return "All views reset"
 }
 
-
-
+// Extra logging for support
 function log() {
-  setTimeout(console.log.bind(console, "%cWelcome To Nebula", "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"));
-  setTimeout(console.log.bind(console, "%c If you are seeing this, Nebula's main script has succesfully loaded!", "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"));
-  setTimeout(console.log.bind(console, "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket", "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"));
-  let enabledCookies = navigator.cookieEnabled;
-  let appName = navigator.appName; // @deprecated
-  let product = navigator.product; // @deprecated
-  let agent = navigator.userAgent;
-  let version = navigator.appVersion; // @deprecated
-  let platform = navigator.platform; // @deprecated
-  let online = navigator.onLine;
-  let userAgent = navigator.userAgent;
-  let browserName;
-  let diagnosticDomain = window.location.href;
+  setTimeout(
+    console.log.bind(
+      console,
+      "%cWelcome To Nebula",
+      "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
+    )
+  )
+  setTimeout(
+    console.log.bind(
+      console,
+      "%c If you are seeing this, Nebula's main script has succesfully loaded!",
+      "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+    )
+  )
+  setTimeout(
+    console.log.bind(
+      console,
+      "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket",
+      "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+    )
+  )
+  let enabledCookies = navigator.cookieEnabled
+  let appName = navigator.appName // @deprecated
+  let product = navigator.product // @deprecated
+  let agent = navigator.userAgent
+  let version = navigator.appVersion // @deprecated
+  let platform = navigator.platform // @deprecated
+  let online = navigator.onLine
+  let userAgent = navigator.userAgent
+  let browserName
+  let diagnosticDomain = window.location.href
   if (userAgent.match(/chrome|chromium|crios/i)) {
-    browserName = "chrome";
+    browserName = "chrome"
   } else if (userAgent.match(/firefox|fxios/i)) {
-    browserName = "firefox";
+    browserName = "firefox"
   } else if (userAgent.match(/safari/i)) {
-    browserName = "safari";
+    browserName = "safari"
   } else if (userAgent.match(/opr\//i)) {
-    browserName = "opera";
+    browserName = "opera"
   } else if (userAgent.match(/edg/i)) {
-    browserName = "edge";
+    browserName = "edge"
   } else {
-    browserName = "No browser detection";
+    browserName = "No browser detection"
   }
-  setTimeout(console.log.bind(console, `%cInformation: \n URL: ${diagnosticDomain} \n BrowserName: ${browserName} \n IsOnline: ${online} \n agent: ${userAgent}, `, "background: gray;color:#FFF;padding:3px;border-radius: 0px;line-height: 26px; font-size:6px;"));
+  setTimeout(
+    console.log.bind(
+      console,
+      `%cInformation: \n URL: ${diagnosticDomain} \n BrowserName: ${browserName} \n IsOnline: ${online} \n agent: ${userAgent}, `,
+      "background: gray;color:#FFF;padding:3px;border-radius: 0px;line-height: 26px; font-size:6px;"
+    )
+  )
 }
 
-function induce(inductor) {
-  if (inductor == "reset") {
-    localStorage.setItem('proxy', 'uv')
-    localStorage.setItem('theme', 'dark')
-    localStorage.setItem('nogg', "off")
-    location.reload();
-  } else if (inductor == 1) {
-    location.reload();
-  }
-}
-log();
+log()
 
-// Notification Banner
+// Notification Banners
+// "Saved" notification
 function saveIc() {
   console.log("Checked")
   var notification = `
@@ -400,14 +519,13 @@ function saveIc() {
                 <strong>Success!</strong> Your settings have been saved!
             </div>
         </div>
-        `;
-  document.getElementById('notifhere').innerHTML = notification
+        `
+  document.getElementById("notifhere").innerHTML = notification
   setTimeout(() => {
-    var NotificationOBJ = document.getElementById('notifhere')
-
-  }, 2000);
-};
-
+    var NotificationOBJ = document.getElementById("notifhere")
+  }, 2000)
+}
+// The "You have unsaved changes" banner. You can remove this but it isn't recommended
 function unsavedChanges() {
   var notification = `
     <div class="notification-container" id="notification-container">
@@ -415,936 +533,220 @@ function unsavedChanges() {
     <strong>Danger!</strong> You have unsaved changes!
 </div>
 </div>
-        `;
-  document.getElementById('notifhere').innerHTML = notification
+        `
+  document.getElementById("notifhere").innerHTML = notification
   setTimeout(() => {
-    var NotificationOBJ = document.getElementById('notifhere')
-
-  }, 2000);
-};
-
+    var NotificationOBJ = document.getElementById("notifhere")
+  }, 2000)
+}
+// Adjectives and surnames for a more advanced stealth engine.
+// Used together to generate random names for the tab name
 const adjectives = [
-  "admiring",
-  "adoring",
-  "affectionate",
-  "agitated",
-  "amazing",
-  "angry",
-  "awesome",
-  "beautiful",
-  "blissful",
-  "bold",
-  "boring",
-  "brave",
-  "busy",
-  "charming",
-  "clever",
-  "cool",
-  "compassionate",
-  "competent",
-  "condescending",
-  "confident",
-  "cranky",
-  "crazy",
-  "dazzling",
-  "determined",
-  "distracted",
-  "dreamy",
-  "eager",
-  "ecstatic",
-  "elastic",
-  "elated",
-  "elegant",
-  "eloquent",
-  "epic",
-  "exciting",
-  "fervent",
-  "festive",
-  "flamboyant",
-  "focused",
-  "friendly",
-  "frosty",
-  "funny",
-  "gallant",
-  "gifted",
-  "goofy",
-  "gracious",
-  "great",
-  "happy",
-  "hardcore",
-  "heuristic",
-  "hopeful",
-  "hungry",
-  "infallible",
-  "inspiring",
-  "interesting",
-  "intelligent",
-  "jolly",
-  "jovial",
-  "keen",
-  "kind",
-  "laughing",
-  "loving",
-  "lucid",
-  "magical",
-  "mystifying",
-  "modest",
-  "musing",
-  "naughty",
-  "nervous",
-  "nice",
-  "nifty",
-  "nostalgic",
-  "objective",
-  "optimistic",
-  "peaceful",
-  "pedantic",
-  "pensive",
-  "practical",
-  "priceless",
-  "quirky",
-  "quizzical",
-  "recursing",
-  "relaxed",
-  "reverent",
-  "romantic",
-  "sad",
-  "serene",
-  "sharp",
-  "silly",
-  "sleepy",
-  "stoic",
-  "strange",
-  "stupefied",
-  "suspicious",
-  "sweet",
-  "tender",
-  "thirsty",
-  "trusting",
-  "unruffled",
-  "upbeat",
-  "vibrant",
-  "vigilant",
-  "vigorous",
-  "wizardly",
-  "wonderful",
-  "xenodochial",
-  "youthful",
-  "zealous",
-  "zen",
-];
-
-const surnames = [
-  "albattani",
-
-  // Frances E. Allen, became the first female IBM Fellow in 1989. In 2006, she became the first female recipient of the ACM's Turing Award. https://en.wikipedia.org/wiki/Frances_E._Allen
-  "allen",
-
-  // June Almeida - Scottish virologist who took the first pictures of the rubella virus - https://en.wikipedia.org/wiki/June_Almeida
-  "almeida",
-
-  // Kathleen Antonelli, American computer programmer and one of the six original programmers of the ENIAC - https://en.wikipedia.org/wiki/Kathleen_Antonelli
-  "antonelli",
-
-  // Maria Gaetana Agnesi - Italian mathematician, philosopher, theologian and humanitarian. She was the first woman to write a mathematics handbook and the first woman appointed as a Mathematics Professor at a University. https://en.wikipedia.org/wiki/Maria_Gaetana_Agnesi
-  "agnesi",
-
-  // Archimedes was a physicist, engineer and mathematician who invented too many things to list them here. https://en.wikipedia.org/wiki/Archimedes
-  "archimedes",
-
-  // Maria Ardinghelli - Italian translator, mathematician and physicist - https://en.wikipedia.org/wiki/Maria_Ardinghelli
-  "ardinghelli",
-
-  // Aryabhata - Ancient Indian mathematician-astronomer during 476-550 CE https://en.wikipedia.org/wiki/Aryabhata
-  "aryabhata",
-
-  // Wanda Austin - Wanda Austin is the President and CEO of The Aerospace Corporation, a leading architect for the US security space programs. https://en.wikipedia.org/wiki/Wanda_Austin
-  "austin",
-
-  // Charles Babbage invented the concept of a programmable computer. https://en.wikipedia.org/wiki/Charles_Babbage.
-  "babbage",
-
-  // Stefan Banach - Polish mathematician, was one of the founders of modern functional analysis. https://en.wikipedia.org/wiki/Stefan_Banach
-  "banach",
-
-  // Buckaroo Banzai and his mentor Dr. Hikita perfected the "oscillation overthruster", a device that allows one to pass through solid matter. - https://en.wikipedia.org/wiki/The_Adventures_of_Buckaroo_Banzai_Across_the_8th_Dimension
-  "banzai",
-
-  // John Bardeen co-invented the transistor - https://en.wikipedia.org/wiki/John_Bardeen
-  "bardeen",
-
-  // Jean Bartik, born Betty Jean Jennings, was one of the original programmers for the ENIAC computer. https://en.wikipedia.org/wiki/Jean_Bartik
-  "bartik",
-
-  // Laura Bassi, the world's first female professor https://en.wikipedia.org/wiki/Laura_Bassi
-  "bassi",
-
-  // Hugh Beaver, British engineer, founder of the Guinness Book of World Records https://en.wikipedia.org/wiki/Hugh_Beaver
-  "beaver",
-
-  // Alexander Graham Bell - an eminent Scottish-born scientist, inventor, engineer and innovator who is credited with inventing the first practical telephone - https://en.wikipedia.org/wiki/Alexander_Graham_Bell
-  "bell",
-
-  // Karl Friedrich Benz - a German automobile engineer. Inventor of the first practical motorcar. https://en.wikipedia.org/wiki/Karl_Benz
-  "benz",
-
-  // Homi J Bhabha - was an Indian nuclear physicist, founding director, and professor of physics at the Tata Institute of Fundamental Research. Colloquially known as "father of Indian nuclear programme"- https://en.wikipedia.org/wiki/Homi_J._Bhabha
-  "bhabha",
-
-  // Bhaskara II - Ancient Indian mathematician-astronomer whose work on calculus predates Newton and Leibniz by over half a millennium - https://en.wikipedia.org/wiki/Bh%C4%81skara_II#Calculus
-  "bhaskara",
-
-  // Sue Black - British computer scientist and campaigner. She has been instrumental in saving Bletchley Park, the site of World War II codebreaking - https://en.wikipedia.org/wiki/Sue_Black_(computer_scientist)
-  "black",
-
-  // Elizabeth Helen Blackburn - Australian-American Nobel laureate; best known for co-discovering telomerase. https://en.wikipedia.org/wiki/Elizabeth_Blackburn
-  "blackburn",
-
-  // Elizabeth Blackwell - American doctor and first American woman to receive a medical degree - https://en.wikipedia.org/wiki/Elizabeth_Blackwell
-  "blackwell",
-
-  // Niels Bohr is the father of quantum theory. https://en.wikipedia.org/wiki/Niels_Bohr.
-  "bohr",
-
-  // Kathleen Booth, she's credited with writing the first assembly language. https://en.wikipedia.org/wiki/Kathleen_Booth
-  "booth",
-
-  // Anita Borg - Anita Borg was the founding director of the Institute for Women and Technology (IWT). https://en.wikipedia.org/wiki/Anita_Borg
-  "borg",
-
-  // Satyendra Nath Bose - He provided the foundation for Bose–Einstein statistics and the theory of the Bose–Einstein condensate. - https://en.wikipedia.org/wiki/Satyendra_Nath_Bose
-  "bose",
-
-  // Katherine Louise Bouman is an imaging scientist and Assistant Professor of Computer Science at the California Institute of Technology. She researches computational methods for imaging, and developed an algorithm that made possible the picture first visualization of a black hole using the Event Horizon Telescope. - https://en.wikipedia.org/wiki/Katie_Bouman
-  "bouman",
-
-  // Evelyn Boyd Granville - She was one of the first African-American woman to receive a Ph.D. in mathematics; she earned it in 1949 from Yale University. https://en.wikipedia.org/wiki/Evelyn_Boyd_Granville
-  "boyd",
-
-  // Brahmagupta - Ancient Indian mathematician during 598-670 CE who gave rules to compute with zero - https://en.wikipedia.org/wiki/Brahmagupta#Zero
-  "brahmagupta",
-
-  // Walter Houser Brattain co-invented the transistor - https://en.wikipedia.org/wiki/Walter_Houser_Brattain
-  "brattain",
-
-  // Emmett Brown invented time travel. https://en.wikipedia.org/wiki/Emmett_Brown (thanks Brian Goff)
-  "brown",
-
-  // Linda Brown Buck - American biologist and Nobel laureate best known for her genetic and molecular analyses of the mechanisms of smell. https://en.wikipedia.org/wiki/Linda_B._Buck
-  "buck",
-
-  // Dame Susan Jocelyn Bell Burnell - Northern Irish astrophysicist who discovered radio pulsars and was the first to analyse them. https://en.wikipedia.org/wiki/Jocelyn_Bell_Burnell
-  "burnell",
-
-  // Annie Jump Cannon - pioneering female astronomer who classified hundreds of thousands of stars and created the system we use to understand stars today. https://en.wikipedia.org/wiki/Annie_Jump_Cannon
-  "cannon",
-
-  // Rachel Carson - American marine biologist and conservationist, her book Silent Spring and other writings are credited with advancing the global environmental movement. https://en.wikipedia.org/wiki/Rachel_Carson
-  "carson",
-
-  // Dame Mary Lucy Cartwright - British mathematician who was one of the first to study what is now known as chaos theory. Also known for Cartwright's theorem which finds applications in signal processing. https://en.wikipedia.org/wiki/Mary_Cartwright
-  "cartwright",
-
-  // George Washington Carver - American agricultural scientist and inventor. He was the most prominent black scientist of the early 20th century. https://en.wikipedia.org/wiki/George_Washington_Carver
-  "carver",
-
-  // Vinton Gray Cerf - American Internet pioneer, recognised as one of "the fathers of the Internet". With Robert Elliot Kahn, he designed TCP and IP, the primary data communication protocols of the Internet and other computer networks. https://en.wikipedia.org/wiki/Vint_Cerf
-  "cerf",
-
-  // Subrahmanyan Chandrasekhar - Astrophysicist known for his mathematical theory on different stages and evolution in structures of the stars. He has won nobel prize for physics - https://en.wikipedia.org/wiki/Subrahmanyan_Chandrasekhar
-  "chandrasekhar",
-
-  // Sergey Alexeyevich Chaplygin (Russian: Серге́й Алексе́евич Чаплы́гин; April 5, 1869 – October 8, 1942) was a Russian and Soviet physicist, mathematician, and mechanical engineer. He is known for mathematical formulas such as Chaplygin's equation and for a hypothetical substance in cosmology called Chaplygin gas, named after him. https://en.wikipedia.org/wiki/Sergey_Chaplygin
-  "chaplygin",
-
-  // Émilie du Châtelet - French natural philosopher, mathematician, physicist, and author during the early 1730s, known for her translation of and commentary on Isaac Newton's book Principia containing basic laws of physics. https://en.wikipedia.org/wiki/%C3%89milie_du_Ch%C3%A2telet
-  "chatelet",
-
-  // Asima Chatterjee was an Indian organic chemist noted for her research on vinca alkaloids, development of drugs for treatment of epilepsy and malaria - https://en.wikipedia.org/wiki/Asima_Chatterjee
-  "chatterjee",
-
-  // Pafnuty Chebyshev - Russian mathematician. He is known fo his works on probability, statistics, mechanics, analytical geometry and number theory https://en.wikipedia.org/wiki/Pafnuty_Chebyshev
-  "chebyshev",
-
-  // Bram Cohen - American computer programmer and author of the BitTorrent peer-to-peer protocol. https://en.wikipedia.org/wiki/Bram_Cohen
-  "cohen",
-
-  // David Lee Chaum - American computer scientist and cryptographer. Known for his seminal contributions in the field of anonymous communication. https://en.wikipedia.org/wiki/David_Chaum
-  "chaum",
-
-  // Joan Clarke - Bletchley Park code breaker during the Second World War who pioneered techniques that remained top secret for decades. Also an accomplished numismatist https://en.wikipedia.org/wiki/Joan_Clarke
-  "clarke",
-
-  // Jane Colden - American botanist widely considered the first female American botanist - https://en.wikipedia.org/wiki/Jane_Colden
-  "colden",
-
-  // Gerty Theresa Cori - American biochemist who became the third woman—and first American woman—to win a Nobel Prize in science, and the first woman to be awarded the Nobel Prize in Physiology or Medicine. Cori was born in Prague. https://en.wikipedia.org/wiki/Gerty_Cori
-  "cori",
-
-  // Seymour Roger Cray was an American electrical engineer and supercomputer architect who designed a series of computers that were the fastest in the world for decades. https://en.wikipedia.org/wiki/Seymour_Cray
-  "cray",
-
-  // This entry reflects a husband and wife team who worked together:
-  // Joan Curran was a Welsh scientist who developed radar and invented chaff, a radar countermeasure. https://en.wikipedia.org/wiki/Joan_Curran
-  // Samuel Curran was an Irish physicist who worked alongside his wife during WWII and invented the proximity fuse. https://en.wikipedia.org/wiki/Samuel_Curran
-  "curran",
-
-  // Marie Curie discovered radioactivity. https://en.wikipedia.org/wiki/Marie_Curie.
-  "curie",
-
-  // Charles Darwin established the principles of natural evolution. https://en.wikipedia.org/wiki/Charles_Darwin.
-  "darwin",
-
-  // Leonardo Da Vinci invented too many things to list here. https://en.wikipedia.org/wiki/Leonardo_da_Vinci.
-  "davinci",
-
-  // A. K. (Alexander Keewatin) Dewdney, Canadian mathematician, computer scientist, author and filmmaker. Contributor to Scientific American's "Computer Recreations" from 1984 to 1991. Author of Core War (program), The Planiverse, The Armchair Universe, The Magic Machine, The New Turing Omnibus, and more. https://en.wikipedia.org/wiki/Alexander_Dewdney
-  "dewdney",
-
-  // Satish Dhawan - Indian mathematician and aerospace engineer, known for leading the successful and indigenous development of the Indian space programme. https://en.wikipedia.org/wiki/Satish_Dhawan
-  "dhawan",
-
-  // Bailey Whitfield Diffie - American cryptographer and one of the pioneers of public-key cryptography. https://en.wikipedia.org/wiki/Whitfield_Diffie
-  "diffie",
-
-  // Edsger Wybe Dijkstra was a Dutch computer scientist and mathematical scientist. https://en.wikipedia.org/wiki/Edsger_W._Dijkstra.
-  "dijkstra",
-
-  // Paul Adrien Maurice Dirac - English theoretical physicist who made fundamental contributions to the early development of both quantum mechanics and quantum electrodynamics. https://en.wikipedia.org/wiki/Paul_Dirac
-  "dirac",
-
-  // Agnes Meyer Driscoll - American cryptanalyst during World Wars I and II who successfully cryptanalysed a number of Japanese ciphers. She was also the co-developer of one of the cipher machines of the US Navy, the CM. https://en.wikipedia.org/wiki/Agnes_Meyer_Driscoll
-  "driscoll",
-
-  // Donna Dubinsky - played an integral role in the development of personal digital assistants (PDAs) serving as CEO of Palm, Inc. and co-founding Handspring. https://en.wikipedia.org/wiki/Donna_Dubinsky
-  "dubinsky",
-
-  // Annie Easley - She was a leading member of the team which developed software for the Centaur rocket stage and one of the first African-Americans in her field. https://en.wikipedia.org/wiki/Annie_Easley
-  "easley",
-
-  // Thomas Alva Edison, prolific inventor https://en.wikipedia.org/wiki/Thomas_Edison
-  "edison",
-
-  // Albert Einstein invented the general theory of relativity. https://en.wikipedia.org/wiki/Albert_Einstein
-  "einstein",
-
-  // Alexandra Asanovna Elbakyan (Russian: Алекса́ндра Аса́новна Элбакя́н) is a Kazakhstani graduate student, computer programmer, internet pirate in hiding, and the creator of the site Sci-Hub. Nature has listed her in 2016 in the top ten people that mattered in science, and Ars Technica has compared her to Aaron Swartz. - https://en.wikipedia.org/wiki/Alexandra_Elbakyan
-  "elbakyan",
-
-  // Taher A. ElGamal - Egyptian cryptographer best known for the ElGamal discrete log cryptosystem and the ElGamal digital signature scheme. https://en.wikipedia.org/wiki/Taher_Elgamal
-  "elgamal",
-
-  // Gertrude Elion - American biochemist, pharmacologist and the 1988 recipient of the Nobel Prize in Medicine - https://en.wikipedia.org/wiki/Gertrude_Elion
-  "elion",
-
-  // James Henry Ellis - British engineer and cryptographer employed by the GCHQ. Best known for conceiving for the first time, the idea of public-key cryptography. https://en.wikipedia.org/wiki/James_H._Ellis
-  "ellis",
-
-  // Douglas Engelbart gave the mother of all demos: https://en.wikipedia.org/wiki/Douglas_Engelbart
-  "engelbart",
-
-  // Euclid invented geometry. https://en.wikipedia.org/wiki/Euclid
-  "euclid",
-
-  // Leonhard Euler invented large parts of modern mathematics. https://de.wikipedia.org/wiki/Leonhard_Euler
-  "euler",
-
-  // Michael Faraday - British scientist who contributed to the study of electromagnetism and electrochemistry. https://en.wikipedia.org/wiki/Michael_Faraday
-  "faraday",
-
-  // Horst Feistel - German-born American cryptographer who was one of the earliest non-government researchers to study the design and theory of block ciphers. Co-developer of DES and Lucifer. Feistel networks, a symmetric structure used in the construction of block ciphers are named after him. https://en.wikipedia.org/wiki/Horst_Feistel
-  "feistel",
-
-  // Pierre de Fermat pioneered several aspects of modern mathematics. https://en.wikipedia.org/wiki/Pierre_de_Fermat
-  "fermat",
-
-  // Enrico Fermi invented the first nuclear reactor. https://en.wikipedia.org/wiki/Enrico_Fermi.
-  "fermi",
-
-  // Richard Feynman was a key contributor to quantum mechanics and particle physics. https://en.wikipedia.org/wiki/Richard_Feynman
-  "feynman",
-
-  // Benjamin Franklin is famous for his experiments in electricity and the invention of the lightning rod.
-  "franklin",
-
-  // Yuri Alekseyevich Gagarin - Soviet pilot and cosmonaut, best known as the first human to journey into outer space. https://en.wikipedia.org/wiki/Yuri_Gagarin
-  "gagarin",
-
-  // Galileo was a founding father of modern astronomy, and faced politics and obscurantism to establish scientific truth.  https://en.wikipedia.org/wiki/Galileo_Galilei
-  "galileo",
-
-  // Évariste Galois - French mathematician whose work laid the foundations of Galois theory and group theory, two major branches of abstract algebra, and the subfield of Galois connections, all while still in his late teens. https://en.wikipedia.org/wiki/%C3%89variste_Galois
-  "galois",
-
-  // Kadambini Ganguly - Indian physician, known for being the first South Asian female physician, trained in western medicine, to graduate in South Asia. https://en.wikipedia.org/wiki/Kadambini_Ganguly
-  "ganguly",
-
-  // William Henry "Bill" Gates III is an American business magnate, philanthropist, investor, computer programmer, and inventor. https://en.wikipedia.org/wiki/Bill_Gates
-  "gates",
-
-  // Johann Carl Friedrich Gauss - German mathematician who made significant contributions to many fields, including number theory, algebra, statistics, analysis, differential geometry, geodesy, geophysics, mechanics, electrostatics, magnetic fields, astronomy, matrix theory, and optics. https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss
-  "gauss",
-
-  // Marie-Sophie Germain - French mathematician, physicist and philosopher. Known for her work on elasticity theory, number theory and philosophy. https://en.wikipedia.org/wiki/Sophie_Germain
-  "germain",
-
-  // Adele Goldberg, was one of the designers and developers of the Smalltalk language. https://en.wikipedia.org/wiki/Adele_Goldberg_(computer_scientist)
-  "goldberg",
-
-  // Adele Goldstine, born Adele Katz, wrote the complete technical description for the first electronic digital computer, ENIAC. https://en.wikipedia.org/wiki/Adele_Goldstine
-  "goldstine",
-
-  // Shafi Goldwasser is a computer scientist known for creating theoretical foundations of modern cryptography. Winner of 2012 ACM Turing Award. https://en.wikipedia.org/wiki/Shafi_Goldwasser
-  "goldwasser",
-
-  // James Golick, all around gangster.
-  "golick",
-
-  // Jane Goodall - British primatologist, ethologist, and anthropologist who is considered to be the world's foremost expert on chimpanzees - https://en.wikipedia.org/wiki/Jane_Goodall
-  "goodall",
-
-  // Stephen Jay Gould was was an American paleontologist, evolutionary biologist, and historian of science. He is most famous for the theory of punctuated equilibrium - https://en.wikipedia.org/wiki/Stephen_Jay_Gould
-  "gould",
-
-  // Carolyn Widney Greider - American molecular biologist and joint winner of the 2009 Nobel Prize for Physiology or Medicine for the discovery of telomerase. https://en.wikipedia.org/wiki/Carol_W._Greider
-  "greider",
-
-  // Alexander Grothendieck - German-born French mathematician who became a leading figure in the creation of modern algebraic geometry. https://en.wikipedia.org/wiki/Alexander_Grothendieck
-  "grothendieck",
-
-  // Lois Haibt - American computer scientist, part of the team at IBM that developed FORTRAN - https://en.wikipedia.org/wiki/Lois_Haibt
-  "haibt",
-
-  // Margaret Hamilton - Director of the Software Engineering Division of the MIT Instrumentation Laboratory, which developed on-board flight software for the Apollo space program. https://en.wikipedia.org/wiki/Margaret_Hamilton_(scientist)
-  "hamilton",
-
-  // Caroline Harriet Haslett - English electrical engineer, electricity industry administrator and champion of women's rights. Co-author of British Standard 1363 that specifies AC power plugs and sockets used across the United Kingdom (which is widely considered as one of the safest designs). https://en.wikipedia.org/wiki/Caroline_Haslett
-  "haslett",
-
-  // Stephen Hawking pioneered the field of cosmology by combining general relativity and quantum mechanics. https://en.wikipedia.org/wiki/Stephen_Hawking
-  "hawking",
-
-  // Martin Edward Hellman - American cryptologist, best known for his invention of public-key cryptography in co-operation with Whitfield Diffie and Ralph Merkle. https://en.wikipedia.org/wiki/Martin_Hellman
-  "hellman",
-
-  // Werner Heisenberg was a founding father of quantum mechanics. https://en.wikipedia.org/wiki/Werner_Heisenberg
-  "heisenberg",
-
-  // Grete Hermann was a German philosopher noted for her philosophical work on the foundations of quantum mechanics. https://en.wikipedia.org/wiki/Grete_Hermann
-  "hermann",
-
-  // Caroline Lucretia Herschel - German astronomer and discoverer of several comets. https://en.wikipedia.org/wiki/Caroline_Herschel
-  "herschel",
-
-  // Heinrich Rudolf Hertz - German physicist who first conclusively proved the existence of the electromagnetic waves. https://en.wikipedia.org/wiki/Heinrich_Hertz
-  "hertz",
-
-  // Jaroslav Heyrovský was the inventor of the polarographic method, father of the electroanalytical method, and recipient of the Nobel Prize in 1959. His main field of work was polarography. https://en.wikipedia.org/wiki/Jaroslav_Heyrovsk%C3%BD
-  "heyrovsky",
-
-  // Dorothy Hodgkin was a British biochemist, credited with the development of protein crystallography. She was awarded the Nobel Prize in Chemistry in 1964. https://en.wikipedia.org/wiki/Dorothy_Hodgkin
-  "hodgkin",
-
-  // Douglas R. Hofstadter is an American professor of cognitive science and author of the Pulitzer Prize and American Book Award-winning work Goedel, Escher, Bach: An Eternal Golden Braid in 1979. A mind-bending work which coined Hofstadter's Law: "It always takes longer than you expect, even when you take into account Hofstadter's Law." https://en.wikipedia.org/wiki/Douglas_Hofstadter
-  "hofstadter",
-
-  // Erna Schneider Hoover revolutionized modern communication by inventing a computerized telephone switching method. https://en.wikipedia.org/wiki/Erna_Schneider_Hoover
-  "hoover",
-
-  // Grace Hopper developed the first compiler for a computer programming language and  is credited with popularizing the term "debugging" for fixing computer glitches. https://en.wikipedia.org/wiki/Grace_Hopper
-  "hopper",
-
-  // Frances Hugle, she was an American scientist, engineer, and inventor who contributed to the understanding of semiconductors, integrated circuitry, and the unique electrical principles of microscopic materials. https://en.wikipedia.org/wiki/Frances_Hugle
-  "hugle",
-
-  // Hypatia - Greek Alexandrine Neoplatonist philosopher in Egypt who was one of the earliest mothers of mathematics - https://en.wikipedia.org/wiki/Hypatia
-  "hypatia",
-
-  // Teruko Ishizaka - Japanese scientist and immunologist who co-discovered the antibody class Immunoglobulin E. https://en.wikipedia.org/wiki/Teruko_Ishizaka
-  "ishizaka",
-
-  // Mary Jackson, American mathematician and aerospace engineer who earned the highest title within NASA's engineering department - https://en.wikipedia.org/wiki/Mary_Jackson_(engineer)
-  "jackson",
-
-  // Yeong-Sil Jang was a Korean scientist and astronomer during the Joseon Dynasty; he invented the first metal printing press and water gauge. https://en.wikipedia.org/wiki/Jang_Yeong-sil
-  "jang",
-
-  // Mae Carol Jemison -  is an American engineer, physician, and former NASA astronaut. She became the first black woman to travel in space when she served as a mission specialist aboard the Space Shuttle Endeavour - https://en.wikipedia.org/wiki/Mae_Jemison
-  "jemison",
-
-  // Betty Jennings - one of the original programmers of the ENIAC. https://en.wikipedia.org/wiki/ENIAC - https://en.wikipedia.org/wiki/Jean_Bartik
-  "jennings",
-
-  // Mary Lou Jepsen, was the founder and chief technology officer of One Laptop Per Child (OLPC), and the founder of Pixel Qi. https://en.wikipedia.org/wiki/Mary_Lou_Jepsen
-  "jepsen",
-
-  // Katherine Coleman Goble Johnson - American physicist and mathematician contributed to the NASA. https://en.wikipedia.org/wiki/Katherine_Johnson
-  "johnson",
-
-  // Irène Joliot-Curie - French scientist who was awarded the Nobel Prize for Chemistry in 1935. Daughter of Marie and Pierre Curie. https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie
-  "joliot",
-
-  // Karen Spärck Jones came up with the concept of inverse document frequency, which is used in most search engines today. https://en.wikipedia.org/wiki/Karen_Sp%C3%A4rck_Jones
-  "jones",
-
-  // A. P. J. Abdul Kalam - is an Indian scientist aka Missile Man of India for his work on the development of ballistic missile and launch vehicle technology - https://en.wikipedia.org/wiki/A._P._J._Abdul_Kalam
-  "kalam",
-
-  // Sergey Petrovich Kapitsa (Russian: Серге́й Петро́вич Капи́ца; 14 February 1928 – 14 August 2012) was a Russian physicist and demographer. He was best known as host of the popular and long-running Russian scientific TV show, Evident, but Incredible. His father was the Nobel laureate Soviet-era physicist Pyotr Kapitsa, and his brother was the geographer and Antarctic explorer Andrey Kapitsa. - https://en.wikipedia.org/wiki/Sergey_Kapitsa
-  "kapitsa",
-
-  // Susan Kare, created the icons and many of the interface elements for the original Apple Macintosh in the 1980s, and was an original employee of NeXT, working as the Creative Director. https://en.wikipedia.org/wiki/Susan_Kare
-  "kare",
-
-  // Mstislav Keldysh - a Soviet scientist in the field of mathematics and mechanics, academician of the USSR Academy of Sciences (1946), President of the USSR Academy of Sciences (1961–1975), three times Hero of Socialist Labor (1956, 1961, 1971), fellow of the Royal Society of Edinburgh (1968). https://en.wikipedia.org/wiki/Mstislav_Keldysh
-  "keldysh",
-
-  // Mary Kenneth Keller, Sister Mary Kenneth Keller became the first American woman to earn a PhD in Computer Science in 1965. https://en.wikipedia.org/wiki/Mary_Kenneth_Keller
-  "keller",
-
-  // Johannes Kepler, German astronomer known for his three laws of planetary motion - https://en.wikipedia.org/wiki/Johannes_Kepler
-  "kepler",
-
-  // Omar Khayyam - Persian mathematician, astronomer and poet. Known for his work on the classification and solution of cubic equations, for his contribution to the understanding of Euclid's fifth postulate and for computing the length of a year very accurately. https://en.wikipedia.org/wiki/Omar_Khayyam
-  "khayyam",
-
-  // Har Gobind Khorana - Indian-American biochemist who shared the 1968 Nobel Prize for Physiology - https://en.wikipedia.org/wiki/Har_Gobind_Khorana
-  "khorana",
-
-  // Jack Kilby invented silicone integrated circuits and gave Silicon Valley its name. - https://en.wikipedia.org/wiki/Jack_Kilby
-  "kilby",
-
-  // Maria Kirch - German astronomer and first woman to discover a comet - https://en.wikipedia.org/wiki/Maria_Margarethe_Kirch
-  "kirch",
-
-  // Donald Knuth - American computer scientist, author of "The Art of Computer Programming" and creator of the TeX typesetting system. https://en.wikipedia.org/wiki/Donald_Knuth
-  "knuth",
-
-  // Sophie Kowalevski - Russian mathematician responsible for important original contributions to analysis, differential equations and mechanics - https://en.wikipedia.org/wiki/Sofia_Kovalevskaya
-  "kowalevski",
-
-  // Marie-Jeanne de Lalande - French astronomer, mathematician and cataloguer of stars - https://en.wikipedia.org/wiki/Marie-Jeanne_de_Lalande
-  "lalande",
-
-  // Hedy Lamarr - Actress and inventor. The principles of her work are now incorporated into modern Wi-Fi, CDMA and Bluetooth technology. https://en.wikipedia.org/wiki/Hedy_Lamarr
-  "lamarr",
-
-  // Leslie B. Lamport - American computer scientist. Lamport is best known for his seminal work in distributed systems and was the winner of the 2013 Turing Award. https://en.wikipedia.org/wiki/Leslie_Lamport
-  "lamport",
-
-  // Mary Leakey - British paleoanthropologist who discovered the first fossilized Proconsul skull - https://en.wikipedia.org/wiki/Mary_Leakey
-  "leakey",
-
-  // Henrietta Swan Leavitt - she was an American astronomer who discovered the relation between the luminosity and the period of Cepheid variable stars. https://en.wikipedia.org/wiki/Henrietta_Swan_Leavitt
-  "leavitt",
-
-  // Esther Miriam Zimmer Lederberg - American microbiologist and a pioneer of bacterial genetics. https://en.wikipedia.org/wiki/Esther_Lederberg
-  "lederberg",
-
-  // Inge Lehmann - Danish seismologist and geophysicist. Known for discovering in 1936 that the Earth has a solid inner core inside a molten outer core. https://en.wikipedia.org/wiki/Inge_Lehmann
-  "lehmann",
-
-  // Daniel Lewin - Mathematician, Akamai co-founder, soldier, 9/11 victim-- Developed optimization techniques for routing traffic on the internet. Died attempting to stop the 9-11 hijackers. https://en.wikipedia.org/wiki/Daniel_Lewin
-  "lewin",
-
-  // Ruth Lichterman - one of the original programmers of the ENIAC. https://en.wikipedia.org/wiki/ENIAC - https://en.wikipedia.org/wiki/Ruth_Teitelbaum
-  "lichterman",
-
-  // Barbara Liskov - co-developed the Liskov substitution principle. Liskov was also the winner of the Turing Prize in 2008. - https://en.wikipedia.org/wiki/Barbara_Liskov
-  "liskov",
-
-  // Ada Lovelace invented the first algorithm. https://en.wikipedia.org/wiki/Ada_Lovelace (thanks James Turnbull)
-  "lovelace",
-
-  // Auguste and Louis Lumière - the first filmmakers in history - https://en.wikipedia.org/wiki/Auguste_and_Louis_Lumi%C3%A8re
-  "lumiere",
-
-  // Mahavira - Ancient Indian mathematician during 9th century AD who discovered basic algebraic identities - https://en.wikipedia.org/wiki/Mah%C4%81v%C4%ABra_(mathematician)
-  "mahavira",
-
-  // Lynn Margulis (b. Lynn Petra Alexander) - an American evolutionary theorist and biologist, science author, educator, and popularizer, and was the primary modern proponent for the significance of symbiosis in evolution. - https://en.wikipedia.org/wiki/Lynn_Margulis
-  "margulis",
-
-  // Yukihiro Matsumoto - Japanese computer scientist and software programmer best known as the chief designer of the Ruby programming language. https://en.wikipedia.org/wiki/Yukihiro_Matsumoto
-  "matsumoto",
-
-  // James Clerk Maxwell - Scottish physicist, best known for his formulation of electromagnetic theory. https://en.wikipedia.org/wiki/James_Clerk_Maxwell
-  "maxwell",
-
-  // Maria Mayer - American theoretical physicist and Nobel laureate in Physics for proposing the nuclear shell model of the atomic nucleus - https://en.wikipedia.org/wiki/Maria_Mayer
-  "mayer",
-
-  // John McCarthy invented LISP: https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)
-  "mccarthy",
-
-  // Barbara McClintock - a distinguished American cytogeneticist, 1983 Nobel Laureate in Physiology or Medicine for discovering transposons. https://en.wikipedia.org/wiki/Barbara_McClintock
-  "mcclintock",
-
-  // Anne Laura Dorinthea McLaren - British developmental biologist whose work helped lead to human in-vitro fertilisation. https://en.wikipedia.org/wiki/Anne_McLaren
-  "mclaren",
-
-  // Malcolm McLean invented the modern shipping container: https://en.wikipedia.org/wiki/Malcom_McLean
-  "mclean",
-
-  // Kay McNulty - one of the original programmers of the ENIAC. https://en.wikipedia.org/wiki/ENIAC - https://en.wikipedia.org/wiki/Kathleen_Antonelli
-  "mcnulty",
-
-  // Gregor Johann Mendel - Czech scientist and founder of genetics. https://en.wikipedia.org/wiki/Gregor_Mendel
-  "mendel",
-
-  // Dmitri Mendeleev - a chemist and inventor. He formulated the Periodic Law, created a farsighted version of the periodic table of elements, and used it to correct the properties of some already discovered elements and also to predict the properties of eight elements yet to be discovered. https://en.wikipedia.org/wiki/Dmitri_Mendeleev
-  "mendeleev",
-
-  // Lise Meitner - Austrian/Swedish physicist who was involved in the discovery of nuclear fission. The element meitnerium is named after her - https://en.wikipedia.org/wiki/Lise_Meitner
-  "meitner",
-
-  // Carla Meninsky, was the game designer and programmer for Atari 2600 games Dodge 'Em and Warlords. https://en.wikipedia.org/wiki/Carla_Meninsky
-  "meninsky",
-
-  // Ralph C. Merkle - American computer scientist, known for devising Merkle's puzzles - one of the very first schemes for public-key cryptography. Also, inventor of Merkle trees and co-inventor of the Merkle-Damgård construction for building collision-resistant cryptographic hash functions and the Merkle-Hellman knapsack cryptosystem. https://en.wikipedia.org/wiki/Ralph_Merkle
-  "merkle",
-
-  // Johanna Mestorf - German prehistoric archaeologist and first female museum director in Germany - https://en.wikipedia.org/wiki/Johanna_Mestorf
-  "mestorf",
-
-  // Maryam Mirzakhani - an Iranian mathematician and the first woman to win the Fields Medal. https://en.wikipedia.org/wiki/Maryam_Mirzakhani
-  "mirzakhani",
-
-  // Gordon Earle Moore - American engineer, Silicon Valley founding father, author of Moore's law. https://en.wikipedia.org/wiki/Gordon_Moore
-  "moore",
-
-  // Samuel Morse - contributed to the invention of a single-wire telegraph system based on European telegraphs and was a co-developer of the Morse code - https://en.wikipedia.org/wiki/Samuel_Morse
-  "morse",
-
-  // Ian Murdock - founder of the Debian project - https://en.wikipedia.org/wiki/Ian_Murdock
-  "murdock",
-
-  // May-Britt Moser - Nobel prize winner neuroscientist who contributed to the discovery of grid cells in the brain. https://en.wikipedia.org/wiki/May-Britt_Moser
-  "moser",
-
-  // John Napier of Merchiston - Scottish landowner known as an astronomer, mathematician and physicist. Best known for his discovery of logarithms. https://en.wikipedia.org/wiki/John_Napier
-  "napier",
-
-  // John Forbes Nash, Jr. - American mathematician who made fundamental contributions to game theory, differential geometry, and the study of partial differential equations. https://en.wikipedia.org/wiki/John_Forbes_Nash_Jr.
-  "nash",
-
-  // John von Neumann - todays computer architectures are based on the von Neumann architecture. https://en.wikipedia.org/wiki/Von_Neumann_architecture
-  "neumann",
-
-  // Isaac Newton invented classic mechanics and modern optics. https://en.wikipedia.org/wiki/Isaac_Newton
-  "newton",
-
-  // Florence Nightingale, more prominently known as a nurse, was also the first female member of the Royal Statistical Society and a pioneer in statistical graphics https://en.wikipedia.org/wiki/Florence_Nightingale#Statistics_and_sanitary_reform
-  "nightingale",
-
-  // Alfred Nobel - a Swedish chemist, engineer, innovator, and armaments manufacturer (inventor of dynamite) - https://en.wikipedia.org/wiki/Alfred_Nobel
-  "nobel",
-
-  // Emmy Noether, German mathematician. Noether's Theorem is named after her. https://en.wikipedia.org/wiki/Emmy_Noether
-  "noether",
-
-  // Poppy Northcutt. Poppy Northcutt was the first woman to work as part of NASA’s Mission Control. http://www.businessinsider.com/poppy-northcutt-helped-apollo-astronauts-2014-12?op=1
-  "northcutt",
-
-  // Robert Noyce invented silicone integrated circuits and gave Silicon Valley its name. - https://en.wikipedia.org/wiki/Robert_Noyce
-  "noyce",
-
-  // Panini - Ancient Indian linguist and grammarian from 4th century CE who worked on the world's first formal system - https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini#Comparison_with_modern_formal_systems
-  "panini",
-
-  // Ambroise Pare invented modern surgery. https://en.wikipedia.org/wiki/Ambroise_Par%C3%A9
-  "pare",
-
-  // Blaise Pascal, French mathematician, physicist, and inventor - https://en.wikipedia.org/wiki/Blaise_Pascal
-  "pascal",
-
-  // Louis Pasteur discovered vaccination, fermentation and pasteurization. https://en.wikipedia.org/wiki/Louis_Pasteur.
-  "pasteur",
-
-  // Cecilia Payne-Gaposchkin was an astronomer and astrophysicist who, in 1925, proposed in her Ph.D. thesis an explanation for the composition of stars in terms of the relative abundances of hydrogen and helium. https://en.wikipedia.org/wiki/Cecilia_Payne-Gaposchkin
-  "payne",
-
-  // Radia Perlman is a software designer and network engineer and most famous for her invention of the spanning-tree protocol (STP). https://en.wikipedia.org/wiki/Radia_Perlman
-  "perlman",
-
-  // Rob Pike was a key contributor to Unix, Plan 9, the X graphic system, utf-8, and the Go programming language. https://en.wikipedia.org/wiki/Rob_Pike
-  "pike",
-
-  // Henri Poincaré made fundamental contributions in several fields of mathematics. https://en.wikipedia.org/wiki/Henri_Poincar%C3%A9
-  "poincare",
-
-  // Laura Poitras is a director and producer whose work, made possible by open source crypto tools, advances the causes of truth and freedom of information by reporting disclosures by whistleblowers such as Edward Snowden. https://en.wikipedia.org/wiki/Laura_Poitras
-  "poitras",
-
-  // Tat’yana Avenirovna Proskuriakova (Russian: Татья́на Авени́ровна Проскуряко́ва) (January 23 [O.S. January 10] 1909 – August 30, 1985) was a Russian-American Mayanist scholar and archaeologist who contributed significantly to the deciphering of Maya hieroglyphs, the writing system of the pre-Columbian Maya civilization of Mesoamerica. https://en.wikipedia.org/wiki/Tatiana_Proskouriakoff
-  "proskuriakova",
-
-  // Claudius Ptolemy - a Greco-Egyptian writer of Alexandria, known as a mathematician, astronomer, geographer, astrologer, and poet of a single epigram in the Greek Anthology - https://en.wikipedia.org/wiki/Ptolemy
-  "ptolemy",
-
-  // C. V. Raman - Indian physicist who won the Nobel Prize in 1930 for proposing the Raman effect. - https://en.wikipedia.org/wiki/C._V._Raman
-  "raman",
-
-  // Srinivasa Ramanujan - Indian mathematician and autodidact who made extraordinary contributions to mathematical analysis, number theory, infinite series, and continued fractions. - https://en.wikipedia.org/wiki/Srinivasa_Ramanujan
-  "ramanujan",
-
-  // Sally Kristen Ride was an American physicist and astronaut. She was the first American woman in space, and the youngest American astronaut. https://en.wikipedia.org/wiki/Sally_Ride
-  "ride",
-
-  // Rita Levi-Montalcini - Won Nobel Prize in Physiology or Medicine jointly with colleague Stanley Cohen for the discovery of nerve growth factor (https://en.wikipedia.org/wiki/Rita_Levi-Montalcini)
-  "montalcini",
-
-  // Dennis Ritchie - co-creator of UNIX and the C programming language. - https://en.wikipedia.org/wiki/Dennis_Ritchie
-  "ritchie",
-
-  // Ida Rhodes - American pioneer in computer programming, designed the first computer used for Social Security. https://en.wikipedia.org/wiki/Ida_Rhodes
-  "rhodes",
-
-  // Julia Hall Bowman Robinson - American mathematician renowned for her contributions to the fields of computability theory and computational complexity theory. https://en.wikipedia.org/wiki/Julia_Robinson
-  "robinson",
-
-  // Wilhelm Conrad Röntgen - German physicist who was awarded the first Nobel Prize in Physics in 1901 for the discovery of X-rays (Röntgen rays). https://en.wikipedia.org/wiki/Wilhelm_R%C3%B6ntgen
-  "roentgen",
-
-  // Rosalind Franklin - British biophysicist and X-ray crystallographer whose research was critical to the understanding of DNA - https://en.wikipedia.org/wiki/Rosalind_Franklin
-  "rosalind",
-
-  // Vera Rubin - American astronomer who pioneered work on galaxy rotation rates. https://en.wikipedia.org/wiki/Vera_Rubin
-  "rubin",
-
-  // Meghnad Saha - Indian astrophysicist best known for his development of the Saha equation, used to describe chemical and physical conditions in stars - https://en.wikipedia.org/wiki/Meghnad_Saha
-  "saha",
-
-  // Jean E. Sammet developed FORMAC, the first widely used computer language for symbolic manipulation of mathematical formulas. https://en.wikipedia.org/wiki/Jean_E._Sammet
-  "sammet",
-
-  // Mildred Sanderson - American mathematician best known for Sanderson's theorem concerning modular invariants. https://en.wikipedia.org/wiki/Mildred_Sanderson
-  "sanderson",
-
-  // Satoshi Nakamoto is the name used by the unknown person or group of people who developed bitcoin, authored the bitcoin white paper, and created and deployed bitcoin's original reference implementation. https://en.wikipedia.org/wiki/Satoshi_Nakamoto
-  "satoshi",
-
-  // Adi Shamir - Israeli cryptographer whose numerous inventions and contributions to cryptography include the Ferge Fiat Shamir identification scheme, the Rivest Shamir Adleman (RSA) public-key cryptosystem, the Shamir's secret sharing scheme, the breaking of the Merkle-Hellman cryptosystem, the TWINKLE and TWIRL factoring devices and the discovery of differential cryptanalysis (with Eli Biham). https://en.wikipedia.org/wiki/Adi_Shamir
-  "shamir",
-
-  // Claude Shannon - The father of information theory and founder of digital circuit design theory. (https://en.wikipedia.org/wiki/Claude_Shannon)
-  "shannon",
-
-  // Carol Shaw - Originally an Atari employee, Carol Shaw is said to be the first female video game designer. https://en.wikipedia.org/wiki/Carol_Shaw_(video_game_designer)
-  "shaw",
-
-  // Dame Stephanie "Steve" Shirley - Founded a software company in 1962 employing women working from home. https://en.wikipedia.org/wiki/Steve_Shirley
-  "shirley",
-
-  // William Shockley co-invented the transistor - https://en.wikipedia.org/wiki/William_Shockley
-  "shockley",
-
-  // Lina Solomonovna Stern (or Shtern; Russian: Лина Соломоновна Штерн; 26 August 1878 – 7 March 1968) was a Soviet biochemist, physiologist and humanist whose medical discoveries saved thousands of lives at the fronts of World War II. She is best known for her pioneering work on blood–brain barrier, which she described as hemato-encephalic barrier in 1921. https://en.wikipedia.org/wiki/Lina_Stern
-  "shtern",
-
-  // Françoise Barré-Sinoussi - French virologist and Nobel Prize Laureate in Physiology or Medicine; her work was fundamental in identifying HIV as the cause of AIDS. https://en.wikipedia.org/wiki/Fran%C3%A7oise_Barr%C3%A9-Sinoussi
-  "sinoussi",
-
-  // Betty Snyder - one of the original programmers of the ENIAC. https://en.wikipedia.org/wiki/ENIAC - https://en.wikipedia.org/wiki/Betty_Holberton
-  "snyder",
-
-  // Cynthia Solomon - Pioneer in the fields of artificial intelligence, computer science and educational computing. Known for creation of Logo, an educational programming language.  https://en.wikipedia.org/wiki/Cynthia_Solomon
-  "solomon",
-
-  // Frances Spence - one of the original programmers of the ENIAC. https://en.wikipedia.org/wiki/ENIAC - https://en.wikipedia.org/wiki/Frances_Spence
-  "spence",
-
-  // Michael Stonebraker is a database research pioneer and architect of Ingres, Postgres, VoltDB and SciDB. Winner of 2014 ACM Turing Award. https://en.wikipedia.org/wiki/Michael_Stonebraker
-  "stonebraker",
-
-  // Ivan Edward Sutherland - American computer scientist and Internet pioneer, widely regarded as the father of computer graphics. https://en.wikipedia.org/wiki/Ivan_Sutherland
-  "sutherland",
-
-  // Janese Swanson (with others) developed the first of the Carmen Sandiego games. She went on to found Girl Tech. https://en.wikipedia.org/wiki/Janese_Swanson
-  "swanson",
-
-  // Aaron Swartz was influential in creating RSS, Markdown, Creative Commons, Reddit, and much of the internet as we know it today. He was devoted to freedom of information on the web. https://en.wikiquote.org/wiki/Aaron_Swartz
-  "swartz",
-
-  // Bertha Swirles was a theoretical physicist who made a number of contributions to early quantum theory. https://en.wikipedia.org/wiki/Bertha_Swirles
-  "swirles",
-
-  // Helen Brooke Taussig - American cardiologist and founder of the field of paediatric cardiology. https://en.wikipedia.org/wiki/Helen_B._Taussig
-  "taussig",
-
-  // Valentina Tereshkova is a Russian engineer, cosmonaut and politician. She was the first woman to fly to space in 1963. In 2013, at the age of 76, she offered to go on a one-way mission to Mars. https://en.wikipedia.org/wiki/Valentina_Tereshkova
-  "tereshkova",
-
-  // Nikola Tesla invented the AC electric system and every gadget ever used by a James Bond villain. https://en.wikipedia.org/wiki/Nikola_Tesla
-  "tesla",
-
-  // Marie Tharp - American geologist and oceanic cartographer who co-created the first scientific map of the Atlantic Ocean floor. Her work led to the acceptance of the theories of plate tectonics and continental drift. https://en.wikipedia.org/wiki/Marie_Tharp
-  "tharp",
-
-  // Ken Thompson - co-creator of UNIX and the C programming language - https://en.wikipedia.org/wiki/Ken_Thompson
-  "thompson",
-
-  // Linus Torvalds invented Linux and Git. https://en.wikipedia.org/wiki/Linus_Torvalds
-  "torvalds",
-
-  // Youyou Tu - Chinese pharmaceutical chemist and educator known for discovering artemisinin and dihydroartemisinin, used to treat malaria, which has saved millions of lives. Joint winner of the 2015 Nobel Prize in Physiology or Medicine. https://en.wikipedia.org/wiki/Tu_Youyou
-  "tu",
-
-  // Alan Turing was a founding father of computer science. https://en.wikipedia.org/wiki/Alan_Turing.
-  "turing",
-
-  // Varahamihira - Ancient Indian mathematician who discovered trigonometric formulae during 505-587 CE - https://en.wikipedia.org/wiki/Var%C4%81hamihira#Contributions
-  "varahamihira",
-
-  // Dorothy Vaughan was a NASA mathematician and computer programmer on the SCOUT launch vehicle program that put America's first satellites into space - https://en.wikipedia.org/wiki/Dorothy_Vaughan
-  "vaughan",
-
-  // Sir Mokshagundam Visvesvaraya - is a notable Indian engineer.  He is a recipient of the Indian Republic's highest honour, the Bharat Ratna, in 1955. On his birthday, 15 September is celebrated as Engineer's Day in India in his memory - https://en.wikipedia.org/wiki/Visvesvaraya
-  "visvesvaraya",
-
-  // Christiane Nüsslein-Volhard - German biologist, won Nobel Prize in Physiology or Medicine in 1995 for research on the genetic control of embryonic development. https://en.wikipedia.org/wiki/Christiane_N%C3%BCsslein-Volhard
-  "volhard",
-
-  // Cédric Villani - French mathematician, won Fields Medal, Fermat Prize and Poincaré Price for his work in differential geometry and statistical mechanics. https://en.wikipedia.org/wiki/C%C3%A9dric_Villani
-  "villani",
-
-  // Marlyn Wescoff - one of the original programmers of the ENIAC. https://en.wikipedia.org/wiki/ENIAC - https://en.wikipedia.org/wiki/Marlyn_Meltzer
-  "wescoff",
-
-  // Sylvia B. Wilbur - British computer scientist who helped develop the ARPANET, was one of the first to exchange email in the UK and a leading researcher in computer-supported collaborative work. https://en.wikipedia.org/wiki/Sylvia_Wilbur
-  "wilbur",
-
-  // Andrew Wiles - Notable British mathematician who proved the enigmatic Fermat's Last Theorem - https://en.wikipedia.org/wiki/Andrew_Wiles
-  "wiles",
-
-  // Roberta Williams, did pioneering work in graphical adventure games for personal computers, particularly the King's Quest series. https://en.wikipedia.org/wiki/Roberta_Williams
-  "williams",
-
-  // Malcolm John Williamson - British mathematician and cryptographer employed by the GCHQ. Developed in 1974 what is now known as Diffie-Hellman key exchange (Diffie and Hellman first published the scheme in 1976). https://en.wikipedia.org/wiki/Malcolm_J._Williamson
-  "williamson",
-
-  // Sophie Wilson designed the first Acorn Micro-Computer and the instruction set for ARM processors. https://en.wikipedia.org/wiki/Sophie_Wilson
-  "wilson",
-
-  // Jeannette Wing - co-developed the Liskov substitution principle. - https://en.wikipedia.org/wiki/Jeannette_Wing
-  "wing",
-
-  // Steve Wozniak invented the Apple I and Apple II. https://en.wikipedia.org/wiki/Steve_Wozniak
-  "wozniak",
-
-  // The Wright brothers, Orville and Wilbur - credited with inventing and building the world's first successful airplane and making the first controlled, powered and sustained heavier-than-air human flight - https://en.wikipedia.org/wiki/Wright_brothers
-  "wright",
-
-  // Chien-Shiung Wu - Chinese-American experimental physicist who made significant contributions to nuclear physics. https://en.wikipedia.org/wiki/Chien-Shiung_Wu
-  "wu",
-
-  // Rosalyn Sussman Yalow - Rosalyn Sussman Yalow was an American medical physicist, and a co-winner of the 1977 Nobel Prize in Physiology or Medicine for development of the radioimmunoassay technique. https://en.wikipedia.org/wiki/Rosalyn_Sussman_Yalow
-  "yalow",
-
-  // Ada Yonath - an Israeli crystallographer, the first woman from the Middle East to win a Nobel prize in the sciences. https://en.wikipedia.org/wiki/Ada_Yonath
-  "yonath",
-
-  // Nikolay Yegorovich Zhukovsky (Russian: Никола́й Его́рович Жуко́вский, January 17 1847 – March 17, 1921) was a Russian scientist, mathematician and engineer, and a founding father of modern aero- and hydrodynamics. Whereas contemporary scientists scoffed at the idea of human flight, Zhukovsky was the first to undertake the study of airflow. He is often called the Father of Russian Aviation. https://en.wikipedia.org/wiki/Nikolay_Yegorovich_Zhukovsky
-  "zhukovsky",
-];
-
+    "admiring",
+    "adoring",
+    "affectionate",
+    "agitated",
+    "amazing",
+    "angry",
+    "awesome",
+    "beautiful",
+    "blissful",
+    "bold",
+    "boring",
+    "brave",
+    "busy",
+    "charming",
+    "clever",
+    "cool",
+    "compassionate",
+    "competent",
+    "condescending",
+    "confident",
+    "cranky",
+    "crazy",
+    "dazzling",
+    "determined",
+    "distracted",
+    "dreamy",
+    "eager",
+    "ecstatic",
+    "elastic",
+    "elated",
+    "elegant",
+    "eloquent",
+    "epic",
+    "exciting",
+    "fervent",
+    "festive",
+    "flamboyant",
+    "focused",
+    "friendly",
+    "frosty",
+    "funny",
+    "gallant",
+    "gifted",
+    "goofy",
+    "gracious",
+    "great",
+    "happy",
+    "hardcore",
+    "heuristic",
+    "hopeful",
+    "hungry",
+    "infallible",
+    "inspiring",
+    "interesting",
+    "intelligent",
+    "jolly",
+    "jovial",
+    "keen",
+    "kind",
+    "laughing",
+    "loving",
+    "lucid",
+    "magical",
+    "mystifying",
+    "modest",
+    "musing",
+    "naughty",
+    "nervous",
+    "nice",
+    "nifty",
+    "nostalgic",
+    "objective",
+    "optimistic",
+    "peaceful",
+    "pedantic",
+    "pensive",
+    "practical",
+    "priceless",
+    "quirky",
+    "quizzical",
+    "recursing",
+    "relaxed",
+    "reverent",
+    "romantic",
+    "sad",
+    "serene",
+    "sharp",
+    "silly",
+    "sleepy",
+    "stoic",
+    "strange",
+    "stupefied",
+    "suspicious",
+    "sweet",
+    "tender",
+    "thirsty",
+    "trusting",
+    "unruffled",
+    "upbeat",
+    "vibrant",
+    "vigilant",
+    "vigorous",
+    "wizardly",
+    "wonderful",
+    "xenodochial",
+    "youthful",
+    "zealous",
+    "zen",
+  ],
+  surnames = [
+    "albattani",
+    "allen",
+    "almeida",
+    "antonelli",
+    "agnesi",
+    "archimedes",
+    "ardinghelli",
+    "aryabhata",
+    "austin",
+    "babbage",
+    "banach",
+    "banzai",
+    "bardeen",
+    "bartik",
+    "bassi",
+    "beaver",
+    "bell",
+    "benz",
+    "bhabha",
+    "bhaskara",
+    "black",
+    "blackburn",
+    "blackwell",
+    "bohr",
+    "booth",
+    "borg",
+    "bose",
+    "bouman",
+    "boyd",
+    "brahmagupta",
+    "brattain",
+    "brown",
+    "buck",
+    "burnell",
+    "cannon",
+    "carson",
+    "cartwright",
+    "carver",
+    "cerf",
+    "chandrasekhar",
+  ]
+
+// Random number generator
+// Dependency of getRandomName function
 function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min) + min)
 }
 
+// Random name generator
 function getRandomName() {
-  const random1 = getRandomNumber(0, adjectives.length);
-  const random2 = getRandomNumber(0, surnames.length);
-  const adjective = adjectives[random1];
-  const surname = surnames[random2];
-  const randomName = adjective + "_" + surname;
-  return randomName;
+  const random1 = getRandomNumber(0, adjectives.length)
+  const random2 = getRandomNumber(0, surnames.length)
+  const adjective = adjectives[random1]
+  const surname = surnames[random2]
+  // Connect the adjective and surname together to create a random name
+  const randomName = adjective + "-" + surname
+  // Return it so it can be called later as a variable for the Tab Name.
+  return randomName
 }
 
-
-function getDayName(dateStr, locale) {
-  var date = new Date(dateStr);
-  return date.toLocaleDateString(locale, { weekday: 'long' });
+// Check if the Browser variable is undefined
+// This is unused as of now but it could be used for better cloaking in the future, specifically with activeTab
+if (typeof browser === "undefined") {
+  // Initialize the browser variable
+  var browser = chrome
 }
+browser = chrome
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
-
-today = mm + '/' + dd + '/' + yyyy;
-
-
-var dateStr = '05/23/2022';
-var day = getDayName(today, "us-US");
-
-var td = new Date();
-var time = td.getHours() + ":" + td.getMinutes()
-function formatAMPM(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return strTime;
-}
-
-
-console.log(day + ", " + formatAMPM(new Date))
-
-
-//           Search Result.
-
-const suggestFromString = async(input) => {
-  var request = await fetch("/bare/v1", { headers: { 'x-bare-host': 'duckduckgo.com', 'x-bare-protocol': 'https:', 'x-bare-path': '/ac/?q=' + encodeURIComponent(input), 'x-bare-port': '443', 'x-bare-headers': JSON.stringify({ Host: 'duckduckgo.com' }), 'x-bare-forward-headers': '[]' } });
-  var json = await request.json();
-  return json;
-}
-const stealthStored = localStorage.getItem('nogg')
-const radonButton = document.getElementById('gamesRadon')
-function link(_link) {
-  if (stealthStored == 'on') {
-     let inFrame
-
-    try {
-      inFrame = window !== top
-    } catch (e) {
-      inFrame = true
-    }
-    setTimeout(() => {
-      if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-        const popup = open("about:blank", "_blank")
-        if (!popup || popup.closed) {
-          alert("Popups are disabled!")
-        } else {
-          const doc = popup.document
-          const iframe = doc.createElement("iframe")
-          const style = iframe.style
-          const img = doc.createElement("link")
-         
-          const link = location.href
-          img.rel = "icon"
-          img.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
-          doc.title = getRandomName()
-
-          var currentLink = link.slice(0, link.length - 1);
-
-          iframe.src = currentLink + "/service/go/" + __uv$config.encodeUrl(_link)
-
-          style.position = "fixed"
-          style.top = style.bottom = style.left = style.right = 0
-          style.border = style.outline = "none"
-          style.width = style.height = "100%"
-
-          doc.body.appendChild(iframe)
-        }
-
+// Clickoff cloaking
+// This function is called as a callback during the event listener
+function handleTabLeave() {
+  var link = document.querySelector("link[rel~='icon']")
+  if (localStorage.getItem("ADVcloak") == "on") {
+    if (document.title == "Nebula") {
+      if (!link) {
+        link = document.createElement("link")
+        link.rel = "icon"
+        document.getElementsByTagName("head")[0].appendChild(link)
       }
-    }, 0200);
-  }
-  else {
-    location.href = 'service/go/' + __uv$config.encodeUrl('https://radon.games/')
+      link.href =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo7AE3IF34XPGyseQjkXIOsWXpkZiLlMjSAwySjcJSPAwlv3hnGKi1&usqp=CAU"
+      document.title = "Google"
+    } else if (document.title == "Google") {
+      document.title = "Nebula"
+      if (!link) {
+        link = document.createElement("link")
+        link.rel = "icon"
+        document.getElementsByTagName("head")[0].appendChild(link)
+      }
+      link.href =
+        "https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png"
+    } else {
+      return false
+    }
   }
 }
+// Create and Add the event listener
+document.addEventListener("visibilitychange", handleTabLeave)
