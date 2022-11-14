@@ -2,7 +2,7 @@
 <div align=center> 
 <img src='https://nebulaproxy.nebula.bio/images/logo.png' width="100px" height="100px">
 <h1>  Nebula </h1>
-NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleak, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
+NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 </div>
 
 
