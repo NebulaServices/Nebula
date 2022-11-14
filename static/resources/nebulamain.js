@@ -750,3 +750,45 @@ function handleTabLeave() {
 }
 // Create and Add the event listener
 document.addEventListener("visibilitychange", handleTabLeave)
+
+
+const stealthStored = localStorage.getItem('nogg')
+function link(_link) {
+  if (stealthStored == "on") {
+    let inFrame
+    try {
+      inFrame = window !== top
+    } catch (e) {
+      inFrame = true
+    }
+    setTimeout(() => {
+      if (!inFrame && !navigator.userAgent.includes("Firefox")) {
+        const popup = open("about:blank", "_blank")
+        if (!popup || popup.closed) {
+          alert("Popups are disabled!")
+        } else {
+          const doc = popup.document
+          const iframe = doc.createElement("iframe")
+          const style = iframe.style
+          const img = doc.createElement("link")
+          const link = location.href
+          img.rel = "icon"
+          img.href =
+            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+          doc.title = getRandomName()
+          var currentLink = link.slice(0, link.length - 1)
+          iframe.src =
+            currentLink + "/service/go/" + __uv$config.encodeUrl(_link)
+          style.position = "fixed"
+          style.top = style.bottom = style.left = style.right = 0
+          style.border = style.outline = "none"
+          style.width = style.height = "100%"
+          doc.body.appendChild(iframe)
+        }
+      }
+    }, 0200)
+  } else {
+    location.href =
+      "service/go/" + __uv$config.encodeUrl("https://radon.games/")
+  }
+}
