@@ -11,16 +11,12 @@
         "proxy"
     ],
     "author": "Nebula Services",
-    "license": "GNU AGPL V3",
+    "license": "AGPL-3.0-only",
     "dependencies": {
-        "@tomphttp/bare-server-node": "^1.0.2-beta-readme5",
-        "crypto-js": "4.1.1",
-        "css-tree": "^2.1.0",
-        "node-fetch": "^3.2.6",
+        "@tomphttp/bare-server-node": "^1.2.2",
         "nodemailer": "^6.8.0",
         "nodemailer-sendgrid-transport": "^0.2.0",
-        "serve-static": "^1.15.0",
-        "ws": "^8.8.1"
+        "serve-static": "^1.15.0"
     },
     "engines": {
         "node": ">=16.0.0"
