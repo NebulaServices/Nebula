@@ -6,4 +6,5 @@ services:
     container_name: nebula
     restart: unless-stopped
     ports:
-      - 8080:3000
+      # DO NOT CHANGE 3000!
+      - your port here:3000
