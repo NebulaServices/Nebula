@@ -42,7 +42,9 @@ window.addEventListener("load", () => {
     if (h == 0) {
       h = 12
     }
-    if (h > 12) {
+    h = h == 12 ? 24 : h; 
+
+    if (h >= 12) {
       h = h - 12
       session = "PM"
     }
