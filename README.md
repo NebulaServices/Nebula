@@ -131,7 +131,7 @@ sudo nohup PORT=80 node . &
 **Make sure your firewall is configured to let through port 80 traffic!** \
 *Note: Server will need to run` cd Nebula && sudo nohup PORT=80 node . &` on reboot*
 
-## File system
+## File Structure
 | **File**                         | Purpose                                                                                                  |   |
 |----------------------------------|----------------------------------------------------------------------------------------------------------|---|
 | `static/index.html`              | The main frontend visuals for NebulaWEB.                                                                 |   |
