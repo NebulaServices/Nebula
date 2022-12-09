@@ -31,6 +31,7 @@ Table of contents
 - Deployment configuration explaination 
 - how to use email OTP Verification mode
 - Advanced Deployment 
+- Filesystem
 
 
 ## Quick & Easy Deployment Options
