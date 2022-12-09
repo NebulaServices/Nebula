@@ -1,7 +1,7 @@
 
-<div align=center> 
-<img src='https://nebulaproxy.nebula.bio/images/logo.png' width="100px" height="100px">
-<h1>  Nebula </h1>
+
+# Nebula
+
 NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 
 ![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue) 
@@ -10,7 +10,6 @@ NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. 
 
 ![ver](https://img.shields.io/github/package-json/v/Nebulaservices/Nebula) 
 
-</div>
 
 
 ## Features
@@ -131,6 +130,15 @@ sudo nohup PORT=80 node . &
 **Make sure your firewall is configured to let through port 80 traffic!** \
 *Note: Server will need to run` cd Nebula && sudo nohup PORT=80 node . &` on reboot*
 
+## File system
+| **File**                         | Purpose                                                                                                  |   |
+|----------------------------------|----------------------------------------------------------------------------------------------------------|---|
+| `static/index.html`              | The main frontend visuals for NebulaWEB.                                                                 |   |
+| `static/unv.html`                | The verification-required frontend/visuals.                                                              |   |
+| `static/options/`                | The frontend for Nebula's options, settings, and preferences.                                            |   |
+| `static/resources/v.js`          | Client verification system for the OTP system.                                                           |   |
+| `static/resources/nebulamain.js` | All of the DOM/client code for NebulaWEB. Includes options, themeSystem, cloak, stealthengine, and more. |   |
+| `app.js`                         | The backend server for Nebula. Contains Nodestatic, Bare, HTTP, and more.                                |   |
 
 
 ## Tech Stack
