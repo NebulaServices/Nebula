@@ -8,7 +8,6 @@ NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. 
 
 ![chat](https://img.shields.io/badge/chat-1139%20online-brightgreen) 
 
-![ver](https://img.shields.io/github/package-json/v/Nebulaservices/Nebula) 
 
 
 
