@@ -776,9 +776,9 @@ function link(_link) {
           img.href =
             "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
           doc.title = getRandomName()
-          var currentLink = link.slice(0, link.length - 1)
+          var currentLink = _link.slice(0, _link.length - 1)
           iframe.src =
-            currentLink + "/service/go/" + __uv$config.encodeUrl(_link)
+            location.origin + "/service/go/" + __uv$config.encodeUrl(currentLink)
           style.position = "fixed"
           style.top = style.bottom = style.left = style.right = 0
           style.border = style.outline = "none"
