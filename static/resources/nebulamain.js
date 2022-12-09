@@ -39,10 +39,11 @@ window.addEventListener("load", () => {
     var m = date.getMinutes() // 0 - 59
     var s = date.getSeconds() // 0 - 59
     var session = "AM"
+    h = h == 12 ? 24 : h; 
+
     if (h == 0) {
       h = 12
-    }
-    if (h > 12) {
+    } else if (h >= 12) {
       h = h - 12
       session = "PM"
     }
