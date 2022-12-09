@@ -743,7 +743,7 @@ function handleTabLeave() {
         document.getElementsByTagName("head")[0].appendChild(link)
       }
       link.href =
-        "https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png"
+        "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67"
     } else {
       return false
     }
