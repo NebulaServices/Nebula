@@ -1,3 +1,0 @@
-## huh.. 
-
-We no longer have a patreon, weird...
