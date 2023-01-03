@@ -12,8 +12,8 @@
       <!-- Embed -->
       
       <script src="../uv/uv.bundle.js"></script>
-      <script src="../resources/appModules/selectBare.js"></script>
-
+      <script src="../resources/appModules/BareSwitcher.js"></script>
+      <script src="../resources/options.js"></script>
       <meta name="theme-color" content="#5a189a">
       <meta property=og:title content=Nebula>
       <meta property="og:type" content="website" />
@@ -187,7 +187,10 @@ if (cloakStored == "on") {
 }
 themeSelector.value = themeStored
 proxySel.value = proxyStored
-document.getElementById("bareLocationInput").value = localStorage.getItem("_BareLocation")
+
+getBareLocation().then(bareLocation => {
+document.getElementById("bareLocationInput").value = bareLocation;
+});
 
       </script>
    </body>

@@ -1,6 +1,3 @@
-importScripts('./uv/uv.bundle.js');
-importScripts('./resources/appModules/database-manager.js');
-importScripts('./uv/uv.config.js');
 importScripts('./uv/uv.sw.js');
 importScripts('./osana/osana.worker.js');
 
