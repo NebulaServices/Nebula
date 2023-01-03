@@ -1,6 +1,6 @@
 self.__uv$config = {
     prefix: '/service/go/',
-    bare: '/bare/',
+    bare: '',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/uv/uv.handler.js',
@@ -8,3 +8,4 @@ self.__uv$config = {
     config: '/uv/uv.config.js',
     sw: '/uv/uv.sw.js',
 };
+

@@ -493,3 +493,38 @@ input:checked+label:after {
 label:active:after {
 	width: 38px;
 }
+
+.bareLocationInput {
+	border-style: solid !important;
+	border: var(--input-border-size) solid #5e18eb;
+	border-width: 0px;
+	border-radius: 6px;
+	background-color: #191724;
+	color: var(--input-text-color);
+	width: auto;
+	height: auto;
+	box-shadow: none !important;
+	outline: none;
+	text-align: center;
+	width: 220px;
+	font-size: 16px;
+	font-family: 'Roboto';
+	height: 29px;
+	transition: 0.06s;
+}
+
+.bareLocationInput:hover {
+	border: var(--input-border-size) solid #5e18eb;
+	border-width: 1px;
+	border-radius: 6px;
+
+}
+
+.bareValidSignal {
+	margin-top: -13px;
+	color: #f45145bd;
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: lighter;
+	font-size: 13px;
+	text-align: center;
+}

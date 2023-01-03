@@ -9,138 +9,181 @@
 
 // Navigation controls for smaller devices
 // Executed in the inline HTML
-function openNav() {
-  document.getElementById("sidenav").style.width = "260px"
+function openNav () {
+  document.getElementById('sidenav').style.width = '260px'
 }
-function closeNav() {
-  document.getElementById("sidenav").style.width = "0px"
+function closeNav () {
+  document.getElementById('sidenav').style.width = '0px'
 }
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   // Register the service workers for Osana and Ultraviolet proxy protocols
   // This is a better method than registering onsubmit because this allows the ability to use proxied links on the main page.
-  navigator.serviceWorker.register("./sw.js", {
-    scope: "/service/",
+
+  const dbPromise = Ultraviolet.openDB('keyval-store', 1, {
+    upgrade (db) {
+      db.createObjectStore('keyval')
+    }
+  })
+  self.storage = {
+    async get (key) {
+      return (await dbPromise).get('keyval', key)
+    },
+
+    async set (key, val) {
+      console.log('please wait')
+      return (await dbPromise).put('keyval', val, key)
+    },
+
+    async del (key) {
+      return (await dbPromise).delete('keyval', key)
+    }
+  }
+
+  function getBareLocation () {
+    return dbPromise
+      .then(db => db.get('keyval', 'bareLocation'))
+      .then(value => value || '')
+  }
+
+  getBareLocation().then(bareLocation => {
+
+    console.log('Bare Location: ' + bareLocation)
+    if (bareLocation === '') {
+      console.log('No bare location found, automatically setting to default')
+      storage.set('bareLocation', '/bare/')
+
+    }
+
+    // if bare location is not only whitespace
+   // if (bareLocation.trim() !== '') {
+      
+  })
+
+  navigator.serviceWorker.register('./sw.js', {
+    scope: '/service/'
   })
 
   // Get's the current day using the Date function built in.
   // A dependency for displaying time - displayTime(void)
-  function getDayName(dateStr, locale) {
+  function getDayName (dateStr, locale) {
     var date = new Date(dateStr)
-    return date.toLocaleDateString(locale, { weekday: "long" })
+    return date.toLocaleDateString(locale, { weekday: 'long' })
   }
 
   // The main function to show the time on the main page
   // needs to be initialized by a call (only one)
   // Dependent on getDayName function
-  function displayTime() {
+  function displayTime () {
     var date = new Date()
     var h = date.getHours() // 0 - 23
     var m = date.getMinutes() // 0 - 59
     var s = date.getSeconds() // 0 - 59
-    var session = "AM"
-    h = h == 12 ? 24 : h; 
+    var session = 'AM'
+    h = h == 12 ? 24 : h
 
     if (h == 0) {
       h = 12
     } else if (h >= 12) {
       h = h - 12
-      session = "PM"
+      session = 'PM'
     }
-    h = h < 10 ? "0" + h : h
-    m = m < 10 ? "0" + m : m
-    s = s < 10 ? "0" + s : s
+    h = h < 10 ? '0' + h : h
+    m = m < 10 ? '0' + m : m
+    s = s < 10 ? '0' + s : s
     // Repeat itself every second
     setTimeout(displayTime, 1000)
     // Get today's date
     var today = new Date()
-    var dd = String(today.getDate()).padStart(2, "0")
-    var mm = String(today.getMonth() + 1).padStart(2, "0") //January is 0!
+    var dd = String(today.getDate()).padStart(2, '0')
+    var mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
     var yyyy = today.getFullYear()
-    today = mm + "/" + dd + "/" + yyyy
+    today = mm + '/' + dd + '/' + yyyy
     var time = h + "<span style='opacity:100%;' class='clockColon'>:</span>" + m
-    document.getElementById("digitalClock").innerHTML =
-      getDayName(today, "us-US") + ", " + time + " " + session + "."
+    document.getElementById('digitalClock').innerHTML =
+      getDayName(today, 'us-US') + ', ' + time + ' ' + session + '.'
 
     return time
   }
   // initialize the time function
+
   displayTime()
 
   // Link evaluation
   // This functions' purpose is to check a string of text (the argument)
   // it recognizes whether a string is a URL or not, and it returns a true or false value
-  function isUrl(val = "") {
+  function isUrl (val = '') {
     if (
       /^http(s?):\/\//.test(val) ||
-      (val.includes(".") && val.substr(0, 1) !== " ")
+      (val.includes('.') && val.substr(0, 1) !== ' ')
     )
       return true
     return false
   }
 
   const useNoGG = false
-  const proxy = localStorage.getItem("proxy") || "uv"
-  const inpbox = document.querySelector("form")
+  const proxy = localStorage.getItem('proxy') || 'uv'
+  const inpbox = document.querySelector('form')
   // Display the "loading" indicators on the main page, looks much better than a static/still screen.
-  inpbox.addEventListener("submit", (event) => {
+
+  inpbox.addEventListener('submit', event => {
     // Prevents the default event tasks
     event.preventDefault()
-    console.log("Connecting to service -> loading")
-    const loader = document.getElementById("lpoader")
-    const texts = document.getElementById("connecterText")
+    console.log('Connecting to service -> loading')
+    const loader = document.getElementById('lpoader')
+    const texts = document.getElementById('connecterText')
     // Adjust size as neccesary
     const loadConstructer = loader.style
     const textConstructer = texts.style
-    loadConstructer.display = "flex"
-    loadConstructer.justifyContent = "center"
+    loadConstructer.display = 'flex'
+    loadConstructer.justifyContent = 'center'
     // Changing the text over multiple periods of time creates character, and aliveness (is that even a word?)
     setTimeout(() => {
-      document.getElementById("connecterText").style.fontSize = "12px"
-      document.getElementById("connecterText").innerHTML =
-        "Due to high server load, this may take a while."
+      document.getElementById('connecterText').style.fontSize = '12px'
+      document.getElementById('connecterText').innerHTML =
+        'Due to high server load, this may take a while.'
     }, 3200)
     setTimeout(() => {
-      document.getElementById("connecterText").style.fontSize = "14px"
-      document.getElementById("connecterText").innerHTML =
+      document.getElementById('connecterText').style.fontSize = '14px'
+      document.getElementById('connecterText').innerHTML =
         "Hmmm.. Something isn't right.."
     }, 17000)
   })
 
   // Form submission
-  const form = document.querySelector("form")
-  form.addEventListener("submit", (event) => {
+  const form = document.querySelector('form')
+  form.addEventListener('submit', event => {
     event.preventDefault()
     // Check if the service worker (commonly called SW) is registered
-    if (typeof navigator.serviceWorker === "undefined")
+    if (typeof navigator.serviceWorker === 'undefined')
       alert(
-        "An error occured registering your service worker. Please contact support - discord.gg/unblocker"
+        'An error occured registering your service worker. Please contact support - discord.gg/unblocker'
       )
     //
-    if (proxy === "uv" || proxy === "osana") {
+    if (proxy === 'uv' || proxy === 'osana') {
       // Re-register the service worker incase it failed to onload
       navigator.serviceWorker
-        .register("./sw.js", {
-          scope: "/service/",
+        .register('./sw.js', {
+          scope: '/service/'
         })
         .then(() => {
           const value = event.target.firstElementChild.value
           let url = value.trim()
-          if (!isUrl(url)) url = "https://www.google.com/search?q=" + url
-          if (!(url.startsWith("https://") || url.startsWith("http://")))
-            url = "http://" + url
+          if (!isUrl(url)) url = 'https://www.google.com/search?q=' + url
+          if (!(url.startsWith('https://') || url.startsWith('http://')))
+            url = 'http://' + url
           // encode the URL for UltraViolet
           let redirectTo =
-            proxy === "uv"
+            proxy === 'uv'
               ? __uv$config.prefix + __uv$config.encodeUrl(url)
               : __osana$config.prefix + __osana$config.codec.encode(url)
-          const option = localStorage.getItem("nogg")
-          if (option === "on") {
+          const option = localStorage.getItem('nogg')
+          if (option === 'on') {
             stealthEngine(redirectTo)
           } else {
             setTimeout(() => {
               // If StealthMode is off, this is the enabled option.
-              const _popout = window.open("/blob", "_self")
+              const _popout = window.open('/blob', '_self')
               const blob = _popout.document
               // Write all of the neccesary page elements, and the Options including the cloak (if enabled)
               // The blob writing is just the background elements, like the "Nebula is loading your content, please wait" screen. It does not carry proxied content, or even the iframe.
@@ -183,25 +226,25 @@ document.addEventListener("visibilitychange", handleTabLeave)
 </div> 
 `)
               // inside of the blob, create and append the Iframe element which WILL carry the proxied content.
-              const iframe = blob.createElement("iframe")
+              const iframe = blob.createElement('iframe')
               const style = iframe.style
-              const img = blob.createElement("link")
+              const img = blob.createElement('link')
               const link = location.href
               // We attach ARC because it supports us, keeping our arc link there would be greatly appreciated :)
-              const arcSrc = blob.createElement("script")
+              const arcSrc = blob.createElement('script')
               arcSrc.setAttribute(
-                "src",
-                "https://arc.io/widget.min.js#BgaWcYfi"
+                'src',
+                'https://arc.io/widget.min.js#BgaWcYfi'
               )
               // Arc requires the Async attribute
               // Async means not running parallel to other tasks, so it loads seperately to everything else (in a sense)
               // Aysnchronous and Synchronous are somewhat difficult topics, so we recommend you
-              arcSrc.setAttribute("async", "")
+              arcSrc.setAttribute('async', '')
               blob.head.appendChild(arcSrc)
-              img.rel = "icon"
+              img.rel = 'icon'
               img.href =
-                "https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png"
-              blob.title = "Nebula"
+                'https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png'
+              blob.title = 'Nebula'
               // slice the link like some nice fruit :)
               // Removing the '/' from 'whateverthislinkis.gay/'
               //                                              ^
@@ -210,10 +253,10 @@ document.addEventListener("visibilitychange", handleTabLeave)
               iframe.src = currentLink + redirectTo
 
               // Style the Iframe to fill the entire screen and remove the bessels.
-              style.position = "fixed"
+              style.position = 'fixed'
               style.top = style.bottom = style.left = style.right = 0
-              style.border = style.outline = "none"
-              style.width = style.height = "100%"
+              style.border = style.outline = 'none'
+              style.width = style.height = '100%'
               // finally, append the iframe to the blob's (window) body
               blob.body.appendChild(iframe)
             }, 1000)
@@ -223,7 +266,7 @@ document.addEventListener("visibilitychange", handleTabLeave)
   })
 
   // Stealth engine, a dependency for everything above.
-  function stealthEngine(encodedURL) {
+  function stealthEngine (encodedURL) {
     // Remember that the EncodedURL argument must be pre-encoded, or encoded before the function is called.
     // This function does not encode the argument at all!
 
@@ -238,37 +281,37 @@ document.addEventListener("visibilitychange", handleTabLeave)
     setTimeout(() => {
       // Basically, a checklist to make sure that an error won't occur.
       // In this if statement, we're checking if an iframe is already being opened, if popups are disabled, and if the user agent IS NOT firefox (firefox sucks, sorry Moz)
-      if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-        const popup = open("about:blank", "_blank")
+      if (!inFrame && !navigator.userAgent.includes('Firefox')) {
+        const popup = open('about:blank', '_blank')
         if (!popup || popup.closed) {
           alert(
-            "StealthEngine was unable to open a popup. (do you have popups disabled?)"
+            'StealthEngine was unable to open a popup. (do you have popups disabled?)'
           )
         } else {
           const doc = popup.document
-          const iframe = doc.createElement("iframe")
+          const iframe = doc.createElement('iframe')
           const style = iframe.style
           // Favicon attachment
-          const img = doc.createElement("link")
-          const arcSrc = doc.createElement("script")
+          const img = doc.createElement('link')
+          const arcSrc = doc.createElement('script')
           // We attach ARC because it supports us, keeping our arc link there would be greatly appreciated :)
-          arcSrc.setAttribute("src", "https://arc.io/widget.min.js#BgaWcYfi")
-          arcSrc.setAttribute("async", "")
+          arcSrc.setAttribute('src', 'https://arc.io/widget.min.js#BgaWcYfi')
+          arcSrc.setAttribute('async', '')
           doc.head.appendChild(arcSrc)
           const link = location.href
-          img.rel = "icon"
+          img.rel = 'icon'
           img.href =
-            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+            'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png'
           doc.title = getRandomName()
 
           var currentLink = link.slice(0, link.length - 1)
 
           iframe.src = currentLink + encodedURL
 
-          style.position = "fixed"
+          style.position = 'fixed'
           style.top = style.bottom = style.left = style.right = 0
-          style.border = style.outline = "none"
-          style.width = style.height = "100%"
+          style.border = style.outline = 'none'
+          style.width = style.height = '100%'
 
           doc.body.appendChild(iframe)
         }
@@ -278,88 +321,79 @@ document.addEventListener("visibilitychange", handleTabLeave)
 })
 
 // Set the option
-var option = localStorage.getItem("nogg")
-
-function toggleNoGG() {
-  if (option === "on") {
-    option = "off"
-    localStorage.setItem("nogg", "off")
-  } else {
-    option = "on"
-    localStorage.setItem("nogg", "on")
-  }
-}
-var option2 = localStorage.getItem("ADVcloak")
-function toggleClickoff() {
-  if (option2 === "on") {
-    option2 = "off"
-    localStorage.setItem("ADVcloak", "off")
-  } else {
-    option2 = "on"
-    localStorage.setItem("ADVcloak", "on")
-  }
-}
-
-const storedSetTheme = localStorage.getItem("theme")
-
-function switchProxy() {
-  var selecter = document.getElementById("proxySwitcher")
-  var selectedOption = selecter.value
-
-  localStorage.setItem("proxy", selectedOption)
-  var storedChoice = localStorage.getItem("proxy")
-  console.log(selectedOption)
-}
+var option = localStorage.getItem('nogg')
+const storedSetTheme = localStorage.getItem('theme')
 
 if (storedSetTheme == null) {
-  localStorage.setItem("theme", "dark")
+  localStorage.setItem('theme', 'dark')
 }
 
-function switchTheme() {
-  var selecter = document.getElementById("themeSwitcher")
-  var selectedOption = selecter.value
-  if (selectedOption == "dark") {
-    changeCSS("--background-primary", "#191724", true)
-    changeCSS("--navbar-color", "#26233a", true)
-    changeCSS("--navbar-height", "60px", true)
-    changeCSS("--navbar-text-color", "#7967dd", true)
-    changeCSS("--input-text-color", "#e0def4", true)
-    changeCSS("--input-placeholder-color", "#6e6a86", true)
-    changeCSS("--input-background-color", "#1f1d2e", true)
-    changeCSS("--input-placeholder-color", "white", true)
-    changeCSS("--input-border-color", "#eb6f92", true)
-    changeCSS("--input-border-size", "1.3px", true)
-    changeCSS("--navbar-link-color", "#e0def4", true)
-    changeCSS("--navbar-font", '"Roboto"', true)
-    changeCSS("--navbar-logo-filter", "invert(0%)", true)
-    changeCSS("--text-color-primary", "#e0def4", true)
-    localStorage.setItem("theme", "dark")
+window.onload = function () {
+  function setCookie (cname, cvalue, exdays) {
+    const d = new Date()
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
+    let expires = 'expires=' + d.toUTCString()
+    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
   }
-  if (selectedOption == "light") {
-    changeCSS("--background-primary", "#d8d8d8", true)
-    changeCSS("--navbar-color", "#a2a2a2", true)
-    changeCSS("--navbar-height", "4em", true)
-    changeCSS("--navbar-text-color", "#000000", true)
-    changeCSS("--input-text-color", "#e0def4", true)
-    changeCSS("--input-placeholder-color", "white", true)
-    changeCSS("--input-background-color", "black", true)
-    changeCSS("--input-border-color", "#eb6f92", true)
-    changeCSS("--input-border-size", "1.3px", true)
-    changeCSS("--navbar-link-color", "#000000", true)
-    changeCSS("--navbar-font", '"Roboto"', true)
-    changeCSS("--navbar-logo-filter", "invert(30%)", true)
-    changeCSS("--text-color-primary", "#303030", true)
-    localStorage.setItem("theme", "light")
+
+  function getCookie (cname) {
+    let name = cname + '='
+    let decodedCookie = decodeURIComponent(document.cookie)
+    let ca = decodedCookie.split(';')
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i]
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1)
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length)
+      }
+    }
+    return ''
   }
-  if (selectedOption == "custom") {
-    let response = prompt("Please enter the code for a custom theme:", "")
-    alert("This feature is not ready yet. Please try again later.")
+  function httpGet (theUrl) {
+    var xmlHttp = new XMLHttpRequest()
+    xmlHttp.open('GET', theUrl, false) // false for synchronous request
+    xmlHttp.send(null)
+    return xmlHttp.responseText
   }
+  if (httpGet('/verification') == 'true') {
+    if (getCookie('verifiedAccess') == '') {
+      console.log('COOKIE NOT FOUND - ENTRY NOT PERMITTED')
+      window.location = '/unv.html'
+    } else {
+      console.log('COOKIE RECOGNIZED - ENTRY PERMITTED ')
+    }
+  }
+  let background = localStorage.getItem('--background-primary')
+  let navbar = localStorage.getItem('--navbar-color')
+  let navbarHeight = localStorage.getItem('--navbar-height')
+  let navbarText = localStorage.getItem('--navbar-text-color')
+  let inputText = localStorage.getItem('--input-text-color')
+  let inputPlaceholder = localStorage.getItem('--input-placeholder-color')
+  let inputBackground = localStorage.getItem('--input-background-color')
+  let inputBorder = localStorage.getItem('--input-border-color')
+  let inputBorderSize = localStorage.getItem('--input-border-size')
+  let navbarFont = localStorage.getItem('--navbar-font')
+  let navbarLink = localStorage.getItem('--navbar-link-color')
+  let navbarLogoFilter = localStorage.getItem('--navbar-logo-filter')
+  let textColorPrimary = localStorage.getItem('--text-color-primary')
+  changeCSS('--background-primary', background)
+  changeCSS('--navbar-color', navbar)
+  changeCSS('--navbar-height', navbarHeight)
+  changeCSS('--navbar-text-color', navbarText)
+  changeCSS('--input-text-color', inputText)
+  changeCSS('--input-placeholder-color', inputPlaceholder)
+  changeCSS('--input-background-color', inputBackground)
+  changeCSS('--input-border-color', inputBorder)
+  changeCSS('--input-border-size', inputBorderSize)
+  changeCSS('--navbar-link-color', navbarLink)
+  changeCSS('--navbar-font', navbarFont)
+  changeCSS('--navbar-logo-filter', navbarLogoFilter)
+  changeCSS('--text-color-primary', textColorPrimary)
 }
 
-function defaultThemes() {}
-
-function changeCSS(variable, value, saveBool) {
+function changeCSS (variable, value, saveBool) {
   document.documentElement.style.setProperty(variable, value)
 
   if (saveBool === true) {
@@ -367,113 +401,31 @@ function changeCSS(variable, value, saveBool) {
   }
 }
 
-function saveCSS(variable, value) {
+function saveCSS (variable, value) {
   localStorage.setItem(variable, value)
 }
 
-window.onload = function () {
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date()
-    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
-    let expires = "expires=" + d.toUTCString()
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"
-  }
-
-  function getCookie(cname) {
-    let name = cname + "="
-    let decodedCookie = decodeURIComponent(document.cookie)
-    let ca = decodedCookie.split(";")
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i]
-      while (c.charAt(0) == " ") {
-        c = c.substring(1)
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length)
-      }
-    }
-    return ""
-  }
-  function httpGet(theUrl) {
-    var xmlHttp = new XMLHttpRequest()
-    xmlHttp.open("GET", theUrl, false) // false for synchronous request
-    xmlHttp.send(null)
-    return xmlHttp.responseText
-  }
-  if (httpGet("/verification") == "true") {
-    if (getCookie("verifiedAccess") == "") {
-      console.log("COOKIE NOT FOUND - ENTRY NOT PERMITTED")
-      window.location = "/unv.html"
-    } else {
-      console.log("COOKIE RECOGNIZED - ENTRY PERMITTED ")
-    }
-  }
-  let background = localStorage.getItem("--background-primary")
-  let navbar = localStorage.getItem("--navbar-color")
-  let navbarHeight = localStorage.getItem("--navbar-height")
-  let navbarText = localStorage.getItem("--navbar-text-color")
-  let inputText = localStorage.getItem("--input-text-color")
-  let inputPlaceholder = localStorage.getItem("--input-placeholder-color")
-  let inputBackground = localStorage.getItem("--input-background-color")
-  let inputBorder = localStorage.getItem("--input-border-color")
-  let inputBorderSize = localStorage.getItem("--input-border-size")
-  let navbarFont = localStorage.getItem("--navbar-font")
-  let navbarLink = localStorage.getItem("--navbar-link-color")
-  let navbarLogoFilter = localStorage.getItem("--navbar-logo-filter")
-  let textColorPrimary = localStorage.getItem("--text-color-primary")
-  changeCSS("--background-primary", background)
-  changeCSS("--navbar-color", navbar)
-  changeCSS("--navbar-height", navbarHeight)
-  changeCSS("--navbar-text-color", navbarText)
-  changeCSS("--input-text-color", inputText)
-  changeCSS("--input-placeholder-color", inputPlaceholder)
-  changeCSS("--input-background-color", inputBackground)
-  changeCSS("--input-border-color", inputBorder)
-  changeCSS("--input-border-size", inputBorderSize)
-  changeCSS("--navbar-link-color", navbarLink)
-  changeCSS("--navbar-font", navbarFont)
-  changeCSS("--navbar-logo-filter", navbarLogoFilter)
-  changeCSS("--text-color-primary", textColorPrimary)
-}
-
-// Resets themes
-function resetViews() {
-  changeCSS("--background-primary", "#191724", true)
-  changeCSS("--navbar-color", "#26233a", true)
-  changeCSS("--navbar-height", "60px", true)
-  changeCSS("--navbar-text-color", "rgb(121 103 221)", true)
-  changeCSS("--navbar-link-color", "#e0def4", true)
-  changeCSS("--navbar-font", '"Roboto"', true)
-  changeCSS("--input-text-color", "#e0def4", true)
-  changeCSS("--input-placeholder-color", "#6e6a86", true)
-  changeCSS("--input-background-color", "#1f1d2e", true)
-  changeCSS("--input-placeholder-color", "white", true)
-  changeCSS("--input-border-color", "#eb6f92", true)
-  changeCSS("--input-border-size", "1.3px", true)
-  return "All views reset"
-}
-
 // Extra logging for support
-function log() {
+function log () {
   setTimeout(
     console.log.bind(
       console,
-      "%cWelcome To Nebula",
-      "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
+      '%cWelcome To Nebula',
+      'background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;'
     )
   )
   setTimeout(
     console.log.bind(
       console,
       "%c If you are seeing this, Nebula's main script has succesfully loaded!",
-      "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      'background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;'
     )
   )
   setTimeout(
     console.log.bind(
       console,
-      "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket",
-      "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      '%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket',
+      'background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;'
     )
   )
   let enabledCookies = navigator.cookieEnabled
@@ -487,235 +439,246 @@ function log() {
   let browserName
   let diagnosticDomain = window.location.href
   if (userAgent.match(/chrome|chromium|crios/i)) {
-    browserName = "chrome"
+    browserName = 'chrome'
   } else if (userAgent.match(/firefox|fxios/i)) {
-    browserName = "firefox"
+    browserName = 'firefox'
   } else if (userAgent.match(/safari/i)) {
-    browserName = "safari"
+    browserName = 'safari'
   } else if (userAgent.match(/opr\//i)) {
-    browserName = "opera"
+    browserName = 'opera'
   } else if (userAgent.match(/edg/i)) {
-    browserName = "edge"
+    browserName = 'edge'
   } else {
-    browserName = "No browser detection"
+    browserName = 'No browser detection'
   }
   setTimeout(
     console.log.bind(
       console,
       `%cInformation: \n URL: ${diagnosticDomain} \n BrowserName: ${browserName} \n IsOnline: ${online} \n agent: ${userAgent}, `,
-      "background: gray;color:#FFF;padding:3px;border-radius: 0px;line-height: 26px; font-size:6px;"
+      'background: gray;color:#FFF;padding:3px;border-radius: 0px;line-height: 26px; font-size:6px;'
     )
   )
 }
 
 log()
+function switchTheme () {
+  var selecter = document.getElementById('themeSwitcher')
+  var selectedOption = selecter.value
+  if (selectedOption == 'dark') {
+    changeCSS('--background-primary', '#191724', true)
+    changeCSS('--navbar-color', '#26233a', true)
+    changeCSS('--navbar-height', '60px', true)
+    changeCSS('--navbar-text-color', '#7967dd', true)
+    changeCSS('--input-text-color', '#e0def4', true)
+    changeCSS('--input-placeholder-color', '#6e6a86', true)
+    changeCSS('--input-background-color', '#1f1d2e', true)
+    changeCSS('--input-placeholder-color', 'white', true)
+    changeCSS('--input-border-color', '#eb6f92', true)
+    changeCSS('--input-border-size', '1.3px', true)
+    changeCSS('--navbar-link-color', '#e0def4', true)
+    changeCSS('--navbar-font', '"Roboto"', true)
+    changeCSS('--navbar-logo-filter', 'invert(0%)', true)
+    changeCSS('--text-color-primary', '#e0def4', true)
+    localStorage.setItem('theme', 'dark')
+  }
+  if (selectedOption == 'light') {
+    changeCSS('--background-primary', '#d8d8d8', true)
+    changeCSS('--navbar-color', '#a2a2a2', true)
+    changeCSS('--navbar-height', '4em', true)
+    changeCSS('--navbar-text-color', '#000000', true)
+    changeCSS('--input-text-color', '#e0def4', true)
+    changeCSS('--input-placeholder-color', 'white', true)
+    changeCSS('--input-background-color', 'black', true)
+    changeCSS('--input-border-color', '#eb6f92', true)
+    changeCSS('--input-border-size', '1.3px', true)
+    changeCSS('--navbar-link-color', '#000000', true)
+    changeCSS('--navbar-font', '"Roboto"', true)
+    changeCSS('--navbar-logo-filter', 'invert(30%)', true)
+    changeCSS('--text-color-primary', '#303030', true)
+    localStorage.setItem('theme', 'light')
+  }
+  if (selectedOption == 'custom') {
+    let response = prompt('Please enter the code for a custom theme:', '')
+    alert('This feature is not ready yet. Please try again later.')
+  }
+}
 
-// Notification Banners
-// "Saved" notification
-function saveIc() {
-  console.log("Checked")
-  var notification = `
-            <div class="notification-container" id="notification-container">
-            <div class="notification notification-success">
-                <strong>Success!</strong> Your settings have been saved!
-            </div>
-        </div>
-        `
-  document.getElementById("notifhere").innerHTML = notification
-  setTimeout(() => {
-    var NotificationOBJ = document.getElementById("notifhere")
-  }, 2000)
-}
-// The "You have unsaved changes" banner. You can remove this but it isn't recommended
-function unsavedChanges() {
-  var notification = `
-    <div class="notification-container" id="notification-container">
-    <div class="notification notification-danger" id="notification-container">
-    <strong>Danger!</strong> You have unsaved changes!
-</div>
-</div>
-        `
-  document.getElementById("notifhere").innerHTML = notification
-  setTimeout(() => {
-    var NotificationOBJ = document.getElementById("notifhere")
-  }, 2000)
-}
 // Adjectives and surnames for a more advanced stealth engine.
 // Used together to generate random names for the tab name
 const adjectives = [
-    "admiring",
-    "adoring",
-    "affectionate",
-    "agitated",
-    "amazing",
-    "angry",
-    "awesome",
-    "beautiful",
-    "blissful",
-    "bold",
-    "boring",
-    "brave",
-    "busy",
-    "charming",
-    "clever",
-    "cool",
-    "compassionate",
-    "competent",
-    "condescending",
-    "confident",
-    "cranky",
-    "crazy",
-    "dazzling",
-    "determined",
-    "distracted",
-    "dreamy",
-    "eager",
-    "ecstatic",
-    "elastic",
-    "elated",
-    "elegant",
-    "eloquent",
-    "epic",
-    "exciting",
-    "fervent",
-    "festive",
-    "flamboyant",
-    "focused",
-    "friendly",
-    "frosty",
-    "funny",
-    "gallant",
-    "gifted",
-    "goofy",
-    "gracious",
-    "great",
-    "happy",
-    "hardcore",
-    "heuristic",
-    "hopeful",
-    "hungry",
-    "infallible",
-    "inspiring",
-    "interesting",
-    "intelligent",
-    "jolly",
-    "jovial",
-    "keen",
-    "kind",
-    "laughing",
-    "loving",
-    "lucid",
-    "magical",
-    "mystifying",
-    "modest",
-    "musing",
-    "naughty",
-    "nervous",
-    "nice",
-    "nifty",
-    "nostalgic",
-    "objective",
-    "optimistic",
-    "peaceful",
-    "pedantic",
-    "pensive",
-    "practical",
-    "priceless",
-    "quirky",
-    "quizzical",
-    "recursing",
-    "relaxed",
-    "reverent",
-    "romantic",
-    "sad",
-    "serene",
-    "sharp",
-    "silly",
-    "sleepy",
-    "stoic",
-    "strange",
-    "stupefied",
-    "suspicious",
-    "sweet",
-    "tender",
-    "thirsty",
-    "trusting",
-    "unruffled",
-    "upbeat",
-    "vibrant",
-    "vigilant",
-    "vigorous",
-    "wizardly",
-    "wonderful",
-    "xenodochial",
-    "youthful",
-    "zealous",
-    "zen",
+    'admiring',
+    'adoring',
+    'affectionate',
+    'agitated',
+    'amazing',
+    'angry',
+    'awesome',
+    'beautiful',
+    'blissful',
+    'bold',
+    'boring',
+    'brave',
+    'busy',
+    'charming',
+    'clever',
+    'cool',
+    'compassionate',
+    'competent',
+    'condescending',
+    'confident',
+    'cranky',
+    'crazy',
+    'dazzling',
+    'determined',
+    'distracted',
+    'dreamy',
+    'eager',
+    'ecstatic',
+    'elastic',
+    'elated',
+    'elegant',
+    'eloquent',
+    'epic',
+    'exciting',
+    'fervent',
+    'festive',
+    'flamboyant',
+    'focused',
+    'friendly',
+    'frosty',
+    'funny',
+    'gallant',
+    'gifted',
+    'goofy',
+    'gracious',
+    'great',
+    'happy',
+    'hardcore',
+    'heuristic',
+    'hopeful',
+    'hungry',
+    'infallible',
+    'inspiring',
+    'interesting',
+    'intelligent',
+    'jolly',
+    'jovial',
+    'keen',
+    'kind',
+    'laughing',
+    'loving',
+    'lucid',
+    'magical',
+    'mystifying',
+    'modest',
+    'musing',
+    'naughty',
+    'nervous',
+    'nice',
+    'nifty',
+    'nostalgic',
+    'objective',
+    'optimistic',
+    'peaceful',
+    'pedantic',
+    'pensive',
+    'practical',
+    'priceless',
+    'quirky',
+    'quizzical',
+    'recursing',
+    'relaxed',
+    'reverent',
+    'romantic',
+    'sad',
+    'serene',
+    'sharp',
+    'silly',
+    'sleepy',
+    'stoic',
+    'strange',
+    'stupefied',
+    'suspicious',
+    'sweet',
+    'tender',
+    'thirsty',
+    'trusting',
+    'unruffled',
+    'upbeat',
+    'vibrant',
+    'vigilant',
+    'vigorous',
+    'wizardly',
+    'wonderful',
+    'xenodochial',
+    'youthful',
+    'zealous',
+    'zen'
   ],
   surnames = [
-    "albattani",
-    "allen",
-    "almeida",
-    "antonelli",
-    "agnesi",
-    "archimedes",
-    "ardinghelli",
-    "aryabhata",
-    "austin",
-    "babbage",
-    "banach",
-    "banzai",
-    "bardeen",
-    "bartik",
-    "bassi",
-    "beaver",
-    "bell",
-    "benz",
-    "bhabha",
-    "bhaskara",
-    "black",
-    "blackburn",
-    "blackwell",
-    "bohr",
-    "booth",
-    "borg",
-    "bose",
-    "bouman",
-    "boyd",
-    "brahmagupta",
-    "brattain",
-    "brown",
-    "buck",
-    "burnell",
-    "cannon",
-    "carson",
-    "cartwright",
-    "carver",
-    "cerf",
-    "chandrasekhar",
+    'albattani',
+    'allen',
+    'almeida',
+    'antonelli',
+    'agnesi',
+    'archimedes',
+    'ardinghelli',
+    'aryabhata',
+    'austin',
+    'babbage',
+    'banach',
+    'banzai',
+    'bardeen',
+    'bartik',
+    'bassi',
+    'beaver',
+    'bell',
+    'benz',
+    'bhabha',
+    'bhaskara',
+    'black',
+    'blackburn',
+    'blackwell',
+    'bohr',
+    'booth',
+    'borg',
+    'bose',
+    'bouman',
+    'boyd',
+    'brahmagupta',
+    'brattain',
+    'brown',
+    'buck',
+    'burnell',
+    'cannon',
+    'carson',
+    'cartwright',
+    'carver',
+    'cerf',
+    'chandrasekhar'
   ]
 
 // Random number generator
 // Dependency of getRandomName function
-function getRandomNumber(min, max) {
+function getRandomNumber (min, max) {
   return Math.floor(Math.random() * (max - min) + min)
 }
 
 // Random name generator
-function getRandomName() {
+function getRandomName () {
   const random1 = getRandomNumber(0, adjectives.length)
   const random2 = getRandomNumber(0, surnames.length)
   const adjective = adjectives[random1]
   const surname = surnames[random2]
   // Connect the adjective and surname together to create a random name
-  const randomName = adjective + "-" + surname
+  const randomName = adjective + '-' + surname
   // Return it so it can be called later as a variable for the Tab Name.
   return randomName
 }
 
 // Check if the Browser variable is undefined
 // This is unused as of now but it could be used for better cloaking in the future, specifically with activeTab
-if (typeof browser === "undefined") {
+if (typeof browser === 'undefined') {
   // Initialize the browser variable
   var browser = chrome
 }
@@ -723,39 +686,38 @@ browser = chrome
 
 // Clickoff cloaking
 // This function is called as a callback during the event listener
-function handleTabLeave() {
+function handleTabLeave () {
   var link = document.querySelector("link[rel~='icon']")
-  if (localStorage.getItem("ADVcloak") == "on") {
-    if (document.title == "Nebula") {
+  if (localStorage.getItem('ADVcloak') == 'on') {
+    if (document.title == 'Nebula') {
       if (!link) {
-        link = document.createElement("link")
-        link.rel = "icon"
-        document.getElementsByTagName("head")[0].appendChild(link)
+        link = document.createElement('link')
+        link.rel = 'icon'
+        document.getElementsByTagName('head')[0].appendChild(link)
       }
       link.href =
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo7AE3IF34XPGyseQjkXIOsWXpkZiLlMjSAwySjcJSPAwlv3hnGKi1&usqp=CAU"
-      document.title = "Google"
-    } else if (document.title == "Google") {
-      document.title = "Nebula"
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo7AE3IF34XPGyseQjkXIOsWXpkZiLlMjSAwySjcJSPAwlv3hnGKi1&usqp=CAU'
+      document.title = 'Google'
+    } else if (document.title == 'Google') {
+      document.title = 'Nebula'
       if (!link) {
-        link = document.createElement("link")
-        link.rel = "icon"
-        document.getElementsByTagName("head")[0].appendChild(link)
+        link = document.createElement('link')
+        link.rel = 'icon'
+        document.getElementsByTagName('head')[0].appendChild(link)
       }
       link.href =
-        "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67"
+        'https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67'
     } else {
       return false
     }
   }
 }
 // Create and Add the event listener
-document.addEventListener("visibilitychange", handleTabLeave)
-
+document.addEventListener('visibilitychange', handleTabLeave)
 
 const stealthStored = localStorage.getItem('nogg')
-function link(_link) {
-  if (stealthStored == "on") {
+function link (_link) {
+  if (stealthStored == 'on') {
     let inFrame
     try {
       inFrame = window !== top
@@ -763,33 +725,35 @@ function link(_link) {
       inFrame = true
     }
     setTimeout(() => {
-      if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-        const popup = open("about:blank", "_blank")
+      if (!inFrame && !navigator.userAgent.includes('Firefox')) {
+        const popup = open('about:blank', '_blank')
         if (!popup || popup.closed) {
-          alert("Popups are disabled!")
+          alert('Popups are disabled!')
         } else {
           const doc = popup.document
-          const iframe = doc.createElement("iframe")
+          const iframe = doc.createElement('iframe')
           const style = iframe.style
-          const img = doc.createElement("link")
+          const img = doc.createElement('link')
           const link = location.href
-          img.rel = "icon"
+          img.rel = 'icon'
           img.href =
-            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+            'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png'
           doc.title = getRandomName()
           var currentLink = _link.slice(0, _link.length - 1)
           iframe.src =
-            location.origin + "/service/go/" + __uv$config.encodeUrl(currentLink)
-          style.position = "fixed"
+            location.origin +
+            '/service/go/' +
+            __uv$config.encodeUrl(currentLink)
+          style.position = 'fixed'
           style.top = style.bottom = style.left = style.right = 0
-          style.border = style.outline = "none"
-          style.width = style.height = "100%"
+          style.border = style.outline = 'none'
+          style.width = style.height = '100%'
           doc.body.appendChild(iframe)
         }
       }
     }, 0200)
   } else {
     location.href =
-      "service/go/" + __uv$config.encodeUrl("https://radon.games/")
+      'service/go/' + __uv$config.encodeUrl('https://radon.games/')
   }
 }
