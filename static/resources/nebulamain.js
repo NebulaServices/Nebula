@@ -19,6 +19,12 @@ function closeNav() {
 window.addEventListener("load", () => {
   // Register the service workers for Osana and Ultraviolet proxy protocols
   // This is a better method than registering onsubmit because this allows the ability to use proxied links on the main page.
+
+  if (localStorage.getItem("_BareLocation") == undefined || localStorage.getItem("_BareLocation") == null) { 
+    localStorage.setItem("_BareLocation", "/bare/")
+  }
+  
+
   navigator.serviceWorker.register("./sw.js", {
     scope: "/service/",
   })
@@ -65,7 +71,10 @@ window.addEventListener("load", () => {
     return time
   }
   // initialize the time function
+  
+  if (window.location.pathname == "/"){
   displayTime()
+  }
 
   // Link evaluation
   // This functions' purpose is to check a string of text (the argument)
@@ -83,6 +92,7 @@ window.addEventListener("load", () => {
   const proxy = localStorage.getItem("proxy") || "uv"
   const inpbox = document.querySelector("form")
   // Display the "loading" indicators on the main page, looks much better than a static/still screen.
+  
   inpbox.addEventListener("submit", (event) => {
     // Prevents the default event tasks
     event.preventDefault()
