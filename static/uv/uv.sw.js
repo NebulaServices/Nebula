@@ -205,8 +205,12 @@ getBareLocation().then(bareLocation => {
             });
 
         } catch(err) {
+            console.error(err);
             return new Response(err.toString(), {
                 status: 500,
+                headers: {
+                    'x-uv-error': err,
+                }
             });
         };
     };
