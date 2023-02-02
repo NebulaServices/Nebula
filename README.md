@@ -87,7 +87,7 @@ When a user tries to access the website, before allowed access they will be aske
 
 #### SendGrid Setup Instructions
 * Firstly, We need to enable verification within the deployment configuration
-	* change `"verification":false,` to `"verification":true,` under the SendGrid Section
+	* change `"sendgrid_verification":false,` to `"sendgrid_verification":true,` above the SendGrid Section
 
 	* _Note: You have to reboot the node app for any changes to take place._
 * Now, we need to use an api to send a message 
@@ -105,13 +105,13 @@ When a user tries to access the website, before allowed access they will be aske
 * Click the Edit Channel button. 
 * Click Integrations
 * Click create web hook and copy the URL.
-* Paste it under the webhook_url section in the deployment configuration.
+* Paste it under the `webhook_url` section in the deployment configuration.
 
 #### SMTP Setup Instructions 
-* Set smtp_verification to true.
+* Set `smtp_verification` to true.
 * Change `to_email` to the email address you want the codes to be sent to.
 * Change `sendFromEmail to the email address that is going to send the codes.
-* Get the host, port from your email provider's documentation.
+* Get the host and port from your email provider's documentation.
 * Fill in your username and password under the `user` and `pass` section under auth.
 	
   
