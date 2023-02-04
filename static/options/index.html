@@ -12,7 +12,6 @@
       <!-- Embed -->
       
       <script src="../uv/uv.bundle.js"></script>
-      <script src="../resources/appModules/BareSwitcher.js"></script>
       <script src="../resources/options.js"></script>
       <meta name="theme-color" content="#5a189a">
       <meta property=og:title content=Nebula>
@@ -142,13 +141,6 @@
             </label>
          </div>
          <div class="settings-cont">
-            <p class="name" style="font-size: 24px;"> Bare location </p>
-            <p class="description">Choose the location where a bare server is hosted. </p>
-            <input id="bareLocationInput" class="bareLocationInput" type="url">
-          <p id="validIndicator" class="bareValidSignal" > </p>
-            </label>
-         </div>
-         <div class="settings-cont">
             <p class="name"> Misc </p>
             <p class="description"></p>
             <a href="#view-acknowledgements" class="button-save"> View acknowledgements</a>
@@ -187,11 +179,6 @@ if (cloakStored == "on") {
 }
 themeSelector.value = themeStored
 proxySel.value = proxyStored
-
-getBareLocation().then(bareLocation => {
-document.getElementById("bareLocationInput").value = bareLocation;
-});
-
       </script>
    </body>
 </html>
