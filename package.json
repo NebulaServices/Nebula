@@ -1,25 +1,25 @@
 {
-    "name": "nebula-web",
-    "version": "7.11.6",
-    "description": "Explore the web. Freely.",
-    "type": "module",
-    "main": "app.js",
-    "scripts": {
-        "start": "node app.js"
-    },
-    "keywords": [
-        "proxy"
-    ],
-    "author": "Nebula Services",
-    "license": "AGPL-3.0-only",
-    "dependencies": {
-        "@tomphttp/bare-server-node": "^1.2.2",
-        "node-fetch": "^3.3.0",
-        "nodemailer": "^6.8.0",
-        "nodemailer-sendgrid-transport": "^0.2.0",
-        "serve-static": "^1.15.0"
-    },
-    "engines": {
-        "node": ">=16.0.0"
-    }
+  "name": "nebula-web",
+  "version": "7.11.6",
+  "description": "Explore the web. Freely.",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "proxy"
+  ],
+  "author": "Nebula Services",
+  "license": "AGPL-3.0-only",
+  "dependencies": {
+    "@tomphttp/bare-server-node": "^1.2.2",
+    "node-fetch": "^3.3.0",
+    "nodemailer": "^6.8.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "serve-static": "^1.15.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
