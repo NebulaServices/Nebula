@@ -20,6 +20,6 @@
     "serve-static": "^1.15.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18"
   }
 }

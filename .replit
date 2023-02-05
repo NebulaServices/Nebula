@@ -1,18 +1,30 @@
+entrypoint = "app.js"
 
-hidden = [".config"]
-run = "npm start"
+hidden = [".config", "package-lock.json"]
+
+[interpreter]
+command = [
+    "prybar-nodejs",
+    "-q",
+    "--ps1",
+    "\u0001\u001b[33m\u0002\u0001\u001b[00m\u0002 ",
+    "-i"
+]
 
 [[hints]]
 regex = "Error \\[ERR_REQUIRE_ESM\\]"
 message = "We see that you are using require(...) inside your code. We currently do not support this syntax. Please use 'import' instead when using external modules. (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)"
 
 [nix]
-channel = "stable-21_11"
+channel = "stable-22_11"
 
 [env]
 XDG_CONFIG_HOME = "/home/runner/.config"
 PATH = "/home/runner/$REPL_SLUG/.config/npm/node_global/bin:/home/runner/$REPL_SLUG/node_modules/.bin"
 npm_config_prefix = "/home/runner/$REPL_SLUG/.config/npm/node_global"
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix", ".config", "package.json", "package-lock.json"]
 
 [packager]
 language = "nodejs"
@@ -24,12 +36,6 @@ language = "nodejs"
 
 [unitTest]
 language = "nodejs"
-
-[languages.javascript]
-pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
-
-  [languages.javascript.languageServer]
-  start = [ "typescript-language-server", "--stdio" ]
 
 [debugger]
 support = true
@@ -70,3 +76,11 @@ support = true
       sourceMaps = true
       stopOnEntry = false
       type = "pwa-node"
+
+[languages]
+
+[languages.javascript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+
+[languages.javascript.languageServer]
+start = "typescript-language-server --stdio"
