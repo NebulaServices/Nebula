@@ -54,12 +54,28 @@ Table of contents
 ## Deployment Configuration Guide 
 (Example configuration with none-json notes) 
 ```json
-{ 
-  "verification": false, // disabled by default 
-  "api_key":" Your sendgrid API key used to access your account from the API to send emails",
-  "sendFromEmail":"The email that will send the one time password (MUST BE VERIFIED IN SENDGRID)",
-  "type": "code", // DO NOT TOUCH
-  "email": " The email you want to use for recieving OTP "
+{
+  "sendgrid_verification": false,
+  "sendgrid_options": {
+      "api_key": "YOUR_SENDGRID_API_KEY",
+      "sendFromEmail": "THE EMAIL THE CODES WILL BE SENT FROM (MUST BE VERIFIED IN SENDGRID)",
+      "to_email": "THE EMAIL YOU WANT THE CODES SENT TO"
+  },
+
+  "discord_verification": false,
+  "webhook_url": "YOUR DISCORD WEBHOOK URL",
+
+  "smtp_verification": false,
+  "smtp_options": {
+    "to_email": "THE EMAIL YOU WANT THE CODES SENT TO",
+    "sendFromEmail": "THE EMAIL THE CODES ARE SENT FROM",
+    "host": "YOUR SMTP HOST",
+    "port": 465,
+    "auth": {
+      "user": "SMTP USER",
+      "pass": "YOUR PASSWORD"
+    }
+  }
 }
 ```
 
@@ -69,8 +85,10 @@ Email verification is a new and unique feature that we've implemented in the eve
 ### What does it do
 When a user tries to access the website, before allowed access they will be asked for a One time password sent to an email set in the deployment configuration. Once verified, they will have 15 day access to the site. 
 
+#### SendGrid Setup Instructions
 * Firstly, We need to enable verification within the deployment configuration
-	* change `"verification":false,` to `"verification":true,` 
+	* change `"sendgrid_verification":false,` to `"sendgrid_verification":true,` above the SendGrid Section
+
 	* _Note: You have to reboot the node app for any changes to take place._
 * Now, we need to use an api to send a message 
 	* Make an account at Sendgrid (https://app.sendgrid.com/)
@@ -79,7 +97,22 @@ When a user tries to access the website, before allowed access they will be aske
 	* Go to settings -> Sender authentication and click Verify a Single Sender
 * Now, We need to get the API key to connect to the API 
 	* Go to settings -> API Keys -> and make an API key. 
-* Complete the information in the deployment config `deployment.config.json` such as: 
+* Complete the information in the deployment config `deployment.config.json` under the `sendgrid_options` section such as: sendFromEmail, to_email and api_key 
+
+#### Discord Webhook Setup Instructions
+* Set discord_verification to true in the deployment configuration.
+* Create a channel in a discord server you have admin in.
+* Click the Edit Channel button. 
+* Click Integrations
+* Click create web hook and copy the URL.
+* Paste it under the `webhook_url` section in the deployment configuration.
+
+#### SMTP Setup Instructions 
+* Set `smtp_verification` to true.
+* Change `to_email` to the email address you want the codes to be sent to.
+* Change `sendFromEmail to the email address that is going to send the codes.
+* Get the host and port from your email provider's documentation.
+* Fill in your username and password under the `user` and `pass` section under auth.
 	
   
 ## Advanced Deployment 
