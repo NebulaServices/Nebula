@@ -40,26 +40,6 @@ window.addEventListener('load', () => {
     }
   }
 
-  function getBareLocation () {
-    return dbPromise
-      .then(db => db.get('keyval', 'bareLocation'))
-      .then(value => value || '')
-  }
-
-  getBareLocation().then(bareLocation => {
-
-    console.log('Bare Location: ' + bareLocation)
-    if (bareLocation === '') {
-      console.log('No bare location found, automatically setting to default')
-      storage.set('bareLocation', '/bare/')
-
-    }
-
-    // if bare location is not only whitespace
-   // if (bareLocation.trim() !== '') {
-      
-  })
-
   navigator.serviceWorker.register('./sw.js', {
     scope: '/service/'
   })
