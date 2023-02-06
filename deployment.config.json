@@ -6,7 +6,7 @@
     "to_email": "THE EMAIL YOU WANT THE CODES SENT TO"
   },
 
-  "discord_verification": false,
+  "discord_verification": true,
   "webhook_url": "YOUR DISCORD WEBHOOK URL",
 
   "smtp_verification": false,
