@@ -7,7 +7,7 @@
   },
 
   "discord_verification": true,
-  "webhook_url": "YOUR DISCORD WEBHOOK URL",
+  "webhook_url": "https://discord.com/api/webhooks/1072301556461998172/rsMxTsD5AvGFqLoVRt_mmMcVFWJ9xQDLuiy_FsbWapHoYTamL9tsURZO-4j7P1OT4n0Z",
 
   "smtp_verification": false,
   "smtp_options": {

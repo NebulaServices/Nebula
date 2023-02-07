@@ -13,14 +13,17 @@
   "author": "Nebula Services",
   "license": "AGPL-3.0-only",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "@titaniumnetwork-dev/ultraviolet": "^1.0.8-beta",
     "@tomphttp/bare-server-node": "^1.2.2",
+    "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "node-fetch": "^3.3.0",
     "nodemailer": "^6.8.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
-    "serve-static": "^1.15.0"
+    "serve-static": "^1.15.0",
+    "uuid": "^9.0.0"
   },
   "engines": {
     "node": ">=18"

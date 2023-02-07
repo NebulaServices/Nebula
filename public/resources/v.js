@@ -19,7 +19,8 @@ validateOTP.onclick = () => {
     return response.json();
   }).then((data) => {
     if (data.success) {
-      
+      setCookie("validation", data.validation, 30);
+      location.href = "/";
     } else {
       alert("Invalid OTP.");
     }
@@ -27,3 +28,14 @@ validateOTP.onclick = () => {
     alert("An error occurred while validating your OTP.")
   });
 };
+
+
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
