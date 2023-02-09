@@ -6,8 +6,8 @@
     "to_email": "THE EMAIL YOU WANT THE CODES SENT TO"
   },
 
-  "discord_verification": true,
-  "webhook_url": "https://discord.com/api/webhooks/1072301556461998172/rsMxTsD5AvGFqLoVRt_mmMcVFWJ9xQDLuiy_FsbWapHoYTamL9tsURZO-4j7P1OT4n0Z",
+  "discord_verification": false,
+  "webhook_url": "YOUR DISCORD WEBHOOK URL",
 
   "smtp_verification": false,
   "smtp_options": {
