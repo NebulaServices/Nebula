@@ -310,42 +310,6 @@ if (storedSetTheme == null) {
 }
 
 window.onload = function () {
-  function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
-  function httpGet(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, false); // false for synchronous request
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
-  }
-  if (httpGet("/verification") == "true") {
-    if (getCookie("verifiedAccess") == "") {
-      console.log("COOKIE NOT FOUND - ENTRY NOT PERMITTED");
-      window.location = "/unv.html";
-    } else {
-      console.log("COOKIE RECOGNIZED - ENTRY PERMITTED ");
-    }
-  }
   let background = localStorage.getItem("--background-primary");
   let navbar = localStorage.getItem("--navbar-color");
   let navbarHeight = localStorage.getItem("--navbar-height");

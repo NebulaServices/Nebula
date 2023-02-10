@@ -1,162 +1,209 @@
+import express from "express";
+import cookieParser from "cookie-parser";
+import http from "node:http";
 import createBareServer from "@tomphttp/bare-server-node";
-import http from "http";
-import { createRequire } from "module";
-import { dirname, join } from "path";
-import serveStatic from "serve-static";
-import { fileURLToPath } from "url";
-const require = createRequire(import.meta.url);
-const config = require("./deployment.config.json");
-import fs from "fs";
-var base64data;
-import sgTransport from "nodemailer-sendgrid-transport";
+import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import path from "node:path";
+import config from "./deployment.config.json" assert { type: "json" };
+import sgMail from "@sendgrid/mail";
 import nodemailer from "nodemailer";
-import fetch from "node-fetch";
-const options = {
-  auth: {
-    api_key: config.sendgrid_options.api_key
-  }
-};
-const sendgridMailerAgent = nodemailer.createTransport(sgTransport(options));
-const smtpMailerAgent = nodemailer.createTransport(config.smtp_options);
-function sendVerificationEmail(UUID, OTP) {
-  let email = {
-    to: "",
-    from: "",
-    subject: `NebulaWEB personal access code ${OTP}`,
-    text: `
- ####### ACCESS CODE (OTP) ${OTP} #######
- ####### DO NOT SHARE THIS CODE!  ####### 
-  (this message is automated)`,
-    html: `
-    ####### ACCESS CODE (OTP) ${OTP} #######
- ####### DO NOT SHARE THIS CODE!  ####### 
-  (this message is automated)
-  `
-  };
-  if (config.sendgrid_verification == true) {
-    email.to = config.sendgrid_options.to_email;
-    email.from = config.sendgrid_options.sendFromEmail;
-    sendgridMailerAgent.sendMail(email, (err, res) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(res);
-    });
-  }
-  if (config.smtp_verification == true) {
-    email.to = config.smtp_options.to_email;
-    email.from = config.smtp_options.sendFromEmail;
-    smtpMailerAgent.sendMail(email, (err, res) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log(res);
-    });
-  }
-  if (config.discord_verification == true) {
-    fetch(config.webhook_url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        content: `Your NebulaWEB access code is ${OTP}`
-      })
-    });
-  }
-}
-
-function getNewCode() {
-  var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
-  if (seq == "0") {
-    getNewCode();
-  }
-  return seq;
-}
+import * as uuid from "uuid";
+import fs from "node:fs";
+import bcrypt from "bcrypt";
 
 const PORT = process.env.PORT || 3000;
-const bareServer = createBareServer("/bare/", {
-  logErrors: false,
-  localAddress: undefined
-});
-
-const serve = serveStatic(
-  join(dirname(fileURLToPath(import.meta.url)), "static/"),
-  {
-    fallthrough: false,
-    maxAge: 5 * 60 * 1000
-  }
-);
+const __dirname = process.cwd();
+const ACTIVE_CODES = new Set();
+let TOKENS = fs
+  .readFileSync("./memory.txt", "utf-8")
+  .trim()
+  .split("\n")
+  .map((token) => {
+    const parts = token.split(":");
+    return {
+      id: parts[0],
+      token: parts[1],
+      expiration: parts[2]
+    };
+  });
 
 const server = http.createServer();
+const app = express(server);
+const bareServer = createBareServer("/bare/");
 
-server.on("request", (request, response) => {
-  try {
-    if (bareServer.shouldRoute(request)) {
-      bareServer.routeRequest(request, response);
-    } else {
-      let base64data;
-      const url = request.url;
-      if (url.startsWith("/sendNewCode")) {
-        const OTP = getNewCode();
-        fs.writeFile("./memory.txt", OTP, function (err) {
-          if (err) return console.log(err);
-          console.log(`Wrote OTP code to temp file`);
-        });
+// Middleware
+app.use(cookieParser());
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+);
 
-        fs.readFile("./memory.txt", "utf8", (err, data) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          console.log(data);
+// Verification
+app.patch("/generate-otp", async (req, res) => {
+  if (
+    config.sendgrid_verification == true ||
+    config.discord_verification == true ||
+    config.smtp_verificaton == true
+  ) {
+    const OTP = generateCode();
+    ACTIVE_CODES.add(OTP);
 
-          sendVerificationEmail("10", data);
-          let buff = new Buffer(data);
-          base64data = buff.toString("base64");
-          console.log("302");
-          response.writeHead(302, {
-            location: "/unv.html?c=" + base64data
-          });
-          response.end();
-        });
-      } else if (url.startsWith("/verification")) {
-        var body;
-        if (
-          config.sendgrid_verification == true ||
-          config.discord_verification == true ||
-          config.smtp_verificaton == true
-        ) {
-          const body = "true";
-          response.writeHead(200, {
-            "Content-Length": Buffer.byteLength(body),
-            "Content-Type": "text/plain"
-          });
-          response.end(body);
-        } else {
-          const body = "false";
-          response.writeHead(200, {
-            "Content-Length": Buffer.byteLength(body),
-            "Content-Type": "text/plain"
-          });
-          response.end(body);
-        }
-      } else {
-        serve(request, response, (err) => {
-          response.writeHead(err?.statusCode || 500, null, {
-            "Content-Type": "text/plain"
-          });
-          response.end(err?.stack);
-        });
+    setTimeout(() => {
+      ACTIVE_CODES.delete(OTP);
+    }, 1000 * 60 * 5);
+
+    let email = {
+      to: "",
+      from: "",
+      subject: `NebulaWEB personal access code ${OTP}`,
+      text: `
+ ####### ACCESS CODE (OTP) ${OTP} #######
+ ####### DO NOT SHARE THIS CODE!  ####### 
+  (this message is automated)`
+    };
+
+    if (config.sendgrid_verification == true) {
+      sgMail.setApiKey(config.sendgrid_options.api_key);
+
+      email.to = config.sendgrid_options.to_email;
+      email.from = config.sendgrid_options.sendFromEmail;
+      try {
+        await sgMail.send(msg);
+      } catch {
+        return res.status(504).end();
       }
     }
-  } catch (e) {
-    response.writeHead(500, "Internal Server Error", {
-      "Content-Type": "text/plain"
-    });
-    response.end(e.stack);
+
+    if (config.smtp_verification == true) {
+      const smtpMailerAgent = nodemailer.createTransport(config.smtp_options);
+
+      email.to = config.smtp_options.to_email;
+      email.from = config.smtp_options.sendFromEmail;
+      try {
+        smtpMailerAgent.sendMail(email);
+      } catch {
+        return res.status(504).end();
+      }
+    }
+
+    if (config.discord_verification == true) {
+      try {
+        await fetch(config.webhook_url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            content: `Your NebulaWEB access code is \`${OTP}\``
+          })
+        });
+      } catch {
+        return res.status(500).end();
+      }
+    }
+
+    res.status(200).end();
+  } else {
+    res.status(404).end();
   }
 });
+
+function generateCode() {
+  const code = Math.floor(Math.random() * 1000000);
+  return code.toString().padStart(6, "0");
+}
+
+app.post("/validate-otp", (req, res) => {
+  if (
+    config.sendgrid_verification == true ||
+    config.discord_verification == true ||
+    config.smtp_verificaton == true
+  ) {
+    const OTP = req.body.otp;
+
+    if (ACTIVE_CODES.has(OTP)) {
+      ACTIVE_CODES.delete(OTP);
+
+      const token = uuid.v4();
+
+      TOKENS.push({
+        id: OTP,
+        token: hash(token),
+        expiration: Date.now() + 1000 * 60 * 60 * 24 * 30
+      });
+
+      fs.writeFileSync(
+        "./memory.txt",
+        TOKENS.map((token) => {
+          return `${token.id}:${token.token}:${token.expiration}`;
+        }).join("\n"),
+        "utf-8"
+      );
+
+      res.status(200).json({
+        success: true,
+        validation: `${OTP}:${token}`
+      });
+    } else {
+      res.status(401).json({
+        success: false
+      });
+    }
+  } else {
+    res.status(404).end();
+  }
+});
+
+// Static files
+app.use("/uv/", express.static(uvPath));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Login route
+app.get("/login", (req, res) => {
+  if (
+    config.sendgrid_verification == true ||
+    config.discord_verification == true ||
+    config.smtp_verificaton == true
+  ) {
+    res.sendFile(path.join(__dirname, "src", "unv.html"));
+  } else {
+    res.redirect("/");
+  }
+});
+
+// General Routes
+app.use((req, res, next) => {
+  const verification = req.cookies["validation"];
+  if (!verification || !validateToken(verification)) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "index.html"));
+});
+
+app.get("/options", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "options.html"));
+});
+
+app.get("/privacy", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "privacy.html"));
+});
+
+// Bare Server
+server.on("request", (req, res) => {
+  if (bareServer.shouldRoute(req)) {
+    bareServer.routeRequest(req, res);
+  } else {
+    app(req, res);
+  }
+});
+
 server.on("upgrade", (req, socket, head) => {
   if (bareServer.shouldRoute(req)) {
     bareServer.routeUpgrade(req, socket, head);
@@ -165,14 +212,31 @@ server.on("upgrade", (req, socket, head) => {
   }
 });
 
-server.listen(PORT);
+server.on("listening", () => {
+  console.log(`Server running at http://localhost:${PORT}/.`);
+});
 
-if (process.env.UNSAFE_CONTINUE)
-  process.on("uncaughtException", (err, origin) => {
-    console.error(`Critical error (${origin}):`);
-    console.error(err);
-    console.error("UNSAFELY CONTINUING EXECUTION");
-    console.error();
-  });
+server.listen({
+  port: PORT
+});
 
-console.log(`Server running at http://localhost:${PORT}/.`);
+function hash(token) {
+  const salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(token, salt);
+}
+
+function validateToken(verification) {
+  console.log(verification);
+  const [id, token] = verification.split(":");
+  const tokenData = TOKENS.find((token) => token.id == id);
+
+  if (!tokenData) {
+    return false;
+  }
+
+  if (tokenData.expiration < Date.now()) {
+    return false;
+  }
+
+  return bcrypt.compareSync(token, tokenData.token);
+}
