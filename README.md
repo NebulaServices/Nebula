@@ -172,21 +172,21 @@ _Note: Server will need to run` cd Nebula && sudo nohup PORT=80 node . &` on reb
 
 | **File**                         | Purpose                                                                                                  |     |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------- | --- |
-| `static/index.html`              | The main frontend visuals for NebulaWEB.                                                                 |     |
-| `static/unv.html`                | The verification-required frontend/visuals.                                                              |     |
-| `static/options/`                | The frontend for Nebula's options, settings, and preferences.                                            |     |
-| `static/resources/v.js`          | Client verification system for the OTP system.                                                           |     |
-| `static/resources/nebulamain.js` | All of the DOM/client code for NebulaWEB. Includes options, themeSystem, cloak, stealthengine, and more. |     |
+| `src/index.html`                 | The main frontend visuals for NebulaWEB.                                                                 |     |
+| `src/unv.html`                   | The verification-required frontend/visuals.                                                              |     |
+| `src/options.html`               | The frontend for Nebula's options, settings, and preferences.                                            |     |
+| `public/resources/v.js`          | Client verification system for the OTP system.                                                           |     |
+| `public/resources/nebulamain.js` | All of the DOM/client code for NebulaWEB. Includes options, themeSystem, cloak, stealthengine, and more. |     |
 | `app.js`                         | The backend server for Nebula. Contains Nodestatic, Bare, HTTP, and more.                                |     |
 
 ## Tech Stack
 
 - HTML, JS, CSS
 - Partical.JS (Specifically v4, 5, 6.1 &< only)
-- UV Backend Proxy
-- Osana Backend Proxy
-- TompHTTP Bare Server
-- node HTTP (No ExpressJS!)
+- Ultraviolet (proxy)
+- Osana (proxy)
+- TompHTTP Bare Server Node
+- ExpressJS
 
 ## Support
 
@@ -198,9 +198,9 @@ For support, email chloe@nebula.bio or join our discord: discord.gg/unblocker
 
 ## Acknowledgements
 
-- [UV (one of the back-end proxy we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
-- [Osana (one of the back-end proxy we use)](https://github.com/NebulaServices/Osana)
-- [Bare Server](https://github.com/tomphttp/bare-server-node)
+- [UV (one of the proxies use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
+- [Osana (one of the proxies we use)](https://github.com/NebulaServices/Osana)
+- [Bare Server Node](https://github.com/tomphttp/bare-server-node)
 - [Partical.JS (v4, 5, 6.1 &< only)](https://github.com/VincentGarreau/particles.js)
 
 ## License
