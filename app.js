@@ -14,6 +14,9 @@ import bcrypt from "bcrypt";
 const PORT = process.env.PORT || 3000;
 const __dirname = process.cwd();
 const ACTIVE_CODES = new Set();
+if (!fs.existsSync("./memory.txt")) {
+  fs.writeFileSync("./memory.txt", "", "utf-8");
+}
 let TOKENS = fs
   .readFileSync("./memory.txt", "utf-8")
   .trim()
