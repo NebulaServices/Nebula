@@ -1,3 +1,5 @@
+importScripts("./uv/uv.bundle.js");
+importScripts("./uv/uv.config.js");
 importScripts("./uv/uv.sw.js");
 importScripts("./osana/osana.worker.js");
 

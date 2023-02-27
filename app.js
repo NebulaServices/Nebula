@@ -14,6 +14,9 @@ import bcrypt from "bcrypt";
 const PORT = process.env.PORT || 3000;
 const __dirname = process.cwd();
 const ACTIVE_CODES = new Set();
+if (!fs.existsSync("./memory.txt")) {
+  fs.writeFileSync("./memory.txt", "", "utf-8");
+}
 let TOKENS = fs
   .readFileSync("./memory.txt", "utf-8")
   .trim()
@@ -43,9 +46,9 @@ app.use(
 // Verification
 app.patch("/generate-otp", async (req, res) => {
   if (
-    config.sendgrid_verification == true ||
-    config.discord_verification == true ||
-    config.smtp_verificaton == true
+    config.sendgrid_verification ||
+    config.discord_verification ||
+    config.smtp_verificaton
   ) {
     const OTP = generateCode();
     ACTIVE_CODES.add(OTP);
@@ -64,7 +67,7 @@ app.patch("/generate-otp", async (req, res) => {
   (this message is automated)`
     };
 
-    if (config.sendgrid_verification == true) {
+    if (config.sendgrid_verification) {
       sgMail.setApiKey(config.sendgrid_options.api_key);
 
       email.to = config.sendgrid_options.to_email;
@@ -76,7 +79,7 @@ app.patch("/generate-otp", async (req, res) => {
       }
     }
 
-    if (config.smtp_verification == true) {
+    if (config.smtp_verification) {
       const smtpMailerAgent = nodemailer.createTransport(config.smtp_options);
 
       email.to = config.smtp_options.to_email;
@@ -88,7 +91,7 @@ app.patch("/generate-otp", async (req, res) => {
       }
     }
 
-    if (config.discord_verification == true) {
+    if (config.discord_verification) {
       try {
         await fetch(config.webhook_url, {
           method: "POST",
@@ -117,9 +120,9 @@ function generateCode() {
 
 app.post("/validate-otp", (req, res) => {
   if (
-    config.sendgrid_verification == true ||
-    config.discord_verification == true ||
-    config.smtp_verificaton == true
+    config.sendgrid_verification ||
+    config.discord_verification ||
+    config.smtp_verificaton
   ) {
     const OTP = req.body.otp;
 
@@ -163,9 +166,9 @@ app.use(express.static(path.join(__dirname, "public")));
 // Login route
 app.get("/login", (req, res) => {
   if (
-    config.sendgrid_verification == true ||
-    config.discord_verification == true ||
-    config.smtp_verificaton == true
+    config.sendgrid_verification ||
+    config.discord_verification ||
+    config.smtp_verificaton
   ) {
     res.sendFile(path.join(__dirname, "src", "unv.html"));
   } else {
@@ -175,12 +178,17 @@ app.get("/login", (req, res) => {
 
 // General Routes
 app.use((req, res, next) => {
-  const verification = req.cookies["validation"];
-  if (!verification || !validateToken(verification)) {
-    res.redirect("/login");
-  } else {
-    next();
+  if (
+    config.sendgrid_verification ||
+    config.discord_verification ||
+    config.smtp_verificaton
+  ) {
+    const verification = req.cookies["validation"];
+    if (!verification || !validateToken(verification)) {
+      return res.redirect("/login");
+    }
   }
+  next();
 });
 
 app.get("/", (req, res) => {
@@ -226,7 +234,6 @@ function hash(token) {
 }
 
 function validateToken(verification) {
-  console.log(verification);
   const [id, token] = verification.split(":");
   const tokenData = TOKENS.find((token) => token.id == id);
 
