@@ -246,6 +246,31 @@ document.addEventListener("visibilitychange", handleTabLeave)
     }
   });
 
+  
+let tryAbFavi = localStorage.getItem("ABfaviconURL");
+let ABFavicon = "";
+if (tryAbFavi === null) {
+  console.warn("ABfaviconURL is null, Defaulting");
+  ABFavicon = "";
+} else if (tryAbFavi == "") {
+  console.warn("ABfaviconURL is empty, Defaulting");
+  ABFavicon = "";
+} else {
+  ABFavicon = tryAbFavi;
+}
+
+let tryAbTitle = localStorage.getItem("ABtitle");
+let ABTitle = "";
+if (tryAbTitle === null) {
+  console.warn("ABtitle is null, Defaulting");
+  ABTitle = "";
+} else if (tryAbTitle == "") {
+  console.warn("ABtitle is empty, Defaulting");
+  ABTitle = "";
+} else {
+  ABTitle = tryAbTitle;
+}
+
   // Stealth engine, a dependency for everything above.
   function stealthEngine(encodedURL) {
     // Remember that the EncodedURL argument must be pre-encoded, or encoded before the function is called.
@@ -281,9 +306,8 @@ document.addEventListener("visibilitychange", handleTabLeave)
           doc.head.appendChild(arcSrc);
           const link = location.href;
           img.rel = "icon";
-          img.href =
-            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
-          doc.title = getRandomName();
+          img.href  = ABFavicon || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+          doc.title = ABTitle || "Nebula";
 
           var currentLink = link.slice(0, link.length - 1);
 
@@ -295,6 +319,7 @@ document.addEventListener("visibilitychange", handleTabLeave)
           style.width = style.height = "100%";
 
           doc.body.appendChild(iframe);
+          doc.head.appendChild(img);
         }
       }
     }, 1500);
@@ -672,30 +697,6 @@ function handleTabLeave() {
 // Create and Add the event listener
 document.addEventListener("visibilitychange", handleTabLeave);
 
-let tryAbFavi = localStorage.getItem('ABfaviconURL');
-let ABFavicon = "";
-if (tryAbFavi === null) {
-  console.warn("ABfaviconURL is null, Defaulting");
-  ABFavicon = "";
-} else if (tryAbFavi == "") {
-  console.warn("ABfaviconURL is empty, Defaulting");
-  ABFavicon = "";
-} else {
-  ABFavicon = tryAbFavi;
-}
-
-let tryAbTitle = localStorage.getItem('ABtitle');
-let ABTitle = "";
-if (tryAbTitle === null) {
-  console.warn("ABtitle is null, Defaulting");
-  ABTitle = "";
-} else if (tryAbTitle == "") {
-  console.warn("ABtitle is empty, Defaulting");
-  ABTitle = "";
-} else {
-  ABTitle = tryAbTitle;
-}
-
 const stealthStored = localStorage.getItem('nogg')
 function link (_link) {
   if (stealthStored == 'on') {
@@ -711,15 +712,16 @@ function link (_link) {
         if (!popup || popup.closed) {
           alert("Popups are disabled!");
         } else {
-          const doc = popup.document
-          const iframe = doc.createElement('iframe')
-          const style = iframe.style
-          const img = doc.createElement('link')
-          const link = location.href
-          img.rel = 'icon'
-          img.href = ABFavicon
-          doc.title = ABTitle
-          var currentLink = _link.slice(0, _link.length - 1)
+         const doc = popup.document;
+         const iframe = doc.createElement("iframe");
+         const style = iframe.style;
+         const img = doc.createElement("link");
+         const link = location.href;
+         img.rel = "icon";
+         img.href =
+           "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+         doc.title = getRandomName();
+         var currentLink = _link.slice(0, _link.length - 1);
           iframe.src =
             location.origin +
             "/service/go/" +
@@ -729,7 +731,6 @@ function link (_link) {
           style.border = style.outline = 'none'
           style.width = style.height = '100%'
           doc.body.appendChild(iframe)
-          doc.head.appendChild(img)
         }
       }
     }, 0200);
