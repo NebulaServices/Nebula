@@ -442,9 +442,21 @@ function switchTheme() {
     changeCSS("--text-color-primary", "#303030", true);
     localStorage.setItem("theme", "light");
   }
-  if (selectedOption == "custom") {
-    let response = prompt("Please enter the code for a custom theme:", "");
-    alert("This feature is not ready yet. Please try again later.");
+  if (selectedOption == 'custom') {
+    changeCSS('--background-primary', localStorage.getItem("--background-primary") , true)
+    changeCSS('--navbar-color', localStorage.getItem("--navbar-color") , true)
+    changeCSS('--navbar-height', localStorage.getItem("--navbar-height") , true)
+    changeCSS('--navbar-text-color', localStorage.getItem("--navbar-text-color") , true)
+    changeCSS('--input-text-color', localStorage.getItem("--input-text-color") , true)
+    changeCSS('--input-placeholder-color', localStorage.getItem("--input-placeholder-color") , true)
+    changeCSS('--input-background-color', localStorage.getItem("--input-background-color") , true)
+    changeCSS('--input-border-color', localStorage.getItem("--input-border-color") , true)
+    changeCSS('--input-border-size', localStorage.getItem("--input-border-size") , true)
+    changeCSS('--navbar-link-color', localStorage.getItem("--navbar-link-color") , true)
+    changeCSS('--navbar-font', localStorage.getItem("--navbar-font") , true)
+    changeCSS('--navbar-logo-filter', localStorage.getItem("--navbar-logo-filter") , true)
+    changeCSS('--text-color-primary', localStorage.getItem("--text-color-primary") , true)
+    localStorage.setItem('theme', 'custom')
   }
 }
 
@@ -660,10 +672,34 @@ function handleTabLeave() {
 // Create and Add the event listener
 document.addEventListener("visibilitychange", handleTabLeave);
 
-const stealthStored = localStorage.getItem("nogg");
-function link(_link) {
-  if (stealthStored == "on") {
-    let inFrame;
+let tryAbFavi = localStorage.getItem('ABfaviconURL');
+let ABFavicon = "";
+if (tryAbFavi === null) {
+  console.warn("ABfaviconURL is null, Defaulting");
+  ABFavicon = "";
+} else if (tryAbFavi == "") {
+  console.warn("ABfaviconURL is empty, Defaulting");
+  ABFavicon = "";
+} else {
+  ABFavicon = tryAbFavi;
+}
+
+let tryAbTitle = localStorage.getItem('ABtitle');
+let ABTitle = "";
+if (tryAbTitle === null) {
+  console.warn("ABtitle is null, Defaulting");
+  ABTitle = "";
+} else if (tryAbTitle == "") {
+  console.warn("ABtitle is empty, Defaulting");
+  ABTitle = "";
+} else {
+  ABTitle = tryAbTitle;
+}
+
+const stealthStored = localStorage.getItem('nogg')
+function link (_link) {
+  if (stealthStored == 'on') {
+    let inFrame
     try {
       inFrame = window !== top;
     } catch (e) {
@@ -675,25 +711,25 @@ function link(_link) {
         if (!popup || popup.closed) {
           alert("Popups are disabled!");
         } else {
-          const doc = popup.document;
-          const iframe = doc.createElement("iframe");
-          const style = iframe.style;
-          const img = doc.createElement("link");
-          const link = location.href;
-          img.rel = "icon";
-          img.href =
-            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
-          doc.title = getRandomName();
-          var currentLink = _link.slice(0, _link.length - 1);
+          const doc = popup.document
+          const iframe = doc.createElement('iframe')
+          const style = iframe.style
+          const img = doc.createElement('link')
+          const link = location.href
+          img.rel = 'icon'
+          img.href = ABFavicon
+          doc.title = ABTitle
+          var currentLink = _link.slice(0, _link.length - 1)
           iframe.src =
             location.origin +
             "/service/go/" +
-            __uv$config.encodeUrl(currentLink);
-          style.position = "fixed";
-          style.top = style.bottom = style.left = style.right = 0;
-          style.border = style.outline = "none";
-          style.width = style.height = "100%";
-          doc.body.appendChild(iframe);
+            __uv$config.encodeUrl(currentLink)
+          style.position = 'fixed'
+          style.top = style.bottom = style.left = style.right = 0
+          style.border = style.outline = 'none'
+          style.width = style.height = '100%'
+          doc.body.appendChild(iframe)
+          doc.head.appendChild(img)
         }
       }
     }, 0200);

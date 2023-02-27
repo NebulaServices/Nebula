@@ -342,6 +342,17 @@ ul li {
 	text-align: center;
 }
 
+.secondary-desc {
+	color: var(--text-color-primary);
+	margin: 0;
+	margin-top: 0.3em;
+	font-size: 18px;
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 300;
+	/* font-style: Italic; */
+	text-align: center;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap');
 
 .new-tag {
@@ -434,6 +445,21 @@ ul li {
 	padding-right: -0.5em;
 	border: 0;
 	margin: 0;
+	border-radius: 3px;
+	text-indent: 0.01px;
+	text-overflow: '';
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+
+.button-save-alt {
+	background-color: #5e18eb;
+	color: #fff;
+	font-size: inherit;
+	padding: 0.3em;
+	padding-right: -0.5em;
+	border: 0;
+	margin: 0.2vh;
 	border-radius: 3px;
 	text-indent: 0.01px;
 	text-overflow: '';
