@@ -160,8 +160,8 @@ app.post("/validate-otp", (req, res) => {
 });
 
 // Static files
-app.use("/uv/", express.static(uvPath));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uv/", express.static(uvPath));
 
 // Login route
 app.get("/login", (req, res) => {
