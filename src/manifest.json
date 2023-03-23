@@ -1,0 +1,51 @@
+{
+"name": "Nebula Web",
+"short_name": "Nebula",
+"start_url": "./",
+"display": "standalone",
+"description": "Nebula Web is a stunning and sleek web proxy with support for hundreds of popular sites.",
+"lang": "en-US",
+"dir": "auto",
+"theme_color": "#14121d",
+"background_color": "#14121d",
+"orientation": "any",
+"icons": [
+    {
+        "src": "images/logo.png",
+        "sizes": "619x619",
+        "type": "image/png",
+        "purpose": "any"
+    }
+],
+"screenshots": [
+    {
+        "src": "images/homepage.png",
+        "sizes": "2559x1440",
+        "type": "image/png",
+        "description": "A screenshot of the home page"
+    },
+    {
+        "src": "images/settings.png",
+        "sizes": "2559x1438",
+        "type": "image/png",
+        "description": "A screenshot of the settings page"
+    }
+],
+"related_applications": [],
+"shortcuts": [
+    {
+        "name":"Settings",
+        "url":"options",
+        "description":"The settings page",
+        "icons": [{ "src": "images/logo.png", "sizes": "619x619" }]
+    }
+],
+"categories": [
+    "education",
+    "kids",
+    "lifestyle",
+    "productivity"
+]
+
+
+}

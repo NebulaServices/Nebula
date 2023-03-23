@@ -203,6 +203,10 @@ app.get("/privacy", (req, res) => {
   res.sendFile(path.join(__dirname, "src", "privacy.html"));
 });
 
+app.get("/manifest", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "manifest.json"));
+});
+
 // Bare Server
 server.on("request", (req, res) => {
   if (bareServer.shouldRoute(req)) {

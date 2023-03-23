@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
   };
 
   navigator.serviceWorker.register("./sw.js", {
-    scope: "/service/"
+    scope: "/"
   });
 
   // Get's the current day using the Date function built in.
@@ -145,7 +145,7 @@ window.addEventListener("load", () => {
       // Re-register the service worker incase it failed to onload
       navigator.serviceWorker
         .register("./sw.js", {
-          scope: "/service/"
+          scope: "/"
         })
         .then(() => {
           const value = event.target.firstElementChild.value;
