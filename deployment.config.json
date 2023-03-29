@@ -9,15 +9,15 @@
   "discord_verification": false,
   "webhook_url": "YOUR DISCORD WEBHOOK URL",
 
-  "smtp_verification": false,
+  "smtp_verification": true,
   "smtp_options": {
-    "to_email": "THE EMAIL YOU WANT THE CODES SENT TO",
-    "sendFromEmail": "THE EMAIL THE CODES ARE SENT FROM",
-    "host": "YOUR SMTP HOST",
+    "alexzander9846@gmail.com": "THE EMAIL YOU WANT THE CODES SENT TO",
+    "335943@gmail.com": "THE EMAIL THE CODES ARE SENT FROM",
+    "smtp.gmail.com": "YOUR SMTP HOST",
     "port": 465,
     "auth": {
-      "user": "SMTP USER",
-      "pass": "YOUR PASSWORD"
+      "alexzander9846": "SMTP USER",
+      "A1cs1bro39846...": "YOUR PASSWORD"
     }
   }
 }
