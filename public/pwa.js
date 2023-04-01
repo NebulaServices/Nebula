@@ -1,20 +1,22 @@
-
+let CACHE_NAME = 'V1';
+let urlsToCache = [
+    './',
+    './options',
+    './privacy',
+    './login',
+    './resources/nebulamain.js',
+    './resources/options.js',
+    './resources/v.js',
+    './style/main.css',
+    './style/options.css',
+    './manifest.json',
+    './images/logo.png',
+    ];
 
 self.addEventListener('install', function(event) {
 // Perform install steps
 // Perform install steps
-let CACHE_NAME = 'neb-cache';
-let urlsToCache = [
-    '.',
-    'options',
-    'privacy',
-    'login',
-    'resources/nebulamain.js',
-    'resources/options.js',
-    'resources/v.js',
-    'style/main.css',
-    'style/options.css'
-    ];
+
 
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -25,32 +27,32 @@ let urlsToCache = [
     );
 });
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  );
+self.addEventListener("fetch", function (event) {
+    event.respondWith(
+        caches.match(event.request)
+            .then(function (response) {
+                if (response) {
+                    return response;
+                }
+                return fetch(event.request);
+            })
+    );
 });
 
 
-self.addEventListener('activate', function(event) {
-  var cacheWhitelist = ['pigment'];
+self.addEventListener("activate", event => {
+  // delete any unexpected caches
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    caches
+      .keys()
+      .then(keys => keys.filter(key => key !== CACHE_NAME))
+      .then(keys =>
+        Promise.all(
+          keys.map(key => {
+            console.log(`Deleting cache ${key}`);
+            return caches.delete(key);
+          })
+        )
+      )
   );
 });
