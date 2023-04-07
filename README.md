@@ -43,7 +43,7 @@ Table of contents
 <br>
 [![Deploy To Koyeb](https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/NebulaServices/Nebula&branch=main&name=NebulaProxy)
 <br>
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/FireStreaker2/Nebula)
+[![Deploy to Render](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/main/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/NebulaServices/Nebula)
 
 ---
 
