@@ -6,7 +6,5 @@ services:
     region: oregon
     plan: free
     branch: main
-    rootDir: webdis
-    dockerCommand: ./Dockerfile
     numInstances: 1
     healthCheckPath: /
