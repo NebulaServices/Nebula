@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: Nebula
+    env: docker
+    repo: https://github.com/NebulaServices/Nebula.git
+    region: oregon
+    plan: free
+    branch: main
+    numInstances: 1
+    healthCheckPath: /
