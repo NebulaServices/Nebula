@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: Nebula
+    env: docker
+    repo: https://github.com/FireStreaker2/Nebula.git
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: webdis
+    dockerCommand: ./Dockerfile
+    numInstances: 1
+    healthCheckPath: /
