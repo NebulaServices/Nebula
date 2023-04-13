@@ -34,10 +34,11 @@ function setLoaderText() {
   }, 17000);
 }
 
+window.stealthEngineLoaded = false; 
+
 window.addEventListener("load", () => {
   // Register the service workers for Osana and Ultraviolet proxy protocols
   // This is a better method than registering onsubmit because this allows the ability to use proxied links on the main page.
-
   const dbPromise = Ultraviolet.openDB("keyval-store", 1, {
     upgrade(db) {
       db.createObjectStore("keyval");
@@ -61,56 +62,6 @@ window.addEventListener("load", () => {
   navigator.serviceWorker.register("./sw.js", {
     scope: "/service/"
   });
-
-  // Get's the current day using the Date function built in.
-  // A dependency for displaying time - displayTime(void)
-  function getDayName(dateStr, locale) {
-    var date = new Date(dateStr);
-    return date.toLocaleDateString(locale, { weekday: "long" });
-  }
-
-  // The main function to show the time on the main page
-  // needs to be initialized by a call (only one)
-  // Dependent on getDayName function
-  function displayTime() {
-    var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    var s = date.getSeconds(); // 0 - 59
-    var session = "AM";
-    h = h == 12 ? 24 : h;
-
-    if (h == 0) {
-      h = 12;
-    } else if (h >= 12) {
-      h = h - 12;
-      session = "PM";
-    }
-    h = h < 10 ? "0" + h : h;
-    m = m < 10 ? "0" + m : m;
-    s = s < 10 ? "0" + s : s;
-    // Repeat itself every second
-    setTimeout(displayTime, 1000);
-    // Get today's date
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-    today = mm + "/" + dd + "/" + yyyy;
-    var time =
-      h + "<span style='opacity:100%;' class='clockColon'>:</span>" + m;
-    try {
-      document.getElementById("digitalClock").innerHTML = getDayName(today, "us-US") + ", " + time + " " + session + ".";
-    } catch {
-
-    }
-    
-
-    return time;
-  }
-  // initialize the time function
-
-  displayTime();
 
   // Link evaluation
   // This functions' purpose is to check a string of text (the argument)
@@ -169,7 +120,11 @@ window.addEventListener("load", () => {
               : __osana$config.prefix + __osana$config.codec.encode(url);
           const option = localStorage.getItem("nogg");
           if (option === "on") {
-            stealthEngine(redirectTo);
+            if (window.stealthEngineLoaded !== false) {
+              stealthEngine(redirectTo);
+            } else {
+              console.error("Stealth Engine failed to load! Please contact support - discord.gg/unblocker")
+            }
           } else {
             setTimeout(() => {
               // If StealthMode is off, this is the enabled option.
@@ -256,100 +211,6 @@ document.addEventListener("visibilitychange", handleTabLeave)
   });
 
 
-  let tryAbFavi = localStorage.getItem("ABfaviconURL");
-  let ABFavicon = "";
-  if (tryAbFavi === null) {
-    console.warn("ABfaviconURL is null, Defaulting");
-    ABFavicon = "";
-  } else if (tryAbFavi == "") {
-    console.warn("ABfaviconURL is empty, Defaulting");
-    ABFavicon = "";
-  } else {
-    ABFavicon = tryAbFavi;
-  }
-
-  let tryAbTitle = localStorage.getItem("ABtitle");
-  let ABTitle = "";
-  if (tryAbTitle === null) {
-    console.warn("ABtitle is null, Defaulting");
-    ABTitle = "";
-  } else if (tryAbTitle == "") {
-    console.warn("ABtitle is empty, Defaulting");
-    ABTitle = "";
-  } else {
-    ABTitle = tryAbTitle;
-  }
-
-  // Stealth engine, a dependency for everything above.
-  function stealthEngine(encodedURL) {
-    // Remember that the EncodedURL argument must be pre-encoded, or encoded before the function is called.
-    // This function does not encode the argument at all!
-
-    // Initialize the variable
-    let inFrame;
-    // make sure there isn't a window open already
-    try {
-      inFrame = window !== top;
-    } catch (e) {
-      inFrame = true;
-    }
-    setTimeout(() => {
-      // Basically, a checklist to make sure that an error won't occur.
-      // In this if statement, we're checking if an iframe is already being opened, if popups are disabled, and if the user agent IS NOT firefox (firefox sucks, sorry Moz)
-      if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-        const popup = open("about:blank", "_blank");
-        if (!popup || popup.closed) {
-          alert("StealthEngine was unable to open a popup. (do you have popups disabled?)");
-        } else {
-          const doc = popup.document;
-          const iframe = doc.createElement("iframe");
-          const style = iframe.style;
-          popup.onload = () => {
-            document.getElementById("lpoader").style.display = "none"
-            document.getElementById('connectorText').textContent = "connecting to service"
-            setTimeout(() => {
-              document.getElementById('connectorText').textContent = "connecting to service"
-            }, 17500);
-          };
-          var isClosed = setInterval(function () {
-            if (popup.closed) {
-              clearInterval(isClosed);
-              document.getElementById("lpoader").style.display = "none"
-              document.getElementById('connectorText').textContent = "connecting to service"
-            }
-          }, 1000);
-          // Favicon attachment
-          const img = doc.createElement("link");
-          const arcSrc = doc.createElement("script");
-          // We attach ARC because it supports us, keeping our arc link there would be greatly appreciated :)
-          arcSrc.setAttribute("src", "https://arc.io/widget.min.js#BgaWcYfi");
-          arcSrc.setAttribute("async", "");
-          doc.head.appendChild(arcSrc);
-          const link = location.href;
-          img.rel = "icon";
-          img.href = ABFavicon || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
-          if (localStorage.nogg == "on") {
-            doc.title = ABTitle || getRandomName();
-          } else {
-            doc.title = ABTitle || "Nebula";
-          }
-
-
-          var currentLink = link.slice(0, link.length - 1);
-
-          iframe.src = currentLink + encodedURL;
-
-          style.position = "fixed";
-          style.top = style.bottom = style.left = style.right = 0;
-          style.border = style.outline = "none";
-          style.width = style.height = "100%";
-
-          doc.body.appendChild(iframe);
-          doc.head.appendChild(img);
-        }
-      }
-    }, 1500);
-  }
 });
 
 // Set the option
