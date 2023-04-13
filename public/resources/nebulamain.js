@@ -101,8 +101,7 @@ window.addEventListener("load", () => {
       return true;
     return false;
   }
-
-  const useNoGG = false;
+  
   const proxy = localStorage.getItem("proxy") || "uv";
   const inpbox = document.querySelector("form");
   // Display the "loading" indicators on the main page, looks much better than a static/still screen.
@@ -246,30 +245,30 @@ document.addEventListener("visibilitychange", handleTabLeave)
     }
   });
 
-  
-let tryAbFavi = localStorage.getItem("ABfaviconURL");
-let ABFavicon = "";
-if (tryAbFavi === null) {
-  console.warn("ABfaviconURL is null, Defaulting");
-  ABFavicon = "";
-} else if (tryAbFavi == "") {
-  console.warn("ABfaviconURL is empty, Defaulting");
-  ABFavicon = "";
-} else {
-  ABFavicon = tryAbFavi;
-}
 
-let tryAbTitle = localStorage.getItem("ABtitle");
-let ABTitle = "";
-if (tryAbTitle === null) {
-  console.warn("ABtitle is null, Defaulting");
-  ABTitle = "";
-} else if (tryAbTitle == "") {
-  console.warn("ABtitle is empty, Defaulting");
-  ABTitle = "";
-} else {
-  ABTitle = tryAbTitle;
-}
+  let tryAbFavi = localStorage.getItem("ABfaviconURL");
+  let ABFavicon = "";
+  if (tryAbFavi === null) {
+    console.warn("ABfaviconURL is null, Defaulting");
+    ABFavicon = "";
+  } else if (tryAbFavi == "") {
+    console.warn("ABfaviconURL is empty, Defaulting");
+    ABFavicon = "";
+  } else {
+    ABFavicon = tryAbFavi;
+  }
+
+  let tryAbTitle = localStorage.getItem("ABtitle");
+  let ABTitle = "";
+  if (tryAbTitle === null) {
+    console.warn("ABtitle is null, Defaulting");
+    ABTitle = "";
+  } else if (tryAbTitle == "") {
+    console.warn("ABtitle is empty, Defaulting");
+    ABTitle = "";
+  } else {
+    ABTitle = tryAbTitle;
+  }
 
   // Stealth engine, a dependency for everything above.
   function stealthEngine(encodedURL) {
@@ -306,7 +305,7 @@ if (tryAbTitle === null) {
           doc.head.appendChild(arcSrc);
           const link = location.href;
           img.rel = "icon";
-          img.href  = ABFavicon || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+          img.href = ABFavicon || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
           doc.title = ABTitle || "Nebula";
 
           var currentLink = link.slice(0, link.length - 1);
@@ -468,177 +467,39 @@ function switchTheme() {
     localStorage.setItem("theme", "light");
   }
   if (selectedOption == 'custom') {
-    changeCSS('--background-primary', localStorage.getItem("--background-primary") , true)
-    changeCSS('--navbar-color', localStorage.getItem("--navbar-color") , true)
-    changeCSS('--navbar-height', localStorage.getItem("--navbar-height") , true)
-    changeCSS('--navbar-text-color', localStorage.getItem("--navbar-text-color") , true)
-    changeCSS('--input-text-color', localStorage.getItem("--input-text-color") , true)
-    changeCSS('--input-placeholder-color', localStorage.getItem("--input-placeholder-color") , true)
-    changeCSS('--input-background-color', localStorage.getItem("--input-background-color") , true)
-    changeCSS('--input-border-color', localStorage.getItem("--input-border-color") , true)
-    changeCSS('--input-border-size', localStorage.getItem("--input-border-size") , true)
-    changeCSS('--navbar-link-color', localStorage.getItem("--navbar-link-color") , true)
-    changeCSS('--navbar-font', localStorage.getItem("--navbar-font") , true)
-    changeCSS('--navbar-logo-filter', localStorage.getItem("--navbar-logo-filter") , true)
-    changeCSS('--text-color-primary', localStorage.getItem("--text-color-primary") , true)
+    changeCSS('--background-primary', localStorage.getItem("--background-primary"), true)
+    changeCSS('--navbar-color', localStorage.getItem("--navbar-color"), true)
+    changeCSS('--navbar-height', localStorage.getItem("--navbar-height"), true)
+    changeCSS('--navbar-text-color', localStorage.getItem("--navbar-text-color"), true)
+    changeCSS('--input-text-color', localStorage.getItem("--input-text-color"), true)
+    changeCSS('--input-placeholder-color', localStorage.getItem("--input-placeholder-color"), true)
+    changeCSS('--input-background-color', localStorage.getItem("--input-background-color"), true)
+    changeCSS('--input-border-color', localStorage.getItem("--input-border-color"), true)
+    changeCSS('--input-border-size', localStorage.getItem("--input-border-size"), true)
+    changeCSS('--navbar-link-color', localStorage.getItem("--navbar-link-color"), true)
+    changeCSS('--navbar-font', localStorage.getItem("--navbar-font"), true)
+    changeCSS('--navbar-logo-filter', localStorage.getItem("--navbar-logo-filter"), true)
+    changeCSS('--text-color-primary', localStorage.getItem("--text-color-primary"), true)
     localStorage.setItem('theme', 'custom')
   }
 }
 
 // Adjectives and surnames for a more advanced stealth engine.
 // Used together to generate random names for the tab name
-const adjectives = [
-    "admiring",
-    "adoring",
-    "affectionate",
-    "agitated",
-    "amazing",
-    "angry",
-    "awesome",
-    "beautiful",
-    "blissful",
-    "bold",
-    "boring",
-    "brave",
-    "busy",
-    "charming",
-    "clever",
-    "cool",
-    "compassionate",
-    "competent",
-    "condescending",
-    "confident",
-    "cranky",
-    "crazy",
-    "dazzling",
-    "determined",
-    "distracted",
-    "dreamy",
-    "eager",
-    "ecstatic",
-    "elastic",
-    "elated",
-    "elegant",
-    "eloquent",
-    "epic",
-    "exciting",
-    "fervent",
-    "festive",
-    "flamboyant",
-    "focused",
-    "friendly",
-    "frosty",
-    "funny",
-    "gallant",
-    "gifted",
-    "goofy",
-    "gracious",
-    "great",
-    "happy",
-    "hardcore",
-    "heuristic",
-    "hopeful",
-    "hungry",
-    "infallible",
-    "inspiring",
-    "interesting",
-    "intelligent",
-    "jolly",
-    "jovial",
-    "keen",
-    "kind",
-    "laughing",
-    "loving",
-    "lucid",
-    "magical",
-    "mystifying",
-    "modest",
-    "musing",
-    "naughty",
-    "nervous",
-    "nice",
-    "nifty",
-    "nostalgic",
-    "objective",
-    "optimistic",
-    "peaceful",
-    "pedantic",
-    "pensive",
-    "practical",
-    "priceless",
-    "quirky",
-    "quizzical",
-    "recursing",
-    "relaxed",
-    "reverent",
-    "romantic",
-    "sad",
-    "serene",
-    "sharp",
-    "silly",
-    "sleepy",
-    "stoic",
-    "strange",
-    "stupefied",
-    "suspicious",
-    "sweet",
-    "tender",
-    "thirsty",
-    "trusting",
-    "unruffled",
-    "upbeat",
-    "vibrant",
-    "vigilant",
-    "vigorous",
-    "wizardly",
-    "wonderful",
-    "xenodochial",
-    "youthful",
-    "zealous",
-    "zen"
-  ],
-  surnames = [
-    "albattani",
-    "allen",
-    "almeida",
-    "antonelli",
-    "agnesi",
-    "archimedes",
-    "ardinghelli",
-    "aryabhata",
-    "austin",
-    "babbage",
-    "banach",
-    "banzai",
-    "bardeen",
-    "bartik",
-    "bassi",
-    "beaver",
-    "bell",
-    "benz",
-    "bhabha",
-    "bhaskara",
-    "black",
-    "blackburn",
-    "blackwell",
-    "bohr",
-    "booth",
-    "borg",
-    "bose",
-    "bouman",
-    "boyd",
-    "brahmagupta",
-    "brattain",
-    "brown",
-    "buck",
-    "burnell",
-    "cannon",
-    "carson",
-    "cartwright",
-    "carver",
-    "cerf",
-    "chandrasekhar"
-  ];
+let adjectives;
+let surnames;
+
+async function surnameAdjectivesData() {
+  await fetch("/resources/adjectives_surnames.json")
+    .then((response) => response.json())
+    .then((data) => {
+      adjectives = data.adjectives;
+      surnames = data.surnames;
+    })
+}
+surnameAdjectivesData();
+
+
 
 // Random number generator
 // Dependency of getRandomName function
@@ -698,44 +559,30 @@ function handleTabLeave() {
 document.addEventListener("visibilitychange", handleTabLeave);
 
 const stealthStored = localStorage.getItem('nogg')
-function link (_link) {
-  if (stealthStored == 'on') {
+function link(_link) {
+  if (stealthStored == "on") {
     let inFrame
-    try {
-      inFrame = window !== top;
-    } catch (e) {
-      inFrame = true;
-    }
+    try { inFrame = window !== top } catch (e) { inFrame = true }
     setTimeout(() => {
       if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-        const popup = open("about:blank", "_blank");
-        if (!popup || popup.closed) {
-          alert("Popups are disabled!");
-        } else {
-         const doc = popup.document;
-         const iframe = doc.createElement("iframe");
-         const style = iframe.style;
-         const img = doc.createElement("link");
-         const link = location.href;
-         img.rel = "icon";
-         img.href =
-           "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
-         doc.title = getRandomName();
-         var currentLink = _link.slice(0, _link.length - 1);
-          iframe.src =
-            location.origin +
-            "/service/go/" +
-            __uv$config.encodeUrl(currentLink)
-          style.position = 'fixed'
+        const popup = open("about:blank", "_blank")
+        if (!popup || popup.closed) { alert("Popups are disabled!") } else {
+          const doc = popup.document
+          const iframe = doc.createElement("iframe")
+          const style = iframe.style
+          const img = doc.createElement("link")
+          img.rel = "icon"
+          img.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+          doc.title = getRandomName()
+          var currentLink = _link.slice(0, _link.length - 1)
+          iframe.src = location.origin + "/service/go/" + __uv$config.encodeUrl(currentLink)
+          style.position = "fixed"
           style.top = style.bottom = style.left = style.right = 0
-          style.border = style.outline = 'none'
-          style.width = style.height = '100%'
+          style.border = style.outline = "none"
+          style.width = style.height = "100%"
           doc.body.appendChild(iframe)
         }
       }
-    }, 0200);
-  } else {
-    location.href =
-      "service/go/" + __uv$config.encodeUrl("https://radon.games/");
-  }
+    }, 0200)
+  } else { location.href = "service/go/" + __uv$config.encodeUrl("https://radon.games/") }
 }
