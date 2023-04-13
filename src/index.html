@@ -39,16 +39,15 @@
 
     <!-- Stylesheets -->
     <script src="resources/nebulamain.js"></script>
-    <link rel="stylesheet" href="style/main.css" />
+    <script src="resources/nebulaclock.js"></script>
+    <script src="resources/stealthEngine.js"></script>
+    <link rel="stylesheet" href="style/main.css">
     <!-- Embed -->
-    <meta name="theme-color" content="#eb6f92" />
-    <meta property="og:title" content="Nebula" />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:image"
-      content="https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png"
-    />
-    <meta property="og:description" content="Nebula Web" />
+    <meta name="theme-color" content="#eb6f92">
+    <meta property="og:title" content="Nebula">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png">
+    <meta property="og:description" content="Nebula Web">
   </head>
   <body>
     <!-- Scripts -->
@@ -377,7 +376,7 @@
             />
           </rect>
         </svg>
-        <p id="connecterText" class="connector">connecting to service</p>
+        <p id="connectorText" class="connector"></p>
       </div>
     </div>
     <!-- Stamp -->
@@ -386,11 +385,10 @@
       <a class="github" href="https://github.com/NebulaServices/Nebula"
         >GitHub</a
       >
-      <a
-        class="tos"
-        href="#"
-        onclick="href = '/service/go/' + __uv$config.encodeUrl('https://static.nebulacdn.xyz/content/other/nebula-privacy-policy/index.html')"
-        >Privacy</a
+      <a 
+        class="tos" 
+        href="#" 
+        onclick='window.href = "/service/go/" + __uv$config.encodeUrl("https://static.nebulacdn.xyz/content/other/nebula-privacy-policy/index.html")'>Privacy</a
       >
     </div>
   </body>
