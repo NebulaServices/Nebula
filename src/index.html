@@ -54,8 +54,13 @@
     <meta name="revisit-after" content="10 days" />
     <meta name="author" content="Nebula Services" />
 
-    <!-- Stylesheets -->
+    <!-- Scripts -->
+    <script src="resources/preload.js"></script>
+    <script src="resources/theme.js"></script>
     <script src="resources/nebulamain.js"></script>
+    <script src="resources/nebulaclock.js"></script>
+    <script src="resources/stealthEngine.js"></script>
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="style/main.css" />
     <!-- Embed -->
     <meta name="theme-color" content="#eb6f92" />
@@ -394,7 +399,7 @@
             />
           </rect>
         </svg>
-        <p id="connecterText" class="connector">connecting to service</p>
+        <p id="connectorText" class="connector"></p>
       </div>
     </div>
     <!-- Stamp -->
@@ -406,7 +411,7 @@
       <a
         class="tos"
         href="#"
-        onclick="href = '/service/go/' + __uv$config.encodeUrl('https://static.nebulacdn.xyz/content/other/nebula-privacy-policy/index.html')"
+        onclick='window.href = "/service/go/" + __uv$config.encodeUrl("https://static.nebulacdn.xyz/content/other/nebula-privacy-policy/index.html")'
         >Privacy</a
       >
     </div>

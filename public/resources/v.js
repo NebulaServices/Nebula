@@ -15,20 +15,22 @@ validateOTP.onclick = () => {
     body: JSON.stringify({
       otp: document.getElementById("otp").value
     })
-  }).then((response) => {
-    return response.json();
-  }).then((data) => {
-    if (data.success) {
-      setCookie("validation", data.validation, 30);
-      location.href = "/";
-    } else {
-      alert("Invalid OTP.");
-    }
-  }).catch(() => {
-    alert("An error occurred while validating your OTP.")
-  });
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success) {
+        setCookie("validation", data.validation, 30);
+        location.href = "/";
+      } else {
+        alert("Invalid OTP.");
+      }
+    })
+    .catch(() => {
+      alert("An error occurred while validating your OTP.");
+    });
 };
-
 
 function setCookie(name, value, days) {
   var expires = "";
