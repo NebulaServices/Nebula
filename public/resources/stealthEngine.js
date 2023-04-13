@@ -1,7 +1,7 @@
 // Stealth engine, a dependency for everything above.
 
 // ensures that the js file is loaded
-window.stealthEngineLoaded = true; 
+window.stealthEngineLoaded = true;
 function stealthEngine(encodedURL) {
   // Remember that the EncodedURL argument must be pre-encoded, or encoded before the function is called.
   // This function does not encode the argument at all!
@@ -20,23 +20,28 @@ function stealthEngine(encodedURL) {
     if (!inFrame && !navigator.userAgent.includes("Firefox")) {
       const popup = open("about:blank", "_blank");
       if (!popup || popup.closed) {
-        alert("StealthEngine was unable to open a popup. (do you have popups disabled?)");
+        alert(
+          "StealthEngine was unable to open a popup. (do you have popups disabled?)"
+        );
       } else {
         const doc = popup.document;
         const iframe = doc.createElement("iframe");
         const style = iframe.style;
         popup.onload = () => {
-          document.getElementById("lpoader").style.display = "none"
-          document.getElementById('connectorText').textContent = "connecting to service"
+          document.getElementById("lpoader").style.display = "none";
+          document.getElementById("connectorText").textContent =
+            "connecting to service";
           setTimeout(() => {
-            document.getElementById('connectorText').textContent = "connecting to service"
+            document.getElementById("connectorText").textContent =
+              "connecting to service";
           }, 17500);
         };
         var isClosed = setInterval(function () {
           if (popup.closed) {
             clearInterval(isClosed);
-            document.getElementById("lpoader").style.display = "none"
-            document.getElementById('connectorText').textContent = "connecting to service"
+            document.getElementById("lpoader").style.display = "none";
+            document.getElementById("connectorText").textContent =
+              "connecting to service";
           }
         }, 1000);
         // Favicon attachment
@@ -48,13 +53,14 @@ function stealthEngine(encodedURL) {
         doc.head.appendChild(arcSrc);
         const link = location.href;
         img.rel = "icon";
-        img.href = ABFavicon || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+        img.href =
+          ABFavicon ||
+          "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
         if (localStorage.nogg == "on") {
           doc.title = ABTitle || getRandomName();
         } else {
           doc.title = ABTitle || "Nebula";
         }
-
 
         var currentLink = link.slice(0, link.length - 1);
 

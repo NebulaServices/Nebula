@@ -17,7 +17,8 @@ function closeNav() {
 }
 
 function setLoaderText() {
-  document.getElementById('connectorText').textContent = "connecting to service"
+  document.getElementById("connectorText").textContent =
+    "connecting to service";
   const loader = document.getElementById("lpoader");
 
   const loadConstructer = loader.style;
@@ -26,38 +27,21 @@ function setLoaderText() {
   // Changing the text over multiple periods of time creates character, and aliveness (is that even a word?)
   setTimeout(() => {
     document.getElementById("connectorText").style.fontSize = "12px";
-    document.getElementById("connectorText").textContent = "Due to high server load, this may take a while.";
+    document.getElementById("connectorText").textContent =
+      "Due to high server load, this may take a while.";
   }, 3200);
   setTimeout(() => {
     document.getElementById("connectorText").style.fontSize = "14px";
-    document.getElementById("connectorText").textContent = "Hmmm.. Something isn't right..";
+    document.getElementById("connectorText").textContent =
+      "Hmmm.. Something isn't right..";
   }, 17000);
 }
 
-window.stealthEngineLoaded = false; 
+window.stealthEngineLoaded = false;
 
 window.addEventListener("load", () => {
   // Register the service workers for Osana and Ultraviolet proxy protocols
   // This is a better method than registering onsubmit because this allows the ability to use proxied links on the main page.
-  const dbPromise = Ultraviolet.openDB("keyval-store", 1, {
-    upgrade(db) {
-      db.createObjectStore("keyval");
-    }
-  });
-  self.storage = {
-    async get(key) {
-      return (await dbPromise).get("keyval", key);
-    },
-
-    async set(key, val) {
-      console.log("please wait");
-      return (await dbPromise).put("keyval", val, key);
-    },
-
-    async del(key) {
-      return (await dbPromise).delete("keyval", key);
-    }
-  };
 
   navigator.serviceWorker.register("./sw.js", {
     scope: "/service/"
@@ -84,8 +68,6 @@ window.addEventListener("load", () => {
   hasLoadedElement.style.display = "none";
   document.body.appendChild(hasLoadedElement);
 
-
-
   inpbox.addEventListener("submit", (event) => {
     // Prevents the default event tasks
     event.preventDefault();
@@ -99,7 +81,9 @@ window.addEventListener("load", () => {
     event.preventDefault();
     // Check if the service worker (commonly called SW) is registered
     if (typeof navigator.serviceWorker === "undefined")
-      alert("An error occured registering your service worker. Please contact support - discord.gg/unblocker");
+      alert(
+        "An error occured registering your service worker. Please contact support - discord.gg/unblocker"
+      );
     //
     if (proxy === "uv" || proxy === "osana") {
       // Re-register the service worker incase it failed to onload
@@ -123,7 +107,9 @@ window.addEventListener("load", () => {
             if (window.stealthEngineLoaded !== false) {
               stealthEngine(redirectTo);
             } else {
-              console.error("Stealth Engine failed to load! Please contact support - discord.gg/unblocker")
+              console.error(
+                "Stealth Engine failed to load! Please contact support - discord.gg/unblocker"
+              );
             }
           } else {
             setTimeout(() => {
@@ -209,8 +195,6 @@ document.addEventListener("visibilitychange", handleTabLeave)
         });
     }
   });
-
-
 });
 
 // Set the option
@@ -219,49 +203,27 @@ if (localStorage.getItem("theme") == null) {
   localStorage.setItem("theme", "dark");
 }
 
-window.onload = function () {
-  changeCSS("--background-primary", localStorage.getItem("--background-primary"));
-  changeCSS("--navbar-color", localStorage.getItem("--navbar-color"));
-  changeCSS("--navbar-height", localStorage.getItem("--navbar-height"));
-  changeCSS("--navbar-text-color", localStorage.getItem("--navbar-text-color"));
-  changeCSS("--input-text-color", localStorage.getItem("--input-text-color"));
-  changeCSS("--input-placeholder-color", localStorage.getItem("--input-placeholder-color"));
-  changeCSS("--input-background-color", localStorage.getItem("--input-background-color"));
-  changeCSS("--input-border-color", localStorage.getItem("--input-border-color"));
-  changeCSS("--input-border-size", localStorage.getItem("--input-border-size"));
-  changeCSS("--navbar-link-color", localStorage.getItem("--navbar-link-color"));
-  changeCSS("--navbar-font", localStorage.getItem("--navbar-font"));
-  changeCSS("--navbar-logo-filter", localStorage.getItem("--navbar-logo-filter"));
-  changeCSS("--text-color-primary", localStorage.getItem("--text-color-primary"));
-};
-
-function changeCSS(variable, value, saveBool) {
-  document.documentElement.style.setProperty(variable, value);
-
-  if (saveBool === true) {
-    saveCSS(variable, value);
-  }
-}
-
-function saveCSS(variable, value) {
-  localStorage.setItem(variable, value);
-}
-
 // Extra logging for support
 function log() {
   setTimeout(
     console.log.bind(
-      console, "%cWelcome To Nebula", "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
+      console,
+      "%cWelcome To Nebula",
+      "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
     )
   );
   setTimeout(
     console.log.bind(
-      console, "%c If you are seeing this, Nebula's main script has succesfully loaded!", "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      console,
+      "%c If you are seeing this, Nebula's main script has succesfully loaded!",
+      "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
     )
   );
   setTimeout(
     console.log.bind(
-      console, "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket", "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      console,
+      "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket",
+      "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
     )
   );
   let online = navigator.onLine;
@@ -288,59 +250,6 @@ function log() {
   );
 }
 log();
-function switchTheme() {
-  var selecter = document.getElementById("themeSwitcher");
-  var selectedOption = selecter.value;
-  if (selectedOption == "dark") {
-    changeCSS("--background-primary", "#191724", true);
-    changeCSS("--navbar-color", "#26233a", true);
-    changeCSS("--navbar-height", "60px", true);
-    changeCSS("--navbar-text-color", "#7967dd", true);
-    changeCSS("--input-text-color", "#e0def4", true);
-    changeCSS("--input-placeholder-color", "#6e6a86", true);
-    changeCSS("--input-background-color", "#1f1d2e", true);
-    changeCSS("--input-placeholder-color", "white", true);
-    changeCSS("--input-border-color", "#eb6f92", true);
-    changeCSS("--input-border-size", "1.3px", true);
-    changeCSS("--navbar-link-color", "#e0def4", true);
-    changeCSS("--navbar-font", '"Roboto"', true);
-    changeCSS("--navbar-logo-filter", "invert(0%)", true);
-    changeCSS("--text-color-primary", "#e0def4", true);
-    localStorage.setItem("theme", "dark");
-  }
-  if (selectedOption == "light") {
-    changeCSS("--background-primary", "#d8d8d8", true);
-    changeCSS("--navbar-color", "#a2a2a2", true);
-    changeCSS("--navbar-height", "4em", true);
-    changeCSS("--navbar-text-color", "#000000", true);
-    changeCSS("--input-text-color", "#e0def4", true);
-    changeCSS("--input-placeholder-color", "white", true);
-    changeCSS("--input-background-color", "black", true);
-    changeCSS("--input-border-color", "#eb6f92", true);
-    changeCSS("--input-border-size", "1.3px", true);
-    changeCSS("--navbar-link-color", "#000000", true);
-    changeCSS("--navbar-font", '"Roboto"', true);
-    changeCSS("--navbar-logo-filter", "invert(30%)", true);
-    changeCSS("--text-color-primary", "#303030", true);
-    localStorage.setItem("theme", "light");
-  }
-  if (selectedOption == 'custom') {
-    changeCSS('--background-primary', localStorage.getItem("--background-primary"), true)
-    changeCSS('--navbar-color', localStorage.getItem("--navbar-color"), true)
-    changeCSS('--navbar-height', localStorage.getItem("--navbar-height"), true)
-    changeCSS('--navbar-text-color', localStorage.getItem("--navbar-text-color"), true)
-    changeCSS('--input-text-color', localStorage.getItem("--input-text-color"), true)
-    changeCSS('--input-placeholder-color', localStorage.getItem("--input-placeholder-color"), true)
-    changeCSS('--input-background-color', localStorage.getItem("--input-background-color"), true)
-    changeCSS('--input-border-color', localStorage.getItem("--input-border-color"), true)
-    changeCSS('--input-border-size', localStorage.getItem("--input-border-size"), true)
-    changeCSS('--navbar-link-color', localStorage.getItem("--navbar-link-color"), true)
-    changeCSS('--navbar-font', localStorage.getItem("--navbar-font"), true)
-    changeCSS('--navbar-logo-filter', localStorage.getItem("--navbar-logo-filter"), true)
-    changeCSS('--text-color-primary', localStorage.getItem("--text-color-primary"), true)
-    localStorage.setItem('theme', 'custom')
-  }
-}
 
 // Adjectives and surnames for a more advanced stealth engine.
 // Used together to generate random names for the tab name
@@ -353,11 +262,9 @@ async function surnameAdjectivesData() {
     .then((data) => {
       adjectives = data.adjectives;
       surnames = data.surnames;
-    })
+    });
 }
 surnameAdjectivesData();
-
-
 
 // Random number generator
 // Dependency of getRandomName function
@@ -375,13 +282,6 @@ function getRandomName() {
   const randomName = adjective + "-" + surname;
   return randomName;
 }
-
-// Check if the Browser variable is undefined
-// This is unused as of now but it could be used for better cloaking in the future, specifically with activeTab
-if (typeof browser === "undefined") {
-  var browser = chrome;
-}
-browser = chrome;
 
 // Clickoff cloaking
 // This is used to cloak the tab when it is not active
@@ -403,7 +303,8 @@ function handleTabLeave() {
         link.rel = "icon";
         document.getElementsByTagName("head")[0].appendChild(link);
       }
-      link.href = "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67";
+      link.href =
+        "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67";
     } else {
       return false;
     }
@@ -412,31 +313,44 @@ function handleTabLeave() {
 // Create and Add the event listener
 document.addEventListener("visibilitychange", handleTabLeave);
 
-const stealthStored = localStorage.getItem('nogg')
+const stealthStored = localStorage.getItem("nogg");
 function link(_link) {
   if (stealthStored == "on") {
-    let inFrame
-    try { inFrame = window !== top } catch (e) { inFrame = true }
+    let inFrame;
+    try {
+      inFrame = window !== top;
+    } catch (e) {
+      inFrame = true;
+    }
     setTimeout(() => {
       if (!inFrame && !navigator.userAgent.includes("Firefox")) {
-        const popup = open("about:blank", "_blank")
-        if (!popup || popup.closed) { alert("Popups are disabled!") } else {
-          const doc = popup.document
-          const iframe = doc.createElement("iframe")
-          const style = iframe.style
-          const img = doc.createElement("link")
-          img.rel = "icon"
-          img.href = "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
-          doc.title = getRandomName()
-          var currentLink = _link.slice(0, _link.length - 1)
-          iframe.src = location.origin + "/service/go/" + __uv$config.encodeUrl(currentLink)
-          style.position = "fixed"
-          style.top = style.bottom = style.left = style.right = 0
-          style.border = style.outline = "none"
-          style.width = style.height = "100%"
-          doc.body.appendChild(iframe)
+        const popup = open("about:blank", "_blank");
+        if (!popup || popup.closed) {
+          alert("Popups are disabled!");
+        } else {
+          const doc = popup.document;
+          const iframe = doc.createElement("iframe");
+          const style = iframe.style;
+          const img = doc.createElement("link");
+          img.rel = "icon";
+          img.href =
+            "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
+          doc.title = getRandomName();
+          var currentLink = _link.slice(0, _link.length - 1);
+          iframe.src =
+            location.origin +
+            "/service/go/" +
+            __uv$config.encodeUrl(currentLink);
+          style.position = "fixed";
+          style.top = style.bottom = style.left = style.right = 0;
+          style.border = style.outline = "none";
+          style.width = style.height = "100%";
+          doc.body.appendChild(iframe);
         }
       }
-    }, 200)
-  } else { location.href = "service/go/" + __uv$config.encodeUrl("https://radon.games/") }
+    }, 200);
+  } else {
+    location.href =
+      "service/go/" + __uv$config.encodeUrl("https://radon.games/");
+  }
 }

@@ -12,8 +12,9 @@
       <!-- Embed -->
 
       <script src="../uv/uv.bundle.js"></script>
-      <script src="../resources/appModules/BareSwitcher.js"></script>
-      <script src="../resources/options.js"></script>
+       <script src="resources/preload.js"></script>
+       <script src="../resources/options.js"></script>
+       <script src="resources/theme.js"></script>
       <meta name="theme-color" content="#5a189a">
       <meta property=og:title content=Nebula>
       <meta property="og:type" content="website" />
@@ -120,23 +121,18 @@
                <a onclick="unsavedChanges();">
                   <select class="dropdown" id="themeSwitcher">
                      <option value="dark">Shades</option>
+                      <option value="suit">Suit (new) </option>
+                        <option value="metallic">Metallic (new) </option>
+                          <option value="dante">Dante (new) </option>
                      <option value="light">Blizzard</option>
+                     
                      <option value="custom">Custom (Beta)</option>
                   </select>
                </a>
             </span>
             <a onclick="saveIc();switchTheme();" class="button-save"> Apply </a>
          </div>
-         <!--
-         <div class="settings-cont">
-            <p class="name" style="font-size: 21px;"> AB Random Tab Name </p>
-            <p class="description"> Choose to randomize your Stealth Tab name or not. </p>
-            <a onclick="saveIc();" class="button-save" style="
-               margin-right: 20px;
-               "> Disable </a>
-            <a onclick="saveIc();" class="button-save"> Enable (recommended) </a>
-            </span>
-         </div>-->
+     
          <div class="settings-cont">
             <p class="name" style="font-size: 21px;"> Custom AB Tab Info </p>
             <p class="description"> Choose a custom Title + Favicon for your AB Tab </p>
@@ -154,13 +150,7 @@
             <label disabled for="ssuggestion" style="background: grey;">
             </label>
          </div>
-         <div class="settings-cont">
-            <p class="name" style="font-size: 24px;"> Bare location </p>
-            <p class="description">Choose the location where a bare server is hosted. </p>
-            <input id="bareLocationInput" class="bareLocationInput" type="url">
-          <p id="validIndicator" class="bareValidSignal" > </p>
-            </label>
-         </div>
+       
          <div class="settings-cont">
             <p class="name"> Misc </p>
             <p class="description"></p>
@@ -176,7 +166,7 @@
       </div>
       <div id='sidebar'>
       </div>
-      <p class="stamp"> Version 7.11.4 (Public Release) | Nebula Copyright (c) Nebula Services 2022 </p>
+      <p class="stamp"> Nebula Copyright (c) Nebula Services 2022 </p>
       </div>
       <script> 
 var noggStored = localStorage.getItem("nogg")
@@ -201,9 +191,6 @@ if (cloakStored == "on") {
 themeSelector.value = themeStored
 proxySel.value = proxyStored
 
-getBareLocation().then(bareLocation => {
-document.getElementById("bareLocationInput").value = bareLocation;
-});
 
       </script>
    </body>
