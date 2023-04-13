@@ -101,7 +101,7 @@ window.addEventListener("load", () => {
       return true;
     return false;
   }
-  
+
   const proxy = localStorage.getItem("proxy") || "uv";
   const inpbox = document.querySelector("form");
   // Display the "loading" indicators on the main page, looks much better than a static/still screen.
@@ -173,6 +173,7 @@ window.addEventListener("load", () => {
   var link = document.querySelector("link[rel~='icon']");
   if (localStorage.getItem('ADVcloak') == "on") {
   if (document.title == "Nebula") {
+    document.title = "Google"
     if (!link) {
     link = document.createElement('link');
     link.rel = 'icon';
@@ -224,7 +225,7 @@ document.addEventListener("visibilitychange", handleTabLeave)
               img.rel = "icon";
               img.href =
                 "https://static.nebulacdn.xyz/content/images/nebula_logo_619x619.png";
-              blob.title = "Nebula";
+              blob.title = getRandomName();
               // slice the link like some nice fruit :)
               // Removing the '/' from 'whateverthislinkis.gay/'
               //                                              ^
@@ -289,9 +290,7 @@ document.addEventListener("visibilitychange", handleTabLeave)
       if (!inFrame && !navigator.userAgent.includes("Firefox")) {
         const popup = open("about:blank", "_blank");
         if (!popup || popup.closed) {
-          alert(
-            "StealthEngine was unable to open a popup. (do you have popups disabled?)"
-          );
+          alert("StealthEngine was unable to open a popup. (do you have popups disabled?)");
         } else {
           const doc = popup.document;
           const iframe = doc.createElement("iframe");
@@ -306,7 +305,12 @@ document.addEventListener("visibilitychange", handleTabLeave)
           const link = location.href;
           img.rel = "icon";
           img.href = ABFavicon || "https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png";
-          doc.title = ABTitle || "Nebula";
+          if (localStorage.nogg == "on") {
+            doc.title = ABTitle || getRandomName();
+          } else {
+            doc.title = ABTitle || "Nebula";
+          }
+
 
           var currentLink = link.slice(0, link.length - 1);
 
@@ -327,39 +331,24 @@ document.addEventListener("visibilitychange", handleTabLeave)
 
 // Set the option
 var option = localStorage.getItem("nogg");
-const storedSetTheme = localStorage.getItem("theme");
-
-if (storedSetTheme == null) {
+if (localStorage.getItem("theme") == null) {
   localStorage.setItem("theme", "dark");
 }
 
 window.onload = function () {
-  let background = localStorage.getItem("--background-primary");
-  let navbar = localStorage.getItem("--navbar-color");
-  let navbarHeight = localStorage.getItem("--navbar-height");
-  let navbarText = localStorage.getItem("--navbar-text-color");
-  let inputText = localStorage.getItem("--input-text-color");
-  let inputPlaceholder = localStorage.getItem("--input-placeholder-color");
-  let inputBackground = localStorage.getItem("--input-background-color");
-  let inputBorder = localStorage.getItem("--input-border-color");
-  let inputBorderSize = localStorage.getItem("--input-border-size");
-  let navbarFont = localStorage.getItem("--navbar-font");
-  let navbarLink = localStorage.getItem("--navbar-link-color");
-  let navbarLogoFilter = localStorage.getItem("--navbar-logo-filter");
-  let textColorPrimary = localStorage.getItem("--text-color-primary");
-  changeCSS("--background-primary", background);
-  changeCSS("--navbar-color", navbar);
-  changeCSS("--navbar-height", navbarHeight);
-  changeCSS("--navbar-text-color", navbarText);
-  changeCSS("--input-text-color", inputText);
-  changeCSS("--input-placeholder-color", inputPlaceholder);
-  changeCSS("--input-background-color", inputBackground);
-  changeCSS("--input-border-color", inputBorder);
-  changeCSS("--input-border-size", inputBorderSize);
-  changeCSS("--navbar-link-color", navbarLink);
-  changeCSS("--navbar-font", navbarFont);
-  changeCSS("--navbar-logo-filter", navbarLogoFilter);
-  changeCSS("--text-color-primary", textColorPrimary);
+  changeCSS("--background-primary", localStorage.getItem("--background-primary"));
+  changeCSS("--navbar-color", localStorage.getItem("--navbar-color"));
+  changeCSS("--navbar-height", localStorage.getItem("--navbar-height"));
+  changeCSS("--navbar-text-color", localStorage.getItem("--navbar-text-color"));
+  changeCSS("--input-text-color", localStorage.getItem("--input-text-color"));
+  changeCSS("--input-placeholder-color", localStorage.getItem("--input-placeholder-color"));
+  changeCSS("--input-background-color", localStorage.getItem("--input-background-color"));
+  changeCSS("--input-border-color", localStorage.getItem("--input-border-color"));
+  changeCSS("--input-border-size", localStorage.getItem("--input-border-size"));
+  changeCSS("--navbar-link-color", localStorage.getItem("--navbar-link-color"));
+  changeCSS("--navbar-font", localStorage.getItem("--navbar-font"));
+  changeCSS("--navbar-logo-filter", localStorage.getItem("--navbar-logo-filter"));
+  changeCSS("--text-color-primary", localStorage.getItem("--text-color-primary"));
 };
 
 function changeCSS(variable, value, saveBool) {
@@ -378,31 +367,19 @@ function saveCSS(variable, value) {
 function log() {
   setTimeout(
     console.log.bind(
-      console,
-      "%cWelcome To Nebula",
-      "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
+      console, "%cWelcome To Nebula", "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
     )
   );
   setTimeout(
     console.log.bind(
-      console,
-      "%c If you are seeing this, Nebula's main script has succesfully loaded!",
-      "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      console, "%c If you are seeing this, Nebula's main script has succesfully loaded!", "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
     )
   );
   setTimeout(
     console.log.bind(
-      console,
-      "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket",
-      "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      console, "%cIf you encounter an error, contact our support team on discord. Copy and paste the information below and send it in the ticket", "background: red;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
     )
   );
-  let enabledCookies = navigator.cookieEnabled;
-  let appName = navigator.appName; // @deprecated
-  let product = navigator.product; // @deprecated
-  let agent = navigator.userAgent;
-  let version = navigator.appVersion; // @deprecated
-  let platform = navigator.platform; // @deprecated
   let online = navigator.onLine;
   let userAgent = navigator.userAgent;
   let browserName;
@@ -420,15 +397,12 @@ function log() {
   } else {
     browserName = "No browser detection";
   }
-  setTimeout(
-    console.log.bind(
-      console,
-      `%cInformation: \n URL: ${diagnosticDomain} \n BrowserName: ${browserName} \n IsOnline: ${online} \n agent: ${userAgent}, `,
-      "background: gray;color:#FFF;padding:3px;border-radius: 0px;line-height: 26px; font-size:6px;"
-    )
+  console.log.bind(
+    console,
+    `%cInformation: \n URL: ${diagnosticDomain} \n BrowserName: ${browserName} \n IsOnline: ${online} \n UA: ${userAgent}, `,
+    "background: gray;color:#FFF;padding:3px;border-radius: 0px; font-size:12px;"
   );
 }
-
 log();
 function switchTheme() {
   var selecter = document.getElementById("themeSwitcher");
@@ -515,20 +489,18 @@ function getRandomName() {
   const surname = surnames[random2];
   // Connect the adjective and surname together to create a random name
   const randomName = adjective + "-" + surname;
-  // Return it so it can be called later as a variable for the Tab Name.
   return randomName;
 }
 
 // Check if the Browser variable is undefined
 // This is unused as of now but it could be used for better cloaking in the future, specifically with activeTab
 if (typeof browser === "undefined") {
-  // Initialize the browser variable
   var browser = chrome;
 }
 browser = chrome;
 
 // Clickoff cloaking
-// This function is called as a callback during the event listener
+// This is used to cloak the tab when it is not active
 function handleTabLeave() {
   var link = document.querySelector("link[rel~='icon']");
   if (localStorage.getItem("ADVcloak") == "on") {
@@ -538,8 +510,7 @@ function handleTabLeave() {
         link.rel = "icon";
         document.getElementsByTagName("head")[0].appendChild(link);
       }
-      link.href =
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo7AE3IF34XPGyseQjkXIOsWXpkZiLlMjSAwySjcJSPAwlv3hnGKi1&usqp=CAU";
+      link.href = "https://www.google.com/favicon.ico";
       document.title = "Google";
     } else if (document.title == "Google") {
       document.title = "Nebula";
@@ -548,8 +519,7 @@ function handleTabLeave() {
         link.rel = "icon";
         document.getElementsByTagName("head")[0].appendChild(link);
       }
-      link.href =
-        "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67";
+      link.href = "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67";
     } else {
       return false;
     }

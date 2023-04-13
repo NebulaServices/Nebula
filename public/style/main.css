@@ -480,7 +480,7 @@ small {
   padding-right: 0.3em;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1190px) {
   #digitalClock {
     display: none;
   }
