@@ -8,8 +8,17 @@ function switchProxy() {
 
   localStorage.setItem("proxy", selectedOption);
   var storedChoice = localStorage.getItem("proxy");
-  console.log(selectedOption);
 }
+
+function setDefaultsIfUndefined() {
+    if (localStorage.ADVcloak == undefined) localStorage.setItem("ADVcloak", "off")
+    if (localStorage.nogg == undefined) localStorage.setItem("nogg", "off")
+    if (localStorage.ABtitle == undefined) localStorage.setItem("ABtitle", "")
+    if (localStorage.ABfaviconURL == undefined) localStorage.setItem("ABfaviconURL", "")
+    if (localStorage.theme == undefined) localStorage.setItem("theme", "dark")
+    if (localStorage.proxy == undefined) localStorage.setItem("proxy", "uv")
+}
+setDefaultsIfUndefined();
 
 function resetViews() {
   changeCSS("--background-primary", "#191724", true);
@@ -27,7 +36,6 @@ function resetViews() {
   return "All views reset";
 }
 function saveIc() {
-  console.log("Checked");
   var notification = `
               <div class="notification-container" id="notification-container">
               <div class="notification notification-success">
@@ -66,8 +74,9 @@ function toggleNoGG() {
     localStorage.setItem("nogg", "on");
   }
 }
-var option2 = localStorage.getItem("ADVcloak");
+var option2 = localStorage.ADVcloak;
 function toggleClickoff() {
+  if (option2 == undefined) return console.error("ADVcloak key unset!")
   if (option2 === "on") {
     option2 = "off";
     localStorage.setItem("ADVcloak", "off");
@@ -75,6 +84,10 @@ function toggleClickoff() {
     option2 = "on";
     localStorage.setItem("ADVcloak", "on");
   }
+}
+
+function toggleSetting(localStorageKey, value) {
+  localStorage.setItem(localStorageKey, value);
 }
 
 window.onload = function () {
