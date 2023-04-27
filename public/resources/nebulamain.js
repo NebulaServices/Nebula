@@ -208,15 +208,15 @@ function log() {
   setTimeout(
     console.log.bind(
       console,
-      "%cWelcome To Nebula",
-      "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:30px;"
+      "%cWelcome To Nebula!",
+      "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:24px;"
     )
   );
   setTimeout(
     console.log.bind(
       console,
-      "%c If you are seeing this, Nebula's main script has succesfully loaded!",
-      "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:12px;"
+      "%cIf you are seeing this, Nebula's main script has succesfully loaded!",
+      "background: green;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px; font-size:16px;"
     )
   );
   setTimeout(
@@ -231,23 +231,26 @@ function log() {
   let browserName;
   let diagnosticDomain = window.location.href;
   if (userAgent.match(/chrome|chromium|crios/i)) {
-    browserName = "chrome";
+    browserName = "Chrome";
   } else if (userAgent.match(/firefox|fxios/i)) {
-    browserName = "firefox";
+    browserName = "Firefox";
   } else if (userAgent.match(/safari/i)) {
-    browserName = "safari";
+    browserName = "Safari";
   } else if (userAgent.match(/opr\//i)) {
-    browserName = "opera";
+    browserName = "Opera";
   } else if (userAgent.match(/edg/i)) {
-    browserName = "edge";
+    browserName = "Edge";
   } else {
-    browserName = "No browser detection";
+    browserName = "Browser not detected!";
   }
-  console.log.bind(
-    console,
-    `%cInformation: \n URL: ${diagnosticDomain} \n BrowserName: ${browserName} \n IsOnline: ${online} \n UA: ${userAgent}, `,
-    "background: gray;color:#FFF;padding:3px;border-radius: 0px; font-size:12px;"
-  );
+  setTimeout(
+    console.log.bind(
+      console,
+      `%c Information: \n Online: ${online} \n URL: ${diagnosticDomain} \n Browser: ${browserName} \n UA: ${userAgent}`, 
+      "background: gray;color:#FFF;padding:5px;line-height: 26px; font-size:14px;"
+    )
+  )
+
 }
 log();
 
