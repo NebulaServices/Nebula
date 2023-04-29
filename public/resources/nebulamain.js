@@ -265,7 +265,11 @@ async function surnameAdjectivesData() {
     .then((data) => {
       adjectives = data.adjectives;
       surnames = data.surnames;
-    });
+    }).catch(() => {
+      console.warn("noGG data failed to load! Falling back to tiny dataset.")
+      adjectives = ["admiring","adoring","affectionate","agitated","amazing","angry","awesome","beautiful","blissful","bold",]
+      surnames = ["albattani","allen","almeida","antonelli","agnesi","archimedes","ardinghelli","aryabhata","austin","babbage","banach",]
+    })
 }
 surnameAdjectivesData();
 
@@ -306,8 +310,7 @@ function handleTabLeave() {
         link.rel = "icon";
         document.getElementsByTagName("head")[0].appendChild(link);
       }
-      link.href =
-        "https://camo.githubusercontent.com/b565ae2e136e0ac6023e7099288a62382de7c2b8cdce86a8b90449b86649434c/68747470733a2f2f6e6562756c6170726f78792e6e6562756c612e62696f2f696d616765732f6c6f676f2e706e67";
+      link.href = location.href + "/images/logo.png"
     } else {
       return false;
     }
@@ -357,3 +360,20 @@ function link(_link) {
       "service/go/" + __uv$config.encodeUrl("https://radon.games/");
   }
 }
+
+let checkInternetConnection = () => {
+  if (!navigator.onLine) {
+    alert("You are offline!");
+    return false;
+  }
+}
+
+// setInterval(() => {
+//     if (checkInternetConnection() == false) {
+//         console.error("You are offline!")
+//     } else {
+//         console.log("You are online!")
+//     }
+// }, 3000);
+
+// TODO: Internet Connection Check!
