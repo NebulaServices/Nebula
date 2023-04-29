@@ -10,15 +10,15 @@ import nodemailer from "nodemailer";
 import * as uuid from "uuid";
 import fs from "node:fs";
 import bcrypt from "bcrypt";
-
+// fx
 const PORT = process.env.PORT || 3000;
 const __dirname = process.cwd();
 const ACTIVE_CODES = new Set();
-if (!fs.existsSync("./memory.txt")) {
-  fs.writeFileSync("./memory.txt", "", "utf-8");
+if (!fs.existsSync("./tmp/memory.txt")) {
+  fs.writeFileSync("./tmp/memory.txt", "", "utf-8");
 }
 let TOKENS = fs
-  .readFileSync("./memory.txt", "utf-8")
+  .readFileSync("./tmp/memory.txt", "utf-8")
   .trim()
   .split("\n")
   .map((token) => {
@@ -138,7 +138,7 @@ app.post("/validate-otp", (req, res) => {
       });
 
       fs.writeFileSync(
-        "./memory.txt",
+        "./tmp/memory.txt",
         TOKENS.map((token) => {
           return `${token.id}:${token.token}:${token.expiration}`;
         }).join("\n"),
