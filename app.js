@@ -10,7 +10,7 @@ import nodemailer from "nodemailer";
 import * as uuid from "uuid";
 import fs from "node:fs";
 import bcrypt from "bcrypt";
-
+// fx
 const PORT = process.env.PORT || 3000;
 const __dirname = process.cwd();
 const ACTIVE_CODES = new Set();
