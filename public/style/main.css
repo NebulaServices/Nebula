@@ -498,3 +498,10 @@ small {
     opacity: 0%;
   }
 }
+.offline-banner {
+  width: 100%;
+  height: 40px;
+  top: 60px;
+  background-color: var(--input-border-color);
+  position: relative;
+}

@@ -363,17 +363,17 @@ function link(_link) {
 
 let checkInternetConnection = () => {
   if (!navigator.onLine) {
-    alert("You are offline!");
     return false;
   }
 }
 
-// setInterval(() => {
-//     if (checkInternetConnection() == false) {
-//         console.error("You are offline!")
-//     } else {
-//         console.log("You are online!")
-//     }
-// }, 3000);
+setInterval(() => {
+    if (checkInternetConnection()) {
+        console.error("You are offline!")
+        
+    } else {
+        console.log("You are online!")
+    }
+}, 3000);
 
 // TODO: Internet Connection Check!
