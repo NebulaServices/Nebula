@@ -246,7 +246,7 @@ function log() {
   setTimeout(
     console.log.bind(
       console,
-      `%c Information: \n Online: ${online} \n URL: ${diagnosticDomain} \n Browser: ${browserName} \n UA: ${userAgent}`, 
+      `%c Information: \n Online: ${online} \n URL: ${diagnosticDomain} \n Browser: ${browserName} \n UA: ${userAgent}`,
       "background: gray;color:#FFF;padding:5px;line-height: 26px; font-size:14px;"
     )
   )
@@ -267,8 +267,8 @@ async function surnameAdjectivesData() {
       surnames = data.surnames;
     }).catch(() => {
       console.warn("noGG data failed to load! Falling back to tiny dataset.")
-      adjectives = ["admiring","adoring","affectionate","agitated","amazing","angry","awesome","beautiful","blissful","bold",]
-      surnames = ["albattani","allen","almeida","antonelli","agnesi","archimedes","ardinghelli","aryabhata","austin","babbage","banach",]
+      adjectives = ["admiring", "adoring", "affectionate", "agitated", "amazing", "angry", "awesome", "beautiful", "blissful", "bold",]
+      surnames = ["albattani", "allen", "almeida", "antonelli", "agnesi", "archimedes", "ardinghelli", "aryabhata", "austin", "babbage", "banach",]
     })
 }
 surnameAdjectivesData();
@@ -364,16 +364,34 @@ function link(_link) {
 let checkInternetConnection = () => {
   if (!navigator.onLine) {
     return false;
+  } else {
+    return true;
   }
 }
 
+let hasReconnected = 0;
+let waitingForReconnect = false;
+
 setInterval(() => {
-    if (checkInternetConnection()) {
-        console.error("You are offline!")
-        
-    } else {
-        console.log("You are online!")
+  if (checkInternetConnection() == false) {
+    console.error("You are offline!")
+    document.getElementById("ofl-banner").style.height = "60px"
+    setTimeout(() => {
+      document.getElementById("ofl-banner").style.display = "flex"
+    }, 300);
+    waitingForReconnect = true;
+  }
+  if (waitingForReconnect == true) {
+    if (checkInternetConnection() == true) {
+      console.log("Reconnected!")
+      document.getElementById("ofl-text").textContent = "Reconnected!"
+      document.getElementById("ofl-banner").style.height = "0px";
+      setTimeout(() => {
+        document.getElementById("ofl-banner").style.display = "none"
+        document.getElementById("ofl-text").textContent = "You are offline!"
+      }, 300);
     }
+  }
 }, 3000);
 
 // TODO: Internet Connection Check!

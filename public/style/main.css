@@ -504,4 +504,22 @@ small {
   top: 60px;
   background-color: var(--input-border-color);
   position: relative;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  transition: 250ms ease-in-out;
+  overflow: hidden;
+}
+.offline-text {
+  color: var(--input-placeholder-color);
+  font-family: 'Roboto';
+  font-weight: 600;
+}
+.offline-sad-face {
+  width: 28px;
+  margin-top: 1px;
+  margin-left: 5px;
+}
+.offline-sad-face > path {
+  fill: white;
 }
