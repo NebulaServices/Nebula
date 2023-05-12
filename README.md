@@ -28,7 +28,7 @@ Table of contents
 - Filesystem
 
 ## Quick & Easy Deployment Options
-
+## PLEASE READ THIS NOTICE: IF YOU ARE USING NODE VERSION 20 (HEROKU, RAILWAY), YOU WILL NEED TO TEMPORARILY DOWNGRADE TO 19 OR EARLIER. 
 [![Deploy to Heroku](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/NebulaServices/Nebula)
 <br>
 [![Run on Replit](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg)](https://replit.com/github/NebulaServices/Nebula)
