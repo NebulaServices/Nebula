@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:20.1-bullseye-slim
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install
