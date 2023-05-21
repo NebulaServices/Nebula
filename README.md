@@ -28,10 +28,9 @@ Table of contents
 - Filesystem
 
 ## Quick & Easy Deployment Options
-## PLEASE READ THIS NOTICE: IF YOU ARE USING NODE VERSION 20 (HEROKU, RAILWAY), YOU WILL NEED TO TEMPORARILY DOWNGRADE TO 19 OR EARLIER. 
-[![Deploy to Heroku](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/NebulaServices/Nebula)
-<br>
-[![Run on Replit](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg)](https://replit.com/github/NebulaServices/Nebula)
+
+## PLEASE READ THIS NOTICE: IF YOU ARE USING NODE VERSION 20 (HEROKU, RAILWAY), YOU WILL NEED TO TEMPORARILY DOWNGRADE TO 19 OR EARLIER.
+
 <br>
 [![Deploy to IBM Cloud](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/ibmcloud.svg)](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/NebulaServices/Nebula)
 <br>
@@ -42,8 +41,6 @@ Table of contents
 [![Deploy on Railway](https://binbashbanana.github.io/deploy-buttons/buttons/remade/railway.svg)](https://railway.app/new/template/pBzeiN)
 <br>
 [![Deploy To Koyeb](https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/NebulaServices/Nebula&branch=main&name=NebulaProxy)
-<br>
-[![Deploy to Render](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/main/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/NebulaServices/Nebula)
 
 ---
 
