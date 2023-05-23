@@ -2,6 +2,10 @@
 
 NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 
+Quick note: If you are a system administrator, and have questions, our email is always open `chloe@nebulaproxy.io`
+
+
+
 ![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue)
 
 ![chat](https://img.shields.io/badge/chat-1139%20online-brightgreen)
@@ -29,10 +33,9 @@ Table of contents
 
 ## Quick & Easy Deployment Options
 
-[![Deploy to Heroku](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/NebulaServices/Nebula)
-<br>
-[![Run on Replit](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/replit.svg)](https://replit.com/github/NebulaServices/Nebula)
-<br>
+## PLEASE READ THIS NOTICE: IF YOU ARE USING NODE VERSION 20 (HEROKU, RAILWAY), YOU WILL NEED TO TEMPORARILY DOWNGRADE TO 19 OR EARLIER.
+
+
 [![Deploy to IBM Cloud](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/ibmcloud.svg)](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/NebulaServices/Nebula)
 <br>
 [![Deploy to Amplify Console](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/amplifyconsole.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/NebulaServices/Nebula)
@@ -42,8 +45,6 @@ Table of contents
 [![Deploy on Railway](https://binbashbanana.github.io/deploy-buttons/buttons/remade/railway.svg)](https://railway.app/new/template/pBzeiN)
 <br>
 [![Deploy To Koyeb](https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/NebulaServices/Nebula&branch=main&name=NebulaProxy)
-<br>
-[![Deploy to Render](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/main/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/NebulaServices/Nebula)
 
 ---
 
