@@ -2,6 +2,7 @@
 
 NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 
+Quick note: If you are a system administrator, and have questions, our email is always open `chloe@nebulaproxy.io`
 ![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue)
 
 ![chat](https://img.shields.io/badge/chat-1139%20online-brightgreen)
