@@ -35,7 +35,7 @@ Table of contents
 
 ## PLEASE READ THIS NOTICE: IF YOU ARE USING NODE VERSION 20 (HEROKU, RAILWAY), YOU WILL NEED TO TEMPORARILY DOWNGRADE TO 19 OR EARLIER.
 
-<br>
+
 [![Deploy to IBM Cloud](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/ibmcloud.svg)](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/NebulaServices/Nebula)
 <br>
 [![Deploy to Amplify Console](https://raw.githubusercontent.com/BinBashBanana/deploy-buttons/master/buttons/remade/amplifyconsole.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/NebulaServices/Nebula)
