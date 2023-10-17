@@ -1,4 +1,4 @@
-FROM node:20.4-bookworm-slim
+FROM node:20.8.1-bookworm-slim
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install
