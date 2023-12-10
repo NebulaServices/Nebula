@@ -161,7 +161,7 @@ credits to @ProgrammerIn-wonderland for writing this wonderful tutorial (which c
 ```
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - \ &&
 sudo apt-get install -y nodejs npm
-git clone https://github.com/NebulaServices/Nebula.git
+git clone https://github.com/JimDude7404/Nebula.git
 cd Nebula
 npm i
 npm ci
