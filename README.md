@@ -165,7 +165,7 @@ git clone https://github.com/NebulaServices/Nebula.git
 cd Nebula
 npm i
 npm ci
-sudo nohup PORT=80 node . &
+sudo PORT=80 nohup node . &
 ```
 
 **Make sure your firewall is configured to let through port 80 traffic!** \
