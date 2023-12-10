@@ -1,7 +1,7 @@
 
 export function Home() {
 	return (
-		<div>
+		<div class="text-8xl">
 			We've enabled nebula servicessssss
 		</div>
 	);
