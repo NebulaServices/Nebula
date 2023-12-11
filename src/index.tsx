@@ -6,6 +6,7 @@ import { Home } from './pages/Home';
 import { NotFound } from './pages/_404.jsx';
 import './style.css';
 import './themes/main.css';
+import './i18n';
 
 export function App() {
 	return (
