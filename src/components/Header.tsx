@@ -2,11 +2,9 @@ import { useLocation } from "preact-iso";
 import LinkSvg from "../assets/link.svg";
 import LogoSvg from "../assets/logo.svg";
 import { useState, useEffect } from "preact/hooks"
-
+import Clock from "./Clock";
 export function Header() {
   const { url } = useLocation();
-  const [currentTime, setCurrentTime] = useState('');
-
 
   return (
     <div id="navbar" className="h-16 px-4 bg-navbar-color flex flex-row items-center justify-between">
@@ -16,7 +14,7 @@ export function Header() {
 			</div>
       
 			<div className="w-1/3">
-				Clock
+				<Clock />
 			</div>
 			<div className="w-1/3">
 				<span className="">Games</span>
