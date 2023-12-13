@@ -1,9 +1,9 @@
-import { useLocation } from "preact-iso";
-import LinkSvg from "../assets/link.svg";
-import LogoSvg from "../assets/logo.svg";
+import { useLocation } from 'preact-iso';
+import LinkSvg from '../assets/link.svg';
+import LogoSvg from '../assets/logo.svg';
 import GamesSvg from '../assets/games.svg';
 
-import { useState, useEffect } from "preact/hooks"
+import { useState, useEffect } from 'preact/hooks'
 import { useTranslation } from 'react-i18next';
 
 export function Header() {
@@ -19,22 +19,10 @@ export function Header() {
 			<div className="w-1/2">
 				<div className="flex flex-row justify-end items-center">
 					<div class="p-4 flex flex-row items-center">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-							style="width: 23px"
-							>
-							<path
-								style="fill: #ffffff00"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
-							/>
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" style="width: 23px" >
+							<path style="fill: #ffffff00" stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
 						</svg>
+						
 						<span className="text-text-color text-lg pl-1 font-roboto font-bold">{t('header.games')}</span>
 					</div>
 					<div class="p-4 flex flex-row items-center">
