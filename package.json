@@ -7,6 +7,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@tomphttp/bare-server-node": "^2.0.1",
 		"i18next": "^23.7.8",
 		"i18next-browser-languagedetector": "^7.2.0",
 		"million": "^2.6.4",

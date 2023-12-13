@@ -7,6 +7,7 @@ import { NotFound } from './pages/_404.jsx';
 import './style.css';
 import './themes/main.css';
 import './i18n';
+import { discordPag } from './pages/discord.js';
 
 export function App() {
 	return (
@@ -17,6 +18,7 @@ export function App() {
 					<main class="h-full">
 						<Router>
 							<Route path="/" component={Home} />
+							<Route path="/discord" component={discordPag} />
 							<Route default component={NotFound} />
 						</Router>
 					</main>
