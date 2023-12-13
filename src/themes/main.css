@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
+
 :root {
     --background-primary: #191724;
     --navbar-color: #26233a;
@@ -13,8 +15,11 @@
     --navbar-logo-filter: none;
   }
 
-.font-roboto {
+.font-inter {
     font-family: 'Inter', sans-serif;
     font-weight: 300;
 }
   
+.font-roboto {
+  font-family: 'Roboto';
+}

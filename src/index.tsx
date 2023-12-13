@@ -14,7 +14,7 @@ export function App() {
 			<div class="flex flex-col h-screen">
 			<Header />
 				<div class="flex-1 bg-primary">
-					<main>
+					<main class="h-full">
 						<Router>
 							<Route path="/" component={Home} />
 							<Route default component={NotFound} />
