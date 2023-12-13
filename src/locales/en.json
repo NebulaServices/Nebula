@@ -4,5 +4,12 @@
         "games": "Games",
         "settings": "Settings",
         "discord": "Want more links?"
+    },
+    "404": {
+        "text": "This Nebula Service has been disabled.",
+        "return": "Back to home"
+    },
+    "home": {
+        "placeholder": "Search the web freely"
     }
 }
