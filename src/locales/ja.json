@@ -13,7 +13,7 @@
         "placeholder": "由にウェブを検索"
     },
     "discord": {
-        "title": "ネビュラのDiscordサーバー",
+        "title": "ネブラDiscordサーバー",
         "sub": "プロキシ経由で開きますか？",
         "button1": "通常通り開く",
         "button2": "プロキシを使用する"
