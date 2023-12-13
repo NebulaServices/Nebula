@@ -11,5 +11,11 @@
     },
     "home": {
         "placeholder": "Search the web freely"
+    },
+    "discord": {
+        "title": "Nebula's Discord Server",
+        "sub": "Would you like to open this via proxy?",
+        "button1": "Open Normally",
+        "button2": "Use Proxy"
     }
 }

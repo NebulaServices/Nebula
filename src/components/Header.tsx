@@ -12,8 +12,8 @@ export function Header() {
 
   return (
     <div id="navbar" className="h-16 px-4 bg-navbar-color flex flex-row items-center justify-between">
-			<a href="/">
-				<div className="flex flex-row items-center w-1/2">
+			<a href="/" class="w-1/2">
+				<div className="flex flex-row items-center">
 					<img src="/logo.png" className="h-16 w-16 hover:rotate-[360deg] transition-all duration-1000"></img>
 					<h1 className="font-roboto text-navbar-text-color text-4xl font-bold">{t('header.title')}</h1>
 				</div>
