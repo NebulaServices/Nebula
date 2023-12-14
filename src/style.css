@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a:hover {
+  color: gray;
+  transition: 0.5s;
+  cursor: pointer;
+}
