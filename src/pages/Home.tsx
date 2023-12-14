@@ -1,24 +1,23 @@
 import { useState } from "preact/hooks";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export function Home() {
-	const [isFocused, setIsFocused] = useState(false);
-	const { t } = useTranslation()
+  const [isFocused, setIsFocused] = useState(false);
+  const { t } = useTranslation();
 
-	return (
-		<div class="flex justify-center items-center h-full">
-			<input 
-				onFocus={(e) => {
-					setIsFocused(true);
-				}}
-				onBlur={(e) => {
-					setIsFocused(false);
-				}}
-				type="text"
-				class="p-2 border border-input-border-color rounded-2xl h-14 w-80 text-center bg-input text-xl placeholder:text-input-text focus:outline-none font-roboto" 
-				placeholder={isFocused ? '' : t('home.placeholder')}
-			>
-			</input>
-		</div>
-	);
+  return (
+    <div class="flex h-full items-center justify-center">
+      <input
+        onFocus={(e) => {
+          setIsFocused(true);
+        }}
+        onBlur={(e) => {
+          setIsFocused(false);
+        }}
+        type="text"
+        class="font-roboto h-14 w-80 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none"
+        placeholder={isFocused ? "" : t("home.placeholder")}
+      ></input>
+    </div>
+  );
 }
