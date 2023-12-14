@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
 export function NotFound() {
-	const { t } = useTranslation()
+	const { t } = useTranslation();
+	
 	return (
 		<section class="h-full">
 			<div class="flex justify-center items-center h-full flex-col">

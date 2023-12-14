@@ -11,7 +11,7 @@ const resources = {
   },
   ja: {
     translation: translationJA,
-  },
+  }
 };
 
 i18n
@@ -22,7 +22,7 @@ i18n
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
-    },
+    }
   });
 
 export default i18n;

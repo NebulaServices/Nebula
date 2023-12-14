@@ -14,8 +14,7 @@ export default {
       "input-text": "var(--input-text-color)",
       "input-border-color": "var(--input-border-color)"
     },
-    extend: {},
+    extend: {}
   },
-  plugins: [],
-}
-
+  plugins: []
+};
