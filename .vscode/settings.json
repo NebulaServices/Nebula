@@ -1,0 +1,12 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 0,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.linkedEditing": true,
+  "css.lint.unknownProperties": "ignore"
+}
