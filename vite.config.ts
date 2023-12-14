@@ -1,8 +1,34 @@
-import million from 'million/compiler';
-import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
+import million from "million/compiler";
+import { defineConfig } from "vite";
+import preact from "@preact/preset-vite";
+import { viteStaticCopy } from "vite-plugin-static-copy";
+import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 
-// https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [million.vite({ auto: true }), preact()],
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          // .replace fixes weird paths on Windows
+          src: `${uvPath}/uv.*.js`.replace(/\\/g, "/"),
+          rename: (name) => {
+            return `${name.replace(/^uv\./, "ultra.")}.js`;
+          },
+          dest: "ultra",
+          overwrite: false
+        }
+      ]
+    }),
+    million.vite({ auto: true }),
+    preact()
+  ],
+  server: {
+    proxy: {
+      "/bare": {
+        target: "http://localhost:8080/",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/bare/, "")
+      }
+    }
+  }
 });

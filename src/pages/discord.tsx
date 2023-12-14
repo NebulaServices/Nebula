@@ -1,21 +1,25 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 export function discordPag() {
-	const { t } = useTranslation()
-	return (
-		<section class="h-full">
-			<div class="flex justify-center items-center h-full flex-col">
-				<div class="p-6 flex flex-col items-center">
-					<p class="text-4xl font-roboto font-bold">{t('discord.title')}</p>
-					<span class="text-3xl font-roboto">{t('discord.sub')}</span>
-				</div>
-                <a href="https://discord.gg/unblocker" class="p-6">
-					<button class="p-2 border border-input-border-color rounded-2xl h-14 w-56 text-center bg-input text-xl placeholder:text-input-text focus:outline-none font-roboto">{t('discord.button1')}</button>
-				</a>
-                <a href="/" class="p-6">
-					<button class="p-2 border border-input-border-color rounded-2xl h-14 w-56 text-center bg-input text-xl placeholder:text-input-text focus:outline-none font-roboto">{t('discord.button2')}</button>
-				</a>
-			</div>
-		</section>
-	);
+  const { t } = useTranslation();
+  return (
+    <section class="h-full">
+      <div class="flex h-full flex-col items-center justify-center">
+        <div class="flex flex-col items-center p-6">
+          <p class="font-roboto text-4xl font-bold">{t("discord.title")}</p>
+          <span class="font-roboto text-3xl">{t("discord.sub")}</span>
+        </div>
+        <a href="https://discord.gg/unblocker" class="p-6">
+          <button class="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none">
+            {t("discord.button1")}
+          </button>
+        </a>
+        <a href="/" class="p-6">
+          <button class="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none">
+            {t("discord.button2")}
+          </button>
+        </a>
+      </div>
+    </section>
+  );
 }

@@ -1,21 +1,21 @@
 {
-    "header": {
-        "title": "ネブラ。",
-        "games": "ゲーム",
-        "settings": "セッティング",
-        "discord": "もっとリンクが欲しいですか？"
-    },
-    "404": {
-        "text": "このネビュラサービスは無効になっています",
-        "return": "帰宅"
-    },
-    "home": {
-        "placeholder": "由にウェブを検索"
-    },
-    "discord": {
-        "title": "ネブラDiscordサーバー",
-        "sub": "プロキシ経由で開きますか？",
-        "button1": "通常通り開く",
-        "button2": "プロキシを使用する"
-    }
+  "header": {
+    "title": "ネブラ。",
+    "games": "ゲーム",
+    "settings": "セッティング",
+    "discord": "もっとリンクが欲しいですか？"
+  },
+  "404": {
+    "text": "このネビュラサービスは無効になっています",
+    "return": "帰宅"
+  },
+  "home": {
+    "placeholder": "由にウェブを検索"
+  },
+  "discord": {
+    "title": "ネブラDiscordサーバー",
+    "sub": "プロキシ経由で開きますか？",
+    "button1": "通常通り開く",
+    "button2": "プロキシを使用する"
+  }
 }
