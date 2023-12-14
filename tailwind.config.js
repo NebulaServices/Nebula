@@ -10,6 +10,7 @@ export default {
       "navbar-text-color": "var(--navbar-text-color)",
       "navbar-color": "var(--navbar-color)",
       "text-color": "var(--navbar-link-color)",
+      "text-hover-color": "var(--navbar-link-hover-color)",
       "input": "var(--input-background-color)",
       "input-text": "var(--input-text-color)",
       "input-border-color": "var(--input-border-color)"
