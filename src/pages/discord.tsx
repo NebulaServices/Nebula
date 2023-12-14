@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export function discordPag() {
+export function DiscordPage() {
   const { t } = useTranslation();
   return (
     <section class="h-full">
