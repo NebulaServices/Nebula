@@ -10,16 +10,18 @@ export function Home() {
     <HeaderRoute>
       <div class="flex h-full items-center justify-center">
         <input
-          onFocus={(e) => {
+          onFocus={() => {
             setIsFocused(true);
           }}
-          onBlur={(e) => {
+          onBlur={() => {
             setIsFocused(false);
           }}
           type="text"
-          class="font-roboto h-14 w-80 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none"
-          placeholder={isFocused ? "" : t("home.placeholder")}
-        ></input>
+          className={`font-roboto h-14 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none ${
+            isFocused ? "w-full md:w-3/12" : "w-full md:w-80"
+          } transition-all duration-300`}
+          placeholder={isFocused ? "" : t('home.placeholder')}
+        />
       </div>
     </HeaderRoute>
   );
