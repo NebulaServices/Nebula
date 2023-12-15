@@ -11,10 +11,7 @@ export default defineConfig({
         {
           // .replace fixes weird paths on Windows
           src: `${uvPath}/uv.*.js`.replace(/\\/g, "/"),
-          rename: (name) => {
-            return `${name.replace(/^uv\./, "ultra.")}.js`;
-          },
-          dest: "ultra",
+          dest: "uv",
           overwrite: false
         }
       ]
