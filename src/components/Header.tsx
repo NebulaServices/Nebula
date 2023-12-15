@@ -23,7 +23,7 @@ export function Header() {
             src="/logo.png"
             className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
           ></img>
-          <h1 className="font-roboto text-4xl font-bold text-navbar-text-color">
+          <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
             {t("header.title")}
           </h1>
         </div>
