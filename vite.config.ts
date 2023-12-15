@@ -3,15 +3,20 @@ import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { dynPath } from "dynamic-npm";
 
 export default defineConfig({
   plugins: [
     viteStaticCopy({
       targets: [
         {
-          // .replace fixes weird paths on Windows
           src: `${uvPath}/uv.*.js`.replace(/\\/g, "/"),
           dest: "uv",
+          overwrite: false
+        },
+        {
+          src: `${dynPath}/dynamic.*.js`.replace(/\\/g, "/"),
+          dest: "dynamic",
           overwrite: false
         }
       ]
@@ -24,6 +29,7 @@ export default defineConfig({
       "/bare": {
         target: "http://localhost:8080/",
         changeOrigin: true,
+        ws: true,
         rewrite: (path) => path.replace(/^\/bare/, "")
       }
     }

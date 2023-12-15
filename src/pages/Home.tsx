@@ -17,10 +17,12 @@ export function Home() {
             setIsFocused(false);
           }}
           type="text"
+          id="proxinp"
           class="font-roboto h-14 w-80 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none"
           placeholder={isFocused ? "" : t("home.placeholder")}
         ></input>
       </div>
+      <iframe class="font-roboto hidden w-max h-max" id="homeFrame"></iframe>
     </HeaderRoute>
   );
 }
