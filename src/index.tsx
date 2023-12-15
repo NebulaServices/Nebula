@@ -13,18 +13,11 @@ import "./i18n";
 export function App() {
   return (
     <LocationProvider>
-      <div class="flex h-screen flex-col">
-        <Header />
-        <div class="flex-1 bg-primary">
-          <main class="h-full">
-            <Router>
-              <Route path="/" component={Home} />
-              <Route path="/discord" component={DiscordPage} />
-              <Route default component={NotFound} />
-            </Router>
-          </main>
-        </div>
-      </div>
+      <Router>
+        <Route path="/" component={Home} />
+        <Route path="/discord" component={DiscordPage} />
+        <Route default component={NotFound} />
+      </Router>
     </LocationProvider>
   );
 }
