@@ -1,10 +1,29 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 
-const Dropdown = ({ name, options }: { name: string; options: string[] }) => {
+interface Option {
+  id: string;
+  label: string; // Translations CAN be passed
+}
+
+const Dropdown = ({
+  name,
+  options,
+  storageKey
+}: {
+  name: string;
+  storageKey: string;
+  options: Option[];
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [choice, setChoice] = useState(
-    localStorage.getItem(name) || options[0]
-  );
+
+  const [choice, setChoice] = useState(() => {
+    return localStorage.getItem(storageKey) || options[0]?.id || "";
+  });
+
+  // update on localstorage change
+  useEffect(() => {
+    setChoice(localStorage.getItem(storageKey) || options[0]?.id || "");
+  }, [storageKey, options]);
 
   return (
     <div className="relative text-center">
@@ -13,20 +32,22 @@ const Dropdown = ({ name, options }: { name: string; options: string[] }) => {
         className="font-roboto flex h-14 w-56 cursor-pointer flex-col items-center justify-center rounded-2xl border border-input-border-color bg-input text-center text-xl"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="select-none">{choice}</div>
+        <div className="select-none">
+          {options.find((o) => o.id === choice)?.label}
+        </div>
         {isOpen && (
           <div className="absolute top-full w-full border">
-            {options.map((option: string) => (
+            {options.map((option) => (
               <div
-                key={option}
+                key={option.id}
                 className="hover:bg-dropdown-option-hover-color"
                 onClick={() => {
                   setIsOpen(false);
-                  setChoice(option);
-                  localStorage.setItem(name, option);
+                  setChoice(option.id);
+                  localStorage.setItem(storageKey, option.id);
                 }}
               >
-                {option}
+                {option.label}
               </div>
             ))}
           </div>
@@ -37,4 +58,3 @@ const Dropdown = ({ name, options }: { name: string; options: string[] }) => {
 };
 
 export default Dropdown;
-

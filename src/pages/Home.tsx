@@ -1,7 +1,6 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
-
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const { t } = useTranslation();

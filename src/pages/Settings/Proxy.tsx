@@ -1,9 +1,16 @@
 import { motion } from "framer-motion";
 import { tabContentVariant, settingsPageVariant } from "./Variants";
 import Dropdown from "./Dropdown";
+import { useTranslation } from "react-i18next";
 
 const Proxy = ({ id, active }) => {
-  const engines = ["Automatic", "Ultraviolet", "Rammerhead", "Dynamic"];
+  const { t } = useTranslation();
+  const engines = [
+    { id: "automatic", label: t("settings.proxy.automatic") },
+    { id: "ultraviolet", label: "Ultraviolet" },
+    { id: "rammerhead", label: "Rammerhead" },
+    { id: "dynamic", label: "Dynamic" }
+  ];
 
   return (
     <motion.div
@@ -18,7 +25,7 @@ const Proxy = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex flex-row flex-wrap justify-around"
       >
-        <Dropdown name="Engine" options={engines} />
+        <Dropdown name={t("settings.proxy.title")} storageKey="proxy" options={engines} />
       </motion.div>
     </motion.div>
   );

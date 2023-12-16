@@ -24,6 +24,10 @@
       "tab": "Tab",
       "custom": "Customization",
       "misc": "Misc"
+    },
+    "proxy": {
+      "title": "Proxy",
+      "automatic": "Automatic"
     }
   }
 }

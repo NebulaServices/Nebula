@@ -24,6 +24,10 @@
       "tab": "タブ",
       "custom": "カスタマイズ",
       "misc": "その他"
+    },
+    "proxy": {
+      "title": "プロキシ",
+      "automatic": "自動"
     }
   }
 }
