@@ -17,5 +17,13 @@
     "sub": "Would you like to open this via proxy?",
     "button1": "Open Normally",
     "button2": "Use Proxy"
+  },
+  "settings": {
+    "tabs": {
+      "proxy": "Proxy",
+      "tab": "Tab",
+      "custom": "Customization",
+      "misc": "Misc"
+    }
   }
 }
