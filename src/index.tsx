@@ -5,6 +5,7 @@ import { Header } from "./components/Header.jsx";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/_404.jsx";
 import { DiscordPage } from "./pages/discord.jsx";
+import { ProxyFrame } from "./ProxyFrame.js";
 
 import "./style.css";
 import "./themes/main.css";
@@ -16,6 +17,7 @@ export function App() {
       <Router>
         <Route path="/" component={Home} />
         <Route path="/discord" component={DiscordPage} />
+        <Route path="/proxyframe/:id" component={ProxyFrame} />
         <Route default component={NotFound} />
       </Router>
     </LocationProvider>
