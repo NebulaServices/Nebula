@@ -30,7 +30,7 @@ export function Header() {
       </Link>
       <button
         type="button"
-        className="z-10 md:hidden"
+        className="z-20 md:hidden"
         aria-expanded={isActive}
         aria-controls="navbar-default"
         onClick={() => setIsActive(!isActive)}
@@ -38,7 +38,7 @@ export function Header() {
         <RxHamburgerMenu />
       </button>
       <div
-        className={`z-5 fixed inset-0 flex md:relative md:right-0 ${
+        className={`fixed inset-0 z-10 flex md:relative md:right-0 ${
           window.innerWidth <= 768 && !isActive && "hidden"
         }`}
       >
