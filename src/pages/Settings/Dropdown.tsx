@@ -1,4 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
+import { FaAngleDown } from "react-icons/fa";
 
 interface Option {
   id: string;
@@ -34,8 +35,13 @@ const Dropdown = ({
         className="font-roboto flex h-14 w-56 cursor-pointer flex-col items-center justify-center rounded-2xl border border-input-border-color bg-input text-center text-xl"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="select-none">
-          {options.find((o) => o.id === choice)?.label}
+        <div className="flex select-none flex-row items-center w-full h-full">
+          <div class="w-3/4">
+            {options.find((o) => o.id === choice)?.label}
+          </div>
+          <div class="w-1/4">
+            <FaAngleDown />
+          </div>
         </div>
         {isOpen && (
           <div className="absolute top-full w-full border">
@@ -48,7 +54,7 @@ const Dropdown = ({
                   setChoice(option.id);
                   localStorage.setItem(storageKey, option.id);
                   if (refresh == true) {
-                    window.location.reload()
+                    window.location.reload();
                   }
                 }}
               >
