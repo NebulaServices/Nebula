@@ -4,6 +4,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import translationEN from "./locales/en.json";
 import translationJA from "./locales/ja.json";
+import translationVida from "./locales/vida.json";
 
 const resources = {
   en: {
@@ -11,7 +12,10 @@ const resources = {
   },
   ja: {
     translation: translationJA
-  }
+  },
+  vida: {
+    translation: translationVida,
+  },
 };
 
 i18n

@@ -1,0 +1,33 @@
+{  
+  "header": {
+    "title": "skibidi toilet.",
+    "games": "Ethanol",
+    "settings": "Minors",
+    "discord": "Want more bare-server-node?"
+  },
+  "404": {
+    "text": "This Nebula Service has been disabled.",
+    "return": "Back to dxm"
+  },
+  "home": {
+    "placeholder": "Lock into Fortnite"
+  },
+  "discord": {
+    "title": "Nebula's Discord Server",
+    "sub": "Would you like to open this via proxy?",
+    "button1": "Open Normally",
+    "button2": "Use Proxy"
+  },
+  "settings": {
+    "tabs": {
+      "proxy": "Proxy",
+      "tab": "Tab",
+      "custom": "Customization",
+      "misc": "Misc"
+    },
+    "proxy": {
+      "title": "Proxy",
+      "automatic": "Automatic"
+    }
+  }
+}
