@@ -32,29 +32,33 @@ const Dropdown = ({
     <div className="relative text-center">
       <h1>{name}</h1>
       <div
-        className="font-roboto flex h-14 w-56 cursor-pointer flex-col items-center justify-center rounded-2xl border border-input-border-color bg-input text-center text-xl"
+        className={`font-roboto flex h-14 w-56 cursor-pointer flex-col items-center justify-center border border-input-border-color bg-input text-center text-xl ${
+          isOpen ? "rounded-t-2xl" : "rounded-2xl"
+        }`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="flex select-none flex-row items-center w-full h-full">
-          <div class="w-1/4 h-full"></div>
-          <div class="w-2/4 items-center flex flex-col">
+        <div className="flex h-full w-full select-none flex-row items-center">
+          <div class="h-full w-1/4"></div>
+          <div class="flex w-2/4 flex-col items-center">
             {options.find((o) => o.id === choice)?.label}
           </div>
-          <div class="w-1/4 flex flex-col items-center">
+          <div class="flex w-1/4 flex-col items-center">
             <FaAngleDown />
           </div>
         </div>
         {isOpen && (
-          <div className="absolute top-full w-full border">
-            {options.map((option) => (
+          <div className="absolute top-full w-full">
+            {options.map((option, index) => (
               <div
                 key={option.id}
-                className="hover:bg-dropdown-option-hover-color"
+                className={`border border-input-border-color bg-input p-2 hover:bg-dropdown-option-hover-color ${
+                  index === options.length - 1 ? "rounded-b-2xl" : ""
+                }`}
                 onClick={() => {
                   setIsOpen(false);
                   setChoice(option.id);
                   localStorage.setItem(storageKey, option.id);
-                  if (refresh == true) {
+                  if (refresh === true) {
                     window.location.reload();
                   }
                 }}

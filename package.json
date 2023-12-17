@@ -19,6 +19,7 @@
     "preact-iso": "^2.3.2",
     "preact-render-to-string": "^6.3.1",
     "preact-router": "^4.1.2",
+    "react-helmet": "^6.1.0",
     "react-i18next": "^13.5.0",
     "react-icons": "^4.12.0"
   },

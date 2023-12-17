@@ -13,26 +13,26 @@ const Proxy = ({ id, active }) => {
   ];
 
   return (
-    <motion.div
-      role="tabpanel"
-      id={id}
-      className="tab-content"
-      variants={tabContentVariant}
-      animate={active ? "active" : "inactive"}
-      initial="inactive"
-    >
       <motion.div
-        variants={settingsPageVariant}
-        className="content-card flex flex-row flex-wrap justify-around"
+        role="tabpanel"
+        id={id}
+        className="tab-content"
+        variants={tabContentVariant}
+        animate={active ? "active" : "inactive"}
+        initial="inactive"
       >
-        <Dropdown
-          name={t("settings.proxy.title")}
-          storageKey="proxy"
-          options={engines}
-          refresh={false}
-        />
+        <motion.div
+          variants={settingsPageVariant}
+          className="content-card flex flex-row flex-wrap justify-around"
+        >
+          <Dropdown
+            name={t("settings.proxy.title")}
+            storageKey="proxy"
+            options={engines}
+            refresh={false}
+          />
+        </motion.div>
       </motion.div>
-    </motion.div>
   );
 };
 export default Proxy;
