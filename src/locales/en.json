@@ -29,5 +29,19 @@
       "title": "Proxy",
       "automatic": "Automatic"
     }
+  },
+  "favicons": {
+    "nebula": {
+      "name": "Nebula",
+      "title": "Nebula"
+    },
+    "classroom": {
+      "name": "Google Classroom",
+      "title": "Home"
+    },
+    "docs": {
+      "name": "Google Docs",
+      "title": "Google Docs"
+    }
   }
 }
