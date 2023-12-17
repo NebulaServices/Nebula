@@ -7,12 +7,14 @@ interface Option {
 
 const Dropdown = ({
   name,
+  storageKey,
   options,
-  storageKey
+  refresh
 }: {
   name: string;
   storageKey: string;
   options: Option[];
+  refresh: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -45,6 +47,9 @@ const Dropdown = ({
                   setIsOpen(false);
                   setChoice(option.id);
                   localStorage.setItem(storageKey, option.id);
+                  if (refresh == true) {
+                    window.location.reload()
+                  }
                 }}
               >
                 {option.label}

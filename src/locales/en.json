@@ -28,6 +28,11 @@
     "proxy": {
       "title": "Proxy",
       "automatic": "Automatic"
+    },
+    "languages": {
+      "title": "Language",
+      "japanese": "Japanese",
+      "english": "English"
     }
   }
 }

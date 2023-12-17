@@ -25,7 +25,12 @@ const Proxy = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex flex-row flex-wrap justify-around"
       >
-        <Dropdown name={t("settings.proxy.title")} storageKey="proxy" options={engines} />
+        <Dropdown
+          name={t("settings.proxy.title")}
+          storageKey="proxy"
+          options={engines}
+          refresh={false}
+        />
       </motion.div>
     </motion.div>
   );

@@ -5,11 +5,10 @@ import { useTranslation } from "react-i18next";
 
 const Misc = ({ id, active }) => {
   const { t } = useTranslation();
-  const engines = [
-    { id: "automatic", label: t("settings.proxy.automatic") },
-    { id: "ultraviolet", label: "Ultraviolet" },
-    { id: "rammerhead", label: "Rammerhead" },
-    { id: "dynamic", label: "Dynamic" }
+  
+  const languages = [
+    { id: "ja", label: t("settings.languages.japanese") },
+    { id: "en-US", label: t("settings.languages.english") }
   ];
 
   return (
@@ -26,9 +25,10 @@ const Misc = ({ id, active }) => {
         className="content-card flex flex-row flex-wrap justify-around"
       >
         <Dropdown
-          name={t("settings.proxy.title")}
-          storageKey="proxy"
-          options={engines}
+          name={t("settings.languages.title")}
+          storageKey="i18nextLng"
+          options={languages}
+          refresh={true}
         />
       </motion.div>
     </motion.div>
