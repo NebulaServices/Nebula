@@ -36,10 +36,11 @@ const Dropdown = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex select-none flex-row items-center w-full h-full">
-          <div class="w-3/4">
+          <div class="w-1/4 h-full"></div>
+          <div class="w-2/4 items-center flex flex-col">
             {options.find((o) => o.id === choice)?.label}
           </div>
-          <div class="w-1/4">
+          <div class="w-1/4 flex flex-col items-center">
             <FaAngleDown />
           </div>
         </div>
