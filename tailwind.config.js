@@ -4,6 +4,7 @@ export default {
   theme: {
     colors: {
       primary: "var(--background-primary)",
+      lighter: "var(--background-lighter)",
       "navbar-text-color": "var(--navbar-text-color)",
       "navbar-color": "var(--navbar-color)",
       "text-color": "var(--navbar-link-color)",

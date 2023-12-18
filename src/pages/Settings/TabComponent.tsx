@@ -69,7 +69,7 @@ const TabComponent = ({ tabs, defaultIndex = 0 }) => {
   const { t } = useTranslation()
 
   return (
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center w-full h-full">
       <div className="container h-full w-full">
         <div className="tabs-component">
           <ul className="tab-links" role="tablist">

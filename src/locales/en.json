@@ -27,10 +27,12 @@
     },
     "proxy": {
       "title": "Proxy",
+      "subtitle": "Choose the proxy that fits your needs",
       "automatic": "Automatic"
     },
     "languages": {
       "title": "Language",
+      "subtitle": "Choose your preferred language",
       "japanese": "Japanese",
       "english": "English"
     }

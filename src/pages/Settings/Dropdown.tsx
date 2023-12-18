@@ -7,12 +7,10 @@ interface Option {
 }
 
 const Dropdown = ({
-  name,
   storageKey,
   options,
   refresh
 }: {
-  name: string;
   storageKey: string;
   options: Option[];
   refresh: boolean;
@@ -30,7 +28,6 @@ const Dropdown = ({
 
   return (
     <div className="relative text-center">
-      <h1>{name}</h1>
       <div
         className={`font-roboto flex h-14 w-56 cursor-pointer flex-col items-center justify-center border border-input-border-color bg-input text-center text-xl ${
           isOpen ? "rounded-t-2xl" : "rounded-2xl"

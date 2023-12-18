@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const Misc = ({ id, active }) => {
   const { t } = useTranslation();
-  
+
   const languages = [
     { id: "ja", label: t("settings.languages.japanese") },
     { id: "en-US", label: t("settings.languages.english") }
@@ -24,12 +24,15 @@ const Misc = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex flex-row flex-wrap justify-around"
       >
-        <Dropdown
-          name={t("settings.languages.title")}
-          storageKey="i18nextLng"
-          options={languages}
-          refresh={true}
-        />
+        <div class="bg-lighter flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color p-7 text-center">
+          <div class="text-3xl">{t("settings.languages.title")}</div>
+          <div class="text-md">{t("settings.languages.subtitle")}</div>
+          <Dropdown
+            storageKey="i18nextLng"
+            options={languages}
+            refresh={true}
+          />
+        </div>
       </motion.div>
     </motion.div>
   );
