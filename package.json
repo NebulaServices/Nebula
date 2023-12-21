@@ -27,7 +27,8 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^13.5.0",
     "react-icons": "^4.12.0",
-    "tsx": "^4.7.0"
+    "tsx": "^4.7.0",
+    "dynamic-npm": "github:notplayingallday383/dynamic-npm"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
