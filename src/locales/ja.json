@@ -6,7 +6,7 @@
     "discord": "もっとリンクが欲しいですか？"
   },
   "404": {
-    "text": "このネビュラサービスは無効になっています",
+    "text": "このネブラサービスは無効になっています",
     "return": "帰宅"
   },
   "home": {
@@ -28,7 +28,8 @@
     "proxy": {
       "title": "プロキシ",
       "subtitle": "ニーズに合ったプロキシを選んでください",
-      "automatic": "自動"
+      "automatic": "自動",
+      "buggyWarning": "(バグ)"
     },
     "languages": {
       "title": "言語",

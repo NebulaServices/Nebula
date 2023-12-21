@@ -4,6 +4,7 @@ import { useEffect, useState } from "preact/hooks";
 declare global {
   interface Window {
     __uv$config: any;
+    __dynamic$config: any;
   }
 }
 
@@ -29,6 +30,13 @@ export function ProxyFrame(props: { url: string }) {
         window.location.href = result;
       });
     } else if (localProxy === "ultraviolet") {
+      window.location.href =
+        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl);
+    } else if (localProxy === "dynamic") {
+      window.location.href =
+        window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+    } else {
+      // use UV for automatic
       window.location.href =
         window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl);
     }

@@ -28,7 +28,8 @@
     "proxy": {
       "title": "Proxy",
       "subtitle": "Choose the proxy that fits your needs",
-      "automatic": "Automatic"
+      "automatic": "Automatic",
+      "buggyWarning": "(BUGGY)"
     },
     "languages": {
       "title": "Language",
