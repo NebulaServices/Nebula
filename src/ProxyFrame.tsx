@@ -1,4 +1,3 @@
-// @ts-ignore
 import { RammerheadEncode } from "./RammerheadEncode";
 import { useEffect, useState } from "preact/hooks";
 
@@ -14,6 +13,13 @@ export function ProxyFrame(props: { url: string }) {
   var [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
 
   var decodedUrl = decodeURIComponent(props.url);
+
+  if (!decodedUrl.includes(".")) {
+    decodedUrl = "https://www.google.com/search?q=" + decodedUrl; // If the users input has no . then we change it to a google query. TODO: Feature to change search engines
+  }
+  if (decodedUrl.startsWith("http://") || !decodedUrl.startsWith("https://")) {
+    decodedUrl = "https://" + decodedUrl;
+  }
 
   useEffect(() => {
     // For now we can redirect to the results. In the future we will add an if statement looking for the users proxy display choice
