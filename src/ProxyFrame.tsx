@@ -7,11 +7,11 @@ export function ProxyFrame(props: { url: string }) { // pass the URL encoded wit
 
   var decodedUrl = decodeURIComponent(props.url);
 
-  useEffect(() => {
+  useEffect(() => { // For now we can redirect to the results. In the future we will add an if statement looking for the users proxy display choice 
     if (localProxy === "rammerhead") {
       RammerheadEncode(decodedUrl).then((result: string) => {
-        console.log("ProxyHref inside:", result);
         setProxiedUrl(result);
+        window.location.href = result;
       });
     }
   }, [localProxy]);
