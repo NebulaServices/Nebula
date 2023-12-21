@@ -7,7 +7,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "skipLibCheck": true,
-    "paths": {
-    }
+    "paths": {}
   }
 }
