@@ -2,6 +2,12 @@
 import { RammerheadEncode } from "./RammerheadEncode";
 import { useEffect, useState } from "preact/hooks";
 
+declare global {
+  interface Window {
+    __uv$config: any;
+  }
+}
+
 export function ProxyFrame(props: { url: string }) {
   // pass the URL encoded with encodeURIcomponent
   var localProxy = localStorage.getItem("proxy") || "automatic";
@@ -18,7 +24,7 @@ export function ProxyFrame(props: { url: string }) {
       });
     } else if (localProxy === "ultraviolet") {
       window.location.href =
-        __uv$config.prefix + __uv$config.encodeUrl(decodedUrl);
+        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl);
     }
   }, [localProxy]);
 
