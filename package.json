@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "concurrently \"vite\" \"bare-server-node --port 8080\"",
     "build": "vite build",
+    "bstart": "npm run build && tsx server.ts",
     "preview": "vite preview",
     "format": "prettier --write ."
   },

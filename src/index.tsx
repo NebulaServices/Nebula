@@ -18,7 +18,7 @@ export function App() {
       <Router>
         <Route path="/" component={Home} />
         <Route path="/discord" component={DiscordPage} />
-        <Route path="/proxyframe/:id" component={ProxyFrame} />
+        <Route path="/go/:url" component={ProxyFrame} />
         <Route path="/settings" component={Settings} />
         <Route default component={NotFound} />
       </Router>
