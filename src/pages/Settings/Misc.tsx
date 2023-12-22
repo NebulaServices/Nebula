@@ -7,8 +7,9 @@ const Misc = ({ id, active }) => {
   const { t } = useTranslation();
 
   const languages = [
-    { id: "ja", label: t("settings.languages.japanese") },
-    { id: "en-US", label: t("settings.languages.english") }
+    { id: "en-US", label: t("settings.languages.english") },
+    { id: "es", label: t("settings.languages.spanish") },
+    { id: "ja", label: t("settings.languages.japanese") }
   ];
 
   return (
@@ -24,7 +25,7 @@ const Misc = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex flex-row flex-wrap justify-around"
       >
-        <div class="bg-lighter flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color p-7 text-center">
+        <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
           <div class="text-3xl">{t("settings.languages.title")}</div>
           <div class="text-md">{t("settings.languages.subtitle")}</div>
           <Dropdown

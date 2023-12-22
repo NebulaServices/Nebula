@@ -1,0 +1,42 @@
+{
+  "header": {
+    "title": "nebula.",
+    "games": "Juegos",
+    "settings": "Ajustes",
+    "discord": "¿Quieres más enlaces?"
+  },
+  "404": {
+    "text": "Este servicio Nebula ha sido deshabilitado.",
+    "return": "De vuelta a casa"
+  },
+  "home": {
+    "placeholder": "Busca en la web libremente"
+  },
+  "discord": {
+    "title": "Nebula's Discord Servidor",
+    "sub": "¿Le gustaría abrir esto a través de proxy?",
+    "button1": "Abierto normalmente",
+    "button2": "Usa proxy"
+  },
+  "settings": {
+    "tabs": {
+      "proxy": "Proxy",
+      "tab": "Pestaña",
+      "custom": "Personalización",
+      "misc": "Misc"
+    },
+    "proxy": {
+      "title": "Proxy",
+      "subtitle": "Elige el proxy que se ajuste a tus necesidades",
+      "automatic": "Automática",
+      "buggyWarning": "(CALESA)"
+    },
+    "languages": {
+      "title": "Idioma",
+      "subtitle": "Elige tu idioma preferido",
+      "japanese": "Japonés",
+      "english": "Inglés",
+      "spanish": "Español"
+    }
+  }
+}
