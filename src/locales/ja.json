@@ -37,6 +37,13 @@
       "japanese": "日本語",
       "english": "英語",
       "spanish": "スペイン語"
+    },
+    "proxymodes": {
+      "title": "開く",
+      "subtitle": "サイトを開く方法を選択する",
+      "embed": "埋め込む",
+      "direct": "直接",
+      "aboutblank": "About:Blank"
     }
   }
 }

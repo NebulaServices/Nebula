@@ -37,6 +37,13 @@
       "japanese": "Japanese",
       "english": "English",
       "spanish": "Spanish"
+    },
+    "proxymodes": {
+      "title": "Open in",
+      "subtitle": "Choose how to open your sites",
+      "embed": "Embed",
+      "direct": "Direct",
+      "aboutblank": "About:Blank"
     }
   }
 }
