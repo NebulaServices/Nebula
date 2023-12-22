@@ -1,11 +1,9 @@
 import { render } from "preact";
 import { LocationProvider, Router, Route } from "preact-iso";
-
-import { Header } from "./components/Header.jsx";
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/_404.jsx";
 import { DiscordPage } from "./pages/discord.jsx";
-import { ProxyFrame } from "./ProxyFrame.js";
+import { ProxyFrame } from "./pages/ProxyFrame.js";
 import { Settings } from "./pages/Settings/index.js";
 
 import "./style.css";
@@ -27,3 +25,4 @@ export function App() {
 }
 
 render(<App />, document.getElementById("app"));
+
