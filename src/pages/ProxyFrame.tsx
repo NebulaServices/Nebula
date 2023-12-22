@@ -1,4 +1,4 @@
-import { RammerheadEncode } from "./RammerheadEncode";
+import { RammerheadEncode } from "../util/RammerheadEncode";
 import { useEffect, useState } from "preact/hooks";
 
 declare global {
