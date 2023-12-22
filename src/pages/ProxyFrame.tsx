@@ -11,14 +11,18 @@ declare global {
 export function ProxyFrame(props: { url: string }) {
   // pass the URL encoded with encodeURIcomponent
   var localProxy = localStorage.getItem("proxy") || "automatic";
+  var proxyMode = localStorage.getItem("proxyMode") || "direct";
+
   var [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
 
   var decodedUrl = decodeURIComponent(props.url);
 
+  var proxyRef;
+
   if (!decodedUrl.includes(".")) {
     decodedUrl = "https://www.google.com/search?q=" + decodedUrl; // If the users input has no . then we change it to a google query. TODO: Feature to change search engines
   }
-  if (decodedUrl.startsWith("http://") || !decodedUrl.startsWith("https://")) {
+  if (!decodedUrl.startsWith("http://") || !decodedUrl.startsWith("https://")) {
     decodedUrl = "https://" + decodedUrl;
   }
 
@@ -27,28 +31,55 @@ export function ProxyFrame(props: { url: string }) {
     if (localProxy === "rammerhead") {
       RammerheadEncode(decodedUrl).then((result: string) => {
         setProxiedUrl(result);
-        window.location.href = result;
       });
     } else if (localProxy === "ultraviolet") {
-      window.location.href =
-        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl);
+      setProxiedUrl(
+        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl)
+      );
     } else if (localProxy === "dynamic") {
-      window.location.href =
-        window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+      setProxiedUrl(
+        window.__dynamic$config.prefix + encodeURIComponent(decodedUrl)
+      );
     } else {
       // use UV for automatic
-      window.location.href =
-        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl);
+      setProxiedUrl(
+        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl)
+      );
     }
   }, [localProxy]);
 
-  console.log(ProxiedUrl);
+  if (proxyMode == "direct") {
+    window.location.href = ProxiedUrl;
+  } else if (proxyMode == "aboutblank") {
+    const newWindow = window.open("about:blank", "_blank");
+    const newDocument = newWindow.document.open();
+    newDocument.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <style type="text/css">
+            body, html
+            {
+              margin: 0; padding: 0; height: 100%; overflow: hidden;
+            }
+          </style>
+        </head>
+        <body>
+          <iframe style="border: none; width: 100%; height: 100vh;" src="${
+            window.location.origin + ProxiedUrl
+          }"></iframe>
+        </body>
+      </html>
+    `);
+    newDocument.close()
+    window.location.replace("/");
+  } else {
+    // iframe
+  }
 
   return (
-    <div>
-      <h1 className="text-black">{props.url}</h1>
-      <h1 className="text-black">{localProxy}</h1>
-      <h1 className="text-black">{ProxiedUrl}</h1>
+    <div class="h-screen w-screen bg-primary">
+      {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
     </div>
   ); // @TODO: Routing (iframe, ab, direct, etc.)
 }
