@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "nebula",
+    "games": "Spiele",
+    "settings": "einstellungen",
+    "discord": "Want more links?"
+  },
+  "404": {
+    "text": "Dieser Nebula-Dienst wurde deaktiviert.",
+    "return": "Zurück nach Hause."
+  },
+  "home": {
+    "placeholder": "Suchen Sie frei im Web."
+  },
+  "discord": {
+    "title": "Nebel's Discord Server",
+    "sub": "Möchten Sie diesen über einen Proxy öffnen?",
+    "button1": "Normal öffnen",
+    "button2": "Proxy verwenden"
+  },
+  "setting": {
+    "tabs": {
+      "proxy": "Proxy",
+      "tab": "tab",
+      "custom": "Anpassung",
+      "misc": "Misc"
+    },
+    "proxy": {
+      "title": "Proxy",
+      "subtitle": "Wählen Sie den Proxy, der Ihren Anforderungen entspricht",
+      "automatic": "Automatisch",
+      "buggyWarning": "(PROBLEME)"
+    },
+    "languages": {
+      "title": "Sprache",
+      "subtitle": "Wählen Sie Ihre bevorzugte Sprache",
+      "japanese": "Japanisch", 
+      "english": "Englisch",
+      "spanish": "Spanisch",
+      "german": "Deutsch",
+      "greek": "Griechisch"
+    },
+    "proxymodes": {
+      "title": "Öffnen in",
+      "subtitle": "Wählen Sie, wie Ihre Seiten geöffnet werden sollen",
+      "embed": "Einbetten",
+      "direct": "Direkt",
+      "aboutblank": "About:Blank"
+    }
+  }
+}
