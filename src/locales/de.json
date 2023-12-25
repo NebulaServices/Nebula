@@ -1,12 +1,12 @@
 {
   "header": {
-    "title": "nebula",
+    "title": "Nebel",
     "games": "Spiele",
     "settings": "einstellungen",
     "discord": "Sie wollen mehr URL-Adresse?"
   },
   "404": {
-    "text": "Dieser Nebula-Dienst wurde deaktiviert.",
+    "text": "Dieser Nebel-Dienst wurde deaktiviert.",
     "return": "Zurück nach Hause."
   },
   "home": {
