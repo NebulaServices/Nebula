@@ -37,6 +37,9 @@
       "japanese": "Japanese",
       "english": "English",
       "spanish": "Spanish"
+      "german": "German",
+      "greek": "Greek",
+      "dutch": "Dutch"
     },
     "proxymodes": {
       "title": "Open in",
