@@ -1,5 +1,8 @@
 import { RammerheadEncode } from "../util/RammerheadEncode";
+import { searchUtil } from "../util/searchUtil";
 import { useEffect, useState } from "preact/hooks";
+//import our Iframe component
+import { Iframe } from "../components/iframe/Iframe";
 
 declare global {
   interface Window {
@@ -10,21 +13,16 @@ declare global {
 
 export function ProxyFrame(props: { url: string }) {
   // pass the URL encoded with encodeURIcomponent
-  var localProxy = localStorage.getItem("proxy") || "automatic";
-  var proxyMode = localStorage.getItem("proxyMode") || "direct";
+  const localProxy = localStorage.getItem("proxy") || "automatic";
+  const proxyMode = localStorage.getItem("proxyMode") || "direct";
 
-  var [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
+  const [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
 
-  var decodedUrl = decodeURIComponent(props.url);
+  let decodedUrl = decodeURIComponent(props.url);
+  //attempt to convert to a valid url
+  decodedUrl = searchUtil(decodedUrl, "https://google.com/search?q=%s");
 
-  var proxyRef;
-
-  if (!decodedUrl.includes(".")) {
-    decodedUrl = "https://www.google.com/search?q=" + decodedUrl; // If the users input has no . then we change it to a google query. TODO: Feature to change search engines
-  }
-  if (!decodedUrl.startsWith("http://") || !decodedUrl.startsWith("https://")) {
-    decodedUrl = "https://" + decodedUrl;
-  }
+  let proxyRef;
 
   useEffect(() => {
     // For now we can redirect to the results. In the future we will add an if statement looking for the users proxy display choice
@@ -71,15 +69,15 @@ export function ProxyFrame(props: { url: string }) {
         </body>
       </html>
     `);
-    newDocument.close()
+    newDocument.close();
     window.location.replace("/");
-  } else {
-    // iframe
   }
 
   return (
     <div class="h-screen w-screen bg-primary">
       {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
+      {proxyMode === "aboutblank" && <h1>Loading {localProxy}...</h1>}
+      {proxyMode === "embed" && <Iframe url={ProxiedUrl} />}
     </div>
-  ); // @TODO: Routing (iframe, ab, direct, etc.)
+  );
 }

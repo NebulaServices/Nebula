@@ -14,8 +14,8 @@ const Proxy = ({ id, active }) => {
   ];
 
   const proxyModes = [
-    { id: "embed", label: t("settings.proxymodes.embed") },
     { id: "direct", label: t("settings.proxymodes.direct") },
+    { id: "embed", label: t("settings.proxymodes.embed") },
     { id: "aboutblank", label: t("settings.proxymodes.aboutblank") }
   ];
 
@@ -30,7 +30,7 @@ const Proxy = ({ id, active }) => {
     >
       <motion.div
         variants={settingsPageVariant}
-        className="content-card flex flex-row flex-wrap justify-around"
+        className="content-card justify-left flex w-full flex-row flex-wrap gap-4"
       >
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
           <div class="p-2 text-3xl">{t("settings.proxy.title")}</div>
@@ -40,7 +40,11 @@ const Proxy = ({ id, active }) => {
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
           <div class="p-2 text-3xl">{t("settings.proxymodes.title")}</div>
           <div class="text-md p-4">{t("settings.proxymodes.subtitle")}</div>
-          <Dropdown storageKey="proxyMode" options={proxyModes} refresh={false} />
+          <Dropdown
+            storageKey="proxyMode"
+            options={proxyModes}
+            refresh={false}
+          />
         </div>
       </motion.div>
     </motion.div>

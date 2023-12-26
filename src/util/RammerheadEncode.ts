@@ -1,4 +1,5 @@
-export function RammerheadEncode(baseUrl) { // Hellhead
+export function RammerheadEncode(baseUrl) {
+  // Hellhead
   const mod = (n, m) => ((n % m) + m) % m;
   const baseDictionary =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~-";
