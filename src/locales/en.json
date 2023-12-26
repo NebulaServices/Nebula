@@ -40,14 +40,10 @@
     },
     "proxymodes": {
       "title": "Open in",
-      "subtitle": "Choose how to open your sites on Nebula",
+      "subtitle": "Choose how to open your sites",
       "embed": "Embed",
       "direct": "Direct",
       "aboutblank": "About:Blank"
-    },
-    "searchengines": {
-      "title": "Search Engine",
-      "subtitle": "Choose your search engine for Nebula"
     }
   }
 }

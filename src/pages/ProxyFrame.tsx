@@ -14,7 +14,7 @@ declare global {
 export function ProxyFrame(props: { url: string }) {
   // pass the URL encoded with encodeURIcomponent
   const localProxy = localStorage.getItem("proxy") || "automatic";
-  const proxyMode = localStorage.getItem("proxyMode") || "embed"; // Embed by default
+  const proxyMode = localStorage.getItem("proxyMode") || "direct";
   const searchEngine =
     localStorage.getItem("searchEngine") || "https://google.com/search?q=%s";
   const [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
