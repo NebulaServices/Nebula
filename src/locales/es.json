@@ -44,6 +44,10 @@
       "embed": "Incrustar",
       "direct": "Directo",
       "aboutblank": "About:Blank"
+    },
+    "searchengines": {
+      "title": "Motor de búsqueda.",
+      "subtitle": "Elija su motor de búsqueda para Nebula"
     }
   }
 }

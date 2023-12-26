@@ -21,7 +21,8 @@ const Proxy = ({ id, active }) => {
 
   const searchEngines = [
     { id: "https://google.com/search?q=%s", label: "Google" },
-    { id: "https://bing.com/search?q=%s", label: "Bing" }
+    { id: "https://bing.com/search?q=%s", label: "Bing" },
+    { id: "https://duckduckgo.com/%s", label: "DuckDuckGo" }
   ];
 
   return (
@@ -52,8 +53,8 @@ const Proxy = ({ id, active }) => {
           />
         </div>
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl">Search ENgines</div>
-          <div class="text-md p-4">{t("settings.proxymodes.subtitle")}</div>
+          <div class="p-2 text-3xl">{t("settings.searchengines.title")}</div>
+          <div class="text-md p-4">{t("settings.searchengines.subtitle")}</div>
           <Dropdown
             storageKey="searchEngine"
             options={searchEngines}
