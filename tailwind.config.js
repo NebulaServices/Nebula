@@ -12,7 +12,7 @@ export default {
       input: "var(--input-background-color)",
       "input-text": "var(--input-text-color)",
       "input-border-color": "var(--input-border-color)",
-      "dropdown-option-hover-color": "var(--dropdown-option-hover-color)"
+      "dropdown-option-hover-color": "var(--dropdown-option-hover-color)",
     },
     extend: {}
   },

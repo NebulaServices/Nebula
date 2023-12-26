@@ -7,7 +7,7 @@ export function Settings() {
   return (
     <HeaderRoute>
       <Helmet>
-        <title>Settingsz</title>
+        <title>Settings</title>
       </Helmet>
       <TabComponent tabs={tabs} />
     </HeaderRoute>
