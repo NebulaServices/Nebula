@@ -15,13 +15,12 @@ export function ProxyFrame(props: { url: string }) {
   // pass the URL encoded with encodeURIcomponent
   const localProxy = localStorage.getItem("proxy") || "automatic";
   const proxyMode = localStorage.getItem("proxyMode") || "direct";
-  const searchEngine =
-    localStorage.getItem("searchEngine") || "https://google.com/search?q=%s";
+
   const [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
 
   let decodedUrl = decodeURIComponent(props.url);
   //attempt to convert to a valid url
-  decodedUrl = searchUtil(decodedUrl, searchEngine);
+  decodedUrl = searchUtil(decodedUrl, "https://google.com/search?q=%s");
 
   let proxyRef;
 

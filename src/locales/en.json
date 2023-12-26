@@ -36,7 +36,10 @@
       "subtitle": "Choose your preferred language",
       "japanese": "Japanese",
       "english": "English",
-      "spanish": "Spanish"
+      "spanish": "Spanish",
+      "german": "German",
+      "greek": "Greek",
+      "dutch": "Dutch"
     },
     "proxymodes": {
       "title": "Open in",
