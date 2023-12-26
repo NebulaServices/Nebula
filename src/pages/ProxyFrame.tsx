@@ -77,9 +77,7 @@ export function ProxyFrame(props: { url: string }) {
     <div class="h-screen w-screen bg-primary">
       {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
       {proxyMode === "aboutblank" && <h1>Loading {localProxy}...</h1>}
-      {proxyMode === "embed" && (
-        <Iframe url={ProxiedUrl} normalUrl={decodedUrl} />
-      )}
+      {proxyMode === "embed" && <Iframe url={ProxiedUrl} />}
     </div>
   );
 }

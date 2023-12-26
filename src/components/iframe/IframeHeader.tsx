@@ -2,6 +2,7 @@ import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { Link } from "preact-router";
 import { RiPictureInPictureExitFill, RiFullscreenFill } from "react-icons/ri";
+import { FaXmark } from "react-icons/fa6";
 
 export function IframeHeader(props: { url: string }) {
   const { t } = useTranslation();
@@ -41,6 +42,9 @@ export function IframeHeader(props: { url: string }) {
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125 active:rotate-90"
             onClick={() => setFullScreen(true)}
           />
+          <Link href="/">
+            <FaXmark className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125" />
+          </Link>
         </div>
       </div>
     </div>
