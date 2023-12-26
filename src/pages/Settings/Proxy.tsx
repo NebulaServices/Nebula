@@ -14,9 +14,14 @@ const Proxy = ({ id, active }) => {
   ];
 
   const proxyModes = [
-    { id: "direct", label: t("settings.proxymodes.direct") },
     { id: "embed", label: t("settings.proxymodes.embed") },
+    { id: "direct", label: t("settings.proxymodes.direct") },
     { id: "aboutblank", label: t("settings.proxymodes.aboutblank") }
+  ];
+
+  const searchEngines = [
+    { id: "https://google.com/search?q=%s", label: "Google" },
+    { id: "https://bing.com/search?q=%s", label: "Bing" }
   ];
 
   return (
@@ -43,6 +48,15 @@ const Proxy = ({ id, active }) => {
           <Dropdown
             storageKey="proxyMode"
             options={proxyModes}
+            refresh={false}
+          />
+        </div>
+        <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+          <div class="p-2 text-3xl">Search ENgines</div>
+          <div class="text-md p-4">{t("settings.proxymodes.subtitle")}</div>
+          <Dropdown
+            storageKey="searchEngine"
+            options={searchEngines}
             refresh={false}
           />
         </div>
