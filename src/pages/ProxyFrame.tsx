@@ -48,8 +48,7 @@ export function ProxyFrame(props: { url: string }) {
 
   if (proxyMode == "direct") {
     window.location.href = ProxiedUrl;
-  } 
-  else if (proxyMode == "aboutblank") {
+  } else if (proxyMode == "aboutblank") {
     const newWindow = window.open("about:blank", "_blank");
     const newDocument = newWindow.document.open();
     newDocument.write(`
@@ -70,7 +69,7 @@ export function ProxyFrame(props: { url: string }) {
         </body>
       </html>
     `);
-    newDocument.close()
+    newDocument.close();
     window.location.replace("/");
   }
 
@@ -78,7 +77,9 @@ export function ProxyFrame(props: { url: string }) {
     <div class="h-screen w-screen bg-primary">
       {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
       {proxyMode === "aboutblank" && <h1>Loading {localProxy}...</h1>}
-      {proxyMode === "embed" && <Iframe url={ProxiedUrl} normalUrl={decodedUrl} />}
+      {proxyMode === "embed" && (
+        <Iframe url={ProxiedUrl} normalUrl={decodedUrl} />
+      )}
     </div>
   );
 }

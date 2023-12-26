@@ -1,0 +1,8 @@
+# Build artifacts
+dist/
+
+# Other things that don't need to be reformatted
+public/uv/
+public/dynamic/
+pnpm-lock.yaml
+package-lock.json

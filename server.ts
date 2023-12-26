@@ -1,7 +1,7 @@
-import fastify from 'fastify';
-import fastifyStatic from '@fastify/static';
-import { fileURLToPath } from 'url';
-import path from 'path';
+import fastify from "fastify";
+import fastifyStatic from "@fastify/static";
+import { fileURLToPath } from "url";
+import path from "path";
 import createRammerhead from "rammerhead/src/server/index.js";
 import { createBareServer } from "@tomphttp/bare-server-node";
 import { createServer } from "http";
@@ -71,15 +71,15 @@ const serverFactory = (handler, opts) => {
 const app = fastify({ logger: true, serverFactory });
 
 app.register(fastifyStatic, {
-  root: path.join(__dirname, 'dist'),
-  prefix: '/',
+  root: path.join(__dirname, "dist"),
+  prefix: "/",
   serve: true,
-  wildcard: false,
+  wildcard: false
 });
 
 app.setNotFoundHandler((req, res) => {
-  res.sendFile('index.html') // SPA catch-all
-})
+  res.sendFile("index.html"); // SPA catch-all
+});
 
 app.listen({
   port: 8080

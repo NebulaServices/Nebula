@@ -1,7 +1,7 @@
 import TabComponent from "./TabComponent";
 import { HeaderRoute } from "../../components/HeaderRoute";
 import tabs from "./tabs";
-import { Helmet } from "react-helmet"
+import { Helmet } from "react-helmet";
 
 export function Settings() {
   return (
