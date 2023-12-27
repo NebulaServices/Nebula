@@ -4,6 +4,8 @@ import { useEffect, useState } from "preact/hooks";
 //import our Iframe component
 import { Iframe } from "../components/iframe/Iframe";
 
+import SiteSupport from "../util/SiteSupport.json";
+
 declare global {
   interface Window {
     __uv$config: any;
@@ -38,9 +40,25 @@ export function ProxyFrame(props: { url: string }) {
           result =
             window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
         } else {
-          result =
-            window.__uv$config.prefix +
-            window.__uv$config.encodeUrl(decodedUrl);
+          // automatic. use SiteSupport.json to determine proxy support
+          const matchingKey = Object.keys(SiteSupport).find((key) =>
+            decodedUrl.includes(key)
+          );
+
+          if (SiteSupport[matchingKey] === "ultraviolet") {
+            result =
+              window.__uv$config.prefix +
+              window.__uv$config.encodeUrl(decodedUrl);
+          } else if (SiteSupport[matchingKey] === "dynamic") {
+            result =
+              window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+          } else if (SiteSupport[matchingKey] === "rammerhead") {
+            result = await RammerheadEncode(decodedUrl);
+          } else {
+            result =
+              window.__uv$config.prefix +
+              window.__uv$config.encodeUrl(decodedUrl); // uv as backup
+          }
         }
         setProxiedUrl(result);
       } catch (error) {
