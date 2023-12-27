@@ -4,7 +4,7 @@
   width: 100vw;
   align-items: center;
   justify-content: center;
-  background-color: var(--background-primary);
+  background-color: #191724;
 }
 
 @keyframes pulse-brighter {
