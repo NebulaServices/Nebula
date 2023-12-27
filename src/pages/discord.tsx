@@ -12,6 +12,7 @@ export function DiscordPage() {
       </Helmet>
       <section class="h-full">
         <div class="flex h-full flex-col items-center justify-center">
+          <img src="/discord.png" class="h-72 w-72"></img>
           <div class="flex flex-col items-center p-6">
             <p class="font-roboto text-4xl font-bold">{t("discord.title")}</p>
             <span class="font-roboto text-3xl">{t("discord.sub")}</span>
