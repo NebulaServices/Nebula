@@ -25,29 +25,38 @@ export function ProxyFrame(props: { url: string }) {
   let proxyRef;
 
   useEffect(() => {
-    // For now we can redirect to the results. In the future we will add an if statement looking for the users proxy display choice
-    if (localProxy === "rammerhead") {
-      RammerheadEncode(decodedUrl).then((result: string) => {
+    const fetchData = async () => {
+      try {
+        let result: any = "";
+        if (localProxy === "rammerhead") {
+          result = await RammerheadEncode(decodedUrl);
+        } else if (localProxy === "ultraviolet") {
+          result =
+            window.__uv$config.prefix +
+            window.__uv$config.encodeUrl(decodedUrl);
+        } else if (localProxy === "dynamic") {
+          result =
+            window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+        } else {
+          result =
+            window.__uv$config.prefix +
+            window.__uv$config.encodeUrl(decodedUrl);
+        }
         setProxiedUrl(result);
-      });
-    } else if (localProxy === "ultraviolet") {
-      setProxiedUrl(
-        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl)
-      );
-    } else if (localProxy === "dynamic") {
-      setProxiedUrl(
-        window.__dynamic$config.prefix + encodeURIComponent(decodedUrl)
-      );
-    } else {
-      // use UV for automatic
-      setProxiedUrl(
-        window.__uv$config.prefix + window.__uv$config.encodeUrl(decodedUrl)
-      );
-    }
-  }, [localProxy]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [localProxy, decodedUrl]);
 
   if (proxyMode == "direct") {
-    window.location.href = ProxiedUrl;
+    console.log(ProxiedUrl);
+    console.log(!(ProxiedUrl == undefined));
+    if (!(ProxiedUrl == undefined)) {
+      window.location.href = ProxiedUrl; // This is the hackiest workaround in the history of hacky workarounds
+    }
   } else if (proxyMode == "aboutblank") {
     const newWindow = window.open("about:blank", "_blank");
     const newDocument = newWindow.document.open();
@@ -72,7 +81,9 @@ export function ProxyFrame(props: { url: string }) {
     newDocument.close();
     window.location.replace("/");
   }
-
+  if (!ProxiedUrl == undefined) {
+    window.location.href = ProxiedUrl;
+  }
   return (
     <div class="h-screen w-screen bg-primary">
       {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
