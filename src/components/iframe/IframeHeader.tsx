@@ -4,6 +4,12 @@ import { Link } from "preact-router";
 import { RiPictureInPictureExitFill, RiFullscreenFill } from "react-icons/ri";
 import { IoCodeSlashSharp } from "react-icons/io5";
 import { FaXmark } from "react-icons/fa6";
+
+interface ProxyFrame extends HTMLElement {
+  contentWindow: any;
+  contentDocument: any;
+}
+
 export function IframeHeader(props: { url: string }) {
   const { t } = useTranslation();
   const [showPopout, setShowPopout] = useState(false);
@@ -38,30 +44,31 @@ export function IframeHeader(props: { url: string }) {
           <IoCodeSlashSharp
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
             onClick={() => {
-                const proccy = document.getElementById("iframe");
-                if (!proccy) return;
-                // @ts-ignore
-                const proccyWindow = proccy.contentWindow;
-                // @ts-ignore
-                const proccyDocument = proccy.contentDocument;
-            
-                if (!proccyWindow || !proccyDocument) return;
-            
-                if (proccyWindow.eruda?._isInit) {
-                    proccyWindow.eruda.destroy();
-                } else {
-                    let script = proccyDocument.createElement('script');
-                    script.src = "https://cdn.jsdelivr.net/npm/eruda";
-                    script.onload = function() {
-                        if (!proccyWindow) return;
-                        proccyWindow.eruda.init();
-                        proccyWindow.eruda.show();
-                    }
-                    proccyDocument.head.appendChild(script);
-                }
-                    }
-                  }
-            />
+              const proxyFrame: ProxyFrame | null = document.getElementById(
+                "iframe"
+              ) as ProxyFrame;
+              if (!proxyFrame) return;
+
+              const proxyWindow = proxyFrame.contentWindow;
+
+              const proxyDocument = proxyFrame.contentDocument;
+
+              if (!proxyWindow || !proxyDocument) return;
+
+              if (proxyWindow.eruda?._isInit) {
+                proxyWindow.eruda.destroy();
+              } else {
+                let script = proxyDocument.createElement("script");
+                script.src = "https://cdn.jsdelivr.net/npm/eruda";
+                script.onload = function () {
+                  if (!proxyWindow) return;
+                  proxyWindow.eruda.init();
+                  proxyWindow.eruda.show();
+                };
+                proxyDocument.head.appendChild(script);
+              }
+            }}
+          />
           <RiPictureInPictureExitFill
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
             onClick={() => setShowPopout(true)}
