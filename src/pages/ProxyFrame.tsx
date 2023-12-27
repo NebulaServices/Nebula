@@ -1,5 +1,6 @@
 import { RammerheadEncode } from "../util/RammerheadEncode";
 import { searchUtil } from "../util/searchUtil";
+import { LoadSuspense } from "../LoadSuspense";
 import { useEffect, useState } from "preact/hooks";
 //import our Iframe component
 import { Iframe } from "../components/iframe/Iframe";
@@ -111,8 +112,8 @@ export function ProxyFrame(props: { url: string }) {
         originalTitle={t("titles.home")}
         originalFavicon="/logo.png"
       />
-      {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
-      {proxyMode === "aboutblank" && <h1>Loading {localProxy}...</h1>}
+      {proxyMode === "direct" && <LoadSuspense />}
+      {proxyMode === "aboutblank" && <LoadSuspense />}
       {proxyMode === "embed" && <Iframe url={ProxiedUrl} />}
     </div>
   );
