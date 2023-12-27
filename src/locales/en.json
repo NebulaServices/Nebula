@@ -47,6 +47,10 @@
     "cloaking": {
       "title": "Cloaking",
       "subtitle": "Choose how your tab looks"
+    },
+    "search": {
+      "title": "Search Engine",
+      "subtitle": "Choose your search engine"
     }
   },
   "titles": {
