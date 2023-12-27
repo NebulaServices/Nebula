@@ -23,7 +23,7 @@ const Misc = ({ id, active }) => {
     >
       <motion.div
         variants={settingsPageVariant}
-        className="content-card flex flex-row flex-wrap justify-around"
+        className="content-card flex flex-row flex-wrap justify-center w-full gap-4"
       >
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
           <div class="text-3xl">{t("settings.languages.title")}</div>
