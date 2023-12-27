@@ -14,8 +14,8 @@ const Proxy = ({ id, active }) => {
   ];
 
   const proxyModes = [
-    { id: "direct", label: t("settings.proxymodes.direct") },
     { id: "embed", label: t("settings.proxymodes.embed") },
+    { id: "direct", label: t("settings.proxymodes.direct") },
     { id: "aboutblank", label: t("settings.proxymodes.aboutblank") }
   ];
 

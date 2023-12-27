@@ -18,7 +18,7 @@ export function DiscordPage() {
             </button>
           </a>
           <a
-            href="${window.location.href = '/go/' + encodeURIComponent(https://discord.gg/unblocker)}"
+            href="/~/uv/https%3A%2F%2Fdiscord.com%2Finvite%2Funblocker"
             class="p-6"
           >
             <button class="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none">
