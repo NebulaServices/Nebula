@@ -10,7 +10,7 @@ const Proxy = ({ id, active }) => {
     { id: "automatic", label: t("settings.proxy.automatic") },
     { id: "ultraviolet", label: "Ultraviolet" },
     { id: "rammerhead", label: "Rammerhead" },
-    { id: "dynamic", label: "Dynamic " + t("settings.proxy.buggyWarning") }
+    { id: "dynamic", label: "Dynamic" }
   ];
 
   const proxyModes = [

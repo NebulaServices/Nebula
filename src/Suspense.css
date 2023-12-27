@@ -1,0 +1,23 @@
+.suspenseContainer {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-color: #191724;
+}
+
+@keyframes pulse-brighter {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-brighter {
+  animation: pulse-brighter 2s infinite;
+  height: 11rem;
+}
