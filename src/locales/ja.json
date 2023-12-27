@@ -28,8 +28,7 @@
     "proxy": {
       "title": "プロキシ",
       "subtitle": "ニーズに合ったプロキシを選んでください",
-      "automatic": "自動",
-      "buggyWarning": "(バグ)"
+      "automatic": "自動"
     },
     "languages": {
       "title": "言語",

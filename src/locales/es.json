@@ -28,8 +28,7 @@
     "proxy": {
       "title": "Proxy",
       "subtitle": "Elige el proxy que se ajuste a tus necesidades",
-      "automatic": "Automática",
-      "buggyWarning": "(CALESA)"
+      "automatic": "Automática"
     },
     "languages": {
       "title": "Idioma",
