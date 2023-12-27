@@ -47,6 +47,10 @@
     "cloaking": {
       "title": "クローキング",
       "subtitle": "タブの見た目を選択する"
+    },
+    "search": {
+      "title": "検索エンジン",
+      "subtitle": "ネビュラの検索エンジンを選択してください"
     }
   },
   "titles": {
