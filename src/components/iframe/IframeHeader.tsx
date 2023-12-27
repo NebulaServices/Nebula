@@ -21,7 +21,7 @@ export function IframeHeader(props: { url: string }) {
       id="iframeNav"
       className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4"
     >
-      <Link href="/" class="w-1/2">
+      <Link href="/" class="w-1/8">
         <div className="flex flex-row items-center">
           <img
             src="/logo.png"
