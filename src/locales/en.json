@@ -44,6 +44,10 @@
       "embed": "Embed",
       "direct": "Direct",
       "aboutblank": "About:Blank"
+    },
+    "cloaking": {
+      "title": "Cloaking",
+      "subtitle": "Choose how your tab looks"
     }
   },
   "titles": {

@@ -1,16 +1,17 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "preact-router";
 import { HeaderRoute } from "../components/HeaderRoute";
-import { Helmet } from "react-helmet";
+import CloakedHead from "../util/CloakedHead";
 
 export function NotFound() {
   const { t } = useTranslation();
 
   return (
     <HeaderRoute>
-      <Helmet>
-        <title>{t("titles.404")}</title>
-      </Helmet>
+      <CloakedHead
+        originalTitle={t("titles.404")}
+        originalFavicon="/logo.png"
+      />
       <section class="h-full">
         <div class="flex h-full flex-col items-center justify-center">
           <img src="/404.png" class="h-72"></img>

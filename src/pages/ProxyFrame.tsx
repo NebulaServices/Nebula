@@ -3,8 +3,9 @@ import { searchUtil } from "../util/searchUtil";
 import { useEffect, useState } from "preact/hooks";
 //import our Iframe component
 import { Iframe } from "../components/iframe/Iframe";
-
+import CloakedHead from "../util/CloakedHead";
 import SiteSupport from "../util/SiteSupport.json";
+import { useTranslation } from "react-i18next";
 
 declare global {
   interface Window {
@@ -14,6 +15,7 @@ declare global {
 }
 
 export function ProxyFrame(props: { url: string }) {
+  const { t } = useTranslation();
   // pass the URL encoded with encodeURIcomponent
   const localProxy = localStorage.getItem("proxy") || "automatic";
   const proxyMode = localStorage.getItem("proxyMode") || "embed";
@@ -104,6 +106,10 @@ export function ProxyFrame(props: { url: string }) {
   }
   return (
     <div class="h-screen w-screen bg-primary">
+      <CloakedHead
+        originalTitle={t("titles.home")}
+        originalFavicon="/logo.png"
+      />
       {proxyMode === "direct" && <h1>Loading {localProxy}...</h1>}
       {proxyMode === "aboutblank" && <h1>Loading {localProxy}...</h1>}
       {proxyMode === "embed" && <Iframe url={ProxiedUrl} />}

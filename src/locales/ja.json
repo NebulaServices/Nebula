@@ -44,6 +44,10 @@
       "embed": "埋め込む",
       "direct": "直接",
       "aboutblank": "About:Blank"
+    },
+    "cloaking": {
+      "title": "クローキング",
+      "subtitle": "タブの見た目を選択する"
     }
   },
   "titles": {

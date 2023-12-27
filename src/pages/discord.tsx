@@ -1,18 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
-import { Helmet } from "react-helmet";
+import CloakedHead from "../util/CloakedHead";
 
 export function DiscordPage() {
   const { t } = useTranslation();
 
   return (
     <HeaderRoute>
-      <Helmet>
-        <title>{t("titles.discord")}</title>
-      </Helmet>
+      <CloakedHead
+        originalTitle={t("titles.discord")}
+        originalFavicon="/logo.png"
+      />
       <section class="h-full">
         <div class="flex h-full flex-col items-center justify-center">
-          <img src="/discord.png" class="h-72 w-72"></img>
+          <img src="/services.png" class="h-72 w-72"></img>
           <div class="flex flex-col items-center p-6">
             <p class="font-roboto text-4xl font-bold">{t("discord.title")}</p>
             <span class="font-roboto text-3xl">{t("discord.sub")}</span>

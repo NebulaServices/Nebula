@@ -44,6 +44,10 @@
       "embed": "Incrustar",
       "direct": "Directo",
       "aboutblank": "About:Blank"
+    },
+    "cloaking": {
+      "title": "Encubrimiento",
+      "subtitle": "Elige cómo se ve tu pestaña"
     }
   },
   "titles": {

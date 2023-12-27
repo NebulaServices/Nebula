@@ -1,8 +1,7 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
-import { Helmet } from "react-helmet";
-
+import CloakedHead from "../util/CloakedHead";
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -15,9 +14,10 @@ export function Home() {
 
   return (
     <HeaderRoute>
-      <Helmet>
-        <title>{t("titles.home")}</title>
-      </Helmet>
+      <CloakedHead
+        originalTitle={t("titles.home")}
+        originalFavicon="/logo.png"
+      />
       <div class="flex h-full flex-col items-center justify-center">
         <div class="font-inter absolute bottom-0 left-0 p-4 text-sm italic text-input-text">
           Nebula &copy; Nebula Services {new Date().getUTCFullYear()}
