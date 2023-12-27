@@ -104,6 +104,7 @@ export function ProxyFrame(props: { url: string }) {
   if (!ProxiedUrl == undefined) {
     window.location.href = ProxiedUrl;
   }
+    
   return (
     <div class="h-screen w-screen bg-primary">
       <CloakedHead
