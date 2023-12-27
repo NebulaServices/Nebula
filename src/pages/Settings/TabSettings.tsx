@@ -11,7 +11,8 @@ const TabSettings = ({ id, active }) => (
     initial="inactive"
   >
     <motion.div variants={settingsPageVariant} className="content-card">
-      <h1>Tab settings</h1>
+      <img src="/comingsoonsnake.png" class="h-72"></img>
+      <h1 class="font-roboto text-3xl">Coming soon!</h1>
     </motion.div>
   </motion.div>
 );

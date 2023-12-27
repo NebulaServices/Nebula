@@ -1,12 +1,16 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "preact-router";
 import { HeaderRoute } from "../components/HeaderRoute";
+import { Helmet } from "react-helmet";
 
 export function NotFound() {
   const { t } = useTranslation();
 
   return (
     <HeaderRoute>
+      <Helmet>
+        <title>{t("titles.404")}</title>
+      </Helmet>
       <section class="h-full">
         <div class="flex h-full flex-col items-center justify-center">
           <img src="/404.png" class="h-72"></img>

@@ -16,7 +16,7 @@ export function Home() {
   return (
     <HeaderRoute>
       <Helmet>
-        <title>Nebula</title>
+        <title>{t("titles.home")}</title>
       </Helmet>
       <div class="flex h-full flex-col items-center justify-center">
         <div class="font-inter absolute bottom-0 left-0 p-1 text-sm italic text-input-text">

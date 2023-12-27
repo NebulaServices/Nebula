@@ -1,11 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
+import { Helmet } from "react-helmet";
 
 export function DiscordPage() {
   const { t } = useTranslation();
 
   return (
     <HeaderRoute>
+      <Helmet>
+        <title>{t("titles.discord")}</title>
+      </Helmet>
       <section class="h-full">
         <div class="flex h-full flex-col items-center justify-center">
           <div class="flex flex-col items-center p-6">

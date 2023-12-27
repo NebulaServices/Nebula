@@ -36,10 +36,7 @@
       "subtitle": "好きな言語を選んでください",
       "japanese": "日本語",
       "english": "英語",
-      "spanish": "スペイン語",
-      "german": "",
-      "greek": "",
-      "dutch": ""
+      "spanish": "スペイン語"
     },
     "proxymodes": {
       "title": "開く",
@@ -48,5 +45,11 @@
       "direct": "直接",
       "aboutblank": "About:Blank"
     }
+  },
+  "titles": {
+    "home": "ネブラ",
+    "settings": "ネブラ - セッティング",
+    "discord": "ネブラ - Discord",
+    "404": "ネブラ - 404"
   }
 }

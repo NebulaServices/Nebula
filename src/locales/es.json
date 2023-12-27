@@ -36,10 +36,7 @@
       "subtitle": "Elige tu idioma preferido",
       "japanese": "Japonés",
       "english": "Inglés",
-      "spanish": "Español",
-      "german": "",
-      "greek": "",
-      "dutch": ""
+      "spanish": "Español"
     },
     "proxymodes": {
       "title": "Abrir en",
@@ -48,5 +45,11 @@
       "direct": "Directo",
       "aboutblank": "About:Blank"
     }
+  },
+  "titles": {
+    "home": "Nebula",
+    "settings": "Nebula - Ajustes",
+    "discord": "Nebula - Discord",
+    "404": "Nebula - 404"
   }
 }
