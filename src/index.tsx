@@ -5,7 +5,7 @@ const Routes = lazy(() => import("./routes"));
 
 export default function App() {
   return (
-    <Suspense fallback={<LoadSuspense />}>
+    <Suspense fallback={<LoadSuspense class="overflow-hidden" />}>
       <div>
         <Routes />
       </div>
