@@ -19,11 +19,11 @@ export function Home() {
         <title>{t("titles.home")}</title>
       </Helmet>
       <div class="flex h-full flex-col items-center justify-center">
-        <div class="font-inter absolute bottom-0 left-0 p-1 text-sm italic text-input-text">
+        <div class="font-inter absolute bottom-0 left-0 p-4 text-sm italic text-input-text">
           Nebula &copy; Nebula Services {new Date().getUTCFullYear()}
         </div>
         <a href="https://github.com/NebulaServices/Nebula">
-          <div class="font-inter absolute bottom-0 right-0 p-1 text-sm text-input-text">
+          <div class="font-inter absolute bottom-0 right-0 p-4 text-sm text-input-text">
             GitHub
           </div>
         </a>
@@ -44,7 +44,7 @@ export function Home() {
               setInputValue((e.target as HTMLInputElement).value)
             }
             className={`font-roboto h-14 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none ${
-              isFocused ? "w-full md:w-3/12" : "w-full md:w-80"
+              isFocused ? "w-10/12 md:w-3/12" : "w-80"
             } transition-all duration-300`}
             placeholder={isFocused ? "" : t("home.placeholder")}
           />

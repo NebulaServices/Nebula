@@ -30,7 +30,7 @@ const Proxy = ({ id, active }) => {
     >
       <motion.div
         variants={settingsPageVariant}
-        className="content-card justify-left flex w-full flex-row flex-wrap gap-4"
+        className="content-card justify-center flex w-full flex-row flex-wrap gap-4"
       >
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
           <div class="p-2 text-3xl">{t("settings.proxy.title")}</div>
