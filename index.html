@@ -17,11 +17,8 @@
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("/uvsw.js", {
-            scope: __uv$config.prefix
-          });
-          navigator.serviceWorker.register("/dysw.js", {
-            scope: __dynamic$config.prefix
+          navigator.serviceWorker.register("/sw.js", {
+            scope: "/~/"
           });
         });
       }
