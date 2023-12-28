@@ -7,6 +7,7 @@ import { Iframe } from "../components/iframe/Iframe";
 import CloakedHead from "../util/CloakedHead";
 import SiteSupport from "../util/SiteSupport.json";
 import { useTranslation } from "react-i18next";
+import { dec } from "../aes";
 
 declare global {
   interface Window {
@@ -24,8 +25,11 @@ export function ProxyFrame(props: { url: string }) {
     localStorage.getItem("searchEngine") || "https://google.com/search?q=%s";
 
   const [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
-
-  let decodedUrl = decodeURIComponent(props.url);
+  //@ts-ignore
+  let decodedUrl = dec(
+    "U2FsdGVkX1" + decodeURIComponent(props.url),
+    "295E1389FED4F2187D992178A53F9"
+  );
   //attempt to convert to a valid url
   decodedUrl = searchUtil(decodedUrl, searchEngine);
 
