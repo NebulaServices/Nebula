@@ -15,9 +15,9 @@ export function Header() {
 
   return (
     <div id="navbar" className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4">
-      <Link href="/" class="w-1/2">
+      <Link href="/" class="w-1/8">
         <div className="flex flex-row items-center">
-          <img src="/logo.png" className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"></img>
+          <img src="/logo.png" alt="Nebula Logo" className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"></img>
           <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
             {t("header.title")}
           </h1>

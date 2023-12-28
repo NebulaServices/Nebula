@@ -1,10 +1,10 @@
 import { LocationProvider, Router, Route } from "preact-iso";
 import { Home } from "./pages/Home";
-import { NotFound } from "./pages/_404.jsx";
-import { DiscordPage } from "./pages/discord.jsx";
+import { NotFound } from "./pages/_404";
+import { DiscordPage } from "./pages/discord";
 import { ProxyFrame } from "./pages/ProxyFrame.js";
 import { Radon } from "./pages/Radon";
-import { Settings } from "./pages/Settings/index.js";
+import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import "./style.css";
 import "./themes/main.css";

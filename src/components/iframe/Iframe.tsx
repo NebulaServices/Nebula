@@ -6,7 +6,7 @@ export function Iframe(props: { url: string }) {
     <>
       <IframeHeader url={props.url} />
       <motion.div
-        className="h-[calc(100%_-_4rem)] w-full"
+        className="h-[calc(100%_-_4rem)] w-full select-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
