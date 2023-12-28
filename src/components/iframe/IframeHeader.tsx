@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { Link } from "preact-router";
 import { RiPictureInPictureExitFill, RiFullscreenFill } from "react-icons/ri";
-import { IoCodeSlashSharp } from "react-icons/io5";
+import { IoCodeSlashSharp,IoChevronBackSharp,IoChevronForwardSharp, IoReloadSharp } from "react-icons/io5";
 import { FaXmark } from "react-icons/fa6";
 
 interface ProxyFrame extends HTMLElement {
@@ -25,13 +25,14 @@ export function IframeHeader(props: { url: string }) {
   return (
     <div
       id="iframeNav"
-      className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4"
+      className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4 gap-3"
     >
-      <Link href="/" class="w-1/2">
+      <Link href="/" class="w-1/8">
         <div className="flex flex-row items-center">
           <img
             src="/logo.png"
             className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
+            alt="Nebula Logo"
           ></img>
           <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
             {" "}
@@ -39,7 +40,30 @@ export function IframeHeader(props: { url: string }) {
           </h1>
         </div>
       </Link>
-      <div id="navItems" class="w-1/2">
+        <div className="gap-3 mr-4 flex flex-row items-center justify-end">
+      <IoChevronBackSharp
+        className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+        onClick={() => {
+          const proxyFrame: ProxyFrame | null = document.getElementById("iframe") as ProxyFrame;
+          proxyFrame.contentWindow.history.back();
+        }}
+      />
+    <IoReloadSharp
+        className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
+        onClick={() => {
+          const proxyFrame: ProxyFrame | null = document.getElementById("iframe") as ProxyFrame;
+          proxyFrame.contentWindow.location.reload();
+        }}
+    />
+      <IoChevronForwardSharp
+          className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+          onClick={() => {
+            const proxyFrame: ProxyFrame | null = document.getElementById("iframe") as ProxyFrame;
+            proxyFrame.contentWindow.history.forward();
+          }}
+      />
+        </div>
+      <div id="navItems" class="w-1/8">
         <div className="mr-4 flex flex-row items-center justify-end gap-3">
           <IoCodeSlashSharp
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
