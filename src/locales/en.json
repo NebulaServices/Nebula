@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "nebula.",
+    "games": "Games",
+    "settings": "Settings",
+    "discord": "Want more links?"
+  },
+  "404": {
+    "text": "This Nebula Service has been disabled.",
+    "return": "Back to home"
+  },
+  "home": {
+    "placeholder": "Search the web freely"
+  },
+  "discord": {
+    "title": "Nebula's Discord Server",
+    "sub": "Would you like to open this via proxy?",
+    "button1": "Open Normally",
+    "button2": "Use Proxy"
+  },
+  "settings": {
+    "tabs": {
+      "proxy": "Proxy",
+      "tab": "Tab",
+      "custom": "Customization",
+      "misc": "Misc"
+    },
+    "proxy": {
+      "title": "Proxy",
+      "subtitle": "Choose the proxy that fits your needs",
+      "automatic": "Automatic"
+    },
+    "languages": {
+      "title": "Language",
+      "subtitle": "Choose your preferred language",
+      "japanese": "Japanese",
+      "english": "English",
+      "spanish": "Spanish"
+    },
+    "proxymodes": {
+      "title": "Open in",
+      "subtitle": "Choose how to open your sites",
+      "embed": "Embed",
+      "direct": "Direct",
+      "aboutblank": "About:Blank"
+    },
+    "cloaking": {
+      "title": "Cloaking",
+      "subtitle": "Choose how your tab looks"
+    },
+    "search": {
+      "title": "Search Engine",
+      "subtitle": "Choose your search engine"
+    }
+  },
+  "titles": {
+    "home": "Nebula",
+    "settings": "Nebula - Settings",
+    "discord": "Nebula - Discord",
+    "404": "Nebula - 404"
+  },
+  "comingsoon": "Coming soon!"
+}

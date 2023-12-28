@@ -4,7 +4,9 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  }
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 0,
+  "css.lint.unknownAtRules": "ignore",
+  "editor.linkedEditing": true,
+  "css.lint.unknownProperties": "ignore"
 }

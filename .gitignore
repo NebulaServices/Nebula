@@ -1,10 +1,24 @@
-# dependencies
-/node_modules
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# System Files
+node_modules
+package-lock.json
+
+dist-ssr
+dist
+*.local
+
+# Editor directories and files
+.idea
 .DS_Store
-Thumbs.db
-.breakpoints
-
-memory.txt
-old.app.js
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

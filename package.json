@@ -1,28 +1,48 @@
 {
-  "name": "nebula-web",
-  "version": "7.11.6",
-  "description": "Explore the web. Freely.",
+  "name": "nebula",
+  "private": true,
   "type": "module",
-  "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "dev": "concurrently \"vite\" \"bare-server-node --port 8080\"",
+    "build": "vite build",
+    "bstart": "npm run build && tsx server.ts",
+    "start": "tsx server.ts",
+    "preview": "vite preview",
+    "format": "prettier --write ."
   },
-  "keywords": [
-    "proxy"
-  ],
-  "author": "Nebula Services",
-  "license": "AGPL-3.0-only",
   "dependencies": {
-    "@sendgrid/mail": "^7.7.0",
-    "@tomphttp/bare-server-node": "^1.2.5",
-    "@titaniumnetwork-dev/ultraviolet": "^1.0.11",
-    "bcrypt": "^5.1.0",
-    "cookie-parser": "^1.4.6",
-    "express": "^4.18.2",
-    "nodemailer": "^6.9.2",
-    "uuid": "^9.0.0"
+    "@fastify/compress": "^6.5.0",
+    "@fastify/static": "^6.12.0",
+    "@titaniumnetwork-dev/ultraviolet": "^2.0.0",
+    "@tomphttp/bare-server-node": "^2.0.1",
+    "classnames": "^2.3.2",
+    "fastify": "^4.25.1",
+    "framer-motion": "^10.16.16",
+    "i18next": "^23.7.9",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "million": "^2.6.4",
+    "preact": "^10.13.1",
+    "preact-iso": "^2.3.2",
+    "preact-render-to-string": "^6.3.1",
+    "preact-router": "^4.1.2",
+    "rammerhead": "https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz",
+    "react-helmet": "^6.1.0",
+    "react-i18next": "^13.5.0",
+    "react-icons": "^4.12.0",
+    "tsx": "^4.7.0"
   },
-  "engines": {
-    "node": ">=18.x"
+  "devDependencies": {
+    "@preact/preset-vite": "^2.5.0",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.55.0",
+    "eslint-config-preact": "^1.3.0",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.9",
+    "vite-plugin-static-copy": "^1.0.0"
   }
 }

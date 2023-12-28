@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "nebula.",
+    "games": "Juegos",
+    "settings": "Ajustes",
+    "discord": "¿Quieres más enlaces?"
+  },
+  "404": {
+    "text": "Este servicio Nebula ha sido deshabilitado.",
+    "return": "De vuelta a casa"
+  },
+  "home": {
+    "placeholder": "Busca en la web libremente"
+  },
+  "discord": {
+    "title": "Nebula's Discord Servidor",
+    "sub": "¿Le gustaría abrir esto a través de proxy?",
+    "button1": "Abierto normalmente",
+    "button2": "Usa proxy"
+  },
+  "settings": {
+    "tabs": {
+      "proxy": "Proxy",
+      "tab": "Pestaña",
+      "custom": "Personalización",
+      "misc": "Misc"
+    },
+    "proxy": {
+      "title": "Proxy",
+      "subtitle": "Elige el proxy que se ajuste a tus necesidades",
+      "automatic": "Automática"
+    },
+    "languages": {
+      "title": "Idioma",
+      "subtitle": "Elige tu idioma preferido",
+      "japanese": "Japonés",
+      "english": "Inglés",
+      "spanish": "Español"
+    },
+    "proxymodes": {
+      "title": "Abrir en",
+      "subtitle": "Elige cómo abrir tus sitios",
+      "embed": "Incrustar",
+      "direct": "Directo",
+      "aboutblank": "About:Blank"
+    },
+    "cloaking": {
+      "title": "Encubrimiento",
+      "subtitle": "Elige cómo se ve tu pestaña"
+    },
+    "search": {
+      "title": "Motor de búsqueda",
+      "subtitle": "Elija su motor de búsqueda para Nebula."
+    }
+  },
+  "titles": {
+    "home": "Nebula",
+    "settings": "Nebula - Ajustes",
+    "discord": "Nebula - Discord",
+    "404": "Nebula - 404"
+  },
+  "comingsoon": "¡Próximamente!"
+}

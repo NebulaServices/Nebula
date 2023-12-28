@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta content="Nebula" property="og:title" />
+    <meta
+      content="A stunning and sleak web proxy frontend with support for hundreds of popular sites."
+      property="og:description"
+    />
+    <meta content="/logo.png" property="og:image" />
+    <meta content="#191724" data-react-helmet="true" name="theme-color" />
+    <script src="/uv/uv.bundle.js"></script>
+    <script src="/uv/uv.config.js"></script>
+    <script src="/dynamic/dynamic.config.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/uvsw.js", {
+            scope: __uv$config.prefix
+          });
+          navigator.serviceWorker.register("/dysw.js", {
+            scope: __dynamic$config.prefix
+          });
+        });
+      }
+    </script>
+  </head>
+  <body style="margin: 0">
+    <div id="app"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
