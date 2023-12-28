@@ -81,33 +81,14 @@ export function ProxyFrame(props: { url: string }) {
       window.location.href = ProxiedUrl; // This is the hackiest workaround in the history of hacky workarounds
     }
   } else if (proxyMode == "aboutblank") {
-    const newWindow = window.open("about:blank", "_blank");
-    const newDocument = newWindow.document.open();
-    newDocument.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style type="text/css">
-            body, html
-            {
-              margin: 0; padding: 0; height: 100%; overflow: hidden;
-            }
-          </style>
-        </head>
-        <body>
-          <iframe style="border: none; width: 100%; height: 100vh;" src="${
-            window.location.origin + ProxiedUrl
-          }"></iframe>
-        </body>
-      </html>
-    `);
-    newDocument.close();
-    window.location.replace("/");
+    if (!(ProxiedUrl == undefined)) {
+      window.location.href = "/ab/" + encodeURIComponent(ProxiedUrl);
+    }
   }
   if (!ProxiedUrl == undefined) {
     window.location.href = ProxiedUrl;
   }
-    
+
   return (
     <div class="h-screen w-screen bg-primary">
       <CloakedHead
