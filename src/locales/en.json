@@ -47,6 +47,10 @@
     "cloaking": {
       "title": "Cloaking",
       "subtitle": "Choose how your tab looks"
+    },
+    "search": {
+      "title": "Search Engine",
+      "subtitle": "Choose your search engine"
     }
   },
   "titles": {
@@ -54,5 +58,6 @@
     "settings": "Nebula - Settings",
     "discord": "Nebula - Discord",
     "404": "Nebula - 404"
-  }
+  },
+  "comingsoon": "Coming soon!"
 }

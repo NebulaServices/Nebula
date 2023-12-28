@@ -47,6 +47,10 @@
     "cloaking": {
       "title": "Encubrimiento",
       "subtitle": "Elige cómo se ve tu pestaña"
+    },
+    "search": {
+      "title": "Motor de búsqueda",
+      "subtitle": "Elija su motor de búsqueda para Nebula."
     }
   },
   "titles": {
@@ -54,5 +58,6 @@
     "settings": "Nebula - Ajustes",
     "discord": "Nebula - Discord",
     "404": "Nebula - 404"
-  }
+  },
+  "comingsoon": "¡Próximamente!"
 }
