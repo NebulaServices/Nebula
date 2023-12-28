@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
+import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
@@ -9,7 +10,12 @@ export function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.location.href = "/go/" + encodeURIComponent(inputValue);
+    window.location.href =
+      "/go/" +
+      encodeURIComponent(
+        //@ts-ignore
+        enc(inputValue, "295E1389FED4F2187D992178A53F9").substring(10)
+      );
   };
 
   return (

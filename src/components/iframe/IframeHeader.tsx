@@ -45,7 +45,7 @@ export function IframeHeader(props: { url: string }) {
           </h1>
         </div>
       </Link>
-      <div className="mr-4 flex flex-row items-center justify-end gap-3">
+      <div className="flex flex-row items-center gap-3 md:gap-2">
         <IoChevronBackSharp
           className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
           onClick={() => {
