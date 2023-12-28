@@ -28,7 +28,7 @@ export function ProxyFrame(props: { url: string }) {
   //@ts-ignore
   let decodedUrl = dec(
     "U2FsdGVkX1" + decodeURIComponent(props.url),
-    "295E1389FED4F2187D992178A53F9"
+    window.location.origin.slice(8) + navigator.userAgent
   );
   //attempt to convert to a valid url
   decodedUrl = searchUtil(decodedUrl, searchEngine);

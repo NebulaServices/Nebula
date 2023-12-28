@@ -14,7 +14,10 @@ export function Home() {
       "/go/" +
       encodeURIComponent(
         //@ts-ignore
-        enc(inputValue, "295E1389FED4F2187D992178A53F9").substring(10)
+        enc(
+          inputValue,
+          window.location.origin.slice(8) + navigator.userAgent
+        ).substring(10)
       );
   };
 
