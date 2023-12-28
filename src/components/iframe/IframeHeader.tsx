@@ -32,6 +32,7 @@ export function IframeHeader(props: { url: string }) {
           <img
             src="/logo.png"
             className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
+            alt="Nebula Logo"
           ></img>
           <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
             {" "}
