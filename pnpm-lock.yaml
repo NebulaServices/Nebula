@@ -12,8 +12,8 @@ dependencies:
     specifier: ^6.12.0
     version: 6.12.0
   '@titaniumnetwork-dev/ultraviolet':
-    specifier: ^2.0.0
-    version: 2.0.0
+    specifier: ^1.0.11
+    version: 1.0.11
   '@tomphttp/bare-server-node':
     specifier: ^2.0.1
     version: 2.0.1
@@ -1191,10 +1191,10 @@ packages:
     dev: true
     optional: true
 
-  /@titaniumnetwork-dev/ultraviolet@2.0.0:
-    resolution: {integrity: sha512-zRjwip5yFr1p3/1WTb7nmbqmJKNIoxvhbaKFaKr1eSw1Px/Y/nBwPZ+AW+aKVAPFZvx/wAb14eTf2BAH7zklaQ==}
+  /@titaniumnetwork-dev/ultraviolet@1.0.11:
+    resolution: {integrity: sha512-FJtZw/xQubrgk8pJLs5wx9k6okCGZPR7FXWXTiL5wOiCvjqgDQCmHBTb7M5eYqnQil05tbaz92+16Ki/7rRWIw==}
     dependencies:
-      '@tomphttp/bare-client': 2.1.0
+      '@tomphttp/bare-client': 1.1.2-beta.3
       css-tree: 2.3.1
       esotope-hammerhead: 0.6.7
       events: 3.3.0
@@ -1205,8 +1205,8 @@ packages:
       set-cookie-parser: 2.6.0
     dev: false
 
-  /@tomphttp/bare-client@2.1.0:
-    resolution: {integrity: sha512-0s2g3bpKAxwk7sOsfewpngLF+2lQrS0mxnga+6qIzKCoYdOKd5+Lm3lkEDHO0cWIEqMbgRZB2wjW1+NQ2XbGWA==}
+  /@tomphttp/bare-client@1.1.2-beta.3:
+    resolution: {integrity: sha512-WyIVnSAqzfrLejmOhh/l/LtDOeK+SHnBGi/z+QyliVP1T1JxoNE5eecwxlV+osM9J6FTAYVGNHr8/5bubaIj6Q==}
     dev: false
 
   /@tomphttp/bare-server-node@2.0.1:

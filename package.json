@@ -13,7 +13,7 @@
   "dependencies": {
     "@fastify/compress": "^6.5.0",
     "@fastify/static": "^6.12.0",
-    "@titaniumnetwork-dev/ultraviolet": "^2.0.0",
+    "@titaniumnetwork-dev/ultraviolet": "^1.0.11",
     "@tomphttp/bare-server-node": "^2.0.1",
     "classnames": "^2.3.2",
     "fastify": "^4.25.1",
