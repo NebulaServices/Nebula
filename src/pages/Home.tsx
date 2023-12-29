@@ -91,13 +91,16 @@ export function Home() {
                       )
                     }
                   >
-                    <div key={index}>{suggestion}</div>
+                    <div
+                      class={`font-roboto w-110 -rounded-2xl h-14 flex-none shrink-0 justify-center border border-input-border-color p-2 text-2xl hover:bg-dropdown-option-hover-color ${
+                        index === suggestion.length - 2 ? "rounded-b-2xl" : ""
+                      }`}
+                      key={index}
+                    >
+                      {suggestion}
+                    </div>
                   </a>
                 ))}
-              {/*} {isFocused &&
-                Array.from({ length: 5 }, (_, index) => (
-                  <div key={index}>Example suggestion</div>
-                ))} */}
             </div>
           </div>
         </form>

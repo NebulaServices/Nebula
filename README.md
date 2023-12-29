@@ -2,12 +2,10 @@
 
 NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 
-
-
 ![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue)
 
-
 ## Features
+
 - Stunning and highly functional UI
 - 3 different backend proxies
 - Hides your IP from sites
@@ -18,19 +16,20 @@ NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. 
 # Deployment
 
 Table of contents
+
 - Deployment
 
-
 ---
-## Deployment  
+
+## Deployment
+
 Run these commands on your server:  
 `git clone https://https://github.com/NebulaServices/Nebula.git`  
 `pnpm i`  
-`npm run bstart`  
+`npm run bstart`
 
 You may also need to run `npm i -g pnpm tsx`  
 Thanks for using Nebula!
-
 
 ## Tech Stack
 
