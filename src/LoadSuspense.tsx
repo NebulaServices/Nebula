@@ -1,4 +1,4 @@
-import './Suspense.css'
+import "./Suspense.css";
 
 export function LoadSuspense() {
   return (

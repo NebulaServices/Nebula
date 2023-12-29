@@ -70,8 +70,8 @@ export function Home() {
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            className={`font-roboto h-14 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none ${
-              isFocused ? "w-10/12 md:w-3/12" : "w-80"
+            className={`font-roboto h-14 rounded-t-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none ${
+              isFocused ? "w-10/12 md:w-3/12" : "w-80 rounded-2xl"
             } transition-all duration-300`}
             placeholder={isFocused ? "" : t("home.placeholder")}
           />
@@ -91,13 +91,16 @@ export function Home() {
                       )
                     }
                   >
-                    <div key={index}>{suggestion}</div>
+                    <div
+                      class={`font-roboto w-110 h-14 flex-none shrink-0 justify-center border border-input-border-color p-2 text-2xl hover:bg-dropdown-option-hover-color ${
+                        index === suggestion.length - 2 ? "rounded-b-2xl" : ""
+                      }`}
+                      key={index}
+                    >
+                      {suggestion}
+                    </div>
                   </a>
                 ))}
-              {/*} {isFocused &&
-                Array.from({ length: 5 }, (_, index) => (
-                  <div key={index}>Example suggestion</div>
-                ))} */}
             </div>
           </div>
         </form>
