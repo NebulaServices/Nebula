@@ -92,8 +92,8 @@ export function Home() {
                     }
                   >
                     <div
-                      class={`font-roboto w-110 h-14 flex-none shrink-0 justify-center border border-input-border-color p-2 text-2xl hover:bg-dropdown-option-hover-color ${
-                        index === suggestion.length - 2 ? "rounded-b-2xl" : ""
+                      class={`font-roboto w-110 h-14 flex-none shrink-0 justify-center border border-input-border-color p-2 text-2xl text-ellipsis hover:bg-dropdown-option-hover-color ${
+                        index === suggestion.slice(-1) ? "rounded-b-2xl" : ""
                       }`}
                       key={index}
                     >
