@@ -6,6 +6,7 @@ import { ProxyFrame } from "./pages/ProxyFrame.js";
 import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
+import AutocompleteInput from "./Autocomplete";
 import "./style.css";
 import "./themes/main.css";
 import "./i18n";
