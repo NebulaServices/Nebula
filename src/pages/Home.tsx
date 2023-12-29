@@ -75,8 +75,8 @@ export function Home() {
             } transition-all duration-300`}
             placeholder={isFocused ? "" : t("home.placeholder")}
           />
-          <div class="relative flex w-10/12 flex-col items-center md:w-3/12">
-            <div class="absolute text-center">
+          <div class="relative w-10/12 flex-col items-center md:w-3/12">
+            <div class="last:rounded-b-2xl text-center truncate">
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
@@ -92,9 +92,7 @@ export function Home() {
                     }
                   >
                     <div
-                      class={`font-roboto w-110 h-14 flex-none shrink-0 justify-center border border-input-border-color p-2 text-2xl text-ellipsis hover:bg-dropdown-option-hover-color ${
-                        index === suggestion.slice(-1) ? "rounded-b-2xl" : ""
-                      }`}
+                      class={`font-roboto w-110 h-14 flex-none justify-center border border-input-border-color p-2 text-2xl hover:bg-dropdown-option-hover-color`}
                       key={index}
                     >
                       {suggestion}
