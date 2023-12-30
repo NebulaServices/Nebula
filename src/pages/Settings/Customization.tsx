@@ -8,8 +8,8 @@ function Customization({ id, active }) {
   const { t } = useTranslation();
 
   const themes = [
-    { id: "main", label: "Main" },
-    { id: "catppucinMocha", label: "Catppucin Mocha" }
+    { id: "main", label: t("themes.main") },
+    { id: "catppucinMocha", label: t("themes.catppuccinMocha") }
   ];
 
   return (
