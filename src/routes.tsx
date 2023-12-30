@@ -8,21 +8,22 @@ import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import AutocompleteInput from "./Autocomplete";
 import "./style.css";
-import "./themes/main.css";
 import "./i18n";
+const theme = localStorage.getItem("theme") || "main";
 
 export default function Routes() {
   return (
-    <LocationProvider>
-      <Router>
-        <Route path="/" component={Home} />
-        <Route path="/discord" component={DiscordPage} />
-        <Route path="/games" component={Radon} />
-        <Route path="/go/:url" component={ProxyFrame} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/ab/:url" component={AboutBlank} />
-        <Route default component={NotFound} />
-      </Router>
-    </LocationProvider>
+      <LocationProvider>
+        <link rel="stylesheet" href={`/themes/${theme}.css`}/>
+        <Router>
+          <Route path="/" component={Home}/>
+          <Route path="/discord" component={DiscordPage}/>
+          <Route path="/games" component={Radon}/>
+          <Route path="/go/:url" component={ProxyFrame}/>
+          <Route path="/settings" component={Settings}/>
+          <Route path="/ab/:url" component={AboutBlank}/>
+          <Route default component={NotFound}/>
+        </Router>
+      </LocationProvider>
   );
 }
