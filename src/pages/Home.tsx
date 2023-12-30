@@ -71,12 +71,15 @@ export function Home() {
             value={inputValue}
             onChange={handleInputChange}
             className={`font-roboto h-14 rounded-t-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none ${
-              isFocused ? "w-10/12 md:w-3/12" : "w-80 rounded-2xl"
+              isFocused && inputValue.trim() !== ""
+                ? "w-10/12 md:w-3/12"
+                : "w-80 rounded-2xl"
             } transition-all duration-300`}
             placeholder={isFocused ? "" : t("home.placeholder")}
           />
+
           <div class="relative flex w-10/12 flex-col items-center md:w-3/12">
-            <div class="absolute text-center">
+            <div class="absolute w-full text-center">
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
@@ -92,8 +95,8 @@ export function Home() {
                     }
                   >
                     <div
-                      class={`font-roboto w-110 h-14 flex-none shrink-0 justify-center border border-input-border-color p-2 text-2xl text-ellipsis hover:bg-dropdown-option-hover-color ${
-                        index === suggestion.slice(-1) ? "rounded-b-2xl" : ""
+                      className={`font-roboto w-110 flex h-10 flex-none shrink-0 items-center justify-center border border-input-border-color bg-input p-2 text-xl hover:bg-dropdown-option-hover-color ${
+                        index === suggestions.length - 1 ? "rounded-b-2xl" : ""
                       }`}
                       key={index}
                     >
@@ -101,6 +104,15 @@ export function Home() {
                     </div>
                   </a>
                 ))}
+              {/* {showSuggestions &&
+                Array.from({ length: 10 }, (_, index) => (
+                  <div
+                    key={index}
+                    class="font-roboto w-110 hover:bg-dropdown-option-hover-colo flex h-8 flex-none shrink-0 items-center justify-center border border-input-border-color p-2 text-2xl"
+                  >
+                    Example suggestion
+                  </div>
+                ))} */}
             </div>
           </div>
         </form>
