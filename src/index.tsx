@@ -1,4 +1,4 @@
-import { render } from "preact";
+import { render, Component } from "preact";
 import { Suspense, lazy } from "preact/compat";
 import { LoadSuspense } from "./LoadSuspense";
 const Routes = lazy(() => import("./routes"));
