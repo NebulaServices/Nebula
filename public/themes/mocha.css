@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
 
-:root [data-theme="mocha"] {
+:root {
     --background-primary: #1e1e2e;
     --background-lighter: #11111b;
     --navbar-color: #11111b;
