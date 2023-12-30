@@ -76,7 +76,7 @@ export function Home() {
             placeholder={isFocused ? "" : t("home.placeholder")}
           />
           <div class="relative w-10/12 flex-col items-center md:w-3/12">
-            <div class="last:rounded-b-2xl text-center truncate">
+            <div class="absolute items-center last:rounded-b-2xl text-center truncate">
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
