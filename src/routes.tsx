@@ -6,14 +6,14 @@ import { ProxyFrame } from "./pages/ProxyFrame.js";
 import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
-//import AutocompleteInput from "./Autocomplete";
+import AutocompleteInput from "./Autocomplete";
 import "./style.css";
+import "./themes/main.css";
 import "./i18n";
 
 export default function Routes() {
   return (
     <LocationProvider>
-      <link rel="stylesheet" href="/themes/main.css" />
       <Router>
         <Route path="/" component={Home} />
         <Route path="/discord" component={DiscordPage} />
