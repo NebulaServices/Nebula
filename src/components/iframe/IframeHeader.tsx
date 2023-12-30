@@ -97,12 +97,7 @@ export function IframeHeader(props: { url: string }) {
                 script.src = "https://cdn.jsdelivr.net/npm/eruda";
                 script.onload = function () {
                   if (!proxyWindow) return;
-                  proxyWindow.eruda.init({
-                    defaults: {
-                      displaySize: 45,
-                      theme: 'Material Palenight'
-                    }
-                  });
+                  proxyWindow.eruda.init();
                   proxyWindow.eruda.show();
                 };
                 proxyDocument.head.appendChild(script);
