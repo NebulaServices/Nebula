@@ -11,7 +11,8 @@ function Customization({ id, active }) {
     { id: "main", label: t("themes.main") },
     { id: "catppuccinMocha", label: t("themes.catppuccinMocha") },
     { id: "catppuccinMacchiato", label: t("themes.catppuccinMacchiato") },
-    { id: "catppuccinFrappe", label: t("themes.catppuccinFrappe") }
+    { id: "catppuccinFrappe", label: t("themes.catppuccinFrappe") },
+    { id: "catppuccinLatte", label: t("themes.catppuccinLatte") }
   ];
 
   return (
