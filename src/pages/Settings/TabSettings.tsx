@@ -19,8 +19,8 @@ const TabSettings = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex w-full flex-col items-center justify-center text-center"
       >
-        <div class="text-3xl font-bold text-catppuccinText">{t("settings.cloaking.title")}</div>
-        <div class="text-md font-bold pb-5 text-catppuccinText">{t("settings.cloaking.subtitle")}</div>
+        <div class="text-3xl font-bold text-input-text">{t("settings.cloaking.title")}</div>
+        <div class="text-md font-bold pb-5 text-input-text">{t("settings.cloaking.subtitle")}</div>
         <div class="flex flex-row space-x-4">
           <CloakPreset faviconUrl="none" title="none" />
           <CloakPreset

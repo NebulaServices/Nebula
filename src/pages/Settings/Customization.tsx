@@ -29,8 +29,8 @@ function Customization({ id, active }) {
         className="content-card flex w-full flex-col items-center justify-center text-center"
       >
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold text-catppuccinText">{t("settings.theme.title")}</div>
-          <div class="text-md p-4 font-bold text-catppuccinText">{t("settings.theme.subtitle")}</div>
+          <div class="p-2 text-3xl font-bold text-input-text">{t("settings.theme.title")}</div>
+          <div class="text-md p-4 font-bold text-input-text">{t("settings.theme.subtitle")}</div>
           <Dropdown storageKey="theme" options={themes} refresh={true} />
         </div>
       </motion.div>

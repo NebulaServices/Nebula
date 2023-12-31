@@ -11,7 +11,6 @@ export default {
       "text-hover-color": "var(--navbar-link-hover-color)",
       input: "var(--input-background-color)",
       "input-text": "var(--input-text-color)",
-      "catppuccinText": "var(--input-text-color)",
       "input-border-color": "var(--input-border-color)",
       "dropdown-option-hover-color": "var(--dropdown-option-hover-color)"
     },
