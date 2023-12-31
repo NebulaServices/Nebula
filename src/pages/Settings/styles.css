@@ -63,7 +63,7 @@ img {
   height: 30px;
   width: 30px;
   min-width: 30px;
-  fill: var(--black);
+  fill: var(--tab-color);
   transition: fill 0.5s ease;
 }
 
