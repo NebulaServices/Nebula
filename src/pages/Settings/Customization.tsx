@@ -9,7 +9,7 @@ function Customization({ id, active }) {
 
   const themes = [
     { id: "main", label: t("themes.main") },
-    { id: "catppucinMocha", label: t("themes.catppuccinMocha") }
+    { id: "catppuccinMocha", label: t("themes.catppuccinMocha") }
   ];
 
   return (
