@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { dynamicPath } from "@nebula-services/dynamic";
+
+console.log(dynamicPath);
 
 export default defineConfig({
   plugins: [
@@ -12,6 +15,12 @@ export default defineConfig({
           // .replace fixes weird paths on Windows
           src: `${uvPath}/uv.*.js`.replace(/\\/g, "/"),
           dest: "uv",
+          overwrite: false
+        },
+        {
+          // .replace fixes weird paths on Windows
+          src: `${dynamicPath}/dynamic.*.js`.replace(/\\/g, "/"),
+          dest: "dynamic",
           overwrite: false
         }
       ]
