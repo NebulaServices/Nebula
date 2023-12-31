@@ -57,6 +57,7 @@ For support, join our discord: discord.gg/unblocker
 - [Dynamic (one of the proxies we use)](https://github.com/NebulaServices/Dynamic)
 - [Rammerhead (one of the proxies we use)](https://github.com/binary-person/rammerhead)
 - [Bare Server Node](https://github.com/tomphttp/bare-server-node)
+- [Catppuccin (for the themes)](https://github.com/catppuccin/catppuccin)
 
 ## License
 
