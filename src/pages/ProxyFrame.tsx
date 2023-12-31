@@ -22,7 +22,7 @@ export function ProxyFrame(props: { url: string }) {
   const localProxy = localStorage.getItem("proxy") || "automatic";
   const proxyMode = localStorage.getItem("proxyMode") || "embed";
   const searchEngine =
-    localStorage.getItem("searchEngine") || "https://google.com/search?q=%s";
+    localStorage.getItem("searchEngine") || "https://duckduckgo.com/?q=%s";
 
   const [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
   //@ts-ignore
