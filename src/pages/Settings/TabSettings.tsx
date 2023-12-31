@@ -19,8 +19,8 @@ const TabSettings = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex w-full flex-col items-center justify-center text-center"
       >
-        <div class="text-3xl">{t("settings.cloaking.title")}</div>
-        <div class="text-md pb-5">{t("settings.cloaking.subtitle")}</div>
+        <div class="text-3xl font-bold text-input-text">{t("settings.cloaking.title")}</div>
+        <div class="text-md font-bold pb-5 text-input-text">{t("settings.cloaking.subtitle")}</div>
         <div class="flex flex-row space-x-4">
           <CloakPreset faviconUrl="none" title="none" />
           <CloakPreset
@@ -38,6 +38,10 @@ const TabSettings = ({ id, active }) => {
           <CloakPreset
             faviconUrl="https://ssl.gstatic.com/classroom/ic_product_classroom_144.png"
             title="Home"
+          />
+          <CloakPreset
+            faviconUrl="https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico"
+            title="Schoology"
           />
         </div>
       </motion.div>

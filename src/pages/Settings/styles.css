@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 * {
   box-sizing: border-box;
 }
@@ -11,7 +12,7 @@
 
 body {
   -webkit-font-smoothing: antialiased;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Roboto;
   background: var(--active-color);
   transition: background 1.5s ease;
 }
@@ -62,7 +63,7 @@ img {
   height: 30px;
   width: 30px;
   min-width: 30px;
-  fill: var(--black);
+  fill: var(--tab-color);
   transition: fill 0.5s ease;
 }
 

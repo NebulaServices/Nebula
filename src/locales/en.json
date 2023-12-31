@@ -66,6 +66,9 @@
   "comingsoon": "Coming soon!",
   "themes": {
     "main": "Main",
-    "catppuccinMocha": "Catppuccin Mocha"
+    "catppuccinMocha": "Catppuccin Mocha",
+    "catppuccinMacchiato": "Catppuccin Macchiato",
+    "catppuccinFrappe": "Catppuccin Frappe",
+    "catppuccinLatte": "Catppuccin Latte"
   }
 }
