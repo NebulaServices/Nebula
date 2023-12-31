@@ -39,13 +39,13 @@ const Proxy = ({ id, active }) => {
         className="content-card flex w-full flex-row flex-wrap justify-center gap-4"
       >
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold">{t("settings.proxy.title")}</div>
-          <div class="text-md p-4 font-bold">{t("settings.proxy.subtitle")}</div>
+          <div class="p-2 text-3xl font-bold text-catppuccinText">{t("settings.proxy.title")}</div>
+          <div class="text-md p-4 font-bold text-catppuccinText">{t("settings.proxy.subtitle")}</div>
           <Dropdown storageKey="proxy" options={engines} refresh={false} />
         </div>
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold">{t("settings.proxymodes.title")}</div>
-          <div class="text-md p-4 font-bold">{t("settings.proxymodes.subtitle")}</div>
+          <div class="p-2 text-3xl font-bold text-catppuccinText">{t("settings.proxymodes.title")}</div>
+          <div class="text-md p-4 font-bold text-catppuccinText">{t("settings.proxymodes.subtitle")}</div>
           <Dropdown
             storageKey="proxyMode"
             options={proxyModes}
@@ -53,8 +53,8 @@ const Proxy = ({ id, active }) => {
           />
         </div>
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold">{t("settings.search.title")}</div>
-          <div class="text-md p-4 font-bold">{t("settings.search.subtitle")}</div>
+          <div class="p-2 text-3xl font-bold text-catppuccinText">{t("settings.search.title")}</div>
+          <div class="text-md p-4 font-bold text-catppuccinText">{t("settings.search.subtitle")}</div>
           <Dropdown
             storageKey="searchEngine"
             options={searchEngines}
