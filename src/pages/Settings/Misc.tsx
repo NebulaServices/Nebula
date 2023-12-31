@@ -26,8 +26,8 @@ const Misc = ({ id, active }) => {
         className="content-card flex w-full flex-row flex-wrap justify-center gap-4"
       >
         <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="text-3xl">{t("settings.languages.title")}</div>
-          <div class="text-md">{t("settings.languages.subtitle")}</div>
+          <div class="text-3xl font-bold">{t("settings.languages.title")}</div>
+          <div class="text-md font-bold">{t("settings.languages.subtitle")}</div>
           <Dropdown
             storageKey="i18nextLng"
             options={languages}
