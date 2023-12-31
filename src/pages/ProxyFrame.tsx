@@ -93,6 +93,10 @@ export function ProxyFrame(props: { url: string }) {
     window.location.href = ProxiedUrl;
   }
 
+  if (proxyMode === "embed") {
+    history.pushState({}, "", "/");
+  }
+
   return (
     <div class="h-screen w-screen bg-primary">
       <CloakedHead
