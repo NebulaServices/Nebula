@@ -7,6 +7,7 @@ export function AboutBlank(props: { url: string }) {
   iframe.style.width = "100%";
   iframe.style.height = "100%";
   iframe.style.border = "none";
+  iframe.style.overflow = "hidden";
   iframe.style.margin = "0";
   iframe.style.padding = "0";
   iframe.style.position = "fixed";
