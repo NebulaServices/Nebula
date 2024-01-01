@@ -39,7 +39,7 @@ export function IframeHeader(props: { url: string }) {
             className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
             alt="Nebula Logo"
           ></img>
-          <h1 className="font-roboto invisible whitespace-nowrap font-bold text-navbar-text-color sm:visible sm:text-2xl">
+          <h1 className="font-roboto invisible whitespace-nowrap text-2xl font-bold text-navbar-text-color sm:visible sm:text-4xl">
             {" "}
             {t("header.title")}{" "}
           </h1>
