@@ -28,7 +28,7 @@ export function Header() {
               className="h-full w-full transition-all duration-1000 hover:rotate-[360deg]"
             />
           </div>
-          <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
+          <h1 className="font-roboto text-2xl font-bold text-navbar-text-color">
             {t("header.title")}
           </h1>
         </div>
