@@ -1,22 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
 
 :root {
-    --background-primary: #eff1f5;
-    --background-lighter: #dce0e8;
-    --navbar-color: #dce0e8;
-    --navbar-height: 60px;
-    --navbar-text-color: #8839ef;
-    --navbar-link-color: #1e66f5;
-    --navbar-link-hover-color: #8839ef;
-    --navbar-font: "Roboto";
-    --input-text-color: #4c4f69;
-    --input-placeholder-color: #5c5f77;
-    --input-background-color: #e6e9ef;
-    --input-border-color: #8839ef;
-    --input-border-size: 1.3px;
-    --navbar-logo-filter: none;
-    --dropdown-option-hover-color: #dce0e8;
-    --tab-color: #ccd0da;
+    --background-primary: #eff1f5 !important;
+    --background-lighter: #dce0e8 !important;
+    --navbar-color: #dce0e8 !important;
+    --navbar-height: 60px !important;
+    --navbar-text-color: #8839ef !important;
+    --navbar-link-color: #1e66f5 !important;
+    --navbar-link-hover-color: #8839ef !important;
+    --navbar-font: "Roboto" !important;
+    --input-text-color: #4c4f69 !important;
+    --input-placeholder-color: #5c5f77 !important;
+    --input-background-color: #e6e9ef !important;
+    --input-border-color: #8839ef !important;
+    --input-border-size: 1.3px !important;
+    --navbar-logo-filter: none !important;
+    --dropdown-option-hover-color: #dce0e8 !important;
+    --tab-color: #ccd0da; !important
 }
 
 .font-inter {

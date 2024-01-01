@@ -12,6 +12,7 @@ export default function App() {
     <div>
       <Helmet>
         <link rel="stylesheet" href={"/themes/" + theme + ".css"}></link>
+        <link rel="stylesheet" href="/themes/main.css"></link>
       </Helmet>
       <Suspense fallback={<LoadSuspense />}>
         <div>
