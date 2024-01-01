@@ -28,7 +28,7 @@ export function Header() {
               className="h-full w-full transition-all duration-1000 hover:rotate-[360deg]"
             />
           </div>
-          <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
+          <h1 className="font-roboto text-2xl font-bold text-navbar-text-color">
             {t("header.title")}
           </h1>
         </div>
@@ -91,7 +91,7 @@ export function Header() {
         >
           <div className="mt-16 h-[calc(100%-4rem)] w-full md:mt-auto md:h-full lg:mt-auto lg:h-full">
             <div
-              className="flex h-full w-full whitespace-nowrap"
+              className="flex h-full w-full"
               onClick={() => setIsActive(false)}
             >
               <div className="flex w-full flex-col justify-evenly md:flex-row">

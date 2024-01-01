@@ -46,7 +46,8 @@
     },
     "cloaking": {
       "title": "クローキング",
-      "subtitle": "タブの見た目を選択する"
+      "subtitle": "タブの見た目を選択する",
+      "aboutblank": "で開く about:blank"
     },
     "search": {
       "title": "検索エンジン",
