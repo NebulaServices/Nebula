@@ -47,7 +47,9 @@ export function ProxyFrame(props: { url: string }) {
             window.__uv$config.encodeUrl(decodedUrl);
         } else if (localProxy === "dynamic") {
           result =
-            window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+            window.__dynamic$config.prefix +
+            "route?url=" +
+            encodeURIComponent(decodedUrl);
         } else {
           // automatic. use SiteSupport.json to determine proxy support
           const matchingKey = Object.keys(SiteSupport).find((key) =>
@@ -60,7 +62,9 @@ export function ProxyFrame(props: { url: string }) {
               window.__uv$config.encodeUrl(decodedUrl);
           } else if (SiteSupport[matchingKey] === "dynamic") {
             result =
-              window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+              window.__dynamic$config.prefix +
+              "route?url=" +
+              encodeURIComponent(decodedUrl);
           } else if (SiteSupport[matchingKey] === "rammerhead") {
             result = await RammerheadEncode(decodedUrl);
           } else {

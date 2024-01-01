@@ -12,8 +12,8 @@ dependencies:
     specifier: ^6.12.0
     version: 6.12.0
   '@nebula-services/dynamic':
-    specifier: 0.7.2-patch.1
-    version: 0.7.2-patch.1
+    specifier: 0.7.2-patch.2
+    version: 0.7.2-patch.2
   '@nebula-services/ultraviolet':
     specifier: 1.0.1-1.patch.5
     version: 1.0.1-1.patch.5
@@ -989,8 +989,8 @@ packages:
     resolution: {integrity: sha512-n3/+wko8WFd/fbiPCOuBB6HfKL6hTcygFEZ/MpmvpMRbgDSdlNMopDFGjsoTYqCbzTVTX9TL/StXco4yx2v58Q==}
     dev: true
 
-  /@nebula-services/dynamic@0.7.2-patch.1:
-    resolution: {integrity: sha512-hN40+RQ1LoxOJos2x891y9/0fumbTTrsbVY/84028tar/c2WSv4YueyD9ZGDLQjsiGiO0vdlByB04ExSxmzJvg==}
+  /@nebula-services/dynamic@0.7.2-patch.2:
+    resolution: {integrity: sha512-0g1ygwVNS0dmT38NIeZYc2Z5HiZKHT3tP7ZagIeWC/VlcZjINIPR4ThNndWVaGiZey2Y2JS2807ABb41OSYTrw==}
     dependencies:
       '@dynamic-pkg/mime': 1.0.1
       '@dynamic-pkg/mutation': 1.0.0
@@ -1002,6 +1002,7 @@ packages:
       astring: 1.8.6
       chalk: 5.3.0
       cookie: 0.5.0
+      crypto-js: 4.2.0
       domhandler: 5.0.3
       esbuild: 0.19.10
       fastify: 4.25.1
@@ -5769,7 +5770,7 @@ packages:
     engines: {node: '>=10'}
 
   '@github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz':
-    resolution: {registry: https://registry.npmjs.org/, tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
+    resolution: {tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
     name: rammerhead
     version: 1.2.41-holy.5
     dependencies:
