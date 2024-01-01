@@ -1,10 +1,15 @@
 import { HeaderRoute } from "../components/HeaderRoute";
-
+interface Window {
+  __uv$config: any;
+}
 export function Radon() {
   return (
     <HeaderRoute>
       <iframe
-        src="/~/uv/https%3A%2F%2Fradon.games%2F"
+        src={
+          window.__uv$config.prefix +
+          window.__uv$config.encodeUrl("https://radon.games")
+        }
         class="h-full w-full"
       ></iframe>
     </HeaderRoute>
