@@ -2,7 +2,7 @@
 
 self.__dynamic$config = {
   prefix: '/~/dynamic/',
-  encoding: 'plain',
+  encoding: 'aes',
   mode: 'production', 
   logLevel: 0, 
   bare: {
