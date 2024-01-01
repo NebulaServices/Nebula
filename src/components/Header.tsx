@@ -18,18 +18,22 @@ export function Header() {
       id="navbar"
       className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4"
     >
-      <Link href="/" class="w-1/8">
-        <div className="flex flex-row items-center">
-          <img
-            src="/logo.png"
-            alt="Nebula Logo"
-            className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
-          ></img>
+      <Link href="/" className="w-1/8">
+        <div className="relative flex flex-row items-center">
+          <div className="relative h-16 w-16">
+            <div className="from-slate-300 to-transparent mask absolute inset-0 bg-gradient-to-br"></div>
+            <img
+              src="/logo.png"
+              alt="Nebula Logo"
+              className="h-full w-full transition-all duration-1000 hover:rotate-[360deg]"
+            />
+          </div>
           <h1 className="font-roboto text-2xl font-bold text-navbar-text-color md:text-4xl">
             {t("header.title")}
           </h1>
         </div>
       </Link>
+
       <motion.button
         type="button"
         className="text-bold z-20 mr-4 text-3xl text-text-color md:hidden"
