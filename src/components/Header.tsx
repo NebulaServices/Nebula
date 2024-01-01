@@ -91,7 +91,7 @@ export function Header() {
         >
           <div className="mt-16 h-[calc(100%-4rem)] w-full md:mt-auto md:h-full lg:mt-auto lg:h-full">
             <div
-              className="flex h-full w-full whitespace-nowrap"
+              className="flex h-full w-full "
               onClick={() => setIsActive(false)}
             >
               <div className="flex w-full flex-col justify-evenly md:flex-row">
