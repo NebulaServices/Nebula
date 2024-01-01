@@ -2,7 +2,7 @@ import million from "million/compiler";
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { uvPath } from "@nebula-services/ultraviolet";
 import { dynamicPath } from "@nebula-services/dynamic";
 
 console.log(dynamicPath);
