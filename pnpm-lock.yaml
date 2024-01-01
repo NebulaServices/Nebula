@@ -15,8 +15,8 @@ dependencies:
     specifier: 0.7.2-patch.1
     version: 0.7.2-patch.1
   '@nebula-services/ultraviolet':
-    specifier: 1.0.1-1.patch
-    version: 1.0.1-1.patch
+    specifier: 1.0.1-1.patch.5
+    version: 1.0.1-1.patch.5
   '@tomphttp/bare-server-node':
     specifier: ^2.0.1
     version: 2.0.1
@@ -1017,8 +1017,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@nebula-services/ultraviolet@1.0.1-1.patch:
-    resolution: {integrity: sha512-ZBD6stHsQW7oZm1Y5tiQLymknQfpUmPK0DjRKYzpEj7+Jx9FA4lylLR+P0UmOmKyKM0TdWAcjDGPER+DtLEzeg==}
+  /@nebula-services/ultraviolet@1.0.1-1.patch.5:
+    resolution: {integrity: sha512-EDwbh+AXPg+JxPcPhRHJh6crLh1AHSodcAgfO47ug4paoLkWXE0ELU5Tm0Um38kguTBHzTOPFSzNULpaFbhFLw==}
     dependencies:
       '@tomphttp/bare-client': 1.1.2-beta.3
       crypto-js: 4.2.0
@@ -5769,7 +5769,7 @@ packages:
     engines: {node: '>=10'}
 
   '@github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz':
-    resolution: {tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
+    resolution: {registry: https://registry.npmjs.org/, tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
     name: rammerhead
     version: 1.2.41-holy.5
     dependencies:
