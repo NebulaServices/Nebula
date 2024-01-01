@@ -46,7 +46,8 @@
     },
     "cloaking": {
       "title": "Encubrimiento",
-      "subtitle": "Elige cómo se ve tu pestaña"
+      "subtitle": "Elige cómo se ve tu pestaña",
+      "aboutblank": "Abierte en about:blank"
     },
     "search": {
       "title": "Buscador",
