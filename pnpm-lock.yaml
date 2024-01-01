@@ -14,9 +14,9 @@ dependencies:
   '@nebula-services/dynamic':
     specifier: 0.7.2-patch.1
     version: 0.7.2-patch.1
-  '@titaniumnetwork-dev/ultraviolet':
-    specifier: ^1.0.11
-    version: 1.0.11
+  '@nebula-services/ultraviolet':
+    specifier: 1.0.1-1.patch
+    version: 1.0.1-1.patch
   '@tomphttp/bare-server-node':
     specifier: ^2.0.1
     version: 2.0.1
@@ -1017,6 +1017,21 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@nebula-services/ultraviolet@1.0.1-1.patch:
+    resolution: {integrity: sha512-ZBD6stHsQW7oZm1Y5tiQLymknQfpUmPK0DjRKYzpEj7+Jx9FA4lylLR+P0UmOmKyKM0TdWAcjDGPER+DtLEzeg==}
+    dependencies:
+      '@tomphttp/bare-client': 1.1.2-beta.3
+      crypto-js: 4.2.0
+      css-tree: 2.3.1
+      esotope-hammerhead: 0.6.7
+      events: 3.3.0
+      idb: 7.1.1
+      meriyah: 4.3.9
+      mime-db: 1.52.0
+      parse5: 7.1.2
+      set-cookie-parser: 2.6.0
+    dev: false
+
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
     dependencies:
@@ -1229,20 +1244,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@titaniumnetwork-dev/ultraviolet@1.0.11:
-    resolution: {integrity: sha512-FJtZw/xQubrgk8pJLs5wx9k6okCGZPR7FXWXTiL5wOiCvjqgDQCmHBTb7M5eYqnQil05tbaz92+16Ki/7rRWIw==}
-    dependencies:
-      '@tomphttp/bare-client': 1.1.2-beta.3
-      css-tree: 2.3.1
-      esotope-hammerhead: 0.6.7
-      events: 3.3.0
-      idb: 7.1.1
-      meriyah: 4.3.9
-      mime-db: 1.52.0
-      parse5: 7.1.2
-      set-cookie-parser: 2.6.0
-    dev: false
 
   /@tomphttp/bare-client@1.1.2-beta.3:
     resolution: {integrity: sha512-WyIVnSAqzfrLejmOhh/l/LtDOeK+SHnBGi/z+QyliVP1T1JxoNE5eecwxlV+osM9J6FTAYVGNHr8/5bubaIj6Q==}
@@ -1994,6 +1995,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    dev: false
 
   /crypto-md5@1.0.0:
     resolution: {integrity: sha512-65Mtei8+EkSIK+5Ie4gpWXoJ/5bgpqPXFknHHXAyhDqKsEAAzUslGd8mOeawbfcuQ8fADNKcF4xQA3fqlZJ8Ig==}
@@ -5764,7 +5769,7 @@ packages:
     engines: {node: '>=10'}
 
   '@github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz':
-    resolution: {registry: https://registry.npmjs.org/, tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
+    resolution: {tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
     name: rammerhead
     version: 1.2.41-holy.5
     dependencies:
