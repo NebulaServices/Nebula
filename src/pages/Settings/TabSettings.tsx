@@ -20,13 +20,13 @@ const TabSettings = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex w-full flex-col items-center justify-center text-center"
       >
-        <div class="text-3xl font-bold text-input-text">
+        <div className="text-3xl font-bold text-input-text">
           {t("settings.cloaking.title")}
         </div>
-        <div class="text-md pb-5 font-bold text-input-text">
+        <div className="text-md pb-5 font-bold text-input-text">
           {t("settings.cloaking.subtitle")}
         </div>
-        <div class="flex flex-row space-x-4">
+        <div className="flex flex-row space-x-4">
           <CloakPreset faviconUrl="none" title="none" />
           <CloakPreset
             faviconUrl="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=32"
@@ -49,9 +49,9 @@ const TabSettings = ({ id, active }) => {
             title="Schoology"
           />
         </div>
-        <div class="relative p-4">
+        <div className="relative p-4">
           <button
-            class="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl font-bold text-input-text placeholder:text-input-text focus:outline-none"
+            className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl font-bold text-input-text placeholder:text-input-text focus:outline-none"
             onClick={() => {
               let newWindow = window.open("about:blank");
               let iframe = document.createElement("iframe");

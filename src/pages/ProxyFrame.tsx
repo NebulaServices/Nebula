@@ -102,7 +102,7 @@ export function ProxyFrame(props: { url: string }) {
   }
 
   return (
-    <div class="h-screen w-screen bg-primary">
+    <div className="h-screen w-screen bg-primary">
       <CloakedHead
         originalTitle={t("titles.home")}
         originalFavicon="/logo.png"

@@ -18,7 +18,7 @@ export function Header() {
       id="navbar"
       className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4"
     >
-      <Link href="/" class="w-1/8">
+      <Link href="/" className="w-1/8">
         <div className="relative flex flex-row items-center">
           <img
             src="/logo.png"

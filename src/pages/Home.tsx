@@ -43,18 +43,18 @@ export function Home() {
         originalTitle={t("titles.home")}
         originalFavicon="/logo.png"
       />
-      <div class="flex h-full flex-col items-center justify-center">
-        <div class="font-inter absolute bottom-0 left-0 p-4 text-sm italic text-input-text">
+      <div className="flex h-full flex-col items-center justify-center">
+        <div className="font-inter absolute bottom-0 left-0 p-4 text-sm italic text-input-text">
           Nebula &copy; Nebula Services {new Date().getUTCFullYear()}
         </div>
         <a href="https://github.com/NebulaServices/Nebula">
-          <div class="font-inter absolute bottom-0 right-0 p-4 text-sm text-input-text">
+          <div className="font-inter absolute bottom-0 right-0 p-4 text-sm text-input-text">
             GitHub
           </div>
         </a>
         <form
           onSubmit={handleSubmit}
-          class="flex h-full w-full flex-col items-center justify-center"
+          className="flex h-full w-full flex-col items-center justify-center"
         >
           <input
             onFocus={() => {
@@ -78,8 +78,8 @@ export function Home() {
             placeholder={isFocused ? "" : t("home.placeholder")}
           />
 
-          <div class="relative flex w-10/12 flex-col items-center md:w-3/12">
-            <div class="absolute w-full text-center">
+          <div className="relative flex w-10/12 flex-col items-center md:w-3/12">
+            <div className="absolute w-full text-center">
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
@@ -108,7 +108,7 @@ export function Home() {
                 Array.from({ length: 10 }, (_, index) => (
                   <div
                     key={index}
-                    class="font-roboto w-110 hover:bg-dropdown-option-hover-colo flex h-8 flex-none shrink-0 items-center justify-center border border-input-border-color p-2 text-2xl"
+                    className="font-roboto w-110 hover:bg-dropdown-option-hover-colo flex h-8 flex-none shrink-0 items-center justify-center border border-input-border-color p-2 text-2xl"
                   >
                     Example suggestion
                   </div>

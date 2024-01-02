@@ -10,7 +10,7 @@ export function Radon() {
           window.__uv$config.prefix +
           window.__uv$config.encodeUrl("https://radon.games")
         }
-        class="h-full w-full"
+        className="h-full w-full"
       ></iframe>
     </HeaderRoute>
   );
