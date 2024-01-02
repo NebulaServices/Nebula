@@ -16,7 +16,7 @@
   --input-border-size: 1.3px !important;
   --navbar-logo-filter: none !important;
   --dropdown-option-hover-color: #181926 !important;
-  --tab-color: #363a4f !important;
+  --tab-color: #363a4f;
 }
 
 .font-inter {
