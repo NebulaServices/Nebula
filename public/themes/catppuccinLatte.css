@@ -5,7 +5,7 @@
   --background-lighter: #e6e9ef !important;
   --navbar-color: #e6e9ef !important;
   --navbar-height: 60px !important;
-  --navbar-text-color: #4c4f69 !important;
+  --navbar-text-color: #8839ef !important;
   --navbar-link-color: #1e66f5 !important;
   --navbar-link-hover-color: #8839ef !important;
   --navbar-font: "Roboto" !important;
@@ -15,7 +15,7 @@
   --input-border-color: color-mix(in srgb, #dce0e8, #8839ef 50%) !important;
   --input-border-size: 1.3px !important;
   --navbar-logo-filter: none !important;
-  --dropdown-option-hover-color: #dce0e8 !important;
+  --dropdown-option-hover-color: #e6e9ef !important;
   --tab-color: #ccd0da !important;
   --active-color: #8839ef !important;
 }
@@ -27,4 +27,5 @@
 
 .font-roboto {
   font-family: "Roboto";
+  color: #4c4f69;
 }
