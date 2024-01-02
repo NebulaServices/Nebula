@@ -70,7 +70,7 @@ export function Home() {
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            className={`font-roboto h-14 rounded-t-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none ${
+            className={`font-roboto h-14 rounded-t-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none text-input-text ${
               isFocused && inputValue.trim() !== ""
                 ? "w-10/12 md:w-3/12"
                 : "w-80 rounded-2xl"
