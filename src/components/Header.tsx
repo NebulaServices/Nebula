@@ -20,16 +20,14 @@ export function Header() {
     >
       <Link href="/" className="w-1/8">
         <div className="relative flex flex-row items-center">
-          <div className="relative h-16 w-16">
-            <div className="from-slate-300 to-transparent mask absolute inset-0 bg-gradient-to-br"></div>
-            <img
-              src="/logo.png"
-              alt="Nebula Logo"
-              className="h-full w-full transition-all duration-1000 hover:rotate-[360deg]"
-            />
-          </div>
-          <h1 className="font-roboto text-2xl font-bold text-navbar-text-color">
-            {t("header.title")}
+          <img
+            src="/logo.png"
+            className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
+            alt="Nebula Logo"
+          ></img>
+          <h1 className="font-roboto invisible whitespace-nowrap text-2xl font-bold text-navbar-text-color sm:visible sm:text-4xl">
+            {" "}
+            {t("header.title")}{" "}
           </h1>
         </div>
       </Link>

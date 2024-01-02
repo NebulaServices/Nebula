@@ -2,7 +2,7 @@ import "./Suspense.css";
 
 export function LoadSuspense() {
   return (
-    <div class="suspenseContainer">
+    <div className="suspenseContainer">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.2"
@@ -10,7 +10,7 @@ export function LoadSuspense() {
         width="400"
         height="400"
         fill="#5e17eb"
-        class="animate-pulse-brighter"
+        className="animate-pulse-brighter"
       >
         <g id="svgg">
           <path

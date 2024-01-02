@@ -32,14 +32,14 @@ export function IframeHeader(props: { url: string }) {
       id="iframeNav"
       className="flex h-16 flex-row items-center justify-between gap-3 bg-navbar-color px-4"
     >
-      <Link href="/" class="w-1/8">
+      <Link href="/" className="w-1/8">
         <div className="flex flex-row items-center">
           <img
             src="/logo.png"
             className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
             alt="Nebula Logo"
           ></img>
-          <h1 className="font-roboto invisible whitespace-nowrap font-bold text-navbar-text-color sm:visible sm:text-2xl">
+          <h1 className="font-roboto invisible whitespace-nowrap text-2xl font-bold text-navbar-text-color sm:visible sm:text-4xl">
             {" "}
             {t("header.title")}{" "}
           </h1>
@@ -74,7 +74,7 @@ export function IframeHeader(props: { url: string }) {
           }}
         />
       </div>
-      <div id="navItems" class="w-1/8">
+      <div id="navItems" className="w-1/8">
         <div className="mr-4 flex flex-row items-center justify-end gap-3">
           <IoCodeSlashSharp
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"

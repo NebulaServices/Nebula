@@ -38,23 +38,35 @@ const Proxy = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex w-full flex-row flex-wrap justify-center gap-4"
       >
-        <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold text-input-text">{t("settings.proxy.title")}</div>
-          <div class="text-md p-4 font-bold text-input-text">{t("settings.proxy.subtitle")}</div>
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+          <div className="p-2 text-3xl font-bold text-input-text">
+            {t("settings.proxy.title")}
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            {t("settings.proxy.subtitle")}
+          </div>
           <Dropdown storageKey="proxy" options={engines} refresh={false} />
         </div>
-        <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold text-input-text">{t("settings.proxymodes.title")}</div>
-          <div class="text-md p-4 font-bold text-input-text">{t("settings.proxymodes.subtitle")}</div>
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+          <div className="p-2 text-3xl font-bold text-input-text">
+            {t("settings.proxymodes.title")}
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            {t("settings.proxymodes.subtitle")}
+          </div>
           <Dropdown
             storageKey="proxyMode"
             options={proxyModes}
             refresh={false}
           />
         </div>
-        <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="p-2 text-3xl font-bold text-input-text">{t("settings.search.title")}</div>
-          <div class="text-md p-4 font-bold text-input-text">{t("settings.search.subtitle")}</div>
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+          <div className="p-2 text-3xl font-bold text-input-text">
+            {t("settings.search.title")}
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            {t("settings.search.subtitle")}
+          </div>
           <Dropdown
             storageKey="searchEngine"
             options={searchEngines}
