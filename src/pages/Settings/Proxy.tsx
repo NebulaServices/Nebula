@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { tabContentVariant, settingsPageVariant } from "./Variants";
 import Dropdown from "./Dropdown";
+import BareInput from "./BareInput";
 import { useTranslation } from "react-i18next";
 
 const Proxy = ({ id, active }) => {
@@ -72,6 +73,15 @@ const Proxy = ({ id, active }) => {
             options={searchEngines}
             refresh={false}
           />
+        </div>
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+          <div className="p-2 text-3xl font-bold text-input-text">
+            {t("settings.bare.title")}
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            {t("settings.bare.subtitle")}
+          </div>
+          <BareInput placeholder="/bare/" storageKey="bare" />
         </div>
       </motion.div>
     </motion.div>
