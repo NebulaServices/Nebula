@@ -4,7 +4,7 @@ importScripts(__uv$config.sw || "/uv/uv.sw.js");
 importScripts("/dynamic/dynamic.config.js");
 importScripts("/dynamic/dynamic.worker.js");
 //import our IDB lib
-importScripts('/libs/localforage.js');
+importScripts('/localforage/localforage.min.js')
  localforage.config({
     driver: localforage.INDEXEDDB,
     name: 'Nebula',
