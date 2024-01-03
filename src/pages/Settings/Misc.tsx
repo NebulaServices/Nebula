@@ -7,9 +7,9 @@ const Misc = ({ id, active }) => {
   const { t } = useTranslation();
 
   const languages = [
-    { id: "en-US", label: t("settings.languages.english") },
-    { id: "es", label: t("settings.languages.spanish") },
-    { id: "ja", label: t("settings.languages.japanese") }
+    { id: "en-US", label: "English" },
+    { id: "es", label: "Español" },
+    { id: "ja", label: "日本語" }
   ];
 
   return (
