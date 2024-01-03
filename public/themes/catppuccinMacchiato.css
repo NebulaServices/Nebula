@@ -5,7 +5,7 @@
   --background-lighter: #1e2030 !important;
   --navbar-color: #1e2030 !important;
   --navbar-height: 60px !important;
-  --navbar-text-color: #cad3f5 !important;
+  --navbar-text-color: #c6a0f6 !important;
   --navbar-link-color: #8aadf4 !important;
   --navbar-link-hover-color: #c6a0f6 !important;
   --navbar-font: "Roboto" !important;
@@ -15,7 +15,7 @@
   --input-border-color: color-mix(in srgb, #181926, #c6a0f6 50%) !important;
   --input-border-size: 1.3px !important;
   --navbar-logo-filter: none !important;
-  --dropdown-option-hover-color: #181926 !important;
+  --dropdown-option-hover-color: #1e2030 !important;
   --tab-color: #363a4f !important;
   --active-color: #c6a0f6 !important;
 }
