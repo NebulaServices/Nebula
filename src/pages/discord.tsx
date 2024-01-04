@@ -18,10 +18,12 @@ export function DiscordPage() {
             <p className="font-roboto text-4xl font-bold text-input-text">
               {t("discord.title")}
             </p>
-            <span className="font-roboto text-3xl text-input-text">{t("discord.sub")}</span>
+            <span className="font-roboto text-3xl text-input-text">
+              {t("discord.sub")}
+            </span>
           </div>
           <a href="https://discord.gg/unblocker" className="p-6">
-            <button className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none text-input-text">
+            <button className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text focus:outline-none">
               {t("discord.button1")}
             </button>
           </a>
@@ -33,7 +35,7 @@ export function DiscordPage() {
             }}
             className="p-6"
           >
-            <button className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl placeholder:text-input-text focus:outline-none text-input-text">
+            <button className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text focus:outline-none">
               {t("discord.button2")}
             </button>
           </a>

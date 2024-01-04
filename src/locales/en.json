@@ -51,8 +51,8 @@
       "subtitle": "Choose your search engine"
     },
     "bare": {
-        "title": "Bare Server",
-        "subtitle": "Enter the URL of your bare server"
+      "title": "Bare Server",
+      "subtitle": "Enter the URL of your bare server"
     },
     "theme": {
       "title": "Theme",

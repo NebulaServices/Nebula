@@ -26,7 +26,10 @@ export default defineConfig({
           overwrite: false
         },
         {
-          src: `${__dirname}/node_modules/localforage/dist/localforage.*.js`.replace(/\\/g, "/"),
+          src: `${__dirname}/node_modules/localforage/dist/localforage.*.js`.replace(
+            /\\/g,
+            "/"
+          ),
           dest: "localforage",
           overwrite: false
         }
