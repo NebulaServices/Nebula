@@ -4,6 +4,8 @@ import preact from "@preact/preset-vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { uvPath } from "@nebula-services/ultraviolet";
 import { dynamicPath } from "@nebula-services/dynamic";
+import path from "path";
+const __dirname = path.resolve();
 
 console.log(dynamicPath);
 
@@ -21,6 +23,14 @@ export default defineConfig({
           // .replace fixes weird paths on Windows
           src: `${dynamicPath}/dynamic.*.js`.replace(/\\/g, "/"),
           dest: "dynamic",
+          overwrite: false
+        },
+        {
+          src: `${__dirname}/node_modules/localforage/dist/localforage.*.js`.replace(
+            /\\/g,
+            "/"
+          ),
+          dest: "localforage",
           overwrite: false
         }
       ]

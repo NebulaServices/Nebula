@@ -3,11 +3,39 @@ importScripts("/uv/uv.config.js");
 importScripts(__uv$config.sw || "/uv/uv.sw.js");
 importScripts("/dynamic/dynamic.config.js");
 importScripts("/dynamic/dynamic.worker.js");
+//import our IDB lib
+importScripts("/localforage/localforage.min.js");
+localforage.config({
+  driver: localforage.INDEXEDDB,
+  name: "Nebula",
+  version: 1.0,
+  storeName: "nebula_config",
+  description: "Nebula Config for things reliant on IndexedDB"
+});
 
-const sw = new UVServiceWorker();
-const dynamic = new Dynamic();
+const dynPromise = new Promise(async (resolve) => {
+  try {
+    const bare =
+      (await localforage.getItem("bare")) || location.origin + "/bare/";
+    self.__dynamic$config.bare.path = bare;
+    self.dynamic = new Dynamic(self.__dynamic$config);
+  } catch (error) {
+    console.log(error);
+  }
+  resolve();
+});
 
-self.dynamic = dynamic;
+const uvPromise = new Promise(async (resolve) => {
+  try {
+    const bare =
+      (await localforage.getItem("bare")) || location.origin + "/bare/";
+    self.__uv$config.bare = bare;
+    self.uv = new UVServiceWorker(self.__uv$config);
+  } catch (error) {
+    console.log(error);
+  }
+  resolve();
+});
 
 self.addEventListener("fetch", (event) => {
   if (
@@ -15,16 +43,25 @@ self.addEventListener("fetch", (event) => {
   ) {
     event.respondWith(
       (async function () {
-        if (await dynamic.route(event)) {
-          return await dynamic.fetch(event);
+        try {
+          await dynPromise;
+        } catch (error) {}
+        if (await self.dynamic.route(event)) {
+          return await self.dynamic.fetch(event);
         }
-
-        return await fetch(event.request);
+        await fetch(event.request);
       })()
     );
   } else if (
-    event.request.url.startsWith(location.origin + __uv$config.prefix)
+    event.request.url.startsWith(location.origin + self.__uv$config.prefix)
   ) {
-    event.respondWith(sw.fetch(event));
+    event.respondWith(
+      (async function () {
+        try {
+          await uvPromise;
+        } catch (error) {}
+        return await self.uv.fetch(event);
+      })()
+    );
   }
 });

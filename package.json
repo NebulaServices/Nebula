@@ -21,6 +21,7 @@
     "framer-motion": "^10.16.16",
     "i18next": "^23.7.9",
     "i18next-browser-languagedetector": "^7.2.0",
+    "localforage": "^1.10.0",
     "million": "^2.6.4",
     "preact": "^10.13.1",
     "preact-iso": "^2.3.2",

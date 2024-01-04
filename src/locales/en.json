@@ -50,6 +50,10 @@
       "title": "Search Engine",
       "subtitle": "Choose your search engine"
     },
+    "bare": {
+      "title": "Bare Server",
+      "subtitle": "Enter the URL of your bare server"
+    },
     "theme": {
       "title": "Theme",
       "subtitle": "Choose a theme so your eyes don't hate us"

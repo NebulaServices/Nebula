@@ -48,7 +48,7 @@ const Dropdown = ({
             {options.map((option, index) => (
               <div
                 key={option.id}
-                className={`border border-input-border-color bg-input p-2 hover:bg-dropdown-option-hover-color text-input-text ${
+                className={`border border-input-border-color bg-input p-2 text-input-text hover:bg-dropdown-option-hover-color ${
                   index === options.length - 1 ? "rounded-b-2xl" : ""
                 }`}
                 onClick={() => {
