@@ -32,10 +32,7 @@
     },
     "languages": {
       "title": "Idioma",
-      "subtitle": "Elige tu idioma preferido",
-      "japanese": "Japonés",
-      "english": "Inglés",
-      "spanish": "Español"
+      "subtitle": "Elige tu idioma preferido"
     },
     "proxymodes": {
       "title": "Abrir en",
