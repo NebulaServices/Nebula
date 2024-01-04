@@ -52,11 +52,13 @@
     },
     "bare": {
       "title": "Bare Server",
-      "subtitle": "Enter the URL of your bare server"
+      "subtitle": "Enter the URL of your bare server",
+      "select": "Select"
     },
     "theme": {
       "title": "Theme",
-      "subtitle": "Choose a theme so your eyes don't hate us"
+      "subtitle": "Choose a theme so your eyes don't hate us",
+      "select": "Select"
     }
   },
   "titles": {

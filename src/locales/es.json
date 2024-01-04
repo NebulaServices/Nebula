@@ -50,6 +50,11 @@
       "title": "Buscador",
       "subtitle": "Elige tu motor de búsqueda."
     },
+    "bare": {
+      "title": "Bare Server",
+      "subtitle": "Pon tu url de tu bare server",
+      "select": "Seleccionar"
+    },
     "theme": {
       "title": "Mirar",
       "subtitle": "Elige una mirada para que tus ojos no nos odienn"

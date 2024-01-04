@@ -50,6 +50,11 @@
       "title": "検索エンジン",
       "subtitle": "ネビュラの検索エンジンを選択してください"
     },
+    "bare": {
+      "title": "Bare サーバー",
+      "subtitle": "Bare サーバー URL を入力してください",
+      "select": "選択する"
+    },
     "theme": {
       "title": "テーマ",
       "subtitle": "目が嫌いにならないようにテーマを選んでください"
