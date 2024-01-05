@@ -95,7 +95,7 @@ export function Home() {
                     }
                   >
                     <div
-                      className={`font-roboto w-110 flex h-8 2xl:h-10 flex-none shrink-0 text-ellipsis text-clip overflow-hidden whitespace-nowrap items-center justify-center border border-input-border-color bg-input p-4 text-lg 2xl:text-xl hover:bg-dropdown-option-hover-color ${
+                      className={`font-roboto w-110 flex h-8 flex-none shrink-0 items-center justify-center overflow-hidden text-ellipsis text-clip whitespace-nowrap border border-input-border-color bg-input p-4 text-lg hover:bg-dropdown-option-hover-color 2xl:h-10 2xl:text-xl ${
                         index === suggestions.length - 1 ? "rounded-b-2xl" : ""
                       }`}
                       key={index}
