@@ -31,7 +31,9 @@ function BareInput(props: BareInputProps) {
     return finalUrl;
   }
   function handleChange() {
-    const url = validateUrl((document.getElementById("input") as HTMLInputElement).value);
+    const url = validateUrl(
+      (document.getElementById("input") as HTMLInputElement).value
+    );
     setInputValue((document.getElementById("input") as HTMLInputElement).value);
     set(props.storageKey, url);
     localStorage.setItem(props.storageKey, url);
@@ -47,8 +49,9 @@ function BareInput(props: BareInputProps) {
         id="input"
         className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl"
       />
-      <div className="font-roboto items-center justify-center flex h-4 w-24 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl" 
-      onClick={handleChange}
+      <div
+        className="font-roboto flex h-4 w-24 flex-row items-center justify-center rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl"
+        onClick={handleChange}
       >
         {t("settings.bare.select")}
       </div>

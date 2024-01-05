@@ -3,7 +3,9 @@ import { LoadSuspense } from "./LoadSuspense";
 export function AboutBlank(props?: { url: string }) {
   var newWindow = window.open("about:blank");
   var iframe = document.createElement("iframe");
-  props?.url ?iframe.src = window.location.origin + props.url : iframe.src = window.location.origin
+  props?.url
+    ? (iframe.src = window.location.origin + props.url)
+    : (iframe.src = window.location.origin);
   iframe.style.width = "100%";
   iframe.style.height = "100%";
   iframe.style.border = "none";
