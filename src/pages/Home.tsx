@@ -79,7 +79,7 @@ export function Home() {
           />
 
           <div className="relative flex w-10/12 flex-col items-center md:w-3/12">
-            <div className="absolute w-full text-center">
+            <div className="w-full text-center sm:absolute">
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
