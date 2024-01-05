@@ -52,7 +52,7 @@ const TabSettings = ({ id, active }) => {
           <button
             className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl font-bold text-input-text placeholder:text-input-text focus:outline-none"
             onClick={() => {
-              AboutBlank();
+              window.location.href = "/ab/";
             }}
           >
             {t("settings.cloaking.aboutblank")}
