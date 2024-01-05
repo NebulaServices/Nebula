@@ -95,9 +95,9 @@ export function Home() {
                     }
                   >
                     <div
-                      className={`font-roboto w-110 flex h-10 flex-none shrink-0 text-ellipsis text-clip overflow-hidden whitespace-nowrap items-center justify-center border border-input-border-color bg-input p-4 text-xl hover:bg-dropdown-option-hover-color ${
+                      className={`font-roboto w-110 flex h-8 2xl:h-10 flex-none shrink-0 text-ellipsis text-clip overflow-hidden whitespace-nowrap items-center justify-center border border-input-border-color bg-input p-4 text-lg 2xl:text-xl hover:bg-dropdown-option-hover-color ${
                         index === suggestions.length - 1 ? "rounded-b-2xl" : ""
-                      }overflow-y-auto max-h-7 sm:max-h-10 xs:max-h-5`}
+                      }`}
                       key={index}
                     >
                       {suggestion}
