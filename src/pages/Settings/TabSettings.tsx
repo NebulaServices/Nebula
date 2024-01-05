@@ -45,7 +45,7 @@ const TabSettings = ({ id, active }) => {
           />
           <CloakPreset
             faviconUrl="https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico"
-            title="Schoology"
+            title="Home | Schoology"
           />
         </div>
         <div className="relative p-4">
