@@ -26,10 +26,10 @@ const Misc = ({ id, active }) => {
         className="content-card flex w-full flex-row flex-wrap justify-center gap-4"
       >
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div className="text-3xl font-bold text-input-text">
+          <div className="p-2 text-3xl font-bold text-input-text">
             {t("settings.languages.title")}
           </div>
-          <div className="text-md font-bold text-input-text">
+          <div className="text-md p-4 font-bold text-input-text">
             {t("settings.languages.subtitle")}
           </div>
           <Dropdown
