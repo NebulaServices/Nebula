@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { Link } from "preact-router";
 import { RiPictureInPictureExitFill, RiFullscreenFill } from "react-icons/ri";
@@ -19,6 +19,33 @@ export function IframeHeader(props: { url: string }) {
   const { t } = useTranslation();
   const [showPopout, setShowPopout] = useState(false);
   const [showFullScreen, setFullScreen] = useState(false);
+  const [proxiedTitle, setProxiedTitle] = useState("");
+  const [proxiedFavicon, setProxiedFavicon] = useState("/generic_globe.png");
+
+  useEffect(() => {
+    const intervalFunction = () => {
+      let proxyFrame: ProxyFrame | null = document.getElementById(
+        "iframe"
+      ) as ProxyFrame;
+      if (proxyFrame) {
+        let faviconLink =
+          proxyFrame.contentDocument.querySelector("link[rel*='icon']");
+        if (faviconLink) {
+          setProxiedFavicon(faviconLink.href);
+        } else {
+          setProxiedFavicon("/generic_globe.png");
+        }
+        setProxiedTitle(proxyFrame.contentDocument.title);
+      } else {
+        console.log(
+          "ehhh this aint supposed to happen. no proxied iframe found."
+        );
+      }
+    };
+
+    const intervalId = setInterval(intervalFunction, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (showPopout) {
     window.location.replace(props.url);
@@ -32,20 +59,15 @@ export function IframeHeader(props: { url: string }) {
       id="iframeNav"
       className="flex h-16 flex-row items-center justify-between gap-3 bg-navbar-color px-4"
     >
-      <Link href="/" className="w-1/8">
+      <div className="w-1/8">
         <div className="flex flex-row items-center">
-          <img
-            src="/logo.png"
-            className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
-            alt="Nebula Logo"
-          ></img>
-          <h1 className="font-roboto invisible whitespace-nowrap text-2xl font-bold text-navbar-text-color sm:visible sm:text-4xl">
-            {" "}
-            {t("header.title")}{" "}
+          <img src={proxiedFavicon} className="h-12 w-12 p-2"></img>
+          <h1 className="font-roboto text-md invisible whitespace-nowrap font-bold text-text-color sm:visible sm:text-lg">
+            {proxiedTitle ? proxiedTitle : "Loading..."}
           </h1>
         </div>
-      </Link>
-      <div className="flex flex-row items-center gap-3 md:gap-2">
+      </div>
+      {/*<div className="flex flex-row items-center gap-3 md:gap-2">
         <IoChevronBackSharp
           className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
           onClick={() => {
@@ -73,7 +95,7 @@ export function IframeHeader(props: { url: string }) {
             proxyFrame.contentWindow.history.forward();
           }}
         />
-      </div>
+        </div> */}
       <div id="navItems" className="w-1/8">
         <div className="mr-4 flex flex-row items-center justify-end gap-3">
           <IoCodeSlashSharp
