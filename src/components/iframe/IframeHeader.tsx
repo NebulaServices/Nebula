@@ -1,6 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import AES from "../../../node_modules/crypto-js/aes.js";
-import Utf8 from "../../../node_modules/crypto-js/enc-utf8.js";
+import CryptoJS from "crypto-js";
 import { useTranslation } from "react-i18next";
 import { dec } from "../../aes";
 import { ToastContainer, toast } from "react-toastify";
@@ -45,10 +44,10 @@ export function IframeHeader(props: { url: string }) {
         .replace(window.__uv$config.prefix, "");
 
       //@ts-ignore
-      let decodedUrl = AES.decrypt(
+      let decodedUrl = CryptoJS.AES.decrypt(
         "U2FsdGVkX1" + encodedUrl,
         location.origin + navigator.userAgent
-      ).toString(Utf8);
+      ).toString(CryptoJS.enc.Utf8);
       Clipboard(decodedUrl);
       toast("URL copied to clipboard!");
     } else {
@@ -103,7 +102,7 @@ export function IframeHeader(props: { url: string }) {
         <div className="w-1/8">
           <div className="flex flex-row items-center">
             <img src={proxiedFavicon} className="h-12 w-12 p-2"></img>
-            <h1 className="font-roboto text-md invisible whitespace-nowrap font-bold text-text-color sm:visible sm:text-lg">
+            <h1 className="font-roboto whitespace-normal text-sm font-bold text-text-color sm:visible sm:text-lg">
               {proxiedTitle ? proxiedTitle : "Loading..."}
             </h1>
           </div>
