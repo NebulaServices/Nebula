@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { tabContentVariant, settingsPageVariant } from "./Variants";
 import CloakPreset from "./CloakPreset";
 import { useTranslation } from "react-i18next";
-import { AboutBlank } from "../../AboutBlank";
 const TabSettings = ({ id, active }) => {
   const { t } = useTranslation();
 
