@@ -1,5 +1,10 @@
 import { useState, useEffect } from "preact/hooks";
+import AES from "../../../node_modules/crypto-js/aes.js";
+import Utf8 from "../../../node_modules/crypto-js/enc-utf8.js";
 import { useTranslation } from "react-i18next";
+import { dec } from "../../aes";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from "preact-router";
 import { RiPictureInPictureExitFill, RiFullscreenFill } from "react-icons/ri";
 import {
@@ -8,6 +13,7 @@ import {
   IoChevronForwardSharp,
   IoReloadSharp
 } from "react-icons/io5";
+import { FaShareAlt } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
 interface ProxyFrame extends HTMLElement {
@@ -15,7 +21,41 @@ interface ProxyFrame extends HTMLElement {
   contentDocument: any;
 }
 
+function Clipboard(text) {
+  var textarea = document.createElement("textarea"); // hacky
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  textarea.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+}
+
 export function IframeHeader(props: { url: string }) {
+  const localProxy = localStorage.getItem("proxy") || "automatic";
+
+  const share = () => {
+    let proxyFrame: ProxyFrame | null = document.getElementById(
+      "iframe"
+    ) as ProxyFrame;
+
+    if (localProxy === "ultraviolet" || localProxy === "automatic") {
+      var encodedUrl = proxyFrame.contentWindow.location.href
+        .replace(window.location.origin, "")
+        .replace(window.__uv$config.prefix, "");
+
+      //@ts-ignore
+      let decodedUrl = AES.decrypt(
+        "U2FsdGVkX1" + encodedUrl,
+        location.origin + navigator.userAgent
+      ).toString(Utf8);
+      Clipboard(decodedUrl);
+      toast("URL copied to clipboard!");
+    } else {
+      toast("Your proxy choice doesn't support sharing.");
+    }
+  };
+
   const { t } = useTranslation();
   const [showPopout, setShowPopout] = useState(false);
   const [showFullScreen, setFullScreen] = useState(false);
@@ -55,95 +95,102 @@ export function IframeHeader(props: { url: string }) {
     setFullScreen(false);
   }
   return (
-    <div
-      id="iframeNav"
-      className="flex h-16 flex-row items-center justify-between gap-3 bg-navbar-color px-4"
-    >
-      <div className="w-1/8">
-        <div className="flex flex-row items-center">
-          <img src={proxiedFavicon} className="h-12 w-12 p-2"></img>
-          <h1 className="font-roboto text-md invisible whitespace-nowrap font-bold text-text-color sm:visible sm:text-lg">
-            {proxiedTitle ? proxiedTitle : "Loading..."}
-          </h1>
+    <div>
+      <div
+        id="iframeNav"
+        className="flex h-16 flex-row items-center justify-between gap-3 bg-navbar-color px-4"
+      >
+        <div className="w-1/8">
+          <div className="flex flex-row items-center">
+            <img src={proxiedFavicon} className="h-12 w-12 p-2"></img>
+            <h1 className="font-roboto text-md invisible whitespace-nowrap font-bold text-text-color sm:visible sm:text-lg">
+              {proxiedTitle ? proxiedTitle : "Loading..."}
+            </h1>
+          </div>
         </div>
-      </div>
-      {/*<div className="flex flex-row items-center gap-3 md:gap-2">
-        <IoChevronBackSharp
-          className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-          onClick={() => {
-            const proxyFrame: ProxyFrame | null = document.getElementById(
-              "iframe"
-            ) as ProxyFrame;
-            proxyFrame.contentWindow.history.back();
-          }}
-        />
-        <IoReloadSharp
-          className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
-          onClick={() => {
-            const proxyFrame: ProxyFrame | null = document.getElementById(
-              "iframe"
-            ) as ProxyFrame;
-            proxyFrame.contentWindow.location.reload();
-          }}
-        />
-        <IoChevronForwardSharp
-          className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-          onClick={() => {
-            const proxyFrame: ProxyFrame | null = document.getElementById(
-              "iframe"
-            ) as ProxyFrame;
-            proxyFrame.contentWindow.history.forward();
-          }}
-        />
-        </div> */}
-      <div id="navItems" className="w-1/8">
-        <div className="mr-4 flex flex-row items-center justify-end gap-3">
-          <IoCodeSlashSharp
+        {/*<div className="flex flex-row items-center gap-3 md:gap-2">
+          <IoChevronBackSharp
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
             onClick={() => {
               const proxyFrame: ProxyFrame | null = document.getElementById(
                 "iframe"
               ) as ProxyFrame;
-              if (!proxyFrame) return;
-
-              const proxyWindow = proxyFrame.contentWindow;
-
-              const proxyDocument = proxyFrame.contentDocument;
-
-              if (!proxyWindow || !proxyDocument) return;
-
-              if (proxyWindow.eruda?._isInit) {
-                proxyWindow.eruda.destroy();
-              } else {
-                let script = proxyDocument.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/npm/eruda";
-                script.onload = function () {
-                  if (!proxyWindow) return;
-                  proxyWindow.eruda.init({
-                    defaults: {
-                      displaySize: 45,
-                      theme: "Material Palenight"
-                    }
-                  });
-                  proxyWindow.eruda.show();
-                };
-                proxyDocument.head.appendChild(script);
-              }
+              proxyFrame.contentWindow.history.back();
             }}
           />
-          <RiPictureInPictureExitFill
+          <IoReloadSharp
+            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
+            onClick={() => {
+              const proxyFrame: ProxyFrame | null = document.getElementById(
+                "iframe"
+              ) as ProxyFrame;
+              proxyFrame.contentWindow.location.reload();
+            }}
+          />
+          <IoChevronForwardSharp
             className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-            onClick={() => setShowPopout(true)}
+            onClick={() => {
+              const proxyFrame: ProxyFrame | null = document.getElementById(
+                "iframe"
+              ) as ProxyFrame;
+              proxyFrame.contentWindow.history.forward();
+            }}
           />
-          <RiFullscreenFill
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125 active:rotate-90"
-            onClick={() => setFullScreen(true)}
-          />
-          <Link href="/">
-            <FaXmark className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125" />
-          </Link>
+          </div> */}
+        <div id="navItems" className="w-1/8">
+          <div className="mr-4 flex flex-row items-center justify-end gap-3">
+            <FaShareAlt
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={share}
+            />
+            <IoCodeSlashSharp
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                if (!proxyFrame) return;
+
+                const proxyWindow = proxyFrame.contentWindow;
+
+                const proxyDocument = proxyFrame.contentDocument;
+
+                if (!proxyWindow || !proxyDocument) return;
+
+                if (proxyWindow.eruda?._isInit) {
+                  proxyWindow.eruda.destroy();
+                } else {
+                  let script = proxyDocument.createElement("script");
+                  script.src = "https://cdn.jsdelivr.net/npm/eruda";
+                  script.onload = function () {
+                    if (!proxyWindow) return;
+                    proxyWindow.eruda.init({
+                      defaults: {
+                        displaySize: 45,
+                        theme: "Material Palenight"
+                      }
+                    });
+                    proxyWindow.eruda.show();
+                  };
+                  proxyDocument.head.appendChild(script);
+                }
+              }}
+            />
+            <RiPictureInPictureExitFill
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={() => setShowPopout(true)}
+            />
+            <RiFullscreenFill
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125 active:rotate-90"
+              onClick={() => setFullScreen(true)}
+            />
+            <Link href="/">
+              <FaXmark className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125" />
+            </Link>
+          </div>
         </div>
       </div>
+      <ToastContainer position="bottom-right" type="sucess" theme="dark" />
     </div>
   );
 }

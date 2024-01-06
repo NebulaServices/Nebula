@@ -17,6 +17,7 @@
     "@nebula-services/ultraviolet": "1.0.1-1.patch.5",
     "@tomphttp/bare-server-node": "^2.0.1",
     "classnames": "^2.3.2",
+    "crypto-js": "^4.2.0",
     "fastify": "^4.25.1",
     "framer-motion": "^10.16.16",
     "i18next": "^23.7.9",
@@ -31,6 +32,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^13.5.0",
     "react-icons": "^4.12.0",
+    "react-toastify": "^9.1.3",
     "tsx": "^4.7.0"
   },
   "devDependencies": {
