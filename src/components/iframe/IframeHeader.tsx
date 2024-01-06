@@ -1,6 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import AES from "../../../node_modules/crypto-js/aes.js";
-import Utf8 from "../../../node_modules/crypto-js/enc-utf8.js";
+import CryptoJS from "crypto-js";
 import { useTranslation } from "react-i18next";
 import { dec } from "../../aes";
 import { ToastContainer, toast } from "react-toastify";
@@ -45,10 +44,10 @@ export function IframeHeader(props: { url: string }) {
         .replace(window.__uv$config.prefix, "");
 
       //@ts-ignore
-      let decodedUrl = AES.decrypt(
+      let decodedUrl = CryptoJS.AES.decrypt(
         "U2FsdGVkX1" + encodedUrl,
         location.origin + navigator.userAgent
-      ).toString(Utf8);
+      ).toString(CryptoJS.enc.Utf8);
       Clipboard(decodedUrl);
       toast("URL copied to clipboard!");
     } else {
