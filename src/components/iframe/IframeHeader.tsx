@@ -103,7 +103,7 @@ export function IframeHeader(props: { url: string }) {
         <div className="w-1/8">
           <div className="flex flex-row items-center">
             <img src={proxiedFavicon} className="h-12 w-12 p-2"></img>
-            <h1 className="font-roboto text-md invisible whitespace-nowrap font-bold text-text-color sm:visible sm:text-lg">
+            <h1 className="font-roboto text-md whitespace-nowrap font-bold text-text-color sm:visible sm:text-lg">
               {proxiedTitle ? proxiedTitle : "Loading..."}
             </h1>
           </div>
