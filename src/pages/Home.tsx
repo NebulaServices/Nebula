@@ -141,7 +141,7 @@ export function Home() {
           />
 
           <div className="relative flex w-10/12 flex-col items-center md:w-3/12">
-            <div className="w-full text-center sm:absolute">
+            <div className="absolute w-full text-center">
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
@@ -157,7 +157,7 @@ export function Home() {
                     }
                   >
                     <div
-                      className={`font-roboto w-110 flex h-8 flex-none shrink-0 items-center justify-center whitespace-nowrap border border-input-border-color bg-input p-4 text-lg text-input-text hover:bg-dropdown-option-hover-color 2xl:h-10 2xl:text-xl ${
+                      className={`font-roboto w-110 flex h-8 flex-none shrink-0 items-center whitespace-nowrap justify-center border border-input-border-color bg-input p-2 text-lg 2xl:h-10 2xl:text-xl text-input-text hover:bg-dropdown-option-hover-color ${
                         index === suggestions.length - 1 ? "rounded-b-2xl" : ""
                       }`}
                       key={index}
