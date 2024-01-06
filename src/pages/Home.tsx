@@ -1,14 +1,76 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
+
+import { set } from "../util/IDB";
+import { uninstallServiceWorkers } from "../util/SWHelper";
+import prod from "./config.json"; // Set prod to true if you wish to load balance
+
 import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
+import { useEffect } from "preact/hooks";
 
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    const handleLoad = () => {
+      const firstLoad = localStorage.getItem("firstLoad") || "true";
+      console.log(firstLoad);
+      if (firstLoad == "true" && prod) {
+        function changeBare(url: string) {
+          set("bare", url);
+          localStorage.setItem("bare", url);
+          uninstallServiceWorkers();
+          window.location.reload();
+        }
+
+        async function test() {
+          const nonProtocolOrigin = window.location.origin.replace(
+            /^https?:\/\//,
+            ""
+          );
+          // Do Tokyo-US pinging to find optimal server
+          const ping = async (url: string) => {
+            let start = Date.now();
+            await fetch(url);
+            let end = Date.now();
+            let total = end - start;
+            return total;
+          };
+
+          const usUrl = "https://us." + nonProtocolOrigin;
+          const jpUrl = "https://jp." + nonProtocolOrigin;
+
+          console.log(usUrl, jpUrl)
+
+          const [usTime, jpTime] = await Promise.all([
+            ping(usUrl),
+            ping(jpUrl)
+          ]);
+
+          if (usTime < jpTime) {
+            console.log("US faster");
+            changeBare(usUrl);
+          } else {
+            console.log("Japan faster");
+            changeBare(jpUrl);
+          }
+          localStorage.setItem("firstLoad", "false");
+        }
+
+        test();
+      }
+    };
+
+    window.addEventListener("load", handleLoad);
+
+    return () => window.removeEventListener("load", handleLoad);
+  }, []);
+
   const { t } = useTranslation();
 
   const handleInputChange = async (event) => {
