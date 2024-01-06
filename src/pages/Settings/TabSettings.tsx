@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { tabContentVariant, settingsPageVariant } from "./Variants";
 import CloakPreset from "./CloakPreset";
 import { useTranslation } from "react-i18next";
-import { LoadSuspense } from "../../LoadSuspense";
-
 const TabSettings = ({ id, active }) => {
   const { t } = useTranslation();
 
@@ -46,34 +44,14 @@ const TabSettings = ({ id, active }) => {
           />
           <CloakPreset
             faviconUrl="https://asset-cdn.schoology.com/sites/all/themes/schoology_theme/favicon.ico"
-            title="Schoology"
+            title="Home | Schoology"
           />
         </div>
         <div className="relative p-4">
           <button
             className="font-roboto h-14 w-56 rounded-2xl border border-input-border-color bg-input p-2 text-center text-xl font-bold text-input-text placeholder:text-input-text focus:outline-none"
             onClick={() => {
-              let newWindow = window.open("about:blank");
-              let iframe = document.createElement("iframe");
-              iframe.src = window.location.origin;
-              iframe.style.width = "100%";
-              iframe.style.height = "100%";
-              iframe.style.border = "none";
-              iframe.style.overflow = "hidden";
-              iframe.style.margin = "0";
-              iframe.style.padding = "0";
-              iframe.style.position = "fixed";
-              iframe.style.top = "0";
-              iframe.style.bottom = "0";
-              iframe.style.left = "0";
-              iframe.style.right = "0";
-              newWindow.document.body.appendChild(iframe);
-              window.location.replace("https://google.com");
-              return (
-                <div>
-                  <LoadSuspense />
-                </div>
-              );
+              window.location.href = "/ab/";
             }}
           >
             {t("settings.cloaking.aboutblank")}
