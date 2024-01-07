@@ -33,6 +33,8 @@ function Clipboard(text) {
 export function IframeHeader(props: { url: string }) {
   const localProxy = localStorage.getItem("proxy") || "automatic";
 
+  const { t } = useTranslation();
+
   const share = () => {
     let proxyFrame: ProxyFrame | null = document.getElementById(
       "iframe"
@@ -49,13 +51,12 @@ export function IframeHeader(props: { url: string }) {
         location.origin + navigator.userAgent
       ).toString(CryptoJS.enc.Utf8);
       Clipboard(decodedUrl);
-      toast("URL copied to clipboard!");
+      toast(t("clipboard"));
     } else {
       toast("Your proxy choice doesn't support sharing.");
     }
   };
 
-  const { t } = useTranslation();
   const [showPopout, setShowPopout] = useState(false);
   const [showFullScreen, setFullScreen] = useState(false);
   const [proxiedTitle, setProxiedTitle] = useState("");
@@ -107,37 +108,35 @@ export function IframeHeader(props: { url: string }) {
             </h1>
           </div>
         </div>
-        {/*<div className="flex flex-row items-center gap-3 md:gap-2">
-          <IoChevronBackSharp
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-            onClick={() => {
-              const proxyFrame: ProxyFrame | null = document.getElementById(
-                "iframe"
-              ) as ProxyFrame;
-              proxyFrame.contentWindow.history.back();
-            }}
-          />
-          <IoReloadSharp
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
-            onClick={() => {
-              const proxyFrame: ProxyFrame | null = document.getElementById(
-                "iframe"
-              ) as ProxyFrame;
-              proxyFrame.contentWindow.location.reload();
-            }}
-          />
-          <IoChevronForwardSharp
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-            onClick={() => {
-              const proxyFrame: ProxyFrame | null = document.getElementById(
-                "iframe"
-              ) as ProxyFrame;
-              proxyFrame.contentWindow.history.forward();
-            }}
-          />
-          </div> */}
         <div id="navItems" className="w-1/8">
           <div className="mr-4 flex flex-row items-center justify-end gap-3">
+            <IoChevronBackSharp
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                proxyFrame.contentWindow.history.back();
+              }}
+            />
+            <IoChevronForwardSharp
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                proxyFrame.contentWindow.history.forward();
+              }}
+            />
+            <IoReloadSharp
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                proxyFrame.contentWindow.location.reload();
+              }}
+            />
             <FaShareAlt
               className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
               onClick={share}
