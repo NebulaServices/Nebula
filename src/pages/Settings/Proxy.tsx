@@ -11,6 +11,7 @@ const Proxy = ({ id, active }) => {
     { id: "automatic", label: t("settings.proxy.automatic") },
     { id: "ultraviolet", label: "Ultraviolet" },
     { id: "rammerhead", label: "Rammerhead" },
+    { id: "adrift", label: "Adrift" },
     { id: "dynamic", label: "Dynamic" }
   ];
 

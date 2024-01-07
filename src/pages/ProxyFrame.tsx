@@ -9,6 +9,21 @@ import SiteSupport from "../util/SiteSupport.json";
 import { useTranslation } from "react-i18next";
 import { dec } from "../aes";
 
+
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import TrackerList from "@mercuryworkshop/adrift/tracker-list";
+import {
+  SignalFirebase,
+  AdriftBareClient,
+  RTCTransport,
+  Connection,
+} from "@mercuryworkshop/adrift/client";
+import {
+  registerRemoteListener,
+  setBareClientImplementation,
+} from "@mercuryworkshop/bare-client-custom";
+
 declare global {
   interface Window {
     __uv$config: any;
@@ -38,6 +53,32 @@ export function ProxyFrame(props: { url: string }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (localProxy == "adrift") {
+          registerRemoteListener();
+          let tracker = TrackerList["us-central-1"];
+          initializeApp(tracker.firebase);
+
+
+          let rtctransport = new RTCTransport(async () => {
+            let connection = new Connection(rtctransport);
+            await connection.initialize();
+            setBareClientImplementation(new AdriftBareClient(connection));
+            setProxiedUrl(window.__uv$config.prefix + Ultraviolet.codec.xor.encode(decodedUrl));
+          }, () =>
+            console.log("transport closed")
+          );
+
+
+          console.log("offering");
+
+          let offer = await rtctransport.createOffer();
+          console.log("Routing you to an available node...");
+          let answer = await SignalFirebase.signalSwarm(JSON.stringify(offer));
+          console.log("Linking to node...");
+          rtctransport.answer(answer.answer, answer.candidates);
+          return;
+        }
+
         let result: any = "";
         if (localProxy === "rammerhead") {
           result = await RammerheadEncode(decodedUrl);
@@ -73,6 +114,8 @@ export function ProxyFrame(props: { url: string }) {
               window.__uv$config.encodeUrl(decodedUrl); // uv as backup
           }
         }
+
+
         setProxiedUrl(result);
       } catch (error) {
         console.error("Error fetching data:", error);

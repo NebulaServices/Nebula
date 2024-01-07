@@ -1,3 +1,4 @@
+
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");
 importScripts(__uv$config.sw || "/uv/uv.sw.js");
@@ -42,10 +43,10 @@ self.addEventListener("fetch", (event) => {
     event.request.url.startsWith(location.origin + self.__dynamic$config.prefix)
   ) {
     event.respondWith(
-      (async function () {
+      (async function() {
         try {
           await dynPromise;
-        } catch (error) {}
+        } catch (error) { }
         if (await self.dynamic.route(event)) {
           return await self.dynamic.fetch(event);
         }
@@ -56,10 +57,10 @@ self.addEventListener("fetch", (event) => {
     event.request.url.startsWith(location.origin + self.__uv$config.prefix)
   ) {
     event.respondWith(
-      (async function () {
+      (async function() {
         try {
           await uvPromise;
-        } catch (error) {}
+        } catch (error) { }
         return await self.uv.fetch(event);
       })()
     );
