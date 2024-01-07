@@ -76,7 +76,10 @@ const TabComponent = ({ tabs, defaultIndex = 0 }) => {
             {tabs.map((tab, index) => (
               <motion.li
                 key={tab.id}
-                className={cn("tab", { active: activeTabIndex === index })}
+                className={
+                  "flex h-12 flex-row " +
+                  cn("tab", { active: activeTabIndex === index })
+                }
                 role="presentation"
                 variants={tabVariant}
                 animate={activeTabIndex === index ? "active" : "inactive"}
