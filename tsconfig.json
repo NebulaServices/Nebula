@@ -6,6 +6,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
+    "esModuleInterop": true,
     "skipLibCheck": true,
     "paths": {}
   }
