@@ -45,7 +45,7 @@ export function Home() {
           const usUrl = "https://us." + nonProtocolOrigin;
           const jpUrl = "https://jp." + nonProtocolOrigin;
 
-          console.log(usUrl, jpUrl)
+          console.log(usUrl, jpUrl);
 
           const [usTime, jpTime] = await Promise.all([
             ping(usUrl),
@@ -157,7 +157,7 @@ export function Home() {
                     }
                   >
                     <div
-                      className={`font-roboto w-110 flex h-8 flex-none shrink-0 items-center whitespace-nowrap justify-center border border-input-border-color bg-input p-2 text-lg 2xl:h-10 2xl:text-xl text-input-text hover:bg-dropdown-option-hover-color ${
+                      className={`font-roboto w-110 flex h-8 flex-none shrink-0 items-center justify-center whitespace-nowrap border border-input-border-color bg-input p-2 text-lg text-input-text hover:bg-dropdown-option-hover-color 2xl:h-10 2xl:text-xl ${
                         index === suggestions.length - 1 ? "rounded-b-2xl" : ""
                       }`}
                       key={index}

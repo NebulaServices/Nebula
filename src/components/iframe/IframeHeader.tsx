@@ -108,36 +108,35 @@ export function IframeHeader(props: { url: string }) {
             </h1>
           </div>
         </div>
-        <div className="flex flex-row items-center gap-3 md:gap-2">          
-          </div> 
+        <div className="flex flex-row items-center gap-3 md:gap-2"></div>
         <div id="navItems" className="w-1/8">
           <div className="mr-4 flex flex-row items-center justify-end gap-3">
-          <IoChevronBackSharp
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-            onClick={() => {
-              const proxyFrame: ProxyFrame | null = document.getElementById(
-                "iframe"
-              ) as ProxyFrame;
-              proxyFrame.contentWindow.history.back();
-            }}
+            <IoChevronBackSharp
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                proxyFrame.contentWindow.history.back();
+              }}
             />
-          <IoChevronForwardSharp
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
-            onClick={() => {
-              const proxyFrame: ProxyFrame | null = document.getElementById(
-                "iframe"
-              ) as ProxyFrame;
-              proxyFrame.contentWindow.history.forward();
-            }}
+            <IoChevronForwardSharp
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                proxyFrame.contentWindow.history.forward();
+              }}
             />
             <IoReloadSharp
-            className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
-            onClick={() => {
-              const proxyFrame: ProxyFrame | null = document.getElementById(
-                "iframe"
-              ) as ProxyFrame;
-              proxyFrame.contentWindow.location.reload();
-            }}
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:rotate-[360deg] hover:scale-110 hover:brightness-125"
+              onClick={() => {
+                const proxyFrame: ProxyFrame | null = document.getElementById(
+                  "iframe"
+                ) as ProxyFrame;
+                proxyFrame.contentWindow.location.reload();
+              }}
             />
             <IoShareSocialSharp
               className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"

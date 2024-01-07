@@ -31,7 +31,9 @@ function BareInput(props: BareInputProps) {
     return finalUrl;
   }
   function handleChange() {
-    const url = validateUrl((document.getElementById("input") as HTMLInputElement).value);
+    const url = validateUrl(
+      (document.getElementById("input") as HTMLInputElement).value
+    );
     setInputValue((document.getElementById("input") as HTMLInputElement).value);
     set(props.storageKey, url);
     localStorage.setItem(props.storageKey, url);
@@ -39,16 +41,17 @@ function BareInput(props: BareInputProps) {
     window.location.reload();
   }
   return (
-    <div className="flex flex-col gap-5 items-center">
+    <div className="flex flex-col items-center gap-5">
       <input
         type="text"
         placeholder={props.placeholder}
         value={inputValue}
         id="input"
-        className="font-roboto flex h-14 w-56 flex-row rounded-2xl border whitespace-nowrap border-input-border-color bg-input p-4 text-center text-xl text-input-text"
+        className="font-roboto flex h-14 w-56 flex-row whitespace-nowrap rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text"
       />
-      <button className="font-roboto items-center justify-center flex h-6 w-28 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text" 
-      onClick={handleChange}
+      <button
+        className="font-roboto flex h-6 w-28 flex-row items-center justify-center rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text"
+        onClick={handleChange}
       >
         {t("settings.bare.select")}
       </button>
