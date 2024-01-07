@@ -39,7 +39,7 @@ const Proxy = ({ id, active }) => {
         variants={settingsPageVariant}
         className="content-card flex w-full flex-row flex-wrap justify-center gap-4"
       >
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-4 text-center">
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
             {t("settings.proxy.title")}
           </div>
@@ -48,7 +48,7 @@ const Proxy = ({ id, active }) => {
           </div>
           <Dropdown storageKey="proxy" options={engines} refresh={false} />
         </div>
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-4 text-center">
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
             {t("settings.proxymodes.title")}
           </div>
@@ -61,7 +61,7 @@ const Proxy = ({ id, active }) => {
             refresh={false}
           />
         </div>
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-4 text-center">
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
             {t("settings.search.title")}
           </div>
@@ -74,7 +74,7 @@ const Proxy = ({ id, active }) => {
             refresh={false}
           />
         </div>
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-4 text-center">
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
             {t("settings.bare.title")}
           </div>

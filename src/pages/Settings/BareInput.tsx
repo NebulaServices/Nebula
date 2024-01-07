@@ -2,6 +2,8 @@ import { useState, useEffect } from "preact/hooks";
 import { set } from "../../util/IDB";
 import { uninstallServiceWorkers } from "../../util/SWHelper";
 import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from "react-toastify";
+import { BareTest } from "./BareTest";
 
 interface BareInputProps {
   placeholder: string;
@@ -31,26 +33,44 @@ function BareInput(props: BareInputProps) {
     return finalUrl;
   }
   function handleChange() {
-    const url = validateUrl((document.getElementById("input") as HTMLInputElement).value);
-    setInputValue((document.getElementById("input") as HTMLInputElement).value);
-    set(props.storageKey, url);
-    localStorage.setItem(props.storageKey, url);
-    uninstallServiceWorkers();
-    window.location.reload();
+    const url = validateUrl(
+      (document.getElementById("input") as HTMLInputElement).value
+    );
+    BareTest(url + "v3/").then((result) => {
+      if (result) {
+        setInputValue(
+          (document.getElementById("input") as HTMLInputElement).value
+        );
+        set(props.storageKey, url);
+        localStorage.setItem(props.storageKey, url);
+        uninstallServiceWorkers();
+        window.location.reload();
+      } else {
+        (document.getElementById("input") as HTMLInputElement).value =
+          localStorage.getItem("bare") || "/bare/";
+        toast(t("bareError"), {
+          type: "error"
+        });
+      }
+    });
   }
   return (
-    <div className="flex flex-col items-center">
-      <input
-        type="text"
-        placeholder={props.placeholder}
-        value={inputValue}
-        id="input"
-        className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl"
-      />
-      <div className="font-roboto items-center justify-center flex h-4 w-24 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl" 
-      onClick={handleChange}
-      >
-        {t("settings.bare.select")}
+    <div>
+      <ToastContainer position="bottom-right" theme="dark" />
+      <div className="flex flex-col items-center">
+        <input
+          type="text"
+          placeholder={props.placeholder}
+          value={inputValue}
+          id="input"
+          className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl"
+        />
+        <div
+          className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
+          onClick={handleChange}
+        >
+          {t("settings.bare.select")}
+        </div>
       </div>
     </div>
   );

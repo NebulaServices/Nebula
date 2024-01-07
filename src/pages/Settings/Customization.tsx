@@ -27,7 +27,7 @@ function Customization({ id, active }) {
         variants={settingsPageVariant}
         className="content-card flex w-full flex-col items-center justify-center text-center"
       >
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
             {t("settings.theme.title")}
           </div>

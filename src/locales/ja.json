@@ -74,5 +74,6 @@
     "catppuccinFrappe": "Catppuccin Frappe",
     "catppuccinLatte": "Catppuccin Latte"
   },
-  "clipboard": "URL がクリップボードにコピーされました!"
+  "clipboard": "URL がクリップボードにコピーされました!",
+  "bareError": "それはうまくいきませんでした。Bare サーバーが存在し、ブロックされていないことを再確認してください。"
 }
