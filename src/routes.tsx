@@ -19,7 +19,7 @@ export default function Routes() {
         <Route path="/games" component={Radon} />
         <Route path="/go/:url" component={ProxyFrame} />
         <Route path="/settings" component={Settings} />
-        <Route path="/ab/:url?" component={AboutBlank} />
+        <Route path="/ab/:url" component={AboutBlank} />
         <Route default component={NotFound} />
       </Router>
     </LocationProvider>
