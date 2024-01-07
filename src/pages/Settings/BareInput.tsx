@@ -47,11 +47,11 @@ function BareInput(props: BareInputProps) {
         id="input"
         className="font-roboto flex h-14 w-56 flex-row rounded-2xl border whitespace-nowrap border-input-border-color bg-input p-4 text-center text-xl text-input-text"
       />
-      <div className="font-roboto items-center justify-center flex h-6 w-28 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text" 
+      <button className="font-roboto items-center justify-center flex h-6 w-28 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text" 
       onClick={handleChange}
       >
         {t("settings.bare.select")}
-      </div>
+      </button>
     </div>
   );
 }
