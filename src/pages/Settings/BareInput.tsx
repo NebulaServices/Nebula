@@ -62,6 +62,11 @@ function BareInput(props: BareInputProps) {
           type="text"
           placeholder={props.placeholder}
           value={inputValue}
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              handleChange()
+            }
+          }}
           id="input"
           className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl"
         />
