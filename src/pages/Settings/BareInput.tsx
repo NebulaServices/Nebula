@@ -39,15 +39,15 @@ function BareInput(props: BareInputProps) {
     window.location.reload();
   }
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col gap-5 items-center">
       <input
         type="text"
         placeholder={props.placeholder}
         value={inputValue}
         id="input"
-        className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text"
+        className="font-roboto flex h-14 w-56 flex-row rounded-2xl border whitespace-nowrap border-input-border-color bg-input p-4 text-center text-xl text-input-text"
       />
-      <div className="font-roboto items-center justify-center flex h-4 w-24 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text" 
+      <div className="font-roboto items-center justify-center flex h-6 w-28 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text" 
       onClick={handleChange}
       >
         {t("settings.bare.select")}
