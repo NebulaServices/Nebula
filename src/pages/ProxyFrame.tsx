@@ -22,7 +22,7 @@ export function ProxyFrame(props: { url: string }) {
   const localProxy = localStorage.getItem("proxy") || "automatic";
   const proxyMode = localStorage.getItem("proxyMode") || "embed";
   const searchEngine =
-    localStorage.getItem("searchEngine") || "https://google.com/search?q=%s";
+    localStorage.getItem("searchEngine") || "https://duckduckgo.com/?q=%s";
 
   const [ProxiedUrl, setProxiedUrl] = useState<string | undefined>(undefined);
   //@ts-ignore
@@ -47,7 +47,9 @@ export function ProxyFrame(props: { url: string }) {
             window.__uv$config.encodeUrl(decodedUrl);
         } else if (localProxy === "dynamic") {
           result =
-            window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+            window.__dynamic$config.prefix +
+            "route?url=" +
+            encodeURIComponent(decodedUrl);
         } else {
           // automatic. use SiteSupport.json to determine proxy support
           const matchingKey = Object.keys(SiteSupport).find((key) =>
@@ -60,7 +62,9 @@ export function ProxyFrame(props: { url: string }) {
               window.__uv$config.encodeUrl(decodedUrl);
           } else if (SiteSupport[matchingKey] === "dynamic") {
             result =
-              window.__dynamic$config.prefix + encodeURIComponent(decodedUrl);
+              window.__dynamic$config.prefix +
+              "route?url=" +
+              encodeURIComponent(decodedUrl);
           } else if (SiteSupport[matchingKey] === "rammerhead") {
             result = await RammerheadEncode(decodedUrl);
           } else {
@@ -93,8 +97,12 @@ export function ProxyFrame(props: { url: string }) {
     window.location.href = ProxiedUrl;
   }
 
+  if (proxyMode === "embed") {
+    history.pushState({}, "", "/");
+  }
+
   return (
-    <div class="h-screen w-screen bg-primary">
+    <div className="h-screen w-screen bg-primary">
       <CloakedHead
         originalTitle={t("titles.home")}
         originalFavicon="/logo.png"

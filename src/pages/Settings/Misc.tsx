@@ -7,9 +7,9 @@ const Misc = ({ id, active }) => {
   const { t } = useTranslation();
 
   const languages = [
-    { id: "en-US", label: t("settings.languages.english") },
-    { id: "es", label: t("settings.languages.spanish") },
-    { id: "ja", label: t("settings.languages.japanese") }
+    { id: "en-US", label: "English" },
+    { id: "es", label: "Español" },
+    { id: "ja", label: "日本語" }
   ];
 
   return (
@@ -23,11 +23,15 @@ const Misc = ({ id, active }) => {
     >
       <motion.div
         variants={settingsPageVariant}
-        className="content-card flex flex-row flex-wrap justify-center w-full gap-4"
+        className="content-card flex w-full flex-row flex-wrap justify-center gap-4"
       >
-        <div class="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
-          <div class="text-3xl">{t("settings.languages.title")}</div>
-          <div class="text-md">{t("settings.languages.subtitle")}</div>
+        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-7 text-center">
+          <div className="text-3xl font-bold text-input-text">
+            {t("settings.languages.title")}
+          </div>
+          <div className="text-md font-bold text-input-text">
+            {t("settings.languages.subtitle")}
+          </div>
           <Dropdown
             storageKey="i18nextLng"
             options={languages}

@@ -77,6 +77,16 @@ app.register(fastifyStatic, {
   wildcard: false
 });
 
+app.get("/search=:query", async (req, res) => {
+  const { query } = req.params as { query: string }; // Define the type for req.params
+
+  const response = await fetch(
+    `http://api.duckduckgo.com/ac?q=${query}&format=json`
+  ).then((apiRes) => apiRes.json());
+
+  res.send(response);
+});
+
 app.setNotFoundHandler((req, res) => {
   res.sendFile("index.html"); // SPA catch-all
 });

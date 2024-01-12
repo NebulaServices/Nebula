@@ -17,11 +17,11 @@ const CloakPreset = (props: Props) => {
   return (
     <div
       onClick={cloak}
-      class="cursor-pointer rounded-full border border-input-border-color bg-lighter"
+      className="cursor-pointer rounded-full border border-input-border-color bg-lighter"
     >
       <img
         src={props.faviconUrl === "none" ? "/logo.png" : props.faviconUrl}
-        class="h-16 w-16 p-4"
+        className="h-16 w-16 p-4"
       />
     </div>
   );

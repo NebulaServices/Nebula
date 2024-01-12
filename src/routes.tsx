@@ -6,8 +6,8 @@ import { ProxyFrame } from "./pages/ProxyFrame.js";
 import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
+
 import "./style.css";
-import "./themes/main.css";
 import "./i18n";
 
 export default function Routes() {
@@ -25,4 +25,3 @@ export default function Routes() {
     </LocationProvider>
   );
 }
-

@@ -35,11 +35,11 @@ const Dropdown = ({
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex h-full w-full select-none flex-row items-center">
-          <div class="h-full w-1/4"></div>
-          <div class="flex w-2/4 flex-col items-center">
+          <div className="h-full w-1/4"></div>
+          <div className="flex w-2/4 flex-col items-center text-input-text">
             {options.find((o) => o.id === choice)?.label}
           </div>
-          <div class="flex w-1/4 flex-col items-center">
+          <div className="flex w-1/4 flex-col items-center text-input-text">
             <FaAngleDown />
           </div>
         </div>
@@ -48,7 +48,7 @@ const Dropdown = ({
             {options.map((option, index) => (
               <div
                 key={option.id}
-                className={`border border-input-border-color bg-input p-2 hover:bg-dropdown-option-hover-color ${
+                className={`border border-input-border-color bg-input p-2 text-input-text hover:bg-dropdown-option-hover-color ${
                   index === options.length - 1 ? "rounded-b-2xl" : ""
                 }`}
                 onClick={() => {

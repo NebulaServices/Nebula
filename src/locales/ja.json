@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "nebula.",
+    "title": "ネブラ。",
     "games": "ゲーム",
     "settings": "セッティング",
     "discord": "もっとリンクが欲しいですか？"
@@ -32,10 +32,7 @@
     },
     "languages": {
       "title": "言語",
-      "subtitle": "好きな言語を選んでください",
-      "japanese": "日本語",
-      "english": "英語",
-      "spanish": "スペイン語"
+      "subtitle": "好きな言語を選んでください"
     },
     "proxymodes": {
       "title": "開く",
@@ -46,11 +43,21 @@
     },
     "cloaking": {
       "title": "クローキング",
-      "subtitle": "タブの見た目を選択する"
+      "subtitle": "タブの見た目を選択する",
+      "aboutblank": "で開く about:blank"
     },
     "search": {
       "title": "検索エンジン",
       "subtitle": "ネビュラの検索エンジンを選択してください"
+    },
+    "bare": {
+      "title": "Bare サーバー",
+      "subtitle": "Bare サーバー URL を入力してください",
+      "select": "選択する"
+    },
+    "theme": {
+      "title": "テーマ",
+      "subtitle": "目が嫌いにならないようにテーマを選んでください"
     }
   },
   "titles": {
@@ -59,5 +66,14 @@
     "discord": "ネブラ - Discord",
     "404": "ネブラ - 404"
   },
-  "comingsoon": "近日公開"
+  "comingsoon": "近日公開",
+  "themes": {
+    "main": "デフォルト",
+    "catppuccinMocha": "Catppuccin Mocha",
+    "catppuccinMacchiato": "Catppuccin Macchiato",
+    "catppuccinFrappe": "Catppuccin Frappe",
+    "catppuccinLatte": "Catppuccin Latte"
+  },
+  "clipboard": "URL がクリップボードにコピーされました!",
+  "bareError": "それはうまくいきませんでした。Bare サーバーが存在し、ブロックされていないことを再確認してください。"
 }

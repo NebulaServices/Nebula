@@ -32,10 +32,7 @@
     },
     "languages": {
       "title": "Language",
-      "subtitle": "Choose your preferred language",
-      "japanese": "Japanese",
-      "english": "English",
-      "spanish": "Spanish"
+      "subtitle": "Choose your preferred language"
     },
     "proxymodes": {
       "title": "Open in",
@@ -46,11 +43,22 @@
     },
     "cloaking": {
       "title": "Cloaking",
-      "subtitle": "Choose how your tab looks"
+      "subtitle": "Choose how your tab looks",
+      "aboutblank": "Open in about:blank"
     },
     "search": {
       "title": "Search Engine",
       "subtitle": "Choose your search engine"
+    },
+    "bare": {
+      "title": "Bare Server",
+      "subtitle": "Enter the URL of your bare server",
+      "select": "Select"
+    },
+    "theme": {
+      "title": "Theme",
+      "subtitle": "Choose a theme so your eyes don't hate us",
+      "select": "Select"
     }
   },
   "titles": {
@@ -59,5 +67,14 @@
     "discord": "Nebula - Discord",
     "404": "Nebula - 404"
   },
-  "comingsoon": "Coming soon!"
+  "comingsoon": "Coming soon!",
+  "themes": {
+    "main": "Main",
+    "catppuccinMocha": "Catppuccin Mocha",
+    "catppuccinMacchiato": "Catppuccin Macchiato",
+    "catppuccinFrappe": "Catppuccin Frappe",
+    "catppuccinLatte": "Catppuccin Latte"
+  },
+  "clipboard": "URL copied to clipboard!",
+  "bareError": "That didn't quite work. Double check that the bare server exists and isn't blocked."
 }

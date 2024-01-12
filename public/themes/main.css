@@ -16,6 +16,7 @@
   --input-border-size: 1.3px;
   --navbar-logo-filter: none;
   --dropdown-option-hover-color: #312a49;
+  --tab-color: var(--black);
 }
 
 .font-inter {
