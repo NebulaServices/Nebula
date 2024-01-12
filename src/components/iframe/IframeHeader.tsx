@@ -13,7 +13,7 @@ import {
   IoReloadSharp
 } from "react-icons/io5";
 import { FaShareAlt } from "react-icons/fa";
-import { FaXmark } from "react-icons/fa6";
+import { FaXmark, FaTableList } from "react-icons/fa6";
 
 interface ProxyFrame extends HTMLElement {
   contentWindow: any;
@@ -30,7 +30,7 @@ function Clipboard(text) {
   document.body.removeChild(textarea);
 }
 
-export function IframeHeader(props: { url: string }) {
+export function IframeHeader(props: { url: string; onSidebarToggle: any }) {
   const localProxy = localStorage.getItem("proxy") || "automatic";
 
   const { t } = useTranslation();
@@ -110,6 +110,10 @@ export function IframeHeader(props: { url: string }) {
         </div>
         <div id="navItems" className="w-1/8">
           <div className="mr-4 flex flex-row items-center justify-end gap-3">
+            <FaTableList
+              className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
+              onClick={props.onSidebarToggle}
+            />
             <IoChevronBackSharp
               className="duration-0500 h-6 w-6 cursor-pointer text-navbar-text-color transition-all hover:scale-110 hover:brightness-125"
               onClick={() => {
