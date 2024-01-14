@@ -1,0 +1,4 @@
+.highlighted {
+  background-color: var(--navbar-text-color);
+  transition: background-color 1s ease; 
+}

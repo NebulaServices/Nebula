@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { HiOutlineCube } from "react-icons/hi";
 import { RxMixerVertical, RxHamburgerMenu } from "react-icons/rx";
 import { RiLinksFill } from "react-icons/ri";
+import { BsQuestionLg } from "react-icons/bs";
 import { useState } from "preact/hooks";
 
 export function Header() {
@@ -68,6 +69,11 @@ export function Header() {
                   translationKey="header.settings"
                 />
                 <HeaderButton
+                  href="/faq"
+                  Icon={BsQuestionLg}
+                  translationKey="header.faq"
+                />
+                <HeaderButton
                   href="/discord"
                   Icon={RiLinksFill}
                   translationKey="header.discord"
@@ -102,6 +108,11 @@ export function Header() {
                   href="/settings"
                   Icon={RxMixerVertical}
                   translationKey="header.settings"
+                />
+                <HeaderButton
+                  href="/faq"
+                  Icon={BsQuestionLg}
+                  translationKey="header.faq"
                 />
                 <HeaderButton
                   href="/discord"

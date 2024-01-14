@@ -3,7 +3,8 @@
     "title": "nebula.",
     "games": "Games",
     "settings": "Settings",
-    "discord": "Want more links?"
+    "discord": "Want more links?",
+    "faq": "FAQ"
   },
   "404": {
     "text": "This Nebula Service has been disabled.",
@@ -76,5 +77,36 @@
     "catppuccinLatte": "Catppuccin Latte"
   },
   "clipboard": "URL copied to clipboard!",
-  "bareError": "That didn't quite work. Double check that the bare server exists and isn't blocked."
+  "bareError": "That didn't quite work. Double check that the bare server exists and isn't blocked.",
+  "faq": {
+    "1": {
+      "q": "How do I get more links?",
+      "a": "You can more links by joining our ",
+      "h": "discord server.",
+      "hR": "/discord"
+    },
+    "2": {
+      "q": "How can I self host Nebula?",
+      "a": "Instructions for self hosting Nebula can be found at our ",
+      "h": "GitHub repository.",
+      "hR": "https://github.com/NebulaServices/Nebula"
+    },
+    "3": {
+      "q": "Nebula won't work for me, what can I do?",
+      "a": "Try pressing Ctrl+Shift+R and/or Shift+F5.",
+      "aMobile": "Try going into settings, clicking on your browser, and clearing cache."
+    },
+    "4": {
+      "q": "What is an HTTP proxy?",
+      "a": "An HTTP proxy is like a VPN. It can change your IP's location to allow you to access geo-restricted content that only other countries can access."
+    },
+    "5": {
+      "q": "Where can I get an HTTP proxy?",
+      "a": "You can look up a tutorial on how to run your own or buy one online. HTTP proxies are coming to boosters in our discord server in the near future so be on the lookout."
+    },
+    "6": {
+      "q": "Nebula is slow.",
+      "a": "You might be connected to the wrong server. Check the bare server you are connected to and make sure its the country you're closest to."
+    }
+  }
 }

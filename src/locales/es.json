@@ -3,7 +3,8 @@
     "title": "nebula.",
     "games": "Juegos",
     "settings": "Ajustes",
-    "discord": "¿Quieres más enlaces?"
+    "discord": "¿Quieres más enlaces?",
+    "faq": "Preguntas más frecuentes"
   },
   "404": {
     "text": "Este servicio Nebula ha sido deshabilitado.",
@@ -75,5 +76,36 @@
     "catppuccinLatte": "Catppuccin Latte"
   },
   "clipboard": "¡URL copiada al portapapeles!",
-  "bareError": "Esto no es funcional. Vuelva a verificar que el servidor bare exista y no esté bloqueado."
+  "bareError": "Esto no es funcional. Vuelva a verificar que el servidor bare exista y no esté bloqueado.",
+  "faq": {
+    "1": {
+      "q": "¿Cómo puedo obtener más enlaces?",
+      "a": "Puedes obtener más enlaces uniéndote a nuestro ",
+      "h": "servidor de discord.",
+      "hR": "/discord"
+    },
+    "2": {
+      "q": "¿Cómo puedo auto hospedar Nebula?",
+      "a": "Las instrucciones para auto hospedar Nebula se pueden encontrar en nuestro ",
+      "h": "repositorio de GitHub.",
+      "hR": "https://github.com/NebulaServices/Nebula"
+    },
+    "3": {
+      "q": "Nebula no funciona para mí, ¿qué puedo hacer?",
+      "a": "Intenta presionar Ctrl+Shift+R y/o Shift+F5.",
+      "aMobile": "Intenta ir a ajustes, haz clic en tu navegador y borra la caché."
+    },
+    "4": {
+      "q": "¿Qué es un proxy HTTP?",
+      "a": "Un proxy HTTP es como una VPN. Puede cambiar la ubicación de tu IP para permitirte acceder a contenido geo-restringido que solo otros países pueden acceder."
+    },
+    "5": {
+      "q": "¿Dónde puedo conseguir un proxy HTTP?",
+      "a": "Puedes buscar un tutorial sobre cómo ejecutar el tuyo propio o comprar uno en línea. Los proxies HTTP llegarán a los impulsores en nuestro servidor de discord en un futuro cercano, así que estate atento."
+    },
+    "6": {
+      "q": "Nebula es lento.",
+      "a": "Es posible que estés conectado al servidor incorrecto. Verifica el servidor bare al que estás conectado y asegúrate de que sea el país más cercano a ti."
+    }
+  }
 }

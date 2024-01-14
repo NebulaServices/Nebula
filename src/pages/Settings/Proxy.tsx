@@ -83,6 +83,19 @@ const Proxy = ({ id, active }) => {
           </div>
           <BareInput placeholder="/bare/" storageKey="bare" />
         </div>
+        {/* <div className="flex h-80 w-96 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
+          <div className="p-2 text-3xl font-bold text-input-text">
+            (Advanced) HTTP Proxy
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            Enter your own HTTP proxy to access geo-restricted content. This
+            will only work with compatible Bare servers.
+          </div>
+          <div className="text-md pb-4 font-bold text-input-text underline">
+            <a href="q">What is this?</a>
+          </div>
+          <BareInput placeholder="/bare/" storageKey="bare" />
+      </div> */}
       </motion.div>
     </motion.div>
   );
