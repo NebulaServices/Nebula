@@ -61,9 +61,12 @@
       "subtitle": "Elige una mirada para que tus ojos no nos odienn"
     },
     "httpProxy": {
-      "title": "(Advanced) HTTP Proxy",
-      "subtitle": "Enter your own HTTP proxy to access geo-restricted content. This will only work with compatible Bare servers.",
-      "link": "What is this?"
+      "title": "Proxy HTTP (avanzado)",
+      "subtitle": "Ingrese su propio proxy HTTP para acceder a contenido restringido geográficamente. Esto solo funcionará con servidores Bare compatibles.",
+      "link": "¿Qué es esto?",
+      "badBare": "Su servidor Bare no soporta servidores proxy HTTP.",
+      "badProxy": "Error en la conexión del proxy. Verifique que su proxy HTTP esté funcionando.",
+      "reset": "Reiniciar"
     }
   },
   "titles": {

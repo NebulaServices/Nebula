@@ -64,7 +64,10 @@
     "httpProxy": {
       "title": "(Advanced) HTTP Proxy",
       "subtitle": "Enter your own HTTP proxy to access geo-restricted content. This will only work with compatible Bare servers.",
-      "link": "What is this?"
+      "link": "What is this?",
+      "badBare": "Your Bare server doesn't support HTTP proxies.",
+      "badProxy": "Proxy connection failed. Please double check that your HTTP proxy is working.",
+      "reset": "Reset"
     }
   },
   "titles": {

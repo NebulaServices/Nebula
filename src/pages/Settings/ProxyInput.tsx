@@ -73,7 +73,7 @@ function ProxyInput(props: BareInputProps) {
                   (
                     document.getElementById("pinput") as HTMLInputElement
                   ).value = localStorage.getItem("HTTPProxy") || "";
-                  toast("Bad proxy", {
+                  toast(t("settings.httpProxy.badProxy"), {
                     type: "error"
                   });
                 }
@@ -81,14 +81,14 @@ function ProxyInput(props: BareInputProps) {
               .catch((error) => {
                 (document.getElementById("pinput") as HTMLInputElement).value =
                   localStorage.getItem("HTTPProxy") || "";
-                toast("Bad proxy", {
+                toast(t("settings.httpProxy.badProxy"), {
                   type: "error"
                 });
               });
           } else {
             (document.getElementById("pinput") as HTMLInputElement).value =
               localStorage.getItem("HTTPProxy") || "";
-            toast("That bare server doesn't support HTTP proxies!", {
+            toast(t("settings.httpProxy.badBare"), {
               type: "error"
             });
           }
@@ -129,7 +129,7 @@ function ProxyInput(props: BareInputProps) {
             className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
             onClick={resetProxy}
           >
-            Reset
+            {t("settings.httpProxy.reset")}
           </div>
         </div>
       </div>
