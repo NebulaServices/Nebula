@@ -3,7 +3,7 @@ import fastifyStatic from "@fastify/static";
 import { fileURLToPath } from "url";
 import path from "path";
 import createRammerhead from "rammerhead/src/server/index.js";
-import { createBareServer } from "@tomphttp/bare-server-node";
+import { createBareServer } from "@nebula-services/bare-server-node";
 import { createServer } from "http";
 
 const __filename = fileURLToPath(import.meta.url);

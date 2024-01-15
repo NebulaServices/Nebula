@@ -11,15 +11,15 @@ dependencies:
   '@fastify/static':
     specifier: ^6.12.0
     version: 6.12.0
+  '@nebula-services/bare-server-node':
+    specifier: 2.0.1-patch.1
+    version: 2.0.1-patch.1
   '@nebula-services/dynamic':
     specifier: 0.7.2-patch.2
     version: 0.7.2-patch.2
   '@nebula-services/ultraviolet':
     specifier: 1.0.1-1.patch.7
     version: 1.0.1-1.patch.7
-  '@tomphttp/bare-server-node':
-    specifier: https://github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz
-    version: '@github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz'
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
@@ -1207,6 +1207,24 @@ packages:
 
   /@nebula-services/bare-client@1.1.2-beta.3-patch.1:
     resolution: {integrity: sha512-SgXCJruqgFg9ulgKd/S+6IAL3G5lP08Ey+pLLv768pwvgV5WgXdoWxytV1jJ8kd0vpQcnrq3ropTn2buT+8r5Q==}
+    dev: false
+
+  /@nebula-services/bare-server-node@2.0.1-patch.1:
+    resolution: {integrity: sha512-kcR7TAuZ6ZwwNtiOOjgVyzHLzUYUsKm85zv/dIg5liYWe2Uzf7mZ7aagzQVbSjac1qdsmOs4UKbFYXtCLY5V6Q==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      async-exit-hook: 2.0.1
+      commander: 10.0.1
+      dotenv: 16.3.1
+      http-errors: 2.0.0
+      ipaddr.js: 2.1.0
+      source-map-support: 0.5.21
+      tunnel: 0.0.6
+      ws: 8.15.1
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
     dev: false
 
   /@nebula-services/dynamic@0.7.2-patch.2:
@@ -6071,26 +6089,6 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  '@github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz':
-    resolution: {tarball: https://github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz}
-    name: '@nebula-services/bare-server-node'
-    version: 2.0.1-patch
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-    dependencies:
-      async-exit-hook: 2.0.1
-      commander: 10.0.1
-      dotenv: 16.3.1
-      http-errors: 2.0.0
-      ipaddr.js: 2.1.0
-      source-map-support: 0.5.21
-      tunnel: 0.0.6
-      ws: 8.15.1
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
 
   '@github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz':
     resolution: {tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}
