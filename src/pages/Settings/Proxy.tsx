@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { tabContentVariant, settingsPageVariant } from "./Variants";
 import Dropdown from "./Dropdown";
 import BareInput from "./BareInput";
+import ProxyInput from "./ProxyInput";
 import { useTranslation } from "react-i18next";
 
 const Proxy = ({ id, active }) => {
@@ -83,19 +84,21 @@ const Proxy = ({ id, active }) => {
           </div>
           <BareInput placeholder="/bare/" storageKey="bare" />
         </div>
-        {/* <div className="flex h-80 w-96 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
+        <div className="flex h-96 w-96 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
-            (Advanced) HTTP Proxy
+            {t("settings.httpProxy.title")}
           </div>
           <div className="text-md p-4 font-bold text-input-text">
-            Enter your own HTTP proxy to access geo-restricted content. This
-            will only work with compatible Bare servers.
+            {t("settings.httpProxy.subtitle")}
           </div>
           <div className="text-md pb-4 font-bold text-input-text underline">
-            <a href="q">What is this?</a>
+            <a href="/faq#4">{t("settings.httpProxy.link")}</a>
           </div>
-          <BareInput placeholder="/bare/" storageKey="bare" />
-      </div> */}
+          <ProxyInput
+            placeholder="username:password@1.2.3.4"
+            storageKey="bare"
+          />
+        </div>
       </motion.div>
     </motion.div>
   );

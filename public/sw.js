@@ -29,7 +29,12 @@ const uvPromise = new Promise(async (resolve) => {
   try {
     const bare =
       (await localforage.getItem("bare")) || location.origin + "/bare/";
+    const proxyUrl =
+      (await localforage.getItem("HTTPProxy")) || "";
+    const [proxyIP, proxyPort] = proxyUrl.split(":");
     self.__uv$config.bare = bare;
+    self.__uv$config.proxyPort = proxyPort;
+    self.__uv$config.proxyIp = proxyIP;
     self.uv = new UVServiceWorker(self.__uv$config);
   } catch (error) {
     console.log(error);

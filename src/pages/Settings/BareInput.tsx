@@ -42,6 +42,10 @@ function BareInput(props: BareInputProps) {
           (document.getElementById("input") as HTMLInputElement).value
         );
         set(props.storageKey, url);
+
+        set("HTTPProxy", ""); // Disable http proxy servicesssss (most bare servers won't support these and we don't want to be untruthful to the user.)
+        localStorage.setItem("HTTPProxy", "");
+
         localStorage.setItem(props.storageKey, url);
         uninstallServiceWorkers();
         window.location.reload();

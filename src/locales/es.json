@@ -59,6 +59,11 @@
     "theme": {
       "title": "Mirar",
       "subtitle": "Elige una mirada para que tus ojos no nos odienn"
+    },
+    "httpProxy": {
+      "title": "(Advanced) HTTP Proxy",
+      "subtitle": "Enter your own HTTP proxy to access geo-restricted content. This will only work with compatible Bare servers.",
+      "link": "What is this?"
     }
   },
   "titles": {
