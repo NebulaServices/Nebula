@@ -18,8 +18,8 @@ dependencies:
     specifier: 1.0.1-1.patch.7
     version: 1.0.1-1.patch.7
   '@tomphttp/bare-server-node':
-    specifier: ^2.0.1
-    version: 2.0.1
+    specifier: https://github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz
+    version: '@github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz'
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
@@ -5704,6 +5704,11 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /tunnel@0.0.6:
+    resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
+    engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
+    dev: false
+
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -6066,6 +6071,26 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  '@github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz':
+    resolution: {tarball: https://github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz}
+    name: '@nebula-services/bare-server-node'
+    version: 2.0.1-patch
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+    dependencies:
+      async-exit-hook: 2.0.1
+      commander: 10.0.1
+      dotenv: 16.3.1
+      http-errors: 2.0.0
+      ipaddr.js: 2.1.0
+      source-map-support: 0.5.21
+      tunnel: 0.0.6
+      ws: 8.15.1
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
 
   '@github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz':
     resolution: {tarball: https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz}

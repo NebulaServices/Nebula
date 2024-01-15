@@ -15,7 +15,7 @@
     "@fastify/static": "^6.12.0",
     "@nebula-services/dynamic": "0.7.2-patch.2",
     "@nebula-services/ultraviolet": "1.0.1-1.patch.7",
-    "@tomphttp/bare-server-node": "^2.0.1",
+    "@tomphttp/bare-server-node": "https://github.com/NebulaServices/bare-server-node/releases/download/v2.0.1-nebula.2.tgz/v2.0.1-nebula.2.tgz",
     "classnames": "^2.3.2",
     "crypto-js": "^4.2.0",
     "fastify": "^4.25.1",
