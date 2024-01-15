@@ -14,6 +14,14 @@ function ProxyInput(props: BareInputProps) {
   const bareServer = localStorage.getItem("bare") || "/bare/";
   const HTTPProxy = localStorage.getItem("HTTPProxy") || "";
   const [inputValue, setInputValue] = useState(HTTPProxy);
+
+  function resetProxy() {
+    set("HTTPProxy", "");
+    localStorage.setItem("HTTPProxy", "");
+    uninstallServiceWorkers();
+    window.location.reload();
+  }
+
   function validateUrl(url: string) {
     let finalUrl = url;
 
@@ -56,10 +64,10 @@ function ProxyInput(props: BareInputProps) {
                   response.headers.get("x-bare-status") === "302"
                 ) {
                   // Success!
-                   set("HTTPProxy", proxyUrl);
-                   localStorage.setItem("HTTPProxy", proxyUrl);
-                   uninstallServiceWorkers();
-                   window.location.reload();
+                  set("HTTPProxy", proxyUrl);
+                  localStorage.setItem("HTTPProxy", proxyUrl);
+                  uninstallServiceWorkers();
+                  window.location.reload();
                   return true;
                 } else {
                   (
@@ -110,11 +118,19 @@ function ProxyInput(props: BareInputProps) {
           id="pinput"
           className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-sm"
         />
-        <div
-          className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
-          onClick={handleChange}
-        >
-          {t("settings.bare.select")}
+        <div class="flex flex-row gap-4">
+          <div
+            className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
+            onClick={handleChange}
+          >
+            {t("settings.bare.select")}
+          </div>
+          <div
+            className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
+            onClick={resetProxy}
+          >
+            Reset
+          </div>
         </div>
       </div>
     </div>
