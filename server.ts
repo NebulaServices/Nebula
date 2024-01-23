@@ -2,7 +2,9 @@ import fastify from "fastify";
 import fastifyStatic from "@fastify/static";
 import { fileURLToPath } from "url";
 import path from "path";
+import fs from "fs";
 import createRammerhead from "rammerhead/src/server/index.js";
+import cookieParser from "@fastify/cookie";
 import { createBareServer } from "@nebula-services/bare-server-node";
 import { createServer } from "http";
 
@@ -11,6 +13,10 @@ const __dirname = path.dirname(__filename);
 
 const bare = createBareServer("/bare/");
 const rh = createRammerhead();
+
+const failureFile = fs.readFileSync("Checkfailed.html", "utf8");
+
+const LICENSE_SERVER_URL = "https://license.mercurywork.shop/validate?license=";
 
 const rammerheadScopes = [
   "/rammerhead.js",
@@ -69,6 +75,57 @@ const serverFactory = (handler, opts) => {
 };
 
 const app = fastify({ logger: true, serverFactory });
+
+app.register(cookieParser);
+
+
+// Uncomment if you wish to add masqr.
+/* app.addHook("preHandler", async (req, reply) => {
+    if (req.cookies["authcheck"]) {
+      return;
+    }
+
+    const authheader = req.headers.authorization;
+
+    if (req.cookies["refreshcheck"] != "true") {
+      reply
+        .setCookie("refreshcheck", "true", { maxAge: 10000 })
+        .type("text/html")
+        .send(failureFile);
+      return;
+    }
+
+    if (!authheader) {
+      reply
+        .code(401)
+        .header("WWW-Authenticate", "Basic")
+        .type("text/html")
+        .send(failureFile);
+      return;
+    }
+
+    const auth = Buffer.from(authheader.split(" ")[1], "base64")
+      .toString()
+      .split(":");
+    const user = auth[0];
+    const pass = auth[1];
+
+    const licenseCheck = (
+      await (
+        await fetch(`${LICENSE_SERVER_URL}${pass}&host=${req.headers.host}`)
+      ).json()
+    )["status"];
+    console.log(
+      `${LICENSE_SERVER_URL}${pass}&host=${req.headers.host} returned ${licenseCheck}`
+    );
+
+    if (licenseCheck === "License valid") {
+      reply.setCookie("authcheck", "true");
+      return;
+    }
+
+    reply.type("text/html").send(failureFile);
+}); */
 
 app.register(fastifyStatic, {
   root: path.join(__dirname, "dist"),
