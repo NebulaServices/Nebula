@@ -78,7 +78,6 @@ const app = fastify({ logger: true, serverFactory });
 
 app.register(cookieParser);
 
-
 // Uncomment if you wish to add masqr.
 /* app.addHook("preHandler", async (req, reply) => {
     if (req.cookies["authcheck"]) {

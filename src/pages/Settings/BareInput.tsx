@@ -68,7 +68,7 @@ function BareInput(props: BareInputProps) {
           value={inputValue}
           onKeyPress={(event) => {
             if (event.key === "Enter") {
-              handleChange()
+              handleChange();
             }
           }}
           id="input"

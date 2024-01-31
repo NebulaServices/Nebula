@@ -45,7 +45,7 @@ export function Home() {
           const usUrl = "https://us." + nonProtocolOrigin;
           const jpUrl = "https://jp." + nonProtocolOrigin;
 
-          console.log(usUrl, jpUrl)
+          console.log(usUrl, jpUrl);
 
           const [usTime, jpTime] = await Promise.all([
             ping(usUrl),
