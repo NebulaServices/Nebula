@@ -11,7 +11,8 @@ const theme = localStorage.getItem("theme") || "main";
 export default function App() {
   return (
     <div>
-      <Meta />
+      {window.location.origin === "https://nebulaproxy.io" && <Meta />}
+      {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
       <Helmet>
         <link rel="stylesheet" href={"/themes/" + theme + ".css"}></link>
         <link rel="stylesheet" href="/themes/main.css"></link>
