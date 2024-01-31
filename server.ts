@@ -77,7 +77,9 @@ const serverFactory = (handler, opts) => {
 const app = fastify({ logger: true, serverFactory });
 
 app.register(cookieParser);
-
+await app.register(
+  import("@fastify/compress")
+  );
 
 // Uncomment if you wish to add masqr.
 /* app.addHook("preHandler", async (req, reply) => {
