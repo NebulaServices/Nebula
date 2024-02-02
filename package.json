@@ -13,7 +13,7 @@
   "dependencies": {
     "@fastify/compress": "^6.5.0",
     "@fastify/cookie": "^9.3.1",
-    "@fastify/static": "^6.12.0",
+    "@fastify/static": "^7.0.0",
     "@nebula-services/bare-server-node": "2.0.1-patch.1",
     "@nebula-services/dynamic": "0.7.2-patch.2",
     "@nebula-services/ultraviolet": "1.0.1-1.patch.7",
