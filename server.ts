@@ -85,51 +85,53 @@ app.register(cookieParser);
 await app.register(import("@fastify/compress"));
 
 // Uncomment if you wish to add masqr.
-/* app.addHook("preHandler", async (req, reply) => {
-    if (req.cookies["authcheck"]) {
-      return;
-    }
+/* 
+app.addHook("preHandler", async (req, reply) => {
+  if (req.cookies["authcheck"]) {
+    return reply;
+  }
 
-    const authheader = req.headers.authorization;
+  const authheader = req.headers.authorization;
 
-    if (req.cookies["refreshcheck"] != "true") {
-      reply
-        .setCookie("refreshcheck", "true", { maxAge: 10000 })
-        .type("text/html")
-        .send(failureFile);
-      return;
-    }
+  if (req.cookies["refreshcheck"] != "true") {
+    reply
+      .setCookie("refreshcheck", "true", { maxAge: 10000 })
+      .type("text/html")
+      .send(failureFile);
+    return reply;
+  }
 
-    if (!authheader) {
-      reply
-        .code(401)
-        .header("WWW-Authenticate", "Basic")
-        .type("text/html")
-        .send(failureFile);
-      return;
-    }
+  if (!authheader) {
+    reply
+      .code(401)
+      .header("WWW-Authenticate", "Basic")
+      .type("text/html")
+      .send(failureFile);
+    return reply;
+  }
 
-    const auth = Buffer.from(authheader.split(" ")[1], "base64")
-      .toString()
-      .split(":");
-    const user = auth[0];
-    const pass = auth[1];
+  const auth = Buffer.from(authheader.split(" ")[1], "base64")
+    .toString()
+    .split(":");
+  const user = auth[0];
+  const pass = auth[1];
 
-    const licenseCheck = (
-      await (
-        await fetch(`${LICENSE_SERVER_URL}${pass}&host=${req.headers.host}`)
-      ).json()
-    )["status"];
-    console.log(
-      `${LICENSE_SERVER_URL}${pass}&host=${req.headers.host} returned ${licenseCheck}`
-    );
+  const licenseCheck = (
+    await (
+      await fetch(`${LICENSE_SERVER_URL}${pass}&host=${req.headers.host}`)
+    ).json()
+  )["status"];
+  console.log(
+    `${LICENSE_SERVER_URL}${pass}&host=${req.headers.host} returned ${licenseCheck}`
+  );
 
-    if (licenseCheck === "License valid") {
-      reply.setCookie("authcheck", "true");
-      return;
-    }
+  if (licenseCheck === "License valid") {
+    reply.setCookie("authcheck", "true");
+    return reply;
+  }
 
-    reply.type("text/html").send(failureFile);
+  reply.type("text/html").send(failureFile);
+  return reply;
 }); */
 
 app.register(fastifyStatic, {
