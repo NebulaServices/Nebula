@@ -3,10 +3,13 @@ import fastifyStatic from "@fastify/static";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
-import createRammerhead from "rammerhead/src/server/index.js";
 import cookieParser from "@fastify/cookie";
-import { createBareServer } from "@nebula-services/bare-server-node";
 import { createServer } from "http";
+
+import { createBareServer } from "@nebula-services/bare-server-node";
+import createRammerhead from "rammerhead/src/server/index.js";
+import wisp from "wisp-server-node";
+import { Socket } from "net";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -70,6 +73,8 @@ const serverFactory = (handler, opts) => {
         bare.routeUpgrade(req, socket, head);
       } else if (shouldRouteRh(req)) {
         routeRhUpgrade(req, socket, head);
+      } else {
+        wisp.routeRequest(req, socket as Socket, head);
       }
     });
 };
@@ -77,9 +82,7 @@ const serverFactory = (handler, opts) => {
 const app = fastify({ logger: true, serverFactory });
 
 app.register(cookieParser);
-await app.register(
-  import("@fastify/compress")
-  );
+await app.register(import("@fastify/compress"));
 
 // Uncomment if you wish to add masqr.
 /* app.addHook("preHandler", async (req, reply) => {

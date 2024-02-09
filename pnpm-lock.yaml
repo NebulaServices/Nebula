@@ -77,6 +77,9 @@ dependencies:
   tsx:
     specifier: ^4.7.0
     version: 4.7.0
+  wisp-server-node:
+    specifier: ^1.0.1
+    version: 1.0.1
 
 devDependencies:
   '@preact/preset-vite':
@@ -6031,6 +6034,10 @@ packages:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
       string-width: 4.2.3
+    dev: false
+
+  /wisp-server-node@1.0.1:
+    resolution: {integrity: sha512-RPid1o/q8NWE0zVFmMIUBIWS7WnUeHmfzrxaNeFsWKXYKD5RO74qYnDLbXSKFDCTSrPQ+uXtRI2I/EpunXfAvw==}
     dev: false
 
   /wrap-ansi@7.0.0:

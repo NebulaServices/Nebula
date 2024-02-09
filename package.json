@@ -34,7 +34,8 @@
     "react-i18next": "^13.5.0",
     "react-icons": "^4.12.0",
     "react-toastify": "^9.1.3",
-    "tsx": "^4.7.0"
+    "tsx": "^4.7.0",
+    "wisp-server-node": "^1.0.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
