@@ -5,7 +5,6 @@ import { HeaderRoute } from "../components/HeaderRoute";
 import { set } from "../util/IDB";
 import { uninstallServiceWorkers } from "../util/SWHelper";
 import prod from "./config.json"; // Set prod to true if you wish to load balance
-
 import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
@@ -15,7 +14,6 @@ export function Home() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-
   useEffect(() => {
     const handleLoad = () => {
       const firstLoad = localStorage.getItem("firstLoad") || "true";
@@ -157,7 +155,7 @@ export function Home() {
                     }
                   >
                     <div
-                      className={`font-roboto w-110 flex h-10 flex-none shrink-0 items-center text-input-text justify-center border border-input-border-color bg-input p-2 text-xl hover:bg-dropdown-option-hover-color ${
+                      className={`font-roboto w-110 flex h-10 flex-none shrink-0 items-center justify-center border border-input-border-color bg-input p-2 text-xl text-input-text hover:bg-dropdown-option-hover-color ${
                         index === suggestions.length - 1 ? "rounded-b-2xl" : ""
                       }`}
                       key={index}

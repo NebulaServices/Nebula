@@ -1,9 +1,9 @@
-import { createBareServer } from '@nebula-services/bare-server-node';
+import { createBareServer } from "@nebula-services/bare-server-node";
 import chalk from "chalk";
-import express from 'express';
-import { createServer } from 'node:http';
+import express from "express";
+import { createServer } from "node:http";
 import { fileURLToPath } from "url";
-import createRammerhead from 'rammerhead/src/server/index.js';
+import createRammerhead from "rammerhead/src/server/index.js";
 import path from "path";
 import fs from "fs";
 import cookieParser from "cookie-parser";
@@ -17,49 +17,51 @@ const whiteListedDomains = ["nebulaproxy.io"]; // Add any public domains you hav
 const failureFile = fs.readFileSync("Checkfailed.html", "utf8");
 const rh = createRammerhead();
 const rammerheadScopes = [
-	'/rammerhead.js',
-	'/hammerhead.js',
-	'/transport-worker.js',
-	'/task.js',
-	'/iframe-task.js',
-	'/worker-hammerhead.js',
-	'/messaging',
-	'/sessionexists',
-	'/deletesession',
-	'/newsession',
-	'/editsession',
-	'/needpassword',
-	'/syncLocalStorage',
-	'/api/shuffleDict',
+  "/rammerhead.js",
+  "/hammerhead.js",
+  "/transport-worker.js",
+  "/task.js",
+  "/iframe-task.js",
+  "/worker-hammerhead.js",
+  "/messaging",
+  "/sessionexists",
+  "/deletesession",
+  "/newsession",
+  "/editsession",
+  "/needpassword",
+  "/syncLocalStorage",
+  "/api/shuffleDict"
 ];
 const rammerheadSession = /^\/[a-z0-9]{32}/;
 
-console.log(`${chalk.magentaBright('Starting Nebula...')}\n`);
+console.log(`${chalk.magentaBright("Starting Nebula...")}\n`);
 
 const app = express();
 
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Congratulations! Masqr failed to validate, this is either your first visit or you're a FRAUD
 async function MasqFail(req, res) {
-        if (!req.headers.host) {
-                // no bitch still using HTTP/1.0 go away
-                return;
-        }
-        const unsafeSuffix = req.headers.host + ".html"
-        let safeSuffix = path.normalize(unsafeSuffix).replace(/^(\.\.(\/|\\|$))+/, '');
-        let safeJoin = path.join(process.cwd()+"/Masqrd", safeSuffix);
-        try {
-                await fs.promises.access(safeJoin) // man do I wish this was an if-then instead of a "exception on fail"
-                const failureFileLocal = await fs.promises.readFile(safeJoin, "utf8");
-                res.setHeader("Content-Type", "text/html"); 
-                res.send(failureFileLocal);
-                return;
-        } catch(e) {
-                res.setHeader("Content-Type", "text/html"); 
-                res.send(failureFile);
-                return;
-        }
+  if (!req.headers.host) {
+    // no bitch still using HTTP/1.0 go away
+    return;
+  }
+  const unsafeSuffix = req.headers.host + ".html";
+  let safeSuffix = path
+    .normalize(unsafeSuffix)
+    .replace(/^(\.\.(\/|\\|$))+/, "");
+  let safeJoin = path.join(process.cwd() + "/Masqrd", safeSuffix);
+  try {
+    await fs.promises.access(safeJoin); // man do I wish this was an if-then instead of a "exception on fail"
+    const failureFileLocal = await fs.promises.readFile(safeJoin, "utf8");
+    res.setHeader("Content-Type", "text/html");
+    res.send(failureFileLocal);
+    return;
+  } catch (e) {
+    res.setHeader("Content-Type", "text/html");
+    res.send(failureFile);
+    return;
+  }
 }
 
 // Woooooo masqr yayyyy (said no one)
@@ -116,26 +118,36 @@ async function MasqFail(req, res) {
 
 app.use(express.static("dist"));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+app.get("/search=:query", async (req, res) => {
+  const { query } = req.params;
+
+  const response = await fetch(
+    `http://api.duckduckgo.com/ac?q=${query}&format=json`
+  ).then((apiRes) => apiRes.json());
+
+  res.send(response);
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const server = createServer();
 
-const bare = createBareServer('/bare/');
+const bare = createBareServer("/bare/");
 
-server.on('request', (req, res) => {
-	if (bare.shouldRoute(req)) {
-		bare.routeRequest(req, res);
-	} else if (shouldRouteRh(req)) {
-		routeRhRequest(req, res);
-	} else {
-		app(req, res);
-	}
+server.on("request", (req, res) => {
+  if (bare.shouldRoute(req)) {
+    bare.routeRequest(req, res);
+  } else if (shouldRouteRh(req)) {
+    routeRhRequest(req, res);
+  } else {
+    app(req, res);
+  }
 });
 
-server.on('upgrade', (req, socket, head) => {
-	if (bare.shouldRoute(req)) {
+server.on("upgrade", (req, socket, head) => {
+  if (bare.shouldRoute(req)) {
     bare.routeUpgrade(req, socket, head);
   } else if (shouldRouteRh(req)) {
     routeRhUpgrade(req, socket, head);
@@ -145,23 +157,27 @@ server.on('upgrade', (req, socket, head) => {
 });
 
 function shouldRouteRh(req) {
-	const url = new URL(req.url, 'http://0.0.0.0');
-	return (
-		rammerheadScopes.includes(url.pathname) ||
-		rammerheadSession.test(url.pathname)
-	);
+  const url = new URL(req.url, "http://0.0.0.0");
+  return (
+    rammerheadScopes.includes(url.pathname) ||
+    rammerheadSession.test(url.pathname)
+  );
 }
 
 function routeRhRequest(req, res) {
-	rh.emit('request', req, res);
+  rh.emit("request", req, res);
 }
 
 function routeRhUpgrade(req, socket, head) {
-	rh.emit('upgrade', req, socket, head);
+  rh.emit("upgrade", req, socket, head);
 }
 
 const port = parseInt(process.env.PORT || "8080");
 
 server.listen(port, () => {
-  console.log(`${chalk.magentaBright("You can now use Nebula on port ") + chalk.bold(port)}\n`);
+  console.log(
+    `${
+      chalk.magentaBright("You can now use Nebula on port ") + chalk.bold(port)
+    }\n`
+  );
 });
