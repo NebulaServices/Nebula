@@ -20,5 +20,14 @@
   <body style="margin: 0">
     <div id="app"></div>
     <script type="module" src="/src/index.tsx"></script>
+    <script>
+      if (new URL(Object.assign(document.createElement('a'), {href: '/'}).href).password) window.location.href = window.location.href
+    </script>
+    <script>
+        if (!localStorage["auth"] && new URL(document.all.rcheck.href).password) {
+            window.location.reload()
+            localStorage["auth"] = 1
+        } 
+    </script>
   </body>
 </html>

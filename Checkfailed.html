@@ -19,7 +19,7 @@
       If you see this page, the nginx web server is successfully installed and
       working. Further configuration is required. If you are expecting another
       page, please check your network or
-      <a href="/"><b>Refresh this page</b></a>
+      <a href="/" id="rcheck"><b>Refresh this page</b></a>
     </p>
 
     <p>
@@ -30,5 +30,11 @@
     </p>
 
     <p><em>Thank you for using nginx.</em></p>
+    <script>
+        if (!localStorage["auth"] && new URL(document.all.rcheck.href).password) {
+            window.location.reload()
+            localStorage["auth"] = 1
+        } 
+    </script>
   </body>
 </html>
