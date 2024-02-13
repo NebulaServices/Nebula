@@ -116,17 +116,17 @@ function ProxyInput(props: BareInputProps) {
             }
           }}
           id="pinput"
-          className="font-roboto flex h-14 w-56 flex-row rounded-2xl border text-input-text border-input-border-color bg-input p-4 text-center text-sm"
+          className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-sm text-input-text"
         />
         <div class="flex flex-row gap-4">
           <div
-            className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row text-input-text items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
+            className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg text-input-text"
             onClick={handleChange}
           >
             {t("settings.bare.select")}
           </div>
           <div
-            className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center text-input-text justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg"
+            className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg text-input-text"
             onClick={resetProxy}
           >
             {t("settings.httpProxy.reset")}

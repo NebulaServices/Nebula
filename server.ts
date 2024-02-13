@@ -3,6 +3,7 @@ import chalk from "chalk";
 import express from "express";
 import { createServer } from "node:http";
 import { fileURLToPath } from "url";
+import compression from "compression";
 import createRammerhead from "rammerhead/src/server/index.js";
 import path from "path";
 import fs from "fs";
@@ -37,7 +38,12 @@ const rammerheadSession = /^\/[a-z0-9]{32}/;
 console.log(`${chalk.magentaBright("Starting Nebula...")}\n`);
 
 const app = express();
-
+app.use(
+  compression({
+    threshold: 0,
+    filter: () => true
+  })
+);
 app.use(cookieParser());
 
 // Congratulations! Masqr failed to validate, this is either your first visit or you're a FRAUD
