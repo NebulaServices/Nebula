@@ -34,7 +34,7 @@ Thanks for using Nebula!
 ## Tech Stack
 
 - TypeScript, Tailwind
-- Fastify
+- Express
 - TSX
 - Framer motion
 - react-i18next
@@ -53,7 +53,7 @@ For support, join our discord: discord.gg/unblocker
 
 ## Acknowledgements
 
-- [UV (one of the proxies use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
+- [UV (one of the proxies we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
 - [Dynamic (one of the proxies we use)](https://github.com/NebulaServices/Dynamic)
 - [Rammerhead (one of the proxies we use)](https://github.com/binary-person/rammerhead)
 - [Bare Server Node](https://github.com/tomphttp/bare-server-node)
