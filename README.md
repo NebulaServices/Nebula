@@ -11,7 +11,7 @@ NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. 
 - Hides your IP from sites
 - [List of officially supported sites](https://github.com/NebulaServices/Nebula/blob/dev/docs/officially-supported-sites.md)
 - Full mobile support
-- `about:blank` cloaking)
+- `about:blank` cloaking
 
 # Deployment
 
