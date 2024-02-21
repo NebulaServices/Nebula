@@ -33,7 +33,7 @@
     "preact-iso": "^2.3.2",
     "preact-render-to-string": "^6.3.1",
     "preact-router": "^4.1.2",
-    "rammerhead": "https://github.com/holy-unblocker/rammerhead/releases/download/v1.2.41-holy.5/rammerhead-1.2.41-holy.5.tgz",
+    "rammerhead": "https://github.com/NebulaServices/rammerhead/releases/download/rammerhead-1.2.41-nebula.8/rammerhead-1.2.41-nebula.7.tgz",
     "react-helmet": "^6.1.0",
     "react-i18next": "^13.5.0",
     "react-icons": "^4.12.0",
