@@ -9,7 +9,8 @@ import path from "path";
 import fs from "fs";
 import cookieParser from "cookie-parser";
 import wisp from "wisp-server-node";
-import { Socket } from "net";
+import { Request, Response } from "express";
+import { Socket, Head } from "ws";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,7 +48,7 @@ app.use(
 app.use(cookieParser());
 
 // Congratulations! Masqr failed to validate, this is either your first visit or you're a FRAUD
-async function MasqFail(req, res) {
+async function MasqFail(req: Request, res: Response) {
   if (!req.headers.host) {
     // no bitch still using HTTP/1.0 go away
     return;
@@ -124,7 +125,7 @@ async function MasqFail(req, res) {
 
 app.use(express.static("dist"));
 
-app.get("/search=:query", async (req, res) => {
+app.get("/search=:query", async (req: Request, res: Response) => {
   const { query } = req.params;
 
   const response = await fetch(
@@ -142,7 +143,7 @@ const server = createServer();
 
 const bare = createBareServer("/bare/");
 
-server.on("request", (req, res) => {
+server.on("request", (req: Request, res: Response) => {
   if (bare.shouldRoute(req)) {
     bare.routeRequest(req, res);
   } else if (shouldRouteRh(req)) {
@@ -152,13 +153,14 @@ server.on("request", (req, res) => {
   }
 });
 
-server.on("upgrade", (req, socket, head) => {
+server.on("upgrade", (req: Request, socket: Socket, head: Head) => {
   if (bare.shouldRoute(req)) {
     bare.routeUpgrade(req, socket, head);
   } else if (shouldRouteRh(req)) {
     routeRhUpgrade(req, socket, head);
-  } else {
-    wisp.routeRequest(req, socket as Socket, head);
+  }
+  else if (req.url.endsWith("/wisp/")) {
+      wisp.routeRequest(req, socket, head);
   }
 });
 
@@ -170,11 +172,11 @@ function shouldRouteRh(req) {
   );
 }
 
-function routeRhRequest(req, res) {
+function routeRhRequest(req: Request, res: Response) {
   rh.emit("request", req, res);
 }
 
-function routeRhUpgrade(req, socket, head) {
+function routeRhUpgrade(req: Request, socket: Socket, head: Head) {
   rh.emit("upgrade", req, socket, head);
 }
 
