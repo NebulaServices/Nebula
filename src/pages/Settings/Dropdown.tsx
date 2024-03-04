@@ -9,7 +9,7 @@ interface Option {
 const Dropdown = ({
   storageKey,
   options,
-  refresh
+  refresh,
 }: {
   storageKey: string;
   options: Option[];
