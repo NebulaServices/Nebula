@@ -19,11 +19,11 @@ export default defineConfig({
           dest: "uv",
           overwrite: false
         },
-        {
-            src: `${baremuxPath}/**/*`.replace(/\\/g, "/"),
-            dest: "mux",
-            overwrite: false
-        },
+        //{
+        //    src: `${baremuxPath}/**/*`.replace(/\\/g, "/"),
+        //    dest: "mux",
+        //    overwrite: false
+        //},
         {
             //include ALL files types
             src: `${epoxyPath}/**/*`,
