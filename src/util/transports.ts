@@ -20,7 +20,7 @@ function changeTransport(transport: string, wispUrl: string) {
     }
 }
 
-registerRemoteListener(navigator.serviceWorker.controller!);
-const p = changeTransport("epoxy", "ws://localhost:5173/wisp/");
-window.p = p;
+//registerRemoteListener(navigator.serviceWorker.controller!);
+//const p = changeTransport("epoxy", "ws://localhost:5173/wisp/");
+//window.p = p;
 export { changeTransport };

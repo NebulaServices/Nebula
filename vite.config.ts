@@ -9,15 +9,13 @@ import { baremuxPath } from "@mercuryworkshop/bare-mux";
 import path from "path";
 const __dirname = path.resolve();
 
-console.log(dynamicPath);
-
 export default defineConfig({
   plugins: [
     viteStaticCopy({
       targets: [
         {
           // .replace fixes weird paths on Windows
-          src: `${uvPath}/uv.*.js`.replace(/\\/g, "/"),
+          src: `${uvPath}/**/*`.replace(/\\/g, "/"),
           dest: "uv",
           overwrite: false
         },
