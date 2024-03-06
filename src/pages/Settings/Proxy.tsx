@@ -29,11 +29,12 @@ const Proxy = ({ id, active }) => {
     { id: "https://bing.com/search?q=%s", label: "Bing" }
   ];
 
-  const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+  const wispUrl =
+    (location.protocol === "https:" ? "wss://" : "ws://") +
+    location.host +
+    "/wisp/";
   //libcurl can be added here when it's stable
-  const transports = [
-    { id: "epoxy", label: "Epoxy" }
-  ];
+  const transports = [{ id: "epoxy", label: "Epoxy" }];
 
   return (
     <motion.div
@@ -93,22 +94,27 @@ const Proxy = ({ id, active }) => {
           <BareInput placeholder="/bare/" storageKey="bare" />
         </div>
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-            <div className="p-2 text-3xl font-bold text-input-text">
-                Wisp Server
-            </div>
-            <div className="text-md p-4 font-bold text-input-text">
-                Enter the url of a Wisp server
-            </div>
-            <WispInput placeholder={wispUrl} />
+          <div className="p-2 text-3xl font-bold text-input-text">
+            Wisp Server
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            Enter the url of a Wisp server
+          </div>
+          <WispInput placeholder={wispUrl} />
         </div>
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-            <div className="p-2 text-3xl font-bold text-input-text">
-                Transport 
-            </div>
-            <div className="text-md p-4 font-bold text-input-text">
-                Select the transport to use 
-            </div>
-            <Dropdown storageKey="transport" options={transports} refresh={false} onChange={(value) => changeTransport(value, wispUrl)} />
+          <div className="p-2 text-3xl font-bold text-input-text">
+            Transport
+          </div>
+          <div className="text-md p-4 font-bold text-input-text">
+            Select the transport to use
+          </div>
+          <Dropdown
+            storageKey="transport"
+            options={transports}
+            refresh={false}
+            onChange={(value) => changeTransport(value, wispUrl)}
+          />
         </div>
         <div className="flex h-96 w-96 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">

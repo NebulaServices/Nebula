@@ -25,10 +25,10 @@ export default defineConfig({
         //    overwrite: false
         //},
         {
-            //include ALL files types
-            src: `${epoxyPath}/**/*`,
-            dest: "epoxy",
-            overwrite: false
+          //include ALL files types
+          src: `${epoxyPath}/**/*`,
+          dest: "epoxy",
+          overwrite: false
         },
         {
           // .replace fixes weird paths on Windows

@@ -9,22 +9,30 @@ interface WispInputProps {
 
 function WispInput(props: WispInputProps) {
   const { t } = useTranslation();
-  const value = localStorage.getItem("wispUrl") || (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+  const value =
+    localStorage.getItem("wispUrl") ||
+    (location.protocol === "https:" ? "wss://" : "ws://") +
+      location.host +
+      "/wisp/";
   const [inputValue, setInputValue] = useState(value);
   function validateUrl(url: string) {
     let finalUrl = url;
     if (finalUrl.startsWith("http://")) {
-        finalUrl = finalUrl.replace("http://", "ws://");
+      finalUrl = finalUrl.replace("http://", "ws://");
     } else if (finalUrl.startsWith("https://")) {
-        finalUrl = finalUrl.replace("https://", "wss://");
-    }
-    else if (finalUrl === "" || finalUrl === null || finalUrl === undefined) {
-        finalUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+      finalUrl = finalUrl.replace("https://", "wss://");
+    } else if (finalUrl === "" || finalUrl === null || finalUrl === undefined) {
+      finalUrl =
+        (location.protocol === "https:" ? "wss://" : "ws://") +
+        location.host +
+        "/wisp/";
     }
     return finalUrl;
   }
   function handleChange() {
-    const url = validateUrl((document.getElementById("wispinput") as HTMLInputElement).value);
+    const url = validateUrl(
+      (document.getElementById("wispinput") as HTMLInputElement).value
+    );
     localStorage.setItem("wispUrl", url);
     changeTransport(localStorage.getItem("transport") || "epoxy", url);
   }
