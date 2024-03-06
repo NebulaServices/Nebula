@@ -7,6 +7,7 @@ declare global {
         p: any;
     }
 }
+
 function changeTransport(transport: string, wispUrl: string) {
     switch (transport) {
         case "epoxy":
@@ -20,7 +21,8 @@ function changeTransport(transport: string, wispUrl: string) {
     }
 }
 
-//registerRemoteListener(navigator.serviceWorker.controller!);
-//const p = changeTransport("epoxy", "ws://localhost:5173/wisp/");
-//window.p = p;
+const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+registerRemoteListener(navigator.serviceWorker.controller!);
+changeTransport(localStorage.getItem("transport") || "epoxy", localStorage.getItem("wispUrl") || wispUrl);
+
 export { changeTransport };

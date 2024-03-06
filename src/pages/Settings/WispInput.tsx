@@ -1,5 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
 import { useTranslation } from "react-i18next";
+import { changeTransport } from "../../util/transports";
 import { ToastContainer, toast } from "react-toastify";
 
 interface WispInputProps {
@@ -17,10 +18,15 @@ function WispInput(props: WispInputProps) {
     } else if (finalUrl.startsWith("https://")) {
         finalUrl = finalUrl.replace("https://", "wss://");
     }
+    else if (finalUrl === "" || finalUrl === null || finalUrl === undefined) {
+        finalUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+    }
+    return finalUrl;
   }
   function handleChange() {
-    const url = validateUrl((document.getElementById("input") as HTMLInputElement).value);
+    const url = validateUrl((document.getElementById("wispinput") as HTMLInputElement).value);
     localStorage.setItem("wispUrl", url);
+    changeTransport(localStorage.getItem("transport") || "epoxy", url);
   }
   return (
     <div>
@@ -35,7 +41,7 @@ function WispInput(props: WispInputProps) {
               handleChange();
             }
           }}
-          id="input"
+          id="wispinput"
           className="font-roboto flex h-14 w-56 flex-row rounded-2xl border border-input-border-color bg-input p-4 text-center text-xl text-input-text"
         />
         <div
