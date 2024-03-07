@@ -2,12 +2,12 @@ import million from "million/compiler";
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import { uvPath } from "@nebula-services/ultraviolet";
+import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { dynamicPath } from "@nebula-services/dynamic";
+import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
+import { baremuxPath } from "@mercuryworkshop/bare-mux";
 import path from "path";
 const __dirname = path.resolve();
-
-console.log(dynamicPath);
 
 export default defineConfig({
   plugins: [
@@ -15,8 +15,19 @@ export default defineConfig({
       targets: [
         {
           // .replace fixes weird paths on Windows
-          src: `${uvPath}/uv.*.js`.replace(/\\/g, "/"),
+          src: `${uvPath}/**/*`.replace(/\\/g, "/"),
           dest: "uv",
+          overwrite: false
+        },
+        //{
+        //    src: `${baremuxPath}/**/*`.replace(/\\/g, "/"),
+        //    dest: "mux",
+        //    overwrite: false
+        //},
+        {
+          //include ALL files types
+          src: `${epoxyPath}/**/*`,
+          dest: "epoxy",
           overwrite: false
         },
         {
