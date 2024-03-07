@@ -26,7 +26,7 @@ export default defineConfig({
         //},
         {
           //include ALL files types
-          src: `${epoxyPath}/**/*`,
+          src: `${epoxyPath}/**/*`.replace(/\\/g, "/"),
           dest: "epoxy",
           overwrite: false
         },
