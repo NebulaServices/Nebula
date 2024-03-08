@@ -4,7 +4,7 @@ export function HeaderRoute(props: { children: any }) {
   return (
     <div className="flex h-screen flex-col">
       <Header />
-      <div className="flex-1 bg-primary">
+      <div className="flex-1">
         <main className="h-full">{props.children}</main>
       </div>
     </div>
