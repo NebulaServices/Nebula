@@ -59,7 +59,7 @@ $ npm run bstart
 - [Dynamic (proxy)](https://github.com/NebulaServices/Dynamic)
 - [Rammerhead (proxy)](https://github.com/binary-person/rammerhead)
 - [Bare Server (nodejs edition)](https://github.com/tomphttp/bare-server-node)
-- [Catppuccin (themes)](https://github.com/catppuccin/catppuccin)
+- [Catppuccin (themes)](https://github.com/catppuccin/catppuccin) (sidenote: [catppuccin](https://github.com/catppuccin/nvim) is objectively the best neovim theme 💯)
 
 ## Support
 
