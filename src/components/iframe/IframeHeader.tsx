@@ -98,7 +98,7 @@ export function IframeHeader(props: { url: string }) {
     <div>
       <div
         id="iframeNav"
-        className="flex h-16 flex-row items-center justify-between gap-3 bg-navbar-color px-4"
+        className="flex h-16 flex-row items-center justify-between gap-3 bg-navbar-color px-4 border-b-2 border-border-color"
       >
         <div className="w-1/8">
           <div className="flex flex-row items-center">
