@@ -27,7 +27,7 @@ export function Faq() {
         originalTitle={t("titles.discord")}
         originalFavicon="/logo.png"
       />
-      <div class="p-10">
+      <div class="p-10 text-input-text">
         {Object.values(faqData).map((item, index) => (
           <div key={index} className="py-3">
             <p className="text-4xl" id={(index + 1).toString()}>

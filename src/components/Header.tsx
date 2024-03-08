@@ -9,6 +9,7 @@ import { RxMixerVertical, RxHamburgerMenu } from "react-icons/rx";
 import { RiLinksFill } from "react-icons/ri";
 import { BsQuestionLg } from "react-icons/bs";
 import { useState } from "preact/hooks";
+import { Logo } from "./logo";
 
 export function Header() {
   const { t } = useTranslation();
@@ -17,15 +18,15 @@ export function Header() {
   return (
     <div
       id="navbar"
-      className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4"
+      className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4 border-b-2 border-border-color "
     >
       <Link href="/" className="w-1/8">
         <div className="relative flex flex-row items-center">
-          <img
-            src="/logo.png"
-            className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg]"
-            alt="Nebula Logo"
-          ></img>
+          <div
+            className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg] fill-navbar-text-color"
+          >
+            <Logo />
+          </div>
           <h1 className="font-roboto invisible whitespace-nowrap text-2xl font-bold text-navbar-text-color sm:visible sm:text-4xl">
             {" "}
             {t("header.title")}{" "}

@@ -8,6 +8,7 @@ function Customization({ id, active }) {
 
   const themes = [
     { id: "main", label: t("themes.main") },
+    { id: "hacker", label: "Hacker" },
     { id: "catppuccinMocha", label: t("themes.catppuccinMocha") },
     { id: "catppuccinMacchiato", label: t("themes.catppuccinMacchiato") },
     { id: "catppuccinFrappe", label: t("themes.catppuccinFrappe") },
