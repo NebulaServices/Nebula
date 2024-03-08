@@ -29,7 +29,7 @@ export function Faq() {
       />
       <div class="p-10">
         {Object.values(faqData).map((item, index) => (
-          <div key={index} className="py-3">
+          <div key={index} className="py-3 text-input-text">
             <p className="text-4xl" id={(index + 1).toString()}>
               {item.q}
             </p>
