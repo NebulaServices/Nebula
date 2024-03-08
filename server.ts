@@ -1,22 +1,25 @@
-import { createBareServer } from "@nebula-services/bare-server-node";
-import chalk from "chalk";
-import express from "express";
+import fs from "node:fs";
+import path from "node:path";
 import { createServer } from "node:http";
-import { fileURLToPath } from "url";
-import compression from "compression";
-import createRammerhead from "rammerhead/src/server/index.js";
-import path from "path";
-import fs from "fs";
-import cookieParser from "cookie-parser";
-import wisp from "wisp-server-node";
-import { Request, Response } from "express";
-import { Socket, Head } from "ws";
+import { fileURLToPath } from "node:url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import chalk from "chalk";
+import { Socket, Head } from "ws";
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import express, { Request, Response } from "express";
+
+import wisp from "wisp-server-node";
+import createRammerhead from "rammerhead/src/server/index.js";
+import { createBareServer } from "@nebula-services/bare-server-node";
+
+// MASQR
 const LICENSE_SERVER_URL = "https://license.mercurywork.shop/validate?license=";
 const whiteListedDomains = ["nebulaproxy.io"]; // Add any public domains you have here
 const failureFile = fs.readFileSync("Checkfailed.html", "utf8");
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const rh = createRammerhead();
 const rammerheadScopes = [
   "/rammerhead.js",
@@ -125,9 +128,7 @@ async function MasqFail(req: Request, res: Response) {
 
 app.use(express.static("dist"));
 
-app.get("/search=:query", async (req: Request, res: Response) => {
-  const { query } = req.params;
-
+app.get("/search=:query", async ({ params: { query } }: Request, res: Response) => {
   const response = await fetch(
     `http://api.duckduckgo.com/ac?q=${query}&format=json`
   ).then((apiRes) => apiRes.json());
@@ -144,23 +145,15 @@ const server = createServer();
 const bare = createBareServer("/bare/");
 
 server.on("request", (req: Request, res: Response) => {
-  if (bare.shouldRoute(req)) {
-    bare.routeRequest(req, res);
-  } else if (shouldRouteRh(req)) {
-    routeRhRequest(req, res);
-  } else {
-    app(req, res);
-  }
+  if (bare.shouldRoute(req)) bare.routeRequest(req, res);
+  else if (shouldRouteRh(req)) routeRhRequest(req, res);
+  else app(req, res);
 });
 
 server.on("upgrade", (req: Request, socket: Socket, head: Head) => {
-  if (bare.shouldRoute(req)) {
-    bare.routeUpgrade(req, socket, head);
-  } else if (shouldRouteRh(req)) {
-    routeRhUpgrade(req, socket, head);
-  } else if (req.url.endsWith("/wisp/")) {
-    wisp.routeRequest(req, socket, head);
-  }
+  if (bare.shouldRoute(req)) bare.routeUpgrade(req, socket, head);
+  else if (shouldRouteRh(req)) routeRhUpgrade(req, socket, head);
+  else if (req.url.endsWith("/wisp/")) wisp.routeRequest(req, socket, head);
 });
 
 function shouldRouteRh(req) {
