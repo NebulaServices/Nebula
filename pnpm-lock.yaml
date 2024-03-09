@@ -20,15 +20,15 @@ dependencies:
   '@mercuryworkshop/epoxy-transport':
     specifier: ^1.0.2
     version: 1.0.2(typescript@5.3.3)
-  '@nebula-services/bare-server-node':
-    specifier: 2.0.1-patch.1
-    version: 2.0.1-patch.1
   '@nebula-services/dynamic':
     specifier: 0.7.2-patch.2
     version: 0.7.2-patch.2
   '@titaniumnetwork-dev/ultraviolet':
     specifier: ^3.0.0
     version: 3.0.0
+  '@tomphttp/bare-server-node':
+    specifier: 2.0.3
+    version: 2.0.3
   '@tsparticles/engine':
     specifier: ^3.3.0
     version: 3.3.0
@@ -851,24 +851,6 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@nebula-services/bare-server-node@2.0.1-patch.1:
-    resolution: {integrity: sha512-kcR7TAuZ6ZwwNtiOOjgVyzHLzUYUsKm85zv/dIg5liYWe2Uzf7mZ7aagzQVbSjac1qdsmOs4UKbFYXtCLY5V6Q==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-    dependencies:
-      async-exit-hook: 2.0.1
-      commander: 10.0.1
-      dotenv: 16.4.5
-      http-errors: 2.0.0
-      ipaddr.js: 2.1.0
-      source-map-support: 0.5.21
-      tunnel: 0.0.6
-      ws: 8.16.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
   /@nebula-services/dynamic@0.7.2-patch.2:
     resolution: {integrity: sha512-0g1ygwVNS0dmT38NIeZYc2Z5HiZKHT3tP7ZagIeWC/VlcZjINIPR4ThNndWVaGiZey2Y2JS2807ABb41OSYTrw==}
     dependencies:
@@ -877,7 +859,7 @@ packages:
       '@fastify/compress': 6.5.0
       '@fastify/static': 6.12.0
       '@tomphttp/bare-client': 2.2.0-alpha
-      '@tomphttp/bare-server-node': 2.0.1
+      '@tomphttp/bare-server-node': 2.0.3
       acorn: 8.11.3
       astring: 1.8.6
       chalk: 5.3.0
@@ -1126,15 +1108,14 @@ packages:
     resolution: {integrity: sha512-xhcflOpwr92tkpp8SoDhB3nK3LHMBIjx+vgow37XobQew2k0/mXSxmaU7BsDFpOIa1CcLCEsR8gWn0v7Cy9+7Q==}
     dev: false
 
-  /@tomphttp/bare-server-node@2.0.1:
-    resolution: {integrity: sha512-L42TC/AldYRFBRZSxhkI0FC5TL8EC/NAsepNC/cWYTTiHQJ7mGg/vdTqNz8ShTYHr6LTHYkuD3/81nhX55SYtA==}
+  /@tomphttp/bare-server-node@2.0.3:
+    resolution: {integrity: sha512-IGzZspDwzto+oPsvlV99OALJKH3X1nRWnpBE8EY6nrqu5I83xw3uSUacEdHNnW4rXG0IQ8vZwMH87VOMoArJ3A==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
       async-exit-hook: 2.0.1
       commander: 10.0.1
       dotenv: 16.4.5
-      headers-polyfill: 3.3.0
       http-errors: 2.0.0
       ipaddr.js: 2.1.0
       source-map-support: 0.5.21
@@ -3646,10 +3627,6 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
     dev: true
-
-  /headers-polyfill@3.3.0:
-    resolution: {integrity: sha512-5e57etwBpNcDc0b6KCVWEh/Ro063OxPvzVimUdM0/tsYM/T7Hfy3kknIGj78SFTOhNd8AZY41U8mOHoO4LzmIQ==}
-    dev: false
 
   /html-parse-stringify@3.0.1:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
@@ -6329,11 +6306,6 @@ packages:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
     dependencies:
       safe-buffer: 5.2.1
-    dev: false
-
-  /tunnel@0.0.6:
-    resolution: {integrity: sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==}
-    engines: {node: '>=0.6.11 <=0.7.0 || >=0.7.3'}
     dev: false
 
   /type-check@0.4.0:

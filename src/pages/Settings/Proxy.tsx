@@ -116,21 +116,6 @@ const Proxy = ({ id, active }) => {
             onChange={(value) => changeTransport(value, wispUrl)}
           />
         </div>
-        <div className="flex h-96 w-96 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-          <div className="p-2 text-3xl font-bold text-input-text">
-            {t("settings.httpProxy.title")}
-          </div>
-          <div className="text-md p-4 font-bold text-input-text">
-            {t("settings.httpProxy.subtitle")}
-          </div>
-          <div className="text-md pb-4 font-bold text-input-text underline">
-            <a href="/faq#4">{t("settings.httpProxy.link")}</a>
-          </div>
-          <ProxyInput
-            placeholder="username:password@1.2.3.4"
-            storageKey="bare"
-          />
-        </div>
       </motion.div>
     </motion.div>
   );
