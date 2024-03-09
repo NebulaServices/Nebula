@@ -14,26 +14,26 @@ const theme = localStorage.getItem("theme") || "main";
 const particlesUrl = localStorage.getItem("particles") || "none";
 
 export default function App() {
-  const [ init, setInit ] = useState(false);
+  const [init, setInit] = useState(false);
 
-    // this should be run only once per application lifetime
-    useEffect(() => {
-        initParticlesEngine(async (engine) => {
-            // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-            // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-            // starting from v2 you can add only the features you need reducing the bundle size
-            //await loadAll(engine);
-            //await loadFull(engine);
-            await loadSlim(engine);
-            //await loadBasic(engine);
-        }).then(() => {
-            setInit(true);
-        });
-    }, []);
+  // this should be run only once per application lifetime
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
+      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+      // starting from v2 you can add only the features you need reducing the bundle size
+      //await loadAll(engine);
+      //await loadFull(engine);
+      await loadSlim(engine);
+      //await loadBasic(engine);
+    }).then(() => {
+      setInit(true);
+    });
+  }, []);
 
-    const particlesLoaded = (container) => {
-        console.log(container);
-    };
+  const particlesLoaded = (container) => {
+    console.log(container);
+  };
 
   return (
     <div class="w-srceen h-screen">
@@ -44,11 +44,18 @@ export default function App() {
         <link rel="stylesheet" href="/themes/main.css"></link>
       </Helmet>
       <Suspense fallback={<LoadSuspense />}>
-        <div className="z-20 absolute w-full h-full">
+        <div className="absolute z-20 h-full w-full">
           <Routes />
         </div>
-        <div className="z-10 bg-primary w-full h-full">
-          {init && particlesUrl !== "none" && <Particles id="tsparticles" url={particlesUrl} particlesLoaded={particlesLoaded} class="bg-primary" /> }
+        <div className="z-10 h-full w-full bg-primary">
+          {init && particlesUrl !== "none" && (
+            <Particles
+              id="tsparticles"
+              url={particlesUrl}
+              particlesLoaded={particlesLoaded}
+              class="bg-primary"
+            />
+          )}
         </div>
       </Suspense>
     </div>

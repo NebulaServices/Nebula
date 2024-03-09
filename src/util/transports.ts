@@ -18,10 +18,13 @@ function changeTransport(transport: string, wispUrl: string) {
       SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
       break;
     case "libcurl":
-        localStorage.setItem("transport", "libcurl");
-        console.log("Setting transport to Libcurl");
-        SetTransport("CurlMod.LibcurlClient", { wisp: wispUrl, wasm: "/libcurl.wasm" });
-        break;
+      localStorage.setItem("transport", "libcurl");
+      console.log("Setting transport to Libcurl");
+      SetTransport("CurlMod.LibcurlClient", {
+        wisp: wispUrl,
+        wasm: "/libcurl.wasm"
+      });
+      break;
     //stuff like bare-as-module3 COULD also be added
     default:
       SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });

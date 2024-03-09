@@ -33,7 +33,10 @@ const Proxy = ({ id, active }) => {
     (location.protocol === "https:" ? "wss://" : "ws://") +
     location.host +
     "/wisp/";
-  const transports = [{ id: "epoxy", label: "Epoxy" }, { id: "libcurl", label: "Libcurl" }];
+  const transports = [
+    { id: "epoxy", label: "Epoxy" },
+    { id: "libcurl", label: "Libcurl" }
+  ];
 
   return (
     <motion.div

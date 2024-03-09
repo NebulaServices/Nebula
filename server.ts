@@ -123,14 +123,16 @@ async function MasqFail(req: Request, res: Response) {
     return; 
 }) */
 
-app.use(express.static("dist", {
+app.use(
+  express.static("dist", {
     //force .cjs files to be served as text/javascript (libcurl)
     setHeaders: (res, path) => {
-        if (path.endsWith(".cjs")) {
-            res.setHeader("Content-Type", "text/javascript");
-        }
+      if (path.endsWith(".cjs")) {
+        res.setHeader("Content-Type", "text/javascript");
+      }
     }
-}));
+  })
+);
 
 app.get("/search=:query", async (req: Request, res: Response) => {
   const { query } = req.params;

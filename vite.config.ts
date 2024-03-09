@@ -5,7 +5,7 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { dynamicPath } from "@nebula-services/dynamic";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
-import { libcurlPath } from "@mercuryworkshop/libcurl-transport"
+import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import path from "path";
 const __dirname = path.resolve();
 
@@ -24,9 +24,9 @@ export default defineConfig({
           overwrite: false
         },
         {
-            src: `${libcurlPath}/**/*`.replace(/\\/g, "/"),
-            dest: "libcurl",
-            overwrite: false
+          src: `${libcurlPath}/**/*`.replace(/\\/g, "/"),
+          dest: "libcurl",
+          overwrite: false
         },
         {
           src: `${dynamicPath}/dynamic.*.js`.replace(/\\/g, "/"),
