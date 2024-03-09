@@ -33,8 +33,7 @@ const Proxy = ({ id, active }) => {
     (location.protocol === "https:" ? "wss://" : "ws://") +
     location.host +
     "/wisp/";
-  //libcurl can be added here when it's stable
-  const transports = [{ id: "epoxy", label: "Epoxy" }];
+  const transports = [{ id: "epoxy", label: "Epoxy" }, { id: "libcurl", label: "Libcurl" }];
 
   return (
     <motion.div
