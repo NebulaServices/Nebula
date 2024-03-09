@@ -18,13 +18,11 @@ export function Header() {
   return (
     <div
       id="navbar"
-      className="flex h-16 flex-row items-center justify-between bg-navbar-color px-4 border-b-2 border-border-color "
+      className="flex h-16 flex-row items-center justify-between border-b-2 border-border-color bg-navbar-color px-4 "
     >
       <Link href="/" className="w-1/8">
         <div className="relative flex flex-row items-center">
-          <div
-            className="h-16 w-16 transition-all duration-1000 hover:rotate-[360deg] fill-navbar-text-color"
-          >
+          <div className="h-16 w-16 fill-navbar-text-color transition-all duration-1000 hover:rotate-[360deg]">
             <Logo />
           </div>
           <h1 className="font-roboto invisible whitespace-nowrap text-2xl font-bold text-navbar-text-color sm:visible sm:text-4xl">

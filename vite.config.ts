@@ -5,7 +5,7 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { dynamicPath } from "@nebula-services/dynamic";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
-import { baremuxPath } from "@mercuryworkshop/bare-mux";
+import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import path from "path";
 const __dirname = path.resolve();
 
@@ -14,24 +14,21 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          // .replace fixes weird paths on Windows
           src: `${uvPath}/**/*`.replace(/\\/g, "/"),
           dest: "uv",
           overwrite: false
         },
-        //{
-        //    src: `${baremuxPath}/**/*`.replace(/\\/g, "/"),
-        //    dest: "mux",
-        //    overwrite: false
-        //},
         {
-          //include ALL files types
           src: `${epoxyPath}/**/*`.replace(/\\/g, "/"),
           dest: "epoxy",
           overwrite: false
         },
         {
-          // .replace fixes weird paths on Windows
+          src: `${libcurlPath}/**/*`.replace(/\\/g, "/"),
+          dest: "libcurl",
+          overwrite: false
+        },
+        {
           src: `${dynamicPath}/dynamic.*.js`.replace(/\\/g, "/"),
           dest: "dynamic",
           overwrite: false
