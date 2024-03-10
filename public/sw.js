@@ -16,6 +16,7 @@ localforage.config({
   description: "Nebula Config for things reliant on IndexedDB"
 });
 
+const uv = new UVServiceWorker();
 const dynPromise = new Promise(async (resolve) => {
   try {
     const bare =
@@ -44,18 +45,17 @@ self.addEventListener("fetch", (event) => {
       })()
     );
   } else if (
-    event.request.url.startsWith(location.origin + self.__uv$config.prefix)
+    event.request.url.startsWith(location.origin + __uv$config.prefix)
   ) {
     event.respondWith(
       (async function () {
-        return await self.uv.fetch(event);
+        return await uv.fetch(event);
       })()
-    );
-  } else {
+    )}
+    else {
     event.respondWith(
       (async function () {
         return await fetch(event.request);
       })()
-    );
-  }
+    )}
 });
