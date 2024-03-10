@@ -3,13 +3,6 @@ import {
   registerRemoteListener
 } from "@mercuryworkshop/bare-mux";
 
-declare global {
-  interface Window {
-    BareMux: any;
-    p: any;
-  }
-}
-
 function changeTransport(transport: string, wispUrl: string) {
   switch (transport) {
     case "epoxy":
@@ -25,6 +18,13 @@ function changeTransport(transport: string, wispUrl: string) {
         wasm: "/libcurl.wasm"
       });
       break;
+    case "bare":
+        localStorage.setItem("transport", "bare");
+        console.log("Setting transport to Bare");
+        const bare = localStorage.getItem("bare") || window.location.origin + "/bare/";
+        console.log("Bare URL: " + bare);
+        SetTransport("BareMod.BareClient", bare);
+        break;
     //stuff like bare-as-module3 COULD also be added
     default:
       SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });

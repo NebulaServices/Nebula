@@ -35,7 +35,8 @@ const Proxy = ({ id, active }) => {
     "/wisp/";
   const transports = [
     { id: "epoxy", label: "Epoxy" },
-    { id: "libcurl", label: "Libcurl" }
+    { id: "libcurl", label: "Libcurl" },
+    { id: "bare", label: "Bare Server" }
   ];
 
   return (
