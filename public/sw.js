@@ -1,5 +1,6 @@
 importScripts("/epoxy/index.js");
 importScripts("/libcurl/index.cjs");
+importScripts("/transports/bareTransport.js");
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");
 importScripts(__uv$config.sw || "/uv/uv.sw.js");
@@ -27,22 +28,6 @@ const dynPromise = new Promise(async (resolve) => {
   resolve();
 });
 
-const uvPromise = new Promise(async (resolve) => {
-  try {
-    const bare =
-      (await localforage.getItem("bare")) || location.origin + "/bare/";
-    const proxyUrl = (await localforage.getItem("HTTPProxy")) || "";
-    const [proxyIP, proxyPort] = proxyUrl.split(":");
-    self.__uv$config.bare = bare;
-    self.__uv$config.proxyPort = proxyPort;
-    self.__uv$config.proxyIp = proxyIP;
-    self.uv = new UVServiceWorker(self.__uv$config);
-  } catch (error) {
-    console.log(error);
-  }
-  resolve();
-});
-
 self.addEventListener("fetch", (event) => {
   if (
     event.request.url.startsWith(location.origin + self.__dynamic$config.prefix)
@@ -63,10 +48,13 @@ self.addEventListener("fetch", (event) => {
   ) {
     event.respondWith(
       (async function () {
-        try {
-          await uvPromise;
-        } catch (error) {}
         return await self.uv.fetch(event);
+      })()
+    );
+  } else {
+    event.respondWith(
+      (async function () {
+        return await fetch(event.request);
       })()
     );
   }
