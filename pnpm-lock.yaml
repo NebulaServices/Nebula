@@ -15,14 +15,14 @@ dependencies:
     specifier: ^6.12.0
     version: 6.12.0
   '@mercuryworkshop/bare-mux':
-    specifier: ^1.0.4
-    version: 1.0.4
+    specifier: ^1.0.5
+    version: 1.0.5
   '@mercuryworkshop/epoxy-transport':
     specifier: ^1.0.2
     version: 1.0.2(typescript@5.4.2)
   '@mercuryworkshop/libcurl-transport':
-    specifier: ^1.2.0
-    version: 1.2.0(typescript@5.4.2)
+    specifier: ^1.2.1
+    version: 1.2.1(typescript@5.4.2)
   '@nebula-services/dynamic':
     specifier: 0.7.2-patch.2
     version: 0.7.2-patch.2
@@ -828,21 +828,21 @@ packages:
       uuid: 9.0.1
     dev: false
 
-  /@mercuryworkshop/bare-mux@1.0.4:
-    resolution: {integrity: sha512-u9vtjc9Gp4G6UO7NYB1SphEiNIZtHuwI7/wxebbeKJ+GegmogxFodXF0ZYsQl7AY0fo3RqQs4odex9pYPHDkgQ==}
+  /@mercuryworkshop/bare-mux@1.0.5:
+    resolution: {integrity: sha512-5czcsWISUCrN49diTuF/8WXZUCyoWHn90Ea+gLhVWKGUTyJzPAG5gTVZ77rMcQYewSuSDA1WVPaF0n79ciL5Gg==}
     dependencies:
       '@types/uuid': 9.0.8
       uuid: 9.0.1
     dev: false
 
-  /@mercuryworkshop/epoxy-tls@1.3.0:
-    resolution: {integrity: sha512-aqa+6Sm7weAtSwuWrVZIlqabIvzb60NxebAm1gf9Haulviz0NCMTO1sCGQ2JJrgWAmzGp63PQ4CeB9ZvKq9odw==}
+  /@mercuryworkshop/epoxy-tls@1.4.0:
+    resolution: {integrity: sha512-AeF9q4oFuuTKYHy+/aSAFED4ols/C1SbmEKTd1qkg5O2Pmzqd9RJWrHG7Siu8Je3FW3oIofIGmLqvnV5HlvuDQ==}
     dev: false
 
   /@mercuryworkshop/epoxy-transport@1.0.2(typescript@5.4.2):
     resolution: {integrity: sha512-phd8dlaSZqOt1/suNShdBFf1dlXyYGVXYEjAX7vg0pW4cWN1kgJvpq58a/LZwNlIqb2vkFp6pXUXq7w/RW70vQ==}
     dependencies:
-      '@mercuryworkshop/epoxy-tls': 1.3.0
+      '@mercuryworkshop/epoxy-tls': 1.4.0
       esbuild-plugin-umd-wrapper: 2.0.0
       rollup: 4.12.1
       rollup-plugin-node-resolve: 5.2.0(rollup@4.12.1)
@@ -854,11 +854,11 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@mercuryworkshop/libcurl-transport@1.2.0(typescript@5.4.2):
-    resolution: {integrity: sha512-jONOZ/jbLAuSd+m0d1Z4JAnB08VbyYf1or8nKFdyNn4TudDnu0yDQnRYuD/nELUXnOJNT7WnjEGIpaeLcNdXCg==}
+  /@mercuryworkshop/libcurl-transport@1.2.1(typescript@5.4.2):
+    resolution: {integrity: sha512-HwlC36KSMoUHQmZ8y2EkF57oV6UfLrg6rUbdniMQqWw2HEDBT5Ua+gcyQybjW6pNMqvneqnOWLJFF9LwZzGHoA==}
     dependencies:
       esbuild-plugin-umd-wrapper: 2.0.0
-      libcurl.js: 0.4.2
+      libcurl.js: 0.5.0
       rollup: 4.12.1
       rollup-plugin-node-resolve: 5.2.0(rollup@4.12.1)
       rollup-plugin-typescript2: 0.36.0(rollup@4.12.1)(typescript@5.4.2)
@@ -2109,7 +2109,7 @@ packages:
       es-errors: 1.3.0
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
-      set-function-length: 1.2.1
+      set-function-length: 1.2.2
 
   /callsite@1.0.0:
     resolution: {integrity: sha512-0vdNRFXn5q+dtOqjfFtmtlI9N2eVZ7LMyEV2iKC5mEEFvSg/69Ml6b/WU2qF8W1nLRa0wiSrDT3Y5jOHZCwKPQ==}
@@ -2694,7 +2694,7 @@ packages:
       object-keys: 1.1.1
       object.assign: 4.1.5
       regexp.prototype.flags: 1.5.2
-      safe-array-concat: 1.1.0
+      safe-array-concat: 1.1.2
       safe-regex-test: 1.0.3
       string.prototype.trim: 1.2.8
       string.prototype.trimend: 1.0.7
@@ -2735,7 +2735,7 @@ packages:
       has-symbols: 1.0.3
       internal-slot: 1.0.7
       iterator.prototype: 1.1.2
-      safe-array-concat: 1.1.0
+      safe-array-concat: 1.1.2
     dev: true
 
   /es-set-tostringtag@2.0.3:
@@ -4188,8 +4188,8 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /libcurl.js@0.4.2:
-    resolution: {integrity: sha512-WuL2EgeYVuSsHFeJhpq83pOMX8+ei1E4Vpym7SKz6vPvuOEK9TBDCZRXDN/zr9o4T9UIy0FXxwpIEyHvSBNGmA==}
+  /libcurl.js@0.5.0:
+    resolution: {integrity: sha512-jzG6d05DjXXi862N/8gVyJbbbh5+9DtiuhqvbNhK4v0E9nhlG0Qs2y+ljBuDBA1reE2Lr4HzpLy/U28w49gCYQ==}
     dev: false
 
   /lie@3.1.1:
@@ -5649,8 +5649,8 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /safe-array-concat@1.1.0:
-    resolution: {integrity: sha512-ZdQ0Jeb9Ofti4hbt5lX3T2JcAamT9hfzYU1MNB+z/jaEbB6wfFfPIR/zEORmZqobkCCJhSjodobH6WHNmJ97dg==}
+  /safe-array-concat@1.1.2:
+    resolution: {integrity: sha512-vj6RsCsWBCf19jIeHEfkRMw8DPiBb+DMXklQ/1SGDHOMlHdPUkZXFQ2YdplS23zESTijAcurb1aSgJA3AgMu1Q==}
     engines: {node: '>=0.4'}
     dependencies:
       call-bind: 1.0.7
@@ -5760,8 +5760,8 @@ packages:
     resolution: {integrity: sha512-RVnVQxTXuerk653XfuliOxBP81Sf0+qfQE73LIYKcyMYHG94AuH0kgrQpRDuTZnSmjpysHmzxJXKNfa6PjFhyQ==}
     dev: false
 
-  /set-function-length@1.2.1:
-    resolution: {integrity: sha512-j4t6ccc+VsKwYHso+kElc5neZpjtq9EnRICFZtWyBsLojhmeF/ZBd/elqm22WJh/BziDe/SBiOeAt0m2mfLD0g==}
+  /set-function-length@1.2.2:
+    resolution: {integrity: sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==}
     engines: {node: '>= 0.4'}
     dependencies:
       define-data-property: 1.1.4
