@@ -26,7 +26,6 @@ function changeTransport(transport: string, wispUrl: string) {
       console.log("Bare URL: " + bare);
       SetTransport("BareMod.BareClient", bare);
       break;
-    //stuff like bare-as-module3 COULD also be added
     default:
       SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
       break;
