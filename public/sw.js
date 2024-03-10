@@ -51,11 +51,12 @@ self.addEventListener("fetch", (event) => {
       (async function () {
         return await uv.fetch(event);
       })()
-    )}
-    else {
+    );
+  } else {
     event.respondWith(
       (async function () {
         return await fetch(event.request);
       })()
-    )}
+    );
+  }
 });

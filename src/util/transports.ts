@@ -19,12 +19,13 @@ function changeTransport(transport: string, wispUrl: string) {
       });
       break;
     case "bare":
-        localStorage.setItem("transport", "bare");
-        console.log("Setting transport to Bare");
-        const bare = localStorage.getItem("bare") || window.location.origin + "/bare/";
-        console.log("Bare URL: " + bare);
-        SetTransport("BareMod.BareClient", bare);
-        break;
+      localStorage.setItem("transport", "bare");
+      console.log("Setting transport to Bare");
+      const bare =
+        localStorage.getItem("bare") || window.location.origin + "/bare/";
+      console.log("Bare URL: " + bare);
+      SetTransport("BareMod.BareClient", bare);
+      break;
     //stuff like bare-as-module3 COULD also be added
     default:
       SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
