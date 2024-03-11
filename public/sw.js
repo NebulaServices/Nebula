@@ -1,5 +1,6 @@
 importScripts("/epoxy/index.js");
 importScripts("/libcurl/index.cjs");
+importScripts("/transports/bareTransport.js");
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");
 importScripts(__uv$config.sw || "/uv/uv.sw.js");
@@ -15,28 +16,13 @@ localforage.config({
   description: "Nebula Config for things reliant on IndexedDB"
 });
 
+const uv = new UVServiceWorker();
 const dynPromise = new Promise(async (resolve) => {
   try {
     const bare =
       (await localforage.getItem("bare")) || location.origin + "/bare/";
     self.__dynamic$config.bare.path = bare;
     self.dynamic = new Dynamic(self.__dynamic$config);
-  } catch (error) {
-    console.log(error);
-  }
-  resolve();
-});
-
-const uvPromise = new Promise(async (resolve) => {
-  try {
-    const bare =
-      (await localforage.getItem("bare")) || location.origin + "/bare/";
-    const proxyUrl = (await localforage.getItem("HTTPProxy")) || "";
-    const [proxyIP, proxyPort] = proxyUrl.split(":");
-    self.__uv$config.bare = bare;
-    self.__uv$config.proxyPort = proxyPort;
-    self.__uv$config.proxyIp = proxyIP;
-    self.uv = new UVServiceWorker(self.__uv$config);
   } catch (error) {
     console.log(error);
   }
@@ -59,14 +45,17 @@ self.addEventListener("fetch", (event) => {
       })()
     );
   } else if (
-    event.request.url.startsWith(location.origin + self.__uv$config.prefix)
+    event.request.url.startsWith(location.origin + __uv$config.prefix)
   ) {
     event.respondWith(
       (async function () {
-        try {
-          await uvPromise;
-        } catch (error) {}
-        return await self.uv.fetch(event);
+        return await uv.fetch(event);
+      })()
+    );
+  } else {
+    event.respondWith(
+      (async function () {
+        return await fetch(event.request);
       })()
     );
   }

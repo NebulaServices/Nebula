@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 
 const Proxy = ({ id, active }) => {
   const { t } = useTranslation();
+  const transport = localStorage.getItem("transport") || "libcurl";
+  const proccy = localStorage.getItem("proxy") || "automatic";
 
   const engines = [
     { id: "automatic", label: t("settings.proxy.automatic") },
@@ -34,8 +36,9 @@ const Proxy = ({ id, active }) => {
     location.host +
     "/wisp/";
   const transports = [
-    { id: "epoxy", label: "Epoxy" },
-    { id: "libcurl", label: "Libcurl" }
+    { id: "libcurl", label: "Libcurl" },
+    { id: "bare", label: "Bare Server" },
+    { id: "epoxy", label: "Epoxy" }
   ];
 
   return (
@@ -86,24 +89,28 @@ const Proxy = ({ id, active }) => {
             refresh={false}
           />
         </div>
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-          <div className="p-2 text-3xl font-bold text-input-text">
-            {t("settings.bare.title")}
+        {transport === "bare" && (
+          <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
+            <div className="p-2 text-3xl font-bold text-input-text">
+              {t("settings.bare.title")}
+            </div>
+            <div className="text-md p-4 font-bold text-input-text">
+              {t("settings.bare.subtitle")}
+            </div>
+            <BareInput placeholder="/bare/" storageKey="bare" />
           </div>
-          <div className="text-md p-4 font-bold text-input-text">
-            {t("settings.bare.subtitle")}
+        )}
+        {transport !== "bare" && (
+          <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
+            <div className="p-2 text-3xl font-bold text-input-text">
+              Wisp Server
+            </div>
+            <div className="text-md p-4 font-bold text-input-text">
+              Enter the url of a Wisp server
+            </div>
+            <WispInput placeholder={wispUrl} />
           </div>
-          <BareInput placeholder="/bare/" storageKey="bare" />
-        </div>
-        <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-          <div className="p-2 text-3xl font-bold text-input-text">
-            Wisp Server
-          </div>
-          <div className="text-md p-4 font-bold text-input-text">
-            Enter the url of a Wisp server
-          </div>
-          <WispInput placeholder={wispUrl} />
-        </div>
+        )}
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
             Transport
@@ -114,8 +121,7 @@ const Proxy = ({ id, active }) => {
           <Dropdown
             storageKey="transport"
             options={transports}
-            refresh={false}
-            onChange={(value) => changeTransport(value, wispUrl)}
+            refresh={true}
           />
         </div>
       </motion.div>
