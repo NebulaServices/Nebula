@@ -90,26 +90,26 @@ const Proxy = ({ id, active }) => {
           />
         </div>
         {transport === "bare" && (
-            <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-                <div className="p-2 text-3xl font-bold text-input-text">
-                    {t("settings.bare.title")}
-                </div>
-                <div className="text-md p-4 font-bold text-input-text">
-                    {t("settings.bare.subtitle")}
-                </div>
-                <BareInput placeholder="/bare/" storageKey="bare" />
+          <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
+            <div className="p-2 text-3xl font-bold text-input-text">
+              {t("settings.bare.title")}
             </div>
+            <div className="text-md p-4 font-bold text-input-text">
+              {t("settings.bare.subtitle")}
+            </div>
+            <BareInput placeholder="/bare/" storageKey="bare" />
+          </div>
         )}
         {transport !== "bare" && (
-            <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
-                <div className="p-2 text-3xl font-bold text-input-text">
-                    Wisp Server
-                </div>
-                <div className="text-md p-4 font-bold text-input-text">
-                    Enter the url of a Wisp server
-                </div>
-                <WispInput placeholder={wispUrl} />
+          <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
+            <div className="p-2 text-3xl font-bold text-input-text">
+              Wisp Server
             </div>
+            <div className="text-md p-4 font-bold text-input-text">
+              Enter the url of a Wisp server
+            </div>
+            <WispInput placeholder={wispUrl} />
+          </div>
         )}
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
