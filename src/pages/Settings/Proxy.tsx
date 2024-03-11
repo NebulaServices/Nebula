@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 const Proxy = ({ id, active }) => {
   const { t } = useTranslation();
   const transport = localStorage.getItem("transport") || "libcurl";
+  const proccy = localStorage.getItem("proxy") || "automatic";
 
   const engines = [
     { id: "automatic", label: t("settings.proxy.automatic") },
