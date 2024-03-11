@@ -15,7 +15,7 @@ function changeTransport(transport: string, wispUrl: string) {
       console.log("Setting transport to Libcurl");
       SetTransport("CurlMod.LibcurlClient", {
         wisp: wispUrl,
-        wasm: "/libcurl.wasm"
+        wasm: "http://cdn.jsdelivr.net/npm/libcurl.js@v0.5.2/libcurl.wasm"
       });
       break;
     case "bare":
