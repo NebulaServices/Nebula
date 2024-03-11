@@ -27,7 +27,10 @@ function changeTransport(transport: string, wispUrl: string) {
       SetTransport("BareMod.BareClient", bare);
       break;
     default:
-      SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
+      SetTransport("CurlMod.LibcurlClient", {
+        wisp: wispUrl,
+        wasm: "/libcurl.wasm"
+      });
       break;
   }
 }
@@ -42,7 +45,7 @@ const wispUrl =
   "/wisp/";
 registerRemoteListener(navigator.serviceWorker.controller!);
 changeTransport(
-  localStorage.getItem("transport") || "epoxy",
+  localStorage.getItem("transport") || "libcurl",
   localStorage.getItem("wispUrl") || wispUrl
 );
 
