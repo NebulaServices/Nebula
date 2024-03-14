@@ -8,7 +8,7 @@ import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
 
-//import the transport util 
+//import the transport util
 import { setTransport } from "./util/transports";
 
 import "./style.css";
@@ -22,7 +22,9 @@ export default function Routes() {
           scope: "/~/"
         })
         .then(() => {
-          console.log("Service worker registered successfully setting transport");
+          console.log(
+            "Service worker registered successfully setting transport"
+          );
           setTransport();
         });
     });
