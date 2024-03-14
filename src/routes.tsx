@@ -8,6 +8,9 @@ import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
 
+//import the transport util
+import { setTransport } from "./util/transports";
+
 import "./style.css";
 import "./i18n";
 
@@ -19,7 +22,10 @@ export default function Routes() {
           scope: "/~/"
         })
         .then(() => {
-          console.log("Service worker registered successfully");
+          console.log(
+            "Service worker registered successfully setting transport"
+          );
+          setTransport();
         });
     });
   }
