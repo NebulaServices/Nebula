@@ -2,7 +2,6 @@ import {
   SetTransport,
   registerRemoteListener
 } from "@mercuryworkshop/bare-mux";
-import { isIOS } from "./IosDetector";
 
 function changeTransport(transport: string, wispUrl: string) {
   switch (transport) {
@@ -46,17 +45,10 @@ const wispUrl =
   "/wisp/";
 registerRemoteListener(navigator.serviceWorker.controller!);
 
-if (isIOS) {
-  console.log("iOS device detected. Bare will be used.");
-  changeTransport(
-    localStorage.getItem("transport") || "libcurl",
-    localStorage.getItem("wispUrl") || wispUrl
-  );
-} else {
-  changeTransport(
-    localStorage.getItem("transport") || "bare",
-    localStorage.getItem("wispUrl") || wispUrl
-  );
-}
+
+changeTransport(
+  localStorage.getItem("transport") || "libcurl",
+  localStorage.getItem("wispUrl") || wispUrl
+);
 
 export { changeTransport, getTransport };
