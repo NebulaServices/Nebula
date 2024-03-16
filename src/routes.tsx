@@ -14,7 +14,7 @@ import "./i18n";
 import { setTransport } from "./util/transports";
 
 export default function Routes() {
-    if ("serviceWorker" in navigator) {
+  if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
         .register("/sw.js", {

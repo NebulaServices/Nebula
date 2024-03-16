@@ -61,7 +61,7 @@ registerRemoteListener(navigator.serviceWorker.controller!);
 
 //changeTransport(
 //    localStorage.getItem("transport") || "libcurl",
-//    localStorage.getItem("wispUrl") || wispUrl 
+//    localStorage.getItem("wispUrl") || wispUrl
 //);
 
 // helper function for  ../routes.tsx

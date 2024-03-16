@@ -1,7 +1,11 @@
 import { FaAngleDown } from "react-icons/fa";
-import { useState, useEffect } from "preact/hooks"
+import { useState, useEffect } from "preact/hooks";
 import { changeTransport } from "../../util/transports.ts";
-const wispUrl = localStorage.getItem("wispUrl") || (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+const wispUrl =
+  localStorage.getItem("wispUrl") ||
+  (location.protocol === "https:" ? "wss://" : "ws://") +
+    location.host +
+    "/wisp/";
 
 interface Option {
   id: string;

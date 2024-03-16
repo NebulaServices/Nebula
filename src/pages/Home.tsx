@@ -92,7 +92,7 @@ export function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //ensure transport is set 
+    //ensure transport is set
     setTransport();
     window.location.href =
       "/go/" +
