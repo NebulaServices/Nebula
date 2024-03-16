@@ -7,6 +7,7 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
+import { setTransport } from "./util/transports";
 
 import "./style.css";
 import "./i18n";
@@ -20,6 +21,7 @@ export default function Routes() {
         })
         .then(() => {
           console.log("Service worker registered successfully");
+          setTransport();
         });
     });
   }

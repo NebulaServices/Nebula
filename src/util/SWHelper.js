@@ -16,4 +16,7 @@ function uninstallServiceWorkers() {
   });
 }
 
+function reInitServiceWorkers() {
+}
+
 export { updateServiceWorkers, uninstallServiceWorkers };
