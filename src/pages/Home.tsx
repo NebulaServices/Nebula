@@ -9,6 +9,7 @@ import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
 import { setTransport } from "../util/transports";
+import { updateServiceWorkers } from "../util/SWHelper.js";
 
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
@@ -19,8 +20,10 @@ export function Home() {
     const handleLoad = () => {
       const firstLoad = localStorage.getItem("firstLoad") || "true";
       console.log(firstLoad);
+      //make sure service workers are updated
+      updateServiceWorkers();
       //make sure transport is set
-      setTransport();
+      //setTransport();
       if (firstLoad == "true" && prod) {
         function changeBare(url: string) {
           set("bare", url);
