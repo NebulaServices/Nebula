@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import BareInput from "./BareInput";
 import WispInput from "./WispInput";
 import ProxyInput from "./ProxyInput";
-import TransportDropdown from "./transportDropdown";
+import { changeTransport } from "../../util/transports";
 import { useTranslation } from "react-i18next";
 
 const Proxy = ({ id, active }) => {
@@ -118,10 +118,10 @@ const Proxy = ({ id, active }) => {
           <div className="text-md p-4 font-bold text-input-text">
             Select the transport to use
           </div>
-          <TransportDropdown
+          <Dropdown
             storageKey="transport"
             options={transports}
-            refresh={false}
+            refresh={true}
           />
         </div>
       </motion.div>
