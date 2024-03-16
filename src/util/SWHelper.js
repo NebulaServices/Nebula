@@ -1,3 +1,5 @@
+import { setTransport } from "./transports.ts";
+
 function updateServiceWorkers() {
   navigator.serviceWorker.getRegistrations().then(function (registrations) {
     for (let registration of registrations) {
@@ -16,7 +18,17 @@ function uninstallServiceWorkers() {
   });
 }
 
-function reInitServiceWorkers() {
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+        .register("/sw.js", {
+          scope: "/~/"
+        })
+        .then(() => {
+          console.log("Service worker registered successfully");
+          setTransport();
+        });
+    }
 }
 
-export { updateServiceWorkers, uninstallServiceWorkers };
+export { updateServiceWorkers, uninstallServiceWorkers, registerServiceWorker };

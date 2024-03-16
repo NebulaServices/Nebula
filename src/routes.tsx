@@ -7,13 +7,14 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
-import { setTransport } from "./util/transports";
+//import { setTransport } from "./util/transports.js";
 
 import "./style.css";
 import "./i18n";
+import { setTransport } from "./util/transports";
 
 export default function Routes() {
-  if ("serviceWorker" in navigator) {
+    if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
         .register("/sw.js", {
@@ -25,7 +26,6 @@ export default function Routes() {
         });
     });
   }
-
   return (
     <LocationProvider>
       <Router>

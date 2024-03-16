@@ -8,6 +8,7 @@ import prod from "./config.json"; // Set prod to true if you wish to load balanc
 import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
+import { setTransport } from "../util/transports";
 
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
@@ -18,6 +19,8 @@ export function Home() {
     const handleLoad = () => {
       const firstLoad = localStorage.getItem("firstLoad") || "true";
       console.log(firstLoad);
+      //make sure transport is set
+      setTransport();
       if (firstLoad == "true" && prod) {
         function changeBare(url: string) {
           set("bare", url);
@@ -86,6 +89,8 @@ export function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    //ensure transport is set 
+    setTransport();
     window.location.href =
       "/go/" +
       encodeURIComponent(
