@@ -4,6 +4,12 @@ import {
 } from "@mercuryworkshop/bare-mux";
 //import { isIOS } from "./IosDetector";
 
+declare global {
+    interface Window {
+        setTransport: () => void;
+    }
+}
+
 function changeTransport(transport: string, wispUrl: string) {
   switch (transport) {
     case "epoxy":
@@ -71,5 +77,7 @@ function setTransport() {
     localStorage.getItem("wispUrl") || wispUrl
   );
 }
+
+window.setTransport = setTransport;
 
 export { changeTransport, getTransport, setTransport };
