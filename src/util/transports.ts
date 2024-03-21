@@ -5,9 +5,9 @@ import {
 //import { isIOS } from "./IosDetector";
 
 declare global {
-    interface Window {
-        setTransport: () => void;
-    }
+  interface Window {
+    setTransport: () => void;
+  }
 }
 
 function changeTransport(transport: string, wispUrl: string) {

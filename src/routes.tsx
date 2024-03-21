@@ -14,17 +14,17 @@ import "./i18n";
 import { setTransport } from "./util/transports";
 
 export default function Routes() {
-    //if ("serviceWorker" in navigator) {
-   //window.addEventListener("load", () => {
-   //   navigator.serviceWorker
-   //     .register("/sw.js", {
-   //       scope: "/~/"
-   //     })
-   //     .then(() => {
-   //       console.log("Service worker registered successfully");
-   //       setTransport();
-   //     });
-    //});
+  //if ("serviceWorker" in navigator) {
+  //window.addEventListener("load", () => {
+  //   navigator.serviceWorker
+  //     .register("/sw.js", {
+  //       scope: "/~/"
+  //     })
+  //     .then(() => {
+  //       console.log("Service worker registered successfully");
+  //       setTransport();
+  //     });
+  //});
   //}
   return (
     <LocationProvider>

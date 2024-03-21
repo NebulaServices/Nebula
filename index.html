@@ -11,21 +11,24 @@
     <script src="/dynamic/dynamic.config.js" defer></script>
     <script src="/localforage/localforage.min.js" defer></script>
     <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker.register("/sw.js", {
-                    scope: "/~/"
-                }).then(() => {
-                    console.log("Service Worker Registered");
-                    try {
-                        window.setTransport();
-                    } catch {}
-                }).catch((err) => {
-                    console.error("Service Worker Failed to Register", err);
-                });
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js", {
+              scope: "/~/"
+            })
+            .then(() => {
+              console.log("Service Worker Registered");
+              try {
+                window.setTransport();
+              } catch {}
+            })
+            .catch((err) => {
+              console.error("Service Worker Failed to Register", err);
             });
-        }
-  </script>
+        });
+      }
+    </script>
   </head>
   <body style="margin: 0">
     <div id="app"></div>
@@ -38,12 +41,15 @@
         window.location.href = window.location.href;
     </script>
     <script>
-        try {
-            if (!localStorage["auth"] && new URL(document.all.rcheck.href).password) {
-                window.location.reload();
-                localStorage["auth"] = 1;
-            }
-        } catch {}
+      try {
+        if (
+          !localStorage["auth"] &&
+          new URL(document.all.rcheck.href).password
+        ) {
+          window.location.reload();
+          localStorage["auth"] = 1;
+        }
+      } catch {}
     </script>
   </body>
 </html>

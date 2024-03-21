@@ -17,7 +17,7 @@ const CloakPreset = (props: Props) => {
   return (
     <div
       onClick={cloak}
-      className="flex cursor-pointer rounded-full w-16 h-16 border border-input-border-color bg-lighter"
+      className="flex h-16 w-16 cursor-pointer rounded-full border border-input-border-color bg-lighter"
     >
       <img
         src={props.faviconUrl === "none" ? "/logo.png" : props.faviconUrl}

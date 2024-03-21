@@ -1,11 +1,11 @@
-version: '3'
+version: "3"
 
 services:
   nebula:
     image: nebula:latest
     build:
       context: .
-      dockerfile: Dockerfile 
+      dockerfile: Dockerfile
     container_name: nebula
     restart: unless-stopped
     ports:
