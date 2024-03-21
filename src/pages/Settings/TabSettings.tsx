@@ -26,7 +26,7 @@ const TabSettings = ({ id, active }) => {
         <div className="text-md pb-5 font-bold text-input-text">
           {t("settings.cloaking.subtitle")}
         </div>
-        <div className="flex flex-row space-x-4">
+        <div className="flex flex-row flex-wrap items-center justify-center gap-4">
           <CloakPreset faviconUrl="none" title="none" />
           <CloakPreset
             faviconUrl="https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://google.com&size=32"

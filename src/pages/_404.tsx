@@ -13,7 +13,7 @@ export function NotFound() {
         originalFavicon="/logo.png"
       />
       <section className="h-full">
-        <div className="flex h-full flex-col items-center justify-center">
+        <div className="flex h-full flex-col items-center justify-center text-center">
           <img src="/404.png" className="h-72"></img>
           <div className="flex flex-col items-center p-6">
             <p className="font-roboto text-4xl text-text-color font-bold">{t("404.text")}</p>
