@@ -22,7 +22,7 @@ function changeTransport(transport: string, wispUrl: string) {
       console.log("Setting transport to Libcurl");
       SetTransport("CurlMod.LibcurlClient", {
         wisp: wispUrl,
-        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.5.3/libcurl.wasm"
+        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.6.4/libcurl.wasm"
       });
       break;
     case "bare":
@@ -36,7 +36,7 @@ function changeTransport(transport: string, wispUrl: string) {
     default:
       SetTransport("CurlMod.LibcurlClient", {
         wisp: wispUrl,
-        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.5.3/libcurl.wasm"
+        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.6.4/libcurl.wasm"
       });
       break;
   }
