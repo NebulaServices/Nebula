@@ -2,6 +2,13 @@ import {
   SetTransport,
   registerRemoteListener
 } from "@mercuryworkshop/bare-mux";
+//import { isIOS } from "./IosDetector";
+
+declare global {
+  interface Window {
+    setTransport: () => void;
+  }
+}
 
 function changeTransport(transport: string, wispUrl: string) {
   switch (transport) {
@@ -15,7 +22,7 @@ function changeTransport(transport: string, wispUrl: string) {
       console.log("Setting transport to Libcurl");
       SetTransport("CurlMod.LibcurlClient", {
         wisp: wispUrl,
-        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.5.2/libcurl.wasm"
+        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.5.3/libcurl.wasm"
       });
       break;
     case "bare":
@@ -29,7 +36,7 @@ function changeTransport(transport: string, wispUrl: string) {
     default:
       SetTransport("CurlMod.LibcurlClient", {
         wisp: wispUrl,
-        wasm: "/libcurl.wasm"
+        wasm: "https://cdn.jsdelivr.net/npm/libcurl.js@v0.5.3/libcurl.wasm"
       });
       break;
   }
@@ -45,10 +52,32 @@ const wispUrl =
   "/wisp/";
 registerRemoteListener(navigator.serviceWorker.controller!);
 
+//if (isIOS) {
+//  console.log("iOS device detected. Bare will be used.");
+//  changeTransport(
+//    localStorage.getItem("transport") || "libcurl",
+//    localStorage.getItem("wispUrl") || wispUrl
+//  );
+//} else {
+//  changeTransport(
+//   localStorage.getItem("transport") || "bare",
+//   localStorage.getItem("wispUrl") || wispUrl
+//  );
+//}
 
-changeTransport(
-  localStorage.getItem("transport") || "libcurl",
-  localStorage.getItem("wispUrl") || wispUrl
-);
+//changeTransport(
+//    localStorage.getItem("transport") || "libcurl",
+//    localStorage.getItem("wispUrl") || wispUrl
+//);
 
-export { changeTransport, getTransport };
+// helper function for  ../routes.tsx
+function setTransport() {
+  changeTransport(
+    localStorage.getItem("transport") || "libcurl",
+    localStorage.getItem("wispUrl") || wispUrl
+  );
+}
+
+window.setTransport = setTransport;
+
+export { changeTransport, getTransport, setTransport };

@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  nebula:
+    image: nebula:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nebula
+    restart: unless-stopped
+    ports:
+      # Host:Container (DO NOT MODIFY THE CONTAINER PORT)
+      - "8081:8080"

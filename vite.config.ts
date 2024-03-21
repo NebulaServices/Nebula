@@ -7,6 +7,9 @@ import { dynamicPath } from "@nebula-services/dynamic";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import path from "path";
+import { createBareServer } from "@tomphttp/bare-server-node";
+import wisp from "wisp-server-node";
+import http from "http";
 const __dirname = path.resolve();
 
 export default defineConfig({
@@ -48,10 +51,16 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      "/bare": {
+      "/bare/": {
         target: "http://localhost:8080/",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/bare/, "")
+        rewrite: (path) => path.replace(/^\/bare\//, "")
+      },
+      "/wisp/": {
+        target: "http://ruby.rubynetwork.co/wisp/",
+        changeOrigin: true,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/wisp\//, "")
       }
     }
   }

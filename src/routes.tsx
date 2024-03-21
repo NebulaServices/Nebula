@@ -7,23 +7,25 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
+//import { setTransport } from "./util/transports.js";
 
 import "./style.css";
 import "./i18n";
+import { setTransport } from "./util/transports";
 
 export default function Routes() {
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/sw.js", {
-          scope: "/~/"
-        })
-        .then(() => {
-          console.log("Service worker registered successfully");
-        });
-    });
-  }
-
+  //if ("serviceWorker" in navigator) {
+  //window.addEventListener("load", () => {
+  //   navigator.serviceWorker
+  //     .register("/sw.js", {
+  //       scope: "/~/"
+  //     })
+  //     .then(() => {
+  //       console.log("Service worker registered successfully");
+  //       setTransport();
+  //     });
+  //});
+  //}
   return (
     <LocationProvider>
       <Router>

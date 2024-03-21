@@ -1,5 +1,5 @@
 importScripts("/epoxy/index.js");
-importScripts("/libcurl/index.cjs");
+importScripts("/libcurl/index.js");
 importScripts("/transports/bareTransport.js");
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");

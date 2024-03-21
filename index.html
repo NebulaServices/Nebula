@@ -4,12 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/epoxy/index.js" defer></script>
-    <script src="/libcurl/index.cjs" defer></script>
+    <script src="/libcurl/index.js" defer></script>
     <script src="/transports/bareTransport.js" defer></script>
     <script src="/uv/uv.bundle.js" defer></script>
     <script src="/uv/uv.config.js" defer></script>
     <script src="/dynamic/dynamic.config.js" defer></script>
     <script src="/localforage/localforage.min.js" defer></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js", {
+              scope: "/~/"
+            })
+            .then(() => {
+              console.log("Service Worker Registered");
+              try {
+                window.setTransport();
+              } catch {}
+            })
+            .catch((err) => {
+              console.error("Service Worker Failed to Register", err);
+            });
+        });
+      }
+    </script>
   </head>
   <body style="margin: 0">
     <div id="app"></div>
@@ -22,10 +41,15 @@
         window.location.href = window.location.href;
     </script>
     <script>
-      if (!localStorage["auth"] && new URL(document.all.rcheck.href).password) {
-        window.location.reload();
-        localStorage["auth"] = 1;
-      }
+      try {
+        if (
+          !localStorage["auth"] &&
+          new URL(document.all.rcheck.href).password
+        ) {
+          window.location.reload();
+          localStorage["auth"] = 1;
+        }
+      } catch {}
     </script>
   </body>
 </html>
