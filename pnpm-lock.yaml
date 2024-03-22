@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.1.0
     version: 1.1.0(typescript@5.4.3)
   '@mercuryworkshop/libcurl-transport':
-    specifier: ^1.2.4
-    version: 1.2.4(typescript@5.4.3)
+    specifier: ^1.3.1
+    version: 1.3.1(typescript@5.4.3)
   '@nebula-services/dynamic':
     specifier: 0.7.2-patch.2
     version: 0.7.2-patch.2
@@ -1085,11 +1085,11 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@mercuryworkshop/libcurl-transport@1.2.4(typescript@5.4.3):
-    resolution: {integrity: sha512-BiqTOcHzjNYy0AHCxw3IAfe81+xX07Gjig9cZkEJ7eRLcuEwkLPwTnf36RopxFQh4yShbk1lMjmU4SjMIi6/uQ==}
+  /@mercuryworkshop/libcurl-transport@1.3.1(typescript@5.4.3):
+    resolution: {integrity: sha512-yGt8K7D1j8WLn7LgH6YPnxmHc+JUCB0x/QPIStuRftl0tq3D8uHskRFeOJ8ksTrru7mTAjk5Cpmvix8jNJ+Lug==}
     dependencies:
       esbuild-plugin-umd-wrapper: 2.0.0
-      libcurl.js: 0.5.3
+      libcurl.js: 0.6.6
       rollup: 4.13.0
       rollup-plugin-node-resolve: 5.2.0(rollup@4.13.0)
       rollup-plugin-typescript2: 0.36.0(rollup@4.13.0)(typescript@5.4.3)
@@ -4541,8 +4541,8 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /libcurl.js@0.5.3:
-    resolution: {integrity: sha512-tHa5c18irBGzafPKwGMBU7c9RMxAQfuf3BHTLgAHToNvJaFXUYRAsKXDqV2SWKLMm5OaW2b1XGu8MsfMh1b08A==}
+  /libcurl.js@0.6.6:
+    resolution: {integrity: sha512-Jq2BTQ8OG30IOnEECUOpvNX8xvnJUgTpcl228Qky1aKERTUKROx6lgF4BbFylepQ5SLJpS/9TcCGqAmqcM0xOQ==}
     dev: false
 
   /lie@3.1.1:
