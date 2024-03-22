@@ -111,8 +111,8 @@ dependencies:
     specifier: ^4.7.1
     version: 4.7.1
   wisp-server-node:
-    specifier: ^1.0.4
-    version: 1.0.4
+    specifier: ^1.0.5
+    version: 1.0.5
   ws:
     specifier: ^8.16.0
     version: 8.16.0
@@ -2323,7 +2323,7 @@ packages:
       promise-inflight: 1.0.1
       rimraf: 3.0.2
       ssri: 8.0.1
-      tar: 6.2.0
+      tar: 6.2.1
       unique-filename: 1.1.1
     transitivePeerDependencies:
       - bluebird
@@ -4977,7 +4977,7 @@ packages:
       npmlog: 6.0.2
       rimraf: 3.0.2
       semver: 7.6.0
-      tar: 6.2.0
+      tar: 6.2.1
       which: 2.0.2
     transitivePeerDependencies:
       - bluebird
@@ -6297,11 +6297,14 @@ packages:
   /sqlite3@5.1.7:
     resolution: {integrity: sha512-GGIyOiFaG+TUra3JIfkI/zGP8yZYLPQ0pl1bH+ODjiX57sPhrLU5sQJn1y9bDKZUFYkX1crlrPfSYt0BKKdkog==}
     requiresBuild: true
+    peerDependenciesMeta:
+      node-gyp:
+        optional: true
     dependencies:
       bindings: 1.5.0
       node-addon-api: 7.1.0
       prebuild-install: 7.1.2
-      tar: 6.2.0
+      tar: 6.2.1
     optionalDependencies:
       node-gyp: 8.4.1
     transitivePeerDependencies:
@@ -6534,8 +6537,8 @@ packages:
       readable-stream: 3.6.2
     dev: false
 
-  /tar@6.2.0:
-    resolution: {integrity: sha512-/Wo7DcT0u5HUV486xg675HtjNd3BXZ6xDbzsCUZPt5iw8bTQ63bP0Raut3mvro9u+CUyq7YQd8Cx55fsZXxqLQ==}
+  /tar@6.2.1:
+    resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
     dependencies:
       chownr: 2.0.0
@@ -7014,8 +7017,8 @@ packages:
     dev: false
     optional: true
 
-  /wisp-server-node@1.0.4:
-    resolution: {integrity: sha512-23mGc9vkjcqJaRzkrX5QbmMciEgfSWBiBcduNn39ttBQbaVdP050om7FzYzLiv9TYt5OMw5d2KyDxZ7QUErzwg==}
+  /wisp-server-node@1.0.5:
+    resolution: {integrity: sha512-D6VgyuQqmFeRHPpt1M46xJytr8bD5f++FgXVfCmKjHaQ5vB+/wXL8oNM3rUSO+g8DE85AIlCdgH1sq9uq/CG4g==}
     dependencies:
       ws: 8.16.0
     transitivePeerDependencies:
