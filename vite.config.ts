@@ -4,7 +4,9 @@ import preact from "@preact/preset-vite";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { dynamicPath } from "@nebula-services/dynamic";
+//@ts-ignore
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
+//@ts-ignore
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import path from "path";
 import { createBareServer } from "@tomphttp/bare-server-node";

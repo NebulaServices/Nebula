@@ -10,6 +10,7 @@ import fs from "fs";
 import cookieParser from "cookie-parser";
 import wisp from "wisp-server-node";
 import { Request, Response } from "express";
+//@ts-ignore
 import { Socket, Head } from "ws";
 
 const __filename = fileURLToPath(import.meta.url);
