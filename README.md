@@ -34,7 +34,7 @@ Thanks for using Nebula!
 ## Tech Stack
 
 - TypeScript, Tailwind
-- Express
+- Fastify
 - TSX
 - Framer motion
 - react-i18next
