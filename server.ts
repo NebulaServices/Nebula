@@ -5,21 +5,16 @@ import path from "path";
 import fs from "fs";
 import cookieParser from "@fastify/cookie";
 import { createServer } from "http";
-
 import { createBareServer } from "@tomphttp/bare-server-node";
 import createRammerhead from "rammerhead/src/server/index.js";
 import wisp from "wisp-server-node";
 import { Socket } from "net";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const bare = createBareServer("/bare/");
 const rh = createRammerhead();
-
-const failureFile = fs.readFileSync("Checkfailed.html", "utf8");
-
-const LICENSE_SERVER_URL = "https://license.mercurywork.shop/validate?license=";
+import chalk from "chalk";
+import masqr from './masqr.js';
 
 const rammerheadScopes = [
   "/rammerhead.js",
@@ -83,56 +78,7 @@ const app = fastify({ logger: false, serverFactory });
 
 app.register(cookieParser);
 await app.register(import("@fastify/compress"));
-
-// Uncomment if you wish to add masqr.
-/* 
-app.addHook("preHandler", async (req, reply) => {
-  if (req.cookies["authcheck"]) {
-    return reply;
-  }
-
-  const authheader = req.headers.authorization;
-
-  if (req.cookies["refreshcheck"] != "true") {
-    reply
-      .setCookie("refreshcheck", "true", { maxAge: 10000 })
-      .type("text/html")
-      .send(failureFile);
-    return reply;
-  }
-
-  if (!authheader) {
-    reply
-      .code(401)
-      .header("WWW-Authenticate", "Basic")
-      .type("text/html")
-      .send(failureFile);
-    return reply;
-  }
-
-  const auth = Buffer.from(authheader.split(" ")[1], "base64")
-    .toString()
-    .split(":");
-  const user = auth[0];
-  const pass = auth[1];
-
-  const licenseCheck = (
-    await (
-      await fetch(`${LICENSE_SERVER_URL}${pass}&host=${req.headers.host}`)
-    ).json()
-  )["status"];
-  console.log(
-    `${LICENSE_SERVER_URL}${pass}&host=${req.headers.host} returned ${licenseCheck}`
-  );
-
-  if (licenseCheck === "License valid") {
-    reply.setCookie("authcheck", "true");
-    return reply;
-  }
-
-  reply.type("text/html").send(failureFile);
-  return reply;
-}); */
+app.register(masqr);
 
 app.register(fastifyStatic, {
   root: path.join(__dirname, "dist"),
@@ -155,6 +101,10 @@ app.setNotFoundHandler((req, res) => {
   res.sendFile("index.html"); // SPA catch-all
 });
 
+console.log(chalk.green(`Server listening on ${chalk.bold("http://localhost:8080")}`));
+console.log(chalk.magenta(`Server also listening on ${chalk.bold("http://0.0.0.0:8080")}`));
+
 app.listen({
-  port: 8080
+  port: 8080,
+  host: "0.0.0.0"
 });
