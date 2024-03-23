@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 const bare = createBareServer("/bare/");
 const rh = createRammerhead();
 import chalk from "chalk";
-import masqr from './masqr.js';
+import masqr from "./masqr.js";
 
 const rammerheadScopes = [
   "/rammerhead.js",
@@ -102,8 +102,12 @@ app.setNotFoundHandler((req, res) => {
   res.sendFile("index.html"); // SPA catch-all
 });
 
-console.log(chalk.green(`Server listening on ${chalk.bold("http://localhost:8080")}`));
-console.log(chalk.magenta(`Server also listening on ${chalk.bold("http://0.0.0.0:8080")}`));
+console.log(
+  chalk.green(`Server listening on ${chalk.bold("http://localhost:8080")}`)
+);
+console.log(
+  chalk.magenta(`Server also listening on ${chalk.bold("http://0.0.0.0:8080")}`)
+);
 
 app.listen({
   port: 8080,
