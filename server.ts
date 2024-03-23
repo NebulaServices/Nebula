@@ -78,7 +78,8 @@ const app = fastify({ logger: false, serverFactory });
 
 app.register(cookieParser);
 await app.register(import("@fastify/compress"));
-app.register(masqr);
+//Uncomment the following line to enable masqr
+//app.register(masqr);
 
 app.register(fastifyStatic, {
   root: path.join(__dirname, "dist"),
