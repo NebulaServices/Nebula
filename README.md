@@ -2,7 +2,8 @@
 
 NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
 
-![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue)
+![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNebulaServices%2FNebula.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FNebulaServices%2FNebula?ref=badge_shield)
+
 
 ## Features
 
@@ -65,3 +66,6 @@ For support, join our discord: discord.gg/unblocker
 Copyright Nebula Services 2021 - Present
 <br>
 This project uses the AGLP GNU V3 license.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNebulaServices%2FNebula.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNebulaServices%2FNebula?ref=badge_large)
