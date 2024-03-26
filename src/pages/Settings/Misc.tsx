@@ -2,14 +2,17 @@ import { motion } from "framer-motion";
 import { tabContentVariant, settingsPageVariant } from "./Variants";
 import Dropdown from "./Dropdown";
 import { useTranslation } from "react-i18next";
+import EnglishFlag from "../../assets/english.png";
+import SpanishFlag from "../../assets/spanish.png";
+import JapaneseFlag from "../../assets/japanese.png";
 
 const Misc = ({ id, active }) => {
   const { t } = useTranslation();
 
   const languages = [
-    { id: "en-US", label: "English" },
-    { id: "es", label: "Español" },
-    { id: "ja", label: "日本語" }
+    { id: "en-US", label: "English", image: EnglishFlag },
+    { id: "es", label: "Español", image: SpanishFlag },
+    { id: "ja", label: "日本語", image: JapaneseFlag }
   ];
 
   return (

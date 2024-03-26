@@ -17,7 +17,7 @@ function Customization({ id, active }) {
 
   const particles = [
     { id: "none", label: "None" },
-    { id: "/crismas.json", label: "Crismas 🐴🎄" }
+    { id: "/crismas.json", label: t("themes.crismas") }
   ];
 
   return (
