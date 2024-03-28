@@ -16,7 +16,7 @@ function Customization({ id, active }) {
   ];
 
   const particles = [
-    { id: "none", label: "None" },
+    { id: "none", label: t("settings.theme.particlesNone") },
     { id: "/crismas.json", label: t("themes.crismas") }
   ];
 
@@ -44,10 +44,10 @@ function Customization({ id, active }) {
         </div>
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
-            Particles
+            {t("settings.theme.particles")}
           </div>
           <div className="text-md p-4 font-bold text-input-text">
-            Choose a particles wallpaper.
+            {t("settings.theme.particlesDesc")}
           </div>
           <Dropdown storageKey="particles" options={particles} refresh={true} />
         </div>

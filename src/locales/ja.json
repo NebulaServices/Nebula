@@ -24,7 +24,8 @@
       "proxy": "プロキシ",
       "tab": "タブ",
       "custom": "カスタマイズ",
-      "misc": "その他"
+      "misc": "その他",
+      "credits": "クレジット"
     },
     "proxy": {
       "title": "プロキシ",
@@ -56,9 +57,21 @@
       "subtitle": "Bare サーバー URL を入力してください",
       "select": "選択する"
     },
+    "wisp": {
+      "title": "Wisp サーバ",
+      "subtitle": "Wisp サーバの URL を入力してください",
+      "select": "選択"
+    },
+    "transport": {
+      "title": "輸送",
+      "desc": "使用するトランスポートを選択します"
+    },
     "theme": {
       "title": "テーマ",
-      "subtitle": "目が嫌いにならないようにテーマを選んでください"
+      "subtitle": "目が嫌いにならないようにテーマを選んでください",
+      "particles": "粒子",
+      "particlesDesc": "粒子の壁紙を選択してください",
+      "particlesNone": "なし"
     },
     "httpProxy": {
       "title": "(高度な) HTTPプロキシ",
@@ -117,5 +130,10 @@
       "q": "ネビュラが遅いです。",
       "a": "間違ったサーバーに接続している可能性があります。接続しているベアサーバーを確認し、最も近い国であることを確認してください。"
     }
+  },
+  "credits": {
+    "devs": "サイト開発者",
+    "jpTranslators": "日本語翻訳者",
+    "esTranslators": "スペイン語翻訳者"
   }
 }

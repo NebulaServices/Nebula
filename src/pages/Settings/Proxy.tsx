@@ -123,20 +123,20 @@ const Proxy = ({ id, active }) => {
         {transport !== "bare" && (
           <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
             <div className="p-2 text-3xl font-bold text-input-text">
-              Wisp Server
+              {t("settings.wisp.title")}
             </div>
             <div className="text-md p-4 font-bold text-input-text">
-              Enter the url of a Wisp server
+              {t("settings.wisp.subtitle")}
             </div>
             <WispInput placeholder={wispUrl} />
           </div>
         )}
         <div className="flex h-64 w-80 flex-col flex-wrap content-center items-center rounded-lg border border-input-border-color bg-lighter p-2 text-center">
           <div className="p-2 text-3xl font-bold text-input-text">
-            Transport
+            {t("settings.transport.title")}
           </div>
           <div className="text-md p-4 font-bold text-input-text">
-            Select the transport to use
+            {t("settings.transport.desc")}
           </div>
           <TransportDropdown
             storageKey="transport"

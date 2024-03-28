@@ -24,7 +24,8 @@
       "proxy": "Proxy",
       "tab": "Tab",
       "custom": "Customization",
-      "misc": "Misc"
+      "misc": "Misc",
+      "credits": "Credits"
     },
     "proxy": {
       "title": "Proxy",
@@ -56,10 +57,22 @@
       "subtitle": "Enter the URL of your bare server",
       "select": "Select"
     },
+    "wisp": {
+      "title": "Wisp Server",
+      "subtitle": "Enter the url of a Wisp server",
+      "select": "Select"
+    },
+    "transport": {
+      "title": "Transport",
+      "desc": "Select the transport to use"
+    },
     "theme": {
       "title": "Theme",
       "subtitle": "Choose a theme so your eyes don't hate us",
-      "select": "Select"
+      "select": "Select",
+      "particles": "Particles",
+      "particlesDesc": "Choose a particles wallpaper",
+      "particlesNone": "None"
     },
     "httpProxy": {
       "title": "(Advanced) HTTP Proxy",
@@ -118,5 +131,10 @@
       "q": "Nebula is slow.",
       "a": "You might be connected to the wrong server. Check the bare server you are connected to and make sure its the country you're closest to."
     }
+  },
+  "credits": {
+    "devs": "Site Developers",
+    "jpTranslators": "Japanese Translators",
+    "esTranslators": "Spanish Translators"
   }
 }

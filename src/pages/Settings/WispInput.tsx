@@ -56,7 +56,7 @@ function WispInput(props: WispInputProps) {
           className="font-roboto mt-2 flex h-4 w-36 cursor-pointer flex-row items-center justify-center rounded-xl border border-input-border-color bg-input p-5 text-center text-lg text-input-text"
           onClick={handleChange}
         >
-          Select
+          {t("settings.wisp.select")}
         </div>
       </div>
     </div>
