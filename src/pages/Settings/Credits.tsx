@@ -62,6 +62,11 @@ export const Credits = ({ id, active }) => {
                 url="https://github.com/wearrrrr"
                 profile="https://avatars.githubusercontent.com/u/99224452?v=4"
               />
+              <PersonCard
+                name="suzumiya39"
+                url="https://github.com/suzumiya39"
+                profile="https://avatars.githubusercontent.com/u/165246341?v=4"
+              />
             </div>
             <p className="mt-12 text-4xl">{t("credits.esTranslators")}</p>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
