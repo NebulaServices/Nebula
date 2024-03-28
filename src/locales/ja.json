@@ -1,139 +1,139 @@
 {
   "header": {
-    "title": "ネブラ。",
+    "title": "Nebula",
     "games": "ゲーム",
-    "settings": "セッティング",
-    "discord": "もっとリンクが欲しいですか？",
-    "faq": "よくある質問"
+    "settings": "設定",
+    "discord": "リンク一覧",
+    "faq": "よくある質問 (FAQ)"
   },
   "404": {
-    "text": "このネブラサービスは無効になっています",
-    "return": "帰宅"
+    "text": "この要求は無効です",
+    "return": "戻る"
   },
   "home": {
-    "placeholder": "由にウェブを検索"
+    "placeholder": "検索欄"
   },
   "discord": {
-    "title": "ネブラDiscordサーバー",
-    "sub": "プロキシ経由で開きますか？",
-    "button1": "通常通り開く",
-    "button2": "プロキシを使用する"
+    "title": "公式 Discordサーバー",
+    "sub": "このページを経由して開きますか？",
+    "button1": "いいえ",
+    "button2": "はい"
   },
   "settings": {
     "tabs": {
       "proxy": "プロキシ",
       "tab": "タブ",
-      "custom": "カスタマイズ",
+      "custom": "デザイン",
       "misc": "その他",
-      "credits": "クレジット"
+      "credits": "法的情報"
     },
     "proxy": {
       "title": "プロキシ",
-      "subtitle": "ニーズに合ったプロキシを選んでください",
+      "subtitle": "使いたいプロキシを選択してください",
       "automatic": "自動"
     },
     "languages": {
       "title": "言語",
-      "subtitle": "好きな言語を選んでください"
+      "subtitle": "使用する言語を選択してください"
     },
     "proxymodes": {
-      "title": "開く",
-      "subtitle": "サイトを開く方法を選択する",
-      "embed": "埋め込む",
+      "title": "モード",
+      "subtitle": "閲覧するサイトを開く方式を選択してください",
+      "embed": "埋め込み",
       "direct": "直接",
-      "aboutblank": "About:Blank"
+      "aboutblank": "空白のページとして開く"
     },
     "cloaking": {
-      "title": "クローキング",
-      "subtitle": "タブの見た目を選択する",
-      "aboutblank": "で開く about:blank"
+      "title": "表示偽装",
+      "subtitle": "タブのアイコンを選択する",
+      "aboutblank": "空白のページとして開く"
     },
     "search": {
       "title": "検索エンジン",
-      "subtitle": "ネビュラの検索エンジンを選択してください"
+      "subtitle": "検索エンジンを選択してください"
     },
     "bare": {
-      "title": "Bare サーバー",
-      "subtitle": "Bare サーバー URL を入力してください",
-      "select": "選択する"
+      "title": "Bareサーバー",
+      "subtitle": "BareサーバーのURLを入力してください",
+      "select": "決定"
     },
     "wisp": {
-      "title": "Wisp サーバ",
-      "subtitle": "Wisp サーバの URL を入力してください",
-      "select": "選択"
+      "title": "Wispサーバ",
+      "subtitle": "WispサーバのURLを入力してください",
+      "select": "決定"
     },
     "transport": {
-      "title": "輸送",
-      "desc": "使用するトランスポートを選択します"
+      "title": "トランスポートサーバー",
+      "desc": "使用するページの転送用のサーバーの種類を指定してください"
     },
     "theme": {
-      "title": "テーマ",
-      "subtitle": "目が嫌いにならないようにテーマを選んでください",
-      "particles": "粒子",
-      "particlesDesc": "粒子の壁紙を選択してください",
+      "title": "壁紙",
+      "subtitle": "お好みの壁紙を選択してください",
+      "particles": "パーティクル",
+      "particlesDesc": "パーティクルの種類を選択してください",
       "particlesNone": "なし"
     },
     "httpProxy": {
-      "title": "(高度な) HTTPプロキシ",
-      "subtitle": "地理的に制限されたコンテンツにアクセスするために、あなた自身のHTTPプロキシを入力してください。これは互換性のあるBareサーバーでのみ機能します。",
-      "link": "これは何ですか？",
-      "badBare": "その bare サーバーは HTTP プロキシをサポートしていません。",
-      "badProxy": "プロキシ接続に失敗しました。 HTTP プロキシが動作していることを再確認してください。",
+      "title": "HTTPプロキシ (上級者向け)",
+      "subtitle": "HTTPプロキシのアドレスを入力してください この機能はHTTPプロキシと互換性のあるBareサーバーでのみ機能します",
+      "link": "資料...HTTPプロキシについて - よくある質問 (FAQ)",
+      "badBare": "このサーバーはHTTPプロキシに対応していません",
+      "badProxy": "接続に失敗しました　HTTPプロキシが動作している事を確認の上、再度お試しください",
       "reset": "リセット"
     }
   },
   "titles": {
-    "home": "ネブラ",
-    "settings": "ネブラ - セッティング",
-    "discord": "ネブラ - Discord",
-    "404": "ネブラ - 404"
+    "home": "Nebula",
+    "settings": "Nebula - 設定",
+    "discord": "Nebula - Discord",
+    "404": "Nebula - ページが存在しません"
   },
   "comingsoon": "近日公開",
   "themes": {
-    "main": "デフォルト",
-    "hacker": "ハッカー",
-    "crismas": "クリマス🐴🎄",
+    "main": "標準",
+    "hacker": "Hacker",
+    "crismas": "Crismas🐴🎄",
     "catppuccinMocha": "Catppuccin Mocha",
     "catppuccinMacchiato": "Catppuccin Macchiato",
     "catppuccinFrappe": "Catppuccin Frappe",
     "catppuccinLatte": "Catppuccin Latte"
   },
-  "clipboard": "URL がクリップボードにコピーされました!",
-  "bareError": "それはうまくいきませんでした。Bare サーバーが存在し、ブロックされていないことを再確認してください。",
+  "clipboard": "コピーしました!",
+  "bareError": "処理を実行できませんでした　Bareサーバーが存在し、そしてアクセスが拒否されていない事も確認してから、再度お試してください",
   "faq": {
     "1": {
-      "q": "もっとリンクをどうやって取得しますか？",
-      "a": "私たちの ",
-      "h": "ディスコードサーバー",
+      "q": "公式サイトのリンクはどこですか?",
+      "a": "Nebula公式によるDiscordサーバーがあります　右のリンクからアクセスしてください",
+      "h": "Discordサーバー",
       "hR": "/discord"
     },
     "2": {
-      "q": "ネビュラを自己ホストするにはどうすればいいですか？",
-      "a": "ネビュラの自己ホスティングの指示は、私たちの ",
-      "h": "GitHubリポジトリ",
+      "q": "Nebulaをオンプレミスとして実行するにはどうすればいいですか？",
+      "a": "Nebulaは右のGithubのリンクからソースコードを入手できます",
+      "h": "GitHub",
       "hR": "https://github.com/NebulaServices/Nebula"
     },
     "3": {
-      "q": "ネビュラが動作しません、どうすればいいですか？",
-      "a": "Ctrl+Shift+R または Shift+F5 を押してみてください。",
-      "aMobile": "設定に行き、ブラウザをクリックして、キャッシュをクリアしてみてください。"
+      "q": "Nebulaが正常に動作しません、どうすればいいですか？",
+      "a": "Shift+F5または右上の更新ボタンを押してください",
+      "aMobile": "設定からキャッシュのクリアを試してください"
     },
     "4": {
       "q": "HTTPプロキシとは何ですか？",
-      "a": "HTTPプロキシはVPNのようなものです。IPの場所を変更して、他の国でのみアクセスできる地域制限コンテンツにアクセスできるようにすることができます。"
+      "a": "インターネット上で認識される国名を偽造して、特定の国でのみ閲覧できる情報を取得できるようにすることができます"
     },
     "5": {
-      "q": "HTTPプロキシはどこで入手できますか？",
-      "a": "自分で実行する方法のチュートリアルを検索するか、オンラインで購入することができます。HTTPプロキシは近い将来、私たちのディスコードサーバーのブースターに提供される予定なので、注目していてください。"
+      "q": "HTTPプロキシアドレスはどこから入手できますか？",
+      "a": "あなたのPC上で実行する方法を検索する他、Web上でプロキシリストを入手することができます HTTPプロキシは、公式Discordサーバーで提供される予定ですので、ぜひ継続して確認しておいてください"
     },
     "6": {
-      "q": "ネビュラが遅いです。",
-      "a": "間違ったサーバーに接続している可能性があります。接続しているベアサーバーを確認し、最も近い国であることを確認してください。"
+      "q": "通信が遅いです",
+      "a": "間違ったアドレスを指定している可能性があります　設定済みのBareサーバーのアドレスを確認して、その接続しているサーバーが近い国である事も確認してください"
     }
   },
   "credits": {
-    "devs": "サイト開発者",
-    "jpTranslators": "日本語翻訳者",
-    "esTranslators": "スペイン語翻訳者"
+    "devs": "開発者一覧",
+    "jpTranslators": "日本語翻訳",
+    "esTranslators": "スペイン語翻訳"
   }
 }
