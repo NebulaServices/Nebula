@@ -15,8 +15,8 @@ dependencies:
     specifier: ^6.12.0
     version: 6.12.0
   '@mercuryworkshop/bare-mux':
-    specifier: ^1.0.5
-    version: 1.0.5
+    specifier: ^1.0.7
+    version: 1.0.7
   '@mercuryworkshop/epoxy-transport':
     specifier: ^1.1.0
     version: 1.1.0(typescript@5.4.3)
@@ -1056,8 +1056,8 @@ packages:
       uuid: 9.0.1
     dev: false
 
-  /@mercuryworkshop/bare-mux@1.0.5:
-    resolution: {integrity: sha512-5czcsWISUCrN49diTuF/8WXZUCyoWHn90Ea+gLhVWKGUTyJzPAG5gTVZ77rMcQYewSuSDA1WVPaF0n79ciL5Gg==}
+  /@mercuryworkshop/bare-mux@1.0.7:
+    resolution: {integrity: sha512-VUJvfLxlzpyCuKoGfaI+sUpHEK4tvmvpYvkalU2z604+O9UahfZoc53arO9pm9F3Fnv7ZNloSWMnvSlPAznkoA==}
     dependencies:
       '@types/uuid': 9.0.8
       uuid: 9.0.1
@@ -5987,6 +5987,9 @@ packages:
   /sqlite3@5.1.7:
     resolution: {integrity: sha512-GGIyOiFaG+TUra3JIfkI/zGP8yZYLPQ0pl1bH+ODjiX57sPhrLU5sQJn1y9bDKZUFYkX1crlrPfSYt0BKKdkog==}
     requiresBuild: true
+    peerDependenciesMeta:
+      node-gyp:
+        optional: true
     dependencies:
       bindings: 1.5.0
       node-addon-api: 7.1.0
