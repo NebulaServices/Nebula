@@ -59,7 +59,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/bare\//, "")
       },
       "/wisp/": {
-        target: "http://ruby.rubynetwork.co/wisp/",
+        target: "http://localhost:8080/wisp/",
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/wisp\//, "")

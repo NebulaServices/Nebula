@@ -13,7 +13,7 @@ const bare = createBareServer("/bare/");
 const rh = createRammerhead();
 import chalk from "chalk";
 import masqr from "./masqr.js";
-
+const port = Number(process.env.PORT) || 8080;
 const rammerheadScopes = [
   "/rammerhead.js",
   "/hammerhead.js",
@@ -101,13 +101,15 @@ app.setNotFoundHandler((req, res) => {
 });
 
 console.log(
-  chalk.green(`Server listening on ${chalk.bold("http://localhost:8080")}`)
+  chalk.green(`Server listening on ${chalk.bold("http://localhost:" + port)}`)
 );
 console.log(
-  chalk.magenta(`Server also listening on ${chalk.bold("http://0.0.0.0:8080")}`)
+  chalk.magenta(
+    `Server also listening on ${chalk.bold("http://0.0.0.0:" + port)}`
+  )
 );
 
 app.listen({
-  port: 8080,
+  port,
   host: "0.0.0.0"
 });

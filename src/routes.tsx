@@ -7,13 +7,12 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
-//import { setTransport } from "./util/transports.js";
 
 import "./style.css";
 import "./i18n";
 import { setTransport } from "./util/transports";
 import { useEffect, useState } from "preact/hooks";
-
+import { LoadSuspense } from "./LoadSuspense";
 export default function Routes() {
   const [swRegistered, setSwRegistered] = useState(false);
   useEffect(() => {
@@ -39,7 +38,7 @@ export default function Routes() {
       console.error(e);
     }
   }, [swRegistered]);
-  return (
+  return swRegistered ? (
     <LocationProvider>
       <Router>
         <Route path="/" component={Home} />
@@ -52,5 +51,7 @@ export default function Routes() {
         <Route default component={NotFound} />
       </Router>
     </LocationProvider>
+  ) : (
+    <LoadSuspense />
   );
 }
