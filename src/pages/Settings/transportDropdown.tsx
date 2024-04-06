@@ -14,10 +14,12 @@ interface Option {
 
 const TransportDropdown = ({
   storageKey,
-  options
+  options,
+  refresh
 }: {
   storageKey: string;
   options: Option[];
+  refresh: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -60,7 +62,9 @@ const TransportDropdown = ({
                   setChoice(option.id);
                   localStorage.setItem(storageKey, option.id);
                   changeTransport(option.id, wispUrl);
-                  window.location.reload();
+                  if (refresh === true) {
+                    window.location.reload();
+                  }
                 }}
               >
                 {option.label}
