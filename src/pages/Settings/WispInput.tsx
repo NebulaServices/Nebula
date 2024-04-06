@@ -1,6 +1,7 @@
 import { useState, useEffect } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { changeTransport } from "../../util/transports";
+import { uninstallServiceWorkers } from "../../util/SWHelper";
 import { ToastContainer, toast } from "react-toastify";
 
 interface WispInputProps {
@@ -34,7 +35,8 @@ function WispInput(props: WispInputProps) {
       (document.getElementById("wispinput") as HTMLInputElement).value
     );
     localStorage.setItem("wispUrl", url);
-    changeTransport(localStorage.getItem("transport") || "epoxy", url);
+    uninstallServiceWorkers();
+    window.location.reload();
   }
   return (
     <div>

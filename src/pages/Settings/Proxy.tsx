@@ -138,11 +138,7 @@ const Proxy = ({ id, active }) => {
           <div className="text-md p-4 font-bold text-input-text">
             {t("settings.transport.desc")}
           </div>
-          <TransportDropdown
-            storageKey="transport"
-            options={transports}
-            refresh={false}
-          />
+          <TransportDropdown storageKey="transport" options={transports} />
         </div>
       </motion.div>
     </motion.div>

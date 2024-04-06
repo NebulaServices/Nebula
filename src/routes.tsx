@@ -12,20 +12,33 @@ import { Faq } from "./pages/Faq";
 import "./style.css";
 import "./i18n";
 import { setTransport } from "./util/transports";
+import { useEffect, useState } from "preact/hooks";
 
 export default function Routes() {
-  //if ("serviceWorker" in navigator) {
-  //window.addEventListener("load", () => {
-  //   navigator.serviceWorker
-  //     .register("/sw.js", {
-  //       scope: "/~/"
-  //     })
-  //     .then(() => {
-  //       console.log("Service worker registered successfully");
-  //       setTransport();
-  //     });
-  //});
-  //}
+  const [swRegistered, setSwRegistered] = useState(false);
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw.js", {
+          scope: "/~/"
+        })
+        .then(() => {
+          console.log("Service Worker Registered");
+          setSwRegistered(true);
+        })
+        .catch((err) => {
+          console.error("Service Worker Failed to Register", err);
+        });
+    }
+  }, []);
+  useEffect(() => {
+    try {
+      if (!swRegistered) return;
+      setTransport();
+    } catch (e) {
+      console.error(e);
+    }
+  }, [swRegistered]);
   return (
     <LocationProvider>
       <Router>

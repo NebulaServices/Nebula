@@ -1,6 +1,6 @@
 import { FaAngleDown } from "react-icons/fa";
 import { useState, useEffect } from "preact/hooks";
-import { changeTransport } from "../../util/transports.ts";
+import { changeTransport } from "../../util/transports";
 const wispUrl =
   localStorage.getItem("wispUrl") ||
   (location.protocol === "https:" ? "wss://" : "ws://") +
@@ -14,12 +14,10 @@ interface Option {
 
 const TransportDropdown = ({
   storageKey,
-  options,
-  refresh
+  options
 }: {
   storageKey: string;
   options: Option[];
-  refresh: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -62,9 +60,7 @@ const TransportDropdown = ({
                   setChoice(option.id);
                   localStorage.setItem(storageKey, option.id);
                   changeTransport(option.id, wispUrl);
-                  if (refresh === true) {
-                    window.location.reload();
-                  }
+                  window.location.reload();
                 }}
               >
                 {option.label}
