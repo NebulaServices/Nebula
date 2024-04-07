@@ -12,7 +12,7 @@ import {
   IoChevronForwardSharp,
   IoReloadSharp
 } from "react-icons/io5";
-import { FaShareAlt } from "react-icons/fa";
+import { FaShareAlt, FaPencilAlt } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
 interface ProxyFrame extends HTMLElement {

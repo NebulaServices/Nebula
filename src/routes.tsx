@@ -7,25 +7,39 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
-//import { setTransport } from "./util/transports.js";
+import { SetTransport } from "@mercuryworkshop/bare-mux";
 
 import "./style.css";
 import "./i18n";
-import { setTransport } from "./util/transports";
 
 export default function Routes() {
-  //if ("serviceWorker" in navigator) {
-  //window.addEventListener("load", () => {
-  //   navigator.serviceWorker
-  //     .register("/sw.js", {
-  //       scope: "/~/"
-  //     })
-  //     .then(() => {
-  //       console.log("Service worker registered successfully");
-  //       setTransport();
-  //     });
-  //});
-  //}
+  const wispUrl =
+    (location.protocol === "https:" ? "wss://" : "ws://") +
+    location.host +
+    "/wisp/"; // @TODO Japan - US ping
+
+  if ("serviceWorker" in navigator) {
+    console.log("am bout to bus");
+    navigator.serviceWorker
+      .register("/sw.js", {
+        scope: "/~/"
+      })
+      .then(() => {
+        console.log("Service Worker Registered");
+        try {
+          localStorage.setItem("transport", "libcurl");
+          console.log("Setting transport to Libcurl");
+          SetTransport("CurlMod.LibcurlClient", {
+            wisp: wispUrl
+          });
+        } catch {}
+      })
+      .catch((err) => {
+        console.error("Service Worker Failed to Register", err);
+      });
+  } else {
+    alert("err");
+  }
   return (
     <LocationProvider>
       <Router>
