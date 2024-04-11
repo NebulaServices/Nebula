@@ -93,10 +93,10 @@
     "main": "標準",
     "hacker": "Hacker",
     "crismas": "Crismas🐴🎄",
-    "catppuccinMocha": "Catppuccin Mocha",
-    "catppuccinMacchiato": "Catppuccin Macchiato",
-    "catppuccinFrappe": "Catppuccin Frappe",
-    "catppuccinLatte": "Catppuccin Latte"
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "catppuccin-macchiato": "Catppuccin Macchiato",
+    "catppuccin-frappe": "Catppuccin Frappe",
+    "catppuccin-latte": "Catppuccin Latte"
   },
   "clipboard": "コピーしました!",
   "bareError": "処理を実行できませんでした　Bareサーバーが存在し、そしてアクセスが拒否されていない事も確認してから、再度お試してください",

@@ -94,10 +94,10 @@
     "main": "Main",
     "hacker": "Hacker",
     "crismas": "Crismas🐴🎄",
-    "catppuccinMocha": "Catppuccin Mocha",
-    "catppuccinMacchiato": "Catppuccin Macchiato",
-    "catppuccinFrappe": "Catppuccin Frappe",
-    "catppuccinLatte": "Catppuccin Latte"
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "catppuccin-macchiato": "Catppuccin Macchiato",
+    "catppuccin-frappe": "Catppuccin Frappe",
+    "catppuccin-latte": "Catppuccin Latte"
   },
   "clipboard": "URL copied to clipboard!",
   "bareError": "That didn't quite work. Double check that the bare server exists and isn't blocked.",

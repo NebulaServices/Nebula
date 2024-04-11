@@ -93,10 +93,10 @@
     "main": "Por defecto",
     "hacker": "Hacker",
     "crismas": "Naidad🐴🎄",
-    "catppuccinMocha": "Catppuccin Mocha",
-    "catppuccinMacchiato": "Catppuccin Macchiato",
-    "catppuccinFrappe": "Catppuccin Frappe",
-    "catppuccinLatte": "Catppuccin Latte"
+    "catppuccin-mocha": "Catppuccin Mocha",
+    "catppuccin-macchiato": "Catppuccin Macchiato",
+    "catppuccin-frappe": "Catppuccin Frappe",
+    "catppuccin-latte": "Catppuccin Latte"
   },
   "clipboard": "¡URL copiada al portapapeles!",
   "bareError": "Esto no es funcional. Vuelva a verificar que el servidor bare exista y no esté bloqueado.",

@@ -1,12 +1,12 @@
 import { render } from "preact";
 import { Suspense, lazy } from "preact/compat";
 import { LoadSuspense } from "./LoadSuspense";
-import { Helmet } from "react-helmet";
 import Meta from "./components/Meta";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 import { useEffect, useState } from "preact/compat";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const Routes = lazy(() => import("./routes"));
 
@@ -36,29 +36,27 @@ export default function App() {
   };
 
   return (
-    <div class="w-srceen h-screen">
-      {window.location.origin === "https://nebulaproxy.io" && <Meta />}
-      {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
-      <Helmet>
-        <link rel="stylesheet" href={"/themes/" + theme + ".css"}></link>
-        <link rel="stylesheet" href="/themes/main.css"></link>
-      </Helmet>
-      <Suspense fallback={<LoadSuspense />}>
-        <div className="absolute z-20 h-full w-full">
-          <Routes />
-        </div>
-        <div className="z-10 h-full w-full bg-primary">
-          {init && particlesUrl !== "none" && (
-            <Particles
-              id="tsparticles"
-              url={particlesUrl}
-              particlesLoaded={particlesLoaded}
-              class="bg-primary"
-            />
-          )}
-        </div>
-      </Suspense>
-    </div>
+    <ThemeProvider>
+      <div class="w-srceen h-screen">
+        {window.location.origin === "https://nebulaproxy.io" && <Meta />}
+        {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
+        <Suspense fallback={<LoadSuspense />}>
+          <div className="absolute z-20 h-full w-full">
+            <Routes />
+          </div>
+          <div className="z-10 h-full w-full bg-primary">
+            {init && particlesUrl !== "none" && (
+              <Particles
+                id="tsparticles"
+                url={particlesUrl}
+                particlesLoaded={particlesLoaded}
+                class="bg-primary"
+              />
+            )}
+          </div>
+        </Suspense>
+      </div>
+    </ThemeProvider>
   );
 }
 
