@@ -7,7 +7,7 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
-import { SetTransport } from "@mercuryworkshop/bare-mux";
+import { registerRemoteListener } from "@mercuryworkshop/bare-mux";
 
 import "./style.css";
 import "./i18n";
@@ -20,25 +20,14 @@ export default function Routes() {
 
   if ("serviceWorker" in navigator) {
     console.log("am bout to bus");
+    navigator.serviceWorker.ready.then(async (sw) => {
+        //await registerRemoteListener(sw.active!)
+        console.log("More code soon")
+    });
     navigator.serviceWorker
       .register("/sw.js", {
         scope: "/~/"
       })
-      .then(() => {
-        console.log("Service Worker Registered");
-        try {
-          localStorage.setItem("transport", "libcurl");
-          console.log("Setting transport to Libcurl");
-          SetTransport("CurlMod.LibcurlClient", {
-            wisp: wispUrl
-          });
-        } catch {}
-      })
-      .catch((err) => {
-        console.error("Service Worker Failed to Register", err);
-      });
-  } else {
-    alert("err");
   }
   return (
     <LocationProvider>
