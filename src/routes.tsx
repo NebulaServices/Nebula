@@ -8,7 +8,7 @@ import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
 import { registerRemoteListener } from "@mercuryworkshop/bare-mux";
-
+import { setTransport } from './util/transports';
 import "./style.css";
 import "./i18n";
 
@@ -22,7 +22,7 @@ export default function Routes() {
     console.log("am bout to bus");
     navigator.serviceWorker.ready.then(async (sw) => {
         //await registerRemoteListener(sw.active!)
-        console.log("More code soon")
+        setTransport();
     });
     navigator.serviceWorker
       .register("/sw.js", {
