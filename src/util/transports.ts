@@ -48,7 +48,7 @@ const wispUrl =
   (location.protocol === "https:" ? "wss://" : "ws://") +
   location.host +
   "/wisp/";
-registerRemoteListener(navigator.serviceWorker.controller!);
+//registerRemoteListener(navigator.serviceWorker.controller!);
 
 //if (isIOS) {
 //  console.log("iOS device detected. Bare will be used.");
