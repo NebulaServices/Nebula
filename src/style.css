@@ -120,9 +120,7 @@
     --active-color: #8839ef !important;
   }
 }
-body {
-  background-color: var(--background-primary) !important;
-}
+
 .font-inter {
   font-family: "Inter", sans-serif;
   font-weight: 300;

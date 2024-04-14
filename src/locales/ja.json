@@ -69,9 +69,13 @@
     "theme": {
       "title": "壁紙",
       "subtitle": "お好みの壁紙を選択してください",
+      "select": "選択する",
       "particles": "パーティクル",
       "particlesDesc": "パーティクルの種類を選択してください",
-      "particlesNone": "なし"
+      "particlesNone": "なし",
+      "background": "背景",
+      "backgroundDesc": "背景画像を選択してください",
+      "backgroundNone": "なし"
     },
     "httpProxy": {
       "title": "HTTPプロキシ (上級者向け)",

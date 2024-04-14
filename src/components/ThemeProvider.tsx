@@ -1,13 +1,13 @@
 import { createContext } from "preact";
 import { useContext, useEffect, useState } from "preact/hooks";
-export type Theme =
+type Theme =
   | "main"
   | "hacker"
   | "catppuccin-mocha"
   | "catppuccin-macchiato"
   | "catppuccin-frappe"
   | "catppuccin-latte";
-export const themes: Theme[] = [
+const themes: Theme[] = [
   "main",
   "hacker",
   "catppuccin-mocha",

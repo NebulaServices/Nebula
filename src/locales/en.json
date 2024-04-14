@@ -72,7 +72,10 @@
       "select": "Select",
       "particles": "Particles",
       "particlesDesc": "Choose a particles wallpaper",
-      "particlesNone": "None"
+      "particlesNone": "None",
+      "background": "Background",
+      "backgroundDesc": "Choose a background image",
+      "backgroundNone": "None"
     },
     "httpProxy": {
       "title": "(Advanced) HTTP Proxy",

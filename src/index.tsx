@@ -34,17 +34,19 @@ export default function App() {
   const particlesLoaded = (container) => {
     console.log(container);
   };
-
+  const bgImage: string | undefined = localStorage.getItem("background");
   return (
     <ThemeProvider>
-      <div class="w-srceen h-screen">
+      <div class="h-screen w-screen">
         {window.location.origin === "https://nebulaproxy.io" && <Meta />}
         {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
         <Suspense fallback={<LoadSuspense />}>
           <div className="absolute z-20 h-full w-full">
             <Routes />
           </div>
-          <div className="z-10 h-full w-full bg-primary">
+          <div
+            className={`z-10 h-full w-full bg-primary ${bgImage && `bg-[url(${bgImage})] bg-cover`}`}
+          >
             {init && particlesUrl !== "none" && (
               <Particles
                 id="tsparticles"

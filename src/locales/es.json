@@ -69,9 +69,13 @@
     "theme": {
       "title": "Mirar",
       "subtitle": "Elige una mirada para que tus ojos no nos odienn",
+      "select": "Seleccionar",
       "particles": "Partículas",
       "particlesDesc": "Elige un fondo de pantalla de partículas",
-      "particlesNone": "Ninguna"
+      "particlesNone": "Ninguna",
+      "background": "Fondo",
+      "backgroundDesc": "Elige una imagen de fondo",
+      "backgroundNone": "Ninguna"
     },
     "httpProxy": {
       "title": "Proxy HTTP (avanzado)",
