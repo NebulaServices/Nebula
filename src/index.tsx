@@ -49,7 +49,8 @@ export default function App() {
             style={{
               backgroundImage: bgImage ? `url(${bgImage})` : "none",
               backgroundSize: "contain",
-              backgroundRepeat: "space"
+              backgroundRepeat: "repeat",
+              backgroundPosition: "center"
             }}
           >
             {init && particlesUrl !== "none" && (
