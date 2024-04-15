@@ -45,7 +45,12 @@ export default function App() {
             <Routes />
           </div>
           <div
-            className={`z-10 h-full w-full bg-primary ${bgImage && `bg-[url(${bgImage})] bg-cover`}`}
+            className="z-10 h-full w-full bg-primary"
+            style={{
+              backgroundImage: bgImage ? `url(${bgImage})` : "none",
+              backgroundSize: "contain",
+              backgroundRepeat: "space"
+            }}
           >
             {init && particlesUrl !== "none" && (
               <Particles
