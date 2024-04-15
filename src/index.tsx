@@ -6,7 +6,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 import { useEffect, useState } from "preact/compat";
-import { ThemeProvider, useTheme } from "./components/ThemeProvider";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const Routes = lazy(() => import("./routes"));
 
@@ -29,27 +29,16 @@ export default function App() {
       setInit(true);
     });
   }, []);
-  const { background } = useTheme();
   const particlesLoaded = (container) => {
     console.log(container);
   };
   return (
-    <div class="h-screen w-screen">
+    <div>
       {window.location.origin === "https://nebulaproxy.io" && <Meta />}
       {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
       <Suspense fallback={<LoadSuspense />}>
-        <div className="absolute z-20 h-full w-full">
-          <Routes />
-        </div>
-        <div
-          className="z-10 h-full w-full bg-primary"
-          style={{
-            backgroundImage: `url(${background})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "repeat",
-            backgroundPosition: "center"
-          }}
-        >
+        <Routes />
+        <div className="z-10 h-full w-full bg-primary">
           {init && particlesUrl !== "none" && (
             <Particles
               id="tsparticles"
