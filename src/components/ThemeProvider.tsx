@@ -21,13 +21,17 @@ type ThemeProviderProps = {
 type ThemeProviderState = {
   themes: Theme[];
   theme: Theme;
+  background: string;
   setTheme: (theme: Theme) => void;
+  setBackground: (background: string) => void;
 };
 
 const initialState: ThemeProviderState = {
   themes: themes,
   theme: "main",
-  setTheme: () => null
+  background: "",
+  setTheme: () => null,
+  setBackground: () => null
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
@@ -35,8 +39,12 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   const defaultTheme = "main";
   const storageKey = "theme";
+  const bgKey = "background";
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  );
+  const [background, setBackground] = useState<string>(() =>
+    localStorage.getItem(bgKey)
   );
 
   useEffect(() => {
@@ -45,16 +53,20 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
     themes.forEach((theme) => {
       root.classList.remove(theme);
     });
-
     root.classList.add(theme);
   }, [theme, themes]);
 
   const value = {
     theme,
     themes,
+    background,
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
+    },
+    setBackground: (background: string) => {
+      localStorage.setItem(bgKey, background);
+      setBackground(background);
     }
   };
 
