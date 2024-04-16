@@ -6,7 +6,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 import { useEffect, useState } from "preact/compat";
-import { ThemeProvider } from "./components/ThemeProvider";
+import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
 const Routes = lazy(() => import("./routes"));
 
@@ -14,7 +14,7 @@ const particlesUrl = localStorage.getItem("particles") || "none";
 
 export default function App() {
   const [init, setInit] = useState(false);
-
+  const {background} = useTheme();
   // this should be run only once per application lifetime
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -33,7 +33,7 @@ export default function App() {
     console.log(container);
   };
   return (
-    <div>
+    <div className={!background && "bg-primary"}>
       {window.location.origin === "https://nebulaproxy.io" && <Meta />}
       {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
       <Suspense fallback={<LoadSuspense />}>

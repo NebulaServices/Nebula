@@ -6,7 +6,6 @@
 @layer base {
   :root,
   .main {
-    --background-image: url();
     --background-primary: #191724;
     --background-lighter: #16121f;
     --navbar-color: #26233a;
