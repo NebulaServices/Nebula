@@ -14,7 +14,7 @@ const particlesUrl = localStorage.getItem("particles") || "none";
 
 export default function App() {
   const [init, setInit] = useState(false);
-  const {background} = useTheme();
+  const { background } = useTheme();
   // this should be run only once per application lifetime
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -37,14 +37,17 @@ export default function App() {
       {window.location.origin === "https://nebulaproxy.io" && <Meta />}
       {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
       <Suspense fallback={<LoadSuspense />}>
-        <Routes />
-        <div className="z-10 h-full w-full bg-primary">
+        <main className="absolute z-50 h-screen w-screen">
+          <Routes />
+        </main>
+        <div className="-z-10 h-full w-full bg-primary">
           {init && particlesUrl !== "none" && (
             <Particles
               id="tsparticles"
               url={particlesUrl}
               particlesLoaded={particlesLoaded}
               class="bg-primary"
+              zIndex={-10}
             />
           )}
         </div>
