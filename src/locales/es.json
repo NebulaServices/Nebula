@@ -69,13 +69,9 @@
     "theme": {
       "title": "Mirar",
       "subtitle": "Elige una mirada para que tus ojos no nos odienn",
-      "select": "Seleccionar",
       "particles": "Partículas",
       "particlesDesc": "Elige un fondo de pantalla de partículas",
-      "particlesNone": "Ninguna",
-      "background": "Fondo",
-      "backgroundDesc": "Elige una imagen de fondo",
-      "backgroundNone": "Ninguna"
+      "particlesNone": "Ninguna"
     },
     "httpProxy": {
       "title": "Proxy HTTP (avanzado)",
@@ -97,10 +93,10 @@
     "main": "Por defecto",
     "hacker": "Hacker",
     "crismas": "Naidad🐴🎄",
-    "catppuccin-mocha": "Catppuccin Mocha",
-    "catppuccin-macchiato": "Catppuccin Macchiato",
-    "catppuccin-frappe": "Catppuccin Frappe",
-    "catppuccin-latte": "Catppuccin Latte"
+    "catppuccinMocha": "Catppuccin Mocha",
+    "catppuccinMacchiato": "Catppuccin Macchiato",
+    "catppuccinFrappe": "Catppuccin Frappe",
+    "catppuccinLatte": "Catppuccin Latte"
   },
   "clipboard": "¡URL copiada al portapapeles!",
   "bareError": "Esto no es funcional. Vuelva a verificar que el servidor bare exista y no esté bloqueado.",

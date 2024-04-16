@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
+
+:root {
+  --background-primary: #191724;
+  --background-lighter: #16121f;
+  --navbar-color: #26233a;
+  --navbar-height: 60px;
+  --navbar-text-color: #7967dd;
+  --navbar-link-color: #e0def4;
+  --navbar-link-hover-color: gray;
+  --navbar-font: "Roboto";
+  --input-text-color: #e0def4;
+  --input-placeholder-color: white;
+  --input-background-color: #1f1d2e;
+  --input-border-color: #eb6f92;
+  --input-border-size: 1.3px;
+  --navbar-logo-filter: none;
+  --dropdown-option-hover-color: #312a49;
+  --tab-color: var(--black);
+  --border-color: #16121f;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+}
+
+.font-roboto {
+  font-family: "Roboto";
+}
