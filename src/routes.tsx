@@ -7,8 +7,8 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
-import { registerRemoteListener } from "@mercuryworkshop/bare-mux";
-import { setTransport } from './util/transports';
+// import { registerRemoteListener } from "@mercuryworkshop/bare-mux";
+import { setTransport } from "./util/transports";
 import "./style.css";
 import "./i18n";
 
@@ -19,15 +19,13 @@ export default function Routes() {
     "/wisp/"; // @TODO Japan - US ping
 
   if ("serviceWorker" in navigator) {
-    console.log("am bout to bus");
-    navigator.serviceWorker.ready.then(async (sw) => {
-        //await registerRemoteListener(sw.active!)
-        setTransport();
+    navigator.serviceWorker.ready.then(async () => {
+      //await registerRemoteListener(sw.active!)
+      setTransport();
     });
-    navigator.serviceWorker
-      .register("/sw.js", {
-        scope: "/~/"
-      })
+    navigator.serviceWorker.register("/sw.js", {
+      scope: "/~/"
+    });
   }
   return (
     <LocationProvider>

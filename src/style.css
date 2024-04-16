@@ -1,9 +1,138 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;700;900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@layer base {
+  :root,
+  .main {
+    --background-primary: #191724;
+    --background-lighter: #16121f;
+    --navbar-color: #26233a;
+    --navbar-height: 60px;
+    --navbar-text-color: #7967dd;
+    --navbar-link-color: #e0def4;
+    --navbar-link-hover-color: gray;
+    --navbar-font: "Roboto";
+    --input-text-color: #e0def4;
+    --input-placeholder-color: white;
+    --input-background-color: #1f1d2e;
+    --input-border-color: #eb6f92;
+    --input-border-size: 1.3px;
+    --navbar-logo-filter: none;
+    --dropdown-option-hover-color: #312a49;
+    --tab-color: var(--black);
+    --border-color: #16121f;
+  }
+  .hacker {
+    --background-primary: #000 !important;
+    --background-lighter: #000 !important;
+    --navbar-color: #000 !important;
+    --navbar-height: 60px !important;
+    --navbar-text-color: greenyellow !important;
+    --navbar-link-color: greenyellow !important;
+    --navbar-link-hover-color: green !important;
+    --navbar-font: "Roboto" !important;
+    --input-text-color: greenyellow !important;
+    --input-placeholder-color: white !important;
+    --input-background-color: #000 !important;
+    --input-border-color: greenyellow !important;
+    --input-border-size: 1.3px !important;
+    --navbar-logo-filter: none !important;
+    --dropdown-option-hover-color: #312a49 !important;
+    --tab-color: var(--black) !important;
+    --border-color: greenyellow !important;
+  }
+  .catppuccin-mocha {
+    --background-primary: #1e1e2e !important;
+    --background-lighter: #181825 !important;
+    --navbar-color: #181825 !important;
+    --navbar-height: 60px !important;
+    --navbar-text-color: #cdd6f4 !important;
+    --navbar-link-color: #89b4fa !important;
+    --navbar-link-hover-color: #cba6f7 !important;
+    --navbar-font: "Roboto" !important;
+    --input-text-color: #cdd6f4 !important;
+    --input-placeholder-color: #a6adc8 !important;
+    --input-background-color: #11111b !important;
+    --input-border-color: color-mix(in srgb, #11111b, #cba6f7 50%) !important;
+    --input-border-size: 1.3px !important;
+    --navbar-logo-filter: none !important;
+    --dropdown-option-hover-color: #11111b !important;
+    --tab-color: #313244 !important;
+    --active-color: #cba6f7 !important;
+  }
+  .catppuccin-macchiato {
+    --background-primary: #24273a !important;
+    --background-lighter: #1e2030 !important;
+    --navbar-color: #1e2030 !important;
+    --navbar-height: 60px !important;
+    --navbar-text-color: #cad3f5 !important;
+    --navbar-link-color: #8aadf4 !important;
+    --navbar-link-hover-color: #c6a0f6 !important;
+    --navbar-font: "Roboto" !important;
+    --input-text-color: #cad3f5 !important;
+    --input-placeholder-color: #a5adcb !important;
+    --input-background-color: #181926 !important;
+    --input-border-color: color-mix(in srgb, #181926, #c6a0f6 50%) !important;
+    --input-border-size: 1.3px !important;
+    --navbar-logo-filter: none !important;
+    --dropdown-option-hover-color: #181926 !important;
+    --tab-color: #363a4f !important;
+    --active-color: #c6a0f6 !important;
+  }
+  .catppuccin-frappe {
+    --background-primary: #303446 !important;
+    --background-lighter: #292c3c !important;
+    --navbar-color: #292c3c !important;
+    --navbar-height: 60px !important;
+    --navbar-text-color: #c6d0f5 !important;
+    --navbar-link-color: #8caaee !important;
+    --navbar-link-hover-color: #ca9ee6 !important;
+    --navbar-font: "Roboto" !important;
+    --input-text-color: #c6d0f5 !important;
+    --input-placeholder-color: #a5adce !important;
+    --input-background-color: #232634 !important;
+    --input-border-color: color-mix(in srgb, #232634, #ca9ee6 50%) !important;
+    --input-border-size: 1.3px !important;
+    --navbar-logo-filter: none !important;
+    --dropdown-option-hover-color: #232634 !important;
+    --tab-color: #414559 !important;
+    --active-color: #ca9ee6 !important;
+  }
+  .catppuccin-latte {
+    --background-primary: #eff1f5 !important;
+    --background-lighter: #e6e9ef !important;
+    --navbar-color: #e6e9ef !important;
+    --navbar-height: 60px !important;
+    --navbar-text-color: #4c4f69 !important;
+    --navbar-link-color: #1e66f5 !important;
+    --navbar-link-hover-color: #8839ef !important;
+    --navbar-font: "Roboto" !important;
+    --input-text-color: #4c4f69 !important;
+    --input-placeholder-color: #6c6f85 !important;
+    --input-background-color: #dce0e8 !important;
+    --input-border-color: color-mix(in srgb, #dce0e8, #8839ef 50%) !important;
+    --input-border-size: 1.3px !important;
+    --navbar-logo-filter: none !important;
+    --dropdown-option-hover-color: #dce0e8 !important;
+    --tab-color: #ccd0da !important;
+    --active-color: #8839ef !important;
+  }
+}
 body {
-  background-color: var(--background-primary) !important;
+  @apply bg-primary;
+  background-image: var(--background-image);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+}
+
+.font-roboto {
+  font-family: "Roboto";
 }
