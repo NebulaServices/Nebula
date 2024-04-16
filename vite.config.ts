@@ -59,15 +59,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/bare\//, "")
       },
       "/wisp/": {
-        target: "http://localhost:8080/wisp/",
+        target: "http://localhost:3000/",
         changeOrigin: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/wisp\//, "")
-      },
-      "/search": {
-        target: "http://localhost:8080/search",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/search/, "")
       }
     }
   }

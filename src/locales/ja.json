@@ -69,13 +69,9 @@
     "theme": {
       "title": "壁紙",
       "subtitle": "お好みの壁紙を選択してください",
-      "select": "選択する",
       "particles": "パーティクル",
       "particlesDesc": "パーティクルの種類を選択してください",
-      "particlesNone": "なし",
-      "background": "背景",
-      "backgroundDesc": "背景画像を選択してください",
-      "backgroundNone": "なし"
+      "particlesNone": "なし"
     },
     "httpProxy": {
       "title": "HTTPプロキシ (上級者向け)",
@@ -97,10 +93,10 @@
     "main": "標準",
     "hacker": "Hacker",
     "crismas": "Crismas🐴🎄",
-    "catppuccin-mocha": "Catppuccin Mocha",
-    "catppuccin-macchiato": "Catppuccin Macchiato",
-    "catppuccin-frappe": "Catppuccin Frappe",
-    "catppuccin-latte": "Catppuccin Latte"
+    "catppuccinMocha": "Catppuccin Mocha",
+    "catppuccinMacchiato": "Catppuccin Macchiato",
+    "catppuccinFrappe": "Catppuccin Frappe",
+    "catppuccinLatte": "Catppuccin Latte"
   },
   "clipboard": "コピーしました!",
   "bareError": "処理を実行できませんでした　Bareサーバーが存在し、そしてアクセスが拒否されていない事も確認してから、再度お試してください",

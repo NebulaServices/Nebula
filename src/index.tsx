@@ -1,20 +1,21 @@
 import { render } from "preact";
 import { Suspense, lazy } from "preact/compat";
 import { LoadSuspense } from "./LoadSuspense";
+import { Helmet } from "react-helmet";
 import Meta from "./components/Meta";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 import { useEffect, useState } from "preact/compat";
-import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 
 const Routes = lazy(() => import("./routes"));
 
+const theme = localStorage.getItem("theme") || "main";
 const particlesUrl = localStorage.getItem("particles") || "none";
 
 export default function App() {
   const [init, setInit] = useState(false);
-  const {background} = useTheme();
+
   // this should be run only once per application lifetime
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -29,15 +30,23 @@ export default function App() {
       setInit(true);
     });
   }, []);
+
   const particlesLoaded = (container) => {
     console.log(container);
   };
+
   return (
-    <div className={!background && "bg-primary"}>
+    <div class="w-srceen h-screen">
       {window.location.origin === "https://nebulaproxy.io" && <Meta />}
       {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
+      <Helmet>
+        <link rel="stylesheet" href={"/themes/" + theme + ".css"}></link>
+        <link rel="stylesheet" href="/themes/main.css"></link>
+      </Helmet>
       <Suspense fallback={<LoadSuspense />}>
-        <Routes />
+        <div className="absolute z-20 h-full w-full">
+          <Routes />
+        </div>
         <div className="z-10 h-full w-full bg-primary">
           {init && particlesUrl !== "none" && (
             <Particles
@@ -53,9 +62,4 @@ export default function App() {
   );
 }
 
-render(
-  <ThemeProvider>
-    <App />
-  </ThemeProvider>,
-  document.getElementById("app")
-);
+render(<App />, document.getElementById("app"));
