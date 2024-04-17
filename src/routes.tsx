@@ -24,7 +24,7 @@ export default function Routes() {
       setTransport();
     });
     navigator.serviceWorker.register("/sw.js", {
-      scope: "/~/"
+      scope: "/"
     });
   }
   return (

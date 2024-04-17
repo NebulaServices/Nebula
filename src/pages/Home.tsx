@@ -20,7 +20,7 @@ export function Home() {
       const firstLoad = localStorage.getItem("firstLoad") || "true";
       console.log(firstLoad);
       //make sure service workers are updated
-      updateServiceWorkers();
+      //updateServiceWorkers();
       //make sure transport is set
       //setTransport();
       if (firstLoad == "true" && prod) {
