@@ -54,10 +54,12 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       root.classList.remove(theme);
     });
     root.classList.add(theme);
-    document.documentElement.style.setProperty(
-      "--background-image",
-      `url(${background})`
-    );
+    if (background) {
+      document.documentElement.style.setProperty(
+        "--background-image",
+        `url(${background})`
+      );
+    }
   }, [theme, themes, background]);
 
   const value = {
