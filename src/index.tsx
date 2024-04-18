@@ -40,9 +40,7 @@ export default function App() {
         <div className="z-30 h-full w-full">
           <Routes />
         </div>
-        <div
-          className={`z-20 h-full w-full ${!background && "bg-primary"}`}
-        >
+        <div className={`z-20 h-full w-full ${!background && "bg-primary"}`}>
           {init && particlesUrl !== "none" && (
             <Particles
               id="tsparticles"
