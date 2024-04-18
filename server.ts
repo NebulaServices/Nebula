@@ -67,7 +67,7 @@ const serverFactory = (handler, opts) => {
       } else if (shouldRouteRh(req)) {
         routeRhUpgrade(req, socket, head);
       } else if (req.url.endsWith("/wisp/")) {
-        wisp.routeRequest(req, socket as Socket, head);
+        wisp.routeRequest(req, socket, head);
       }
     });
 };
