@@ -54,7 +54,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/bare/": {
-        target: "http://localhost:8080/",
+        target: "http://localhost:8080/bare/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/bare\//, "")
       },
