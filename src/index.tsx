@@ -33,14 +33,14 @@ export default function App() {
     console.log(container);
   };
   return (
-    <div>
+    <div className={!background && "bg-primary"}>
       {window.location.origin === "https://nebulaproxy.io" && <Meta />}
       {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
       <Suspense fallback={<LoadSuspense />}>
-        <div className="z-30 h-full w-full">
+        <div className="z-30 fixed h-full w-full">
           <Routes />
-        </div>
-        <div className={`z-20 h-full w-full ${!background && "bg-primary"}`}>
+        </div>{" "}
+        <div className={`z-20 h-full fixed w-full ${!background && "bg-primary"}`}>
           {init && particlesUrl !== "none" && (
             <Particles
               id="tsparticles"
