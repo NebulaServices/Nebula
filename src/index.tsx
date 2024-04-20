@@ -37,10 +37,18 @@ export default function App() {
       {window.location.origin === "https://nebulaproxy.io" && <Meta />}
       {/* {window.location.origin === "http://localhost:8080" && <Meta />} */}
       <Suspense fallback={<LoadSuspense />}>
-        <div className="z-30 fixed h-full w-full">
+        <div className="fixed z-30 h-full w-full">
           <Routes />
-        </div>{" "}
-        <div className={`z-20 h-full fixed w-full ${!background && "bg-primary"}`}>
+        </div>
+        <div
+          className="fixed z-10 h-full w-full bg-primary"
+          style={{
+            backgroundImage: background ? `url(${background})` : "none",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center"
+          }}
+        >
           {init && particlesUrl !== "none" && (
             <Particles
               id="tsparticles"
