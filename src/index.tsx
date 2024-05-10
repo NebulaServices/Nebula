@@ -59,6 +59,12 @@ export default function App() {
           )}
         </div>
       </Suspense>
+      {/* <video muted autoplay loop className="relative z-10 h-screen w-full object-cover">
+        <source
+          src="bg.mp4"
+          type="video/mp4"
+        />
+        </video> */}
     </div>
   );
 }

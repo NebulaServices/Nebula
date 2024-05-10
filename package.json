@@ -47,7 +47,6 @@
     "tsx": "^4.7.3",
     "vite-plugin-static-copy": "^1.0.4",
     "vite-plugin-vsharp": "^1.7.3",
-    "vite-plugin-webp-generator": "^0.0.5",
     "wisp-server-node": "^1.0.6",
     "ws": "^8.17.0"
   },
