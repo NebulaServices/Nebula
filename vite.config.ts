@@ -12,6 +12,8 @@ import path from "path";
 import { createBareServer } from "@tomphttp/bare-server-node";
 import wisp from "wisp-server-node";
 import http from "http";
+import vsharp from "vite-plugin-vsharp";
+
 const __dirname = path.resolve();
 
 export default defineConfig({
@@ -49,7 +51,10 @@ export default defineConfig({
       ]
     }),
     million.vite({ auto: true }),
-    preact()
+    preact(),
+    vsharp({
+      width: 400
+    })
   ],
   server: {
     proxy: {

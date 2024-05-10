@@ -1,7 +1,6 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
-
 import { set } from "../util/IDB";
 import { uninstallServiceWorkers } from "../util/SWHelper";
 import prod from "./config.json"; // Set prod to true if you wish to load balance
@@ -102,6 +101,24 @@ export function Home() {
       );
   };
 
+  useEffect(() => {
+    const epoxyScript = document.createElement("script");
+    epoxyScript.src = "/epoxy/index.js";
+
+    epoxyScript.onload = function () {
+      console.log("lazy loaded epoxy");
+    };
+
+    const libcurlScript = document.createElement("script");
+    libcurlScript.src = "/libcurl/index.js";
+
+    libcurlScript.onload = function () {
+      console.log("lazy loaded libcurl");
+    };
+
+    document.body.appendChild(epoxyScript);
+    document.body.appendChild(libcurlScript);
+  }, []);
   return (
     <HeaderRoute>
       <CloakedHead
