@@ -71,7 +71,7 @@ const wispUrl =
 // helper function for  ../routes.tsx
 function setTransport() {
   changeTransport(
-    localStorage.getItem("transport") || "libcurl",
+    localStorage.getItem("transport") || "epoxy",
     localStorage.getItem("wispUrl") || wispUrl
   );
 }
