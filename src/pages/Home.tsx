@@ -8,6 +8,7 @@ import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
 import { updateServiceWorkers } from "../util/SWHelper.js";
+import { setTransport } from "../util/transports";
 
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
@@ -90,6 +91,7 @@ export function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setTransport();
     window.location.href =
       "/go/" +
       encodeURIComponent(
@@ -165,6 +167,7 @@ export function Home() {
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
+                    onClick={() => {setTransport()}}
                     href={
                       "/go/" +
                       encodeURIComponent(
