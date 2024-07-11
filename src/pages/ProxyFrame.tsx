@@ -1,4 +1,5 @@
 import { RammerheadEncode } from "../util/RammerheadEncode";
+import { setTransport } from "../util/transports";
 import { searchUtil } from "../util/searchUtil";
 import { LoadSuspense } from "../LoadSuspense";
 import { useEffect, useState } from "preact/hooks";
@@ -78,8 +79,9 @@ export function ProxyFrame(props: { url: string }) {
         console.error("Error fetching data:", error);
       }
     };
-
-    fetchData();
+    setTransport().then(() => {
+      fetchData();
+    });
   }, [localProxy, decodedUrl]);
 
   if (proxyMode == "direct") {

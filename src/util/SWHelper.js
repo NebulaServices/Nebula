@@ -20,14 +20,9 @@ function uninstallServiceWorkers() {
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-      .register("/sw.js", {
-        scope: "/~/"
-      })
-      .then(() => {
-        console.log("Service worker registered successfully");
-        setTransport();
-      });
+    navigator.serviceWorker.register("/sw.js", {
+      scope: "/~/"
+    });
   }
 }
 

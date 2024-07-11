@@ -89,9 +89,9 @@ export function Home() {
     setSuggestions(newSuggestions);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setTransport();
+    //await setTransport();
     window.location.href =
       "/go/" +
       encodeURIComponent(
@@ -103,24 +103,6 @@ export function Home() {
       );
   };
 
-  useEffect(() => {
-    const epoxyScript = document.createElement("script");
-    epoxyScript.src = "/epoxy/index.js";
-
-    epoxyScript.onload = function () {
-      console.log("lazy loaded epoxy");
-    };
-
-    const libcurlScript = document.createElement("script");
-    libcurlScript.src = "/libcurl/index.js";
-
-    libcurlScript.onload = function () {
-      console.log("lazy loaded libcurl");
-    };
-
-    document.body.appendChild(epoxyScript);
-    document.body.appendChild(libcurlScript);
-  }, []);
   return (
     <HeaderRoute>
       <CloakedHead
@@ -167,7 +149,9 @@ export function Home() {
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
-                    onClick={() => {setTransport()}}
+                    onClick={async () => {
+                      //await setTransport();
+                    }}
                     href={
                       "/go/" +
                       encodeURIComponent(
