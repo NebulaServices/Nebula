@@ -150,18 +150,18 @@ export function Home() {
                 suggestions.map((suggestion, index) => (
                   <a
                     onClick={async () => {
-                      //await setTransport();
+                      await registerServiceWorker();
+                      window.location.href =
+                        "/go/" +
+                        encodeURIComponent(
+                          //@ts-ignore
+                          enc(
+                            suggestion,
+                            window.location.origin.slice(8) +
+                              navigator.userAgent
+                          ).substring(10)
+                        );
                     }}
-                    href={
-                      "/go/" +
-                      encodeURIComponent(
-                        //@ts-ignore
-                        enc(
-                          suggestion,
-                          window.location.origin.slice(8) + navigator.userAgent
-                        ).substring(10)
-                      )
-                    }
                   >
                     <div
                       className={`font-roboto w-110 flex h-10 flex-none shrink-0 items-center justify-center border border-input-border-color bg-input p-2 text-xl text-input-text hover:bg-dropdown-option-hover-color ${
