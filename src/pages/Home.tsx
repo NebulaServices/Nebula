@@ -7,7 +7,7 @@ import prod from "./config.json"; // Set prod to true if you wish to load balanc
 import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
-import { updateServiceWorkers } from "../util/SWHelper.js";
+import { registerServiceWorker } from "../util/SWHelper.js";
 import { setTransport } from "../util/transports";
 
 export function Home() {
@@ -91,7 +91,7 @@ export function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //await setTransport();
+    await registerServiceWorker();
     window.location.href =
       "/go/" +
       encodeURIComponent(

@@ -18,7 +18,7 @@
     "@mercuryworkshop/epoxy-transport": "^2.1.3",
     "@mercuryworkshop/libcurl-transport": "^1.3.6",
     "@nebula-services/dynamic": "0.7.2-patch.2",
-    "@titaniumnetwork-dev/ultraviolet": "^3.2.1",
+    "@titaniumnetwork-dev/ultraviolet": "^3.2.2",
     "@mercuryworkshop/bare-as-module3": "^2.2.2",
     "@tomphttp/bare-server-node": "2.0.3",
     "@tsparticles/engine": "^3.4.0",
