@@ -45,30 +45,12 @@ async function changeTransport(transport: string, wispUrl: string) {
 function getTransport() {
   return localStorage.getItem("transport") || "epoxy";
 }
+
 const wispUrl =
   (location.protocol === "https:" ? "wss://" : "ws://") +
   location.host +
   "/wisp/";
 window.connection = new BareMuxConnection("/baremux/worker.js");
-//registerRemoteListener(navigator.serviceWorker.controller!);
-
-//if (isIOS) {
-//  console.log("iOS device detected. Bare will be used.");
-//  changeTransport(
-//    localStorage.getItem("transport") || "libcurl",
-//    localStorage.getItem("wispUrl") || wispUrl
-//  );
-//} else {
-//  changeTransport(
-//   localStorage.getItem("transport") || "bare",
-//   localStorage.getItem("wispUrl") || wispUrl
-//  );
-//}
-
-//changeTransport(
-//    localStorage.getItem("transport") || "libcurl",
-//    localStorage.getItem("wispUrl") || wispUrl
-//);
 
 // helper function for  ../routes.tsx
 async function setTransport() {

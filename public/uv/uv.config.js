@@ -1,6 +1,5 @@
 self.__uv$config = {
   prefix: "/~/uv/",
-  bare: "/bare/",
   encodeUrl: function encode(str) {
         if (!str) return str;
         return encodeURIComponent(
@@ -30,7 +29,5 @@ self.__uv$config = {
   client: "/uv/uv.client.js",
   bundle: "/uv/uv.bundle.js",
   config: "/uv/uv.config.js",
-  sw: "/uv/uv.sw.js",
-  proxyIp: "",
-  proxyPort: ""
+  sw: "/uv/uv.sw.js"
 };

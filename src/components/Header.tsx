@@ -9,7 +9,7 @@ import { RxMixerVertical, RxHamburgerMenu } from "react-icons/rx";
 import { RiLinksFill } from "react-icons/ri";
 import { BsQuestionLg } from "react-icons/bs";
 import { useState } from "preact/hooks";
-import { Logo } from "./logo";
+import { Logo } from "./Logo";
 
 export function Header() {
   const { t } = useTranslation();

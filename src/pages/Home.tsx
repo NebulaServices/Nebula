@@ -8,21 +8,17 @@ import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
 import { registerServiceWorker } from "../util/SWHelper.js";
-import { setTransport } from "../util/transports";
 
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const handleLoad = () => {
       const firstLoad = localStorage.getItem("firstLoad") || "true";
       console.log(firstLoad);
-      //make sure service workers are updated
-      //updateServiceWorkers();
-      //make sure transport is set
-      //setTransport();
       if (firstLoad == "true" && prod) {
         function changeBare(url: string) {
           set("bare", url);
