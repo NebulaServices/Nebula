@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
+import { LoadSuspense } from "../LoadSuspense";
 import { set } from "../util/IDB";
 import { uninstallServiceWorkers } from "../util/SWHelper";
 import prod from "./config.json"; // Set prod to true if you wish to load balance
@@ -87,6 +88,10 @@ export function Home() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+    {
+      loading && <LoadSuspense />;
+    }
     await registerServiceWorker();
     window.location.href =
       "/go/" +
@@ -145,7 +150,12 @@ export function Home() {
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
-                    onClick={async () => {
+                    onClick={async (event) => {
+                      event.preventDefault();
+                      setLoading(true);
+                      {
+                        loading && <LoadSuspense />;
+                      }
                       await registerServiceWorker();
                       window.location.href =
                         "/go/" +
