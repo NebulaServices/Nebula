@@ -17,11 +17,11 @@ function BareInput(props: BareInputProps) {
   function validateUrl(url: string) {
     let finalUrl = url;
     if (url === "/bare/" || url === "/bare") {
-      finalUrl = "/bare/";
+      finalUrl = location.origin + "/bare/";
       return finalUrl;
     }
     if (url === null || url === undefined || url === "") {
-      finalUrl = "/bare/";
+      finalUrl = location.origin + "/bare/";
       return finalUrl;
     }
     if (!url.endsWith("/")) {
@@ -51,7 +51,7 @@ function BareInput(props: BareInputProps) {
         window.location.reload();
       } else {
         (document.getElementById("input") as HTMLInputElement).value =
-          localStorage.getItem("bare") || "/bare/";
+          localStorage.getItem("bare") || location.origin + "/bare/";
         toast(t("bareError"), {
           type: "error"
         });

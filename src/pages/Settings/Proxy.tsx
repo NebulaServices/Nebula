@@ -117,7 +117,10 @@ const Proxy = ({ id, active }) => {
             <div className="text-md p-4 font-bold text-input-text">
               {t("settings.bare.subtitle")}
             </div>
-            <BareInput placeholder="/bare/" storageKey="bare" />
+            <BareInput
+              placeholder={location.origin + "/bare/"}
+              storageKey="bare"
+            />
           </div>
         )}
         {transport !== "bare" && (
