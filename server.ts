@@ -101,15 +101,15 @@ app.setNotFoundHandler((req, res) => {
 });
 
 console.log(
-  chalk.green(`Server listening on ${chalk.bold(`http://localhost:${PORT}`)}`)
+  chalk.green(`Server listening on ${chalk.bold(`http://localhost:${port}`)}`)
 );
 console.log(
   chalk.magenta(
-    `Server also listening on ${chalk.bold(`http://0.0.0.0:${PORT}`)}`
+    `Server also listening on ${chalk.bold(`http://0.0.0.0:${port}`)}`
   )
 );
 
 app.listen({
-  port: PORT,
+  port: port,
   host: "0.0.0.0"
 });
