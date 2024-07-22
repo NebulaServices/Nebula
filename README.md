@@ -1,67 +1,54 @@
-# Nebula
+# Astro Starter Kit: Basics
 
-NebulaWeb is an official flagship of Nebula Services and Nebula Developer Labs. NebulaWeb is a stunning, sleek, and functional web-proxy with support for thousands of popular sites. With NebulaWeb, the sky is the limit.
+```sh
+npm create astro@latest -- --template basics
+```
 
-![license](https://img.shields.io/badge/License-GNU%20AGPL%20v3-blue)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
 
-## Features
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-- Stunning and highly functional UI
-- 3 different backend proxies
-- Hides your IP from sites
-- [List of officially supported sites](https://github.com/NebulaServices/Nebula/blob/dev/docs/officially-supported-sites.md)
-- Full mobile support
-- `about:blank` cloaking)
+![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
 
-# Deployment
+## 🚀 Project Structure
 
-Table of contents
+Inside of your Astro project, you'll see the following folders and files:
 
-- Deployment
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── components/
+│   │   └── Card.astro
+│   ├── layouts/
+│   │   └── Layout.astro
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
 
----
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-## Deployment
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-Run these commands on your server:  
-`git clone https://github.com/NebulaServices/Nebula.git`  
-`pnpm i`  
-`npm run bstart`
+Any static assets, like images, can be placed in the `public/` directory.
 
-You may also need to run `npm i -g pnpm tsx`  
-Thanks for using Nebula!
+## 🧞 Commands
 
-## Tech Stack
+All commands are run from the root of the project, from a terminal:
 
-- TypeScript, Tailwind
-- Fastify
-- TSX
-- Framer motion
-- react-i18next
-- Ultraviolet (proxy)
-- Dynamic (proxy)
-- Rammerhead (proxy)
-- TompHTTP Bare Server Node
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## Support
+## 👀 Want to learn more?
 
-For support, join our discord: discord.gg/unblocker
-
-## Demo
-
-[Click here to see a demo of Nebula](https://nebulaproxy.io/)
-
-## Acknowledgements
-
-- [UV (one of the proxies we use)](https://github.com/titaniumnetwork-dev/Ultraviolet)
-- [Dynamic (one of the proxies we use)](https://github.com/NebulaServices/Dynamic)
-- [Rammerhead (one of the proxies we use)](https://github.com/binary-person/rammerhead)
-- [Bare Server Node](https://github.com/tomphttp/bare-server-node)
-- [Catppuccin (for the themes)](https://github.com/catppuccin/catppuccin)
-
-## License
-
-(Nebula's license is now GNU AGPL V3 as of v7.10)
-Copyright Nebula Services 2021 - Present
-<br>
-This project uses the AGLP GNU V3 license.
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

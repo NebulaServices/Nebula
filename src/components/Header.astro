@@ -1,0 +1,39 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import Logo from "./Logo.astro";
+import HeaderButton from "./HeaderButton.astro";
+import { Icon } from "astro-icon/components";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<div
+  id="navbar"
+  class="flex h-16 flex-row items-center justify-end border-b-2 border-border-color bg-navbar-color px-4"
+>
+  <a href="/" class="w-1/8">
+    <div class="relative flex flex-row">
+      <HeaderButton text="Games">
+        <Icon
+          name="ph:cube"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+        {
+          /* Astro won't let us pass the icon as a prop so it's going into the outlet here. */
+        }
+      </HeaderButton>
+      <HeaderButton text={t("faq.whatIsAProxy")}>
+        <Icon
+          name="ph:wrench-fill"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </HeaderButton>
+      <HeaderButton text="Want more links?">
+        <Icon
+          name="ph:link-bold"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </HeaderButton>
+    </div>
+  </a>
+</div>

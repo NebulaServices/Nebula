@@ -1,25 +1,24 @@
-# Logs
-logs
-*.log
+# build output
+dist/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-package-lock.json
+# environment variables
+.env
+.env.production
 
-dist-ssr
-dist
-*.local
-
-# Editor directories and files
-.idea
+# macOS-specific files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-~/
+
+# jetbrains setting folder
+.idea/

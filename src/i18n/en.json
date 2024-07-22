@@ -1,0 +1,65 @@
+{
+    "ultraviolet": "Ultraviolet",
+  
+    "pages.home": "Home | Alu",
+    "pages.games": "Games | Alu",
+    "pages.settings": "Settings | Alu",
+  
+    "nav.brand": "Alu",
+    "nav.games": "Games",
+    "nav.settings": "Settings",
+  
+    "menu.welcome": "Welcome to Alu",
+    "menu.search": "Search the web...",
+  
+    "faq.title": "Frequently Asked Questions",
+  
+    "faq.whatIsAProxy": "What is a proxy?",
+    "faq.whatIsAProxy.answer": "A proxy is a method of making your internet traffic anonymous by sending your request to a server (proxy), having that make the request, and then send it back to you! This allows for a much larger level of security, as well as bypassing website restrictions in public spaces and censorship.",
+  
+    "faq.noBareClients": "What does \"there are no bare clients\" mean?",
+    "faq.noBareClients.answer": "There are a couple reasons this particular error happens, but it's most commonly an issue with the proxy failing to load. Please reload the page, and if the problem persists, make a GitHub issue!",
+  
+    "faq.contributeToAlu": "How can I contribute to Alu?",
+    "faq.contributeToAlu.answer.segment1": "Spreading the word of Alu is a great start, but if you really enjoy Alu, and want private links, consider supporting me through Patreon!",
+    "faq.contributeToAlu.answer.patreonLinkText": "You can support me here!",
+    "faq.contributeToAlu.answer.segment2": "Thank you for helping to make Alu great!",
+  
+    "footer.brand": "Alu",
+    "footer.madeWithLove": "Made with ❤️ by wearr",
+    "footer.poweredBy": "Titanium Network",
+    "footer.services": "Services",
+    "footer.socials": "Socials",
+    "footer.aluProject": "Alu Project",
+  
+    "games.title": "Games",
+    "games.search": "Search...",
+  
+    "settings.title": "Settings",
+    "settings.proxy": "Proxy",
+    "settings.proxy.auto": "Auto",
+    "settings.proxy.selectedProxy": "Selected Proxy",
+    "settings.proxy.searchEngine": "Search Engine",
+    "settings.proxy.openPageWith": "Open With",
+    "settings.proxy.openPageWith.embed": "Embed",
+    "settings.proxy.openPageWith.newTab": "New Tab",
+    "settings.proxy.searxngURL": "Searx URL",
+    "settings.proxy.transport": "Transport",
+    "settings.proxy.wispURL": "Wisp URL",
+    "settings.proxy.bareURL": "Bare URL",
+  
+    "settings.customization": "Customization",
+    "settings.customization.theme": "Theme",
+    "settings.customization.theme.Alu": "Alu",
+    "settings.customization.theme.Macchiato": "Macchiato",
+    "settings.customization.theme.Mocha": "Mocha",
+    "settings.customization.language": "Language",
+  
+    "settings.cloaking": "Cloaking",
+    "settings.cloaking.subtext": "Change how your tab looks...",
+    "settings.cloaking.updateCloak": "Update Cloak",
+  
+    "settings.credits": "Credits",
+    "settings.credits.mochaandmacchiatothemes": "Mocha & Macchiato Themes",
+    "settings.credits.japaneseTranslations": "Japanese Translations"
+  }
