@@ -12,7 +12,7 @@ export function getStaticPaths() {
 <Layout title="Welcome to Astro.">
   <p>The services</p>
   <p id="">Mobile Navvy</p>
-  <div id="mobileNavMenu" class="hidden w-full">
+  <div id="mobileNavMenu" class="w-full fixed inset-0 h-[calc(100vh-4rem)] z-0">
     <MobileNavigation />
   </div>
 </Layout>
@@ -24,10 +24,11 @@ export function getStaticPaths() {
     if (open) {
       if (mobileNavMenu) {
         mobileNavMenu.style.display = "block";
+        mobileNavMenu.style.transform = "translateX(0%)";
       }
     } else {
       if (mobileNavMenu) {
-        mobileNavMenu.style.display = "none";
+        mobileNavMenu.style.transform = "translateX(100%)";
       }
     }
   });
@@ -36,6 +37,7 @@ export function getStaticPaths() {
   #mobileNavMenu {
     -webkit-transition-duration: 600ms;
     transition-duration: 600ms;
+    transform: translateX(100%);
   }
 
   @keyframes slide-left {
