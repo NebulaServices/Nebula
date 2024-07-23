@@ -1,9 +1,9 @@
-import en from "./en.json";
+import en_US from "./en_US.json";
 import jp from "./jp.json";
 
-export const defaultLang = "en";
+export const defaultLang = "en_US";
 
 export const ui = {
-  en,
+  en_US,
   jp,
 };

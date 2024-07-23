@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { isMobileNavOpen } from "../store.js";
 import Logo from "./Logo.astro";
 import HeaderButton from "./HeaderButton.astro";
 import { Icon } from "astro-icon/components";
@@ -11,9 +12,10 @@ const t = useTranslations(lang);
   id="navbar"
   class="flex h-16 flex-row items-center justify-end border-b-2 border-border-color bg-navbar-color px-4"
 >
-  <a href="/" class="w-1/8">
-    <div class="relative flex flex-row">
-      <HeaderButton text="Games">
+  <div class="w-1/8">
+    {/* Typical desktop menu */}
+    <div class="relative flex-row hidden md:flex">
+      <HeaderButton text={t("header.games")}>
         <Icon
           name="ph:cube"
           class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
@@ -22,18 +24,50 @@ const t = useTranslations(lang);
           /* Astro won't let us pass the icon as a prop so it's going into the outlet here. */
         }
       </HeaderButton>
-      <HeaderButton text={t("faq.whatIsAProxy")}>
+      <HeaderButton text={t("header.settings")}>
         <Icon
           name="ph:wrench-fill"
           class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
         />
       </HeaderButton>
-      <HeaderButton text="Want more links?">
+      <HeaderButton text={t("header.morelinks")}>
         <Icon
           name="ph:link-bold"
           class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
         />
       </HeaderButton>
     </div>
-  </a>
+    {/* Mobile hamburger menu */}
+    <div class="flex md:hidden" id="mobileNavTrigger">
+      <Icon name="ph:text-align-justify-bold" class="h-9 w-9 text-text-color" />
+    </div>
+  </div>
 </div>
+<script>
+  import { isMobileNavOpen } from "../store.js";
+  let isMobileNavOpenLocal = true;
+  // Create a copy of the nano store so we can make this a toggle
+
+  // Set the store to true when the button is clicked
+  function openDialog() {
+    if (isMobileNavOpenLocal == false) {
+      isMobileNavOpen.set(true);
+    } else {
+      isMobileNavOpen.set(false);
+    }
+  }
+
+  isMobileNavOpen.subscribe((open) => {
+    if (open) {
+      isMobileNavOpenLocal = true;
+    } else {
+      isMobileNavOpenLocal = false;
+    }
+  });
+
+  // Add an event listener to the button
+  const mobileNavTrigger = document.getElementById("mobileNavTrigger");
+  if (mobileNavTrigger) {
+    mobileNavTrigger.addEventListener("click", openDialog);
+  }
+</script>

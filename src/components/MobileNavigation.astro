@@ -1,0 +1,30 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import HeaderButton from "./HeaderButton.astro";
+import { Icon } from "astro-icon/components";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<div
+  class="absolute bottom-0 h-[calc(100%-4rem)] flex w-full flex-col justify-evenly md:flex-row bg-navbar-color m-auto"
+>
+  <HeaderButton text={t("header.games")}>
+    <Icon
+      name="ph:cube"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+  <HeaderButton text={t("header.settings")}>
+    <Icon
+      name="ph:wrench-fill"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+  <HeaderButton text={t("header.morelinks")}>
+    <Icon
+      name="ph:link-bold"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+</div>

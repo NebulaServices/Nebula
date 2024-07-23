@@ -1,7 +1,7 @@
 import { ui, defaultLang } from "./ui";
 
 export const STATIC_PATHS = [
-  { params: { lang: "en" } },
+  { params: { lang: "en_US" } },
   { params: { lang: "jp" } },
 ];
 
