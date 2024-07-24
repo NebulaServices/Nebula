@@ -1,6 +1,7 @@
 { 
-  "header.home": "homee",
+  "header.home": "ホーム",
   "header.games": "ゲーム",
   "header.settings": "設定",
-  "header.morelinks": "リンク一覧"
+  "header.morelinks": "リンク一覧",
+  "home.placeholder": "検索欄"
 }

@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Logo from "../../components/Logo.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 export function getStaticPaths() {
   const STATIC_PATHS = [
     { params: { lang: "en_US" } },
@@ -7,12 +9,28 @@ export function getStaticPaths() {
   ];
   return STATIC_PATHS;
 }
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Layout title="Welcome to Astro.">
   <div
-    class="flex flex-wrap mt-16 justify-center content-center w-full fixed inset-0 h-[calc(100%-4rem)] z-0"
+    class="flex flex-wrap mt-16 justify-center content-center w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center"
   >
-    Centered
+    <div class="flex flex-row items-center mb-8">
+      <div class="h-32 w-32 fill-navbar-text-color">
+        <Logo />
+      </div>
+      <h1
+        class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
+      >
+        nebula.
+      </h1>
+    </div>
+    <input
+      class="font-roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
+      placeholder={t("home.placeholder")}
+    />
   </div>
 </Layout>
