@@ -11,14 +11,14 @@ loading...
     try {
       let parsed = JSON.parse(currentLang).value;
       switch (parsed) {
-        case "en_US":
-          redirect("/en_US/");
+        case "en-US":
+          redirect("/en-US/");
           break;
         case "jp":
           redirect("/jp/");
           break;
         default:
-          redirect("/en/");
+          redirect("/en-US/");
           break;
       }
     } catch {
@@ -32,9 +32,9 @@ loading...
     } else {
       localStorage.setItem(
         "selectedLanguage",
-        JSON.stringify({ value: "en_US" })
+        JSON.stringify({ value: "en-US" })
       );
-      redirect("/en_US/");
+      redirect("/en-US/");
     }
   }
 </script>

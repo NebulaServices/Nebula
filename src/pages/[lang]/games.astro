@@ -1,8 +1,10 @@
 ---
-import { STATIC_PATHS } from "../../i18n/utils";
 import Layout from "../../layouts/Layout.astro";
-
 export function getStaticPaths() {
+  const STATIC_PATHS = [
+    { params: { lang: "en_US" } },
+    { params: { lang: "jp" } },
+  ];
   return STATIC_PATHS;
 }
 ---
