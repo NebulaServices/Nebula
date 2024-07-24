@@ -30,5 +30,11 @@ const t = useTranslations(lang);
   </HeaderButton>
 </div>
 <script>
-  const mobileNavButton = document.getElementById("mobileNavButton");
+  import { fade } from "astro:transitions";
+  import { isMobileNavOpen } from "../store.js";
+  function closeMobileNav() {
+    isMobileNavOpen.set(false);
+  }
+  const mobileNavMenu = document.getElementById("mobileNavMenu");
+  mobileNavMenu!.addEventListener("click", closeMobileNav);
 </script>

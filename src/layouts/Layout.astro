@@ -18,6 +18,10 @@ const { title } = Astro.props;
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ViewTransitions />
@@ -28,6 +32,7 @@ const { title } = Astro.props;
     <div
       id="mobileNavMenu"
       class="w-full fixed inset-0 h-[calc(100vh-4rem)] z-0"
+      transition:persist
     >
       <MobileNavigation />
     </div>
@@ -57,7 +62,6 @@ const { title } = Astro.props;
     </style>
 
     <style is:global>
-      @import "https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap";
       :root {
         --accent: 136, 58, 234;
         --accent-light: 224, 204, 250;

@@ -38,7 +38,7 @@ const t = useTranslations(lang);
       </HeaderButton>
     </div>
     {/* Mobile hamburger menu */}
-    <div class="flex md:hidden" id="mobileNavTrigger">
+    <div class="flex md:hidden" id="mobileNavTrigger" transition:persist>
       <Icon
         name="ph:text-align-justify-bold"
         class="h-9 w-9 text-text-color"
@@ -80,8 +80,16 @@ const t = useTranslations(lang);
   isMobileNavOpen.subscribe((open) => {
     if (open) {
       isMobileNavOpenLocal = true;
+      if (hamburger_menu && right_caret) {
+        hamburger_menu.style.display = "none";
+        right_caret.style.display = "block";
+      }
     } else {
       isMobileNavOpenLocal = false;
+      if (hamburger_menu && right_caret) {
+        hamburger_menu.style.display = "block";
+        right_caret.style.display = "none";
+      }
     }
   });
 
@@ -90,11 +98,4 @@ const t = useTranslations(lang);
   if (mobileNavTrigger) {
     mobileNavTrigger.addEventListener("click", openDialog);
   }
-
-  document.addEventListener("astro:after-swap", () => {
-    if (mobileNavTrigger) {
-      const mobileNavTrigger = document.getElementById("mobileNavTrigger")!;
-      mobileNavTrigger.addEventListener("click", openDialog);
-    }
-  });
 </script>
