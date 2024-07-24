@@ -12,31 +12,4 @@ export function getStaticPaths() {
 <Layout title="Welcome to Astro.">
   <p>The services</p>
   <p id="">Mobile Navvy</p>
-  <div id="mobileNavMenu" class="w-full fixed inset-0 h-[calc(100vh-4rem)] z-0">
-    <MobileNavigation />
-  </div>
 </Layout>
-<script>
-  import { isMobileNavOpen } from "../../store.js";
-  const mobileNavMenu = document.getElementById("mobileNavMenu");
-  // Listen to changes in the store, and show/hide the mobile navigation accordingly
-  isMobileNavOpen.subscribe((open) => {
-    if (open) {
-      if (mobileNavMenu) {
-        mobileNavMenu.style.display = "block";
-        mobileNavMenu.style.transform = "translateX(0%)";
-      }
-    } else {
-      if (mobileNavMenu) {
-        mobileNavMenu.style.transform = "translateX(100%)";
-      }
-    }
-  });
-</script>
-<style>
-  #mobileNavMenu {
-    -webkit-transition-duration: 600ms;
-    transition-duration: 600ms;
-    transform: translateX(100%);
-  }
-</style>

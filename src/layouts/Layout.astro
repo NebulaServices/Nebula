@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import "../themes/nebula.css";
+import MobileNavigation from "../components/MobileNavigation.astro";
 
 interface Props {
   title: string;
@@ -22,8 +23,39 @@ const { title } = Astro.props;
   <body class="h-screen overflow-x-hidden">
     <Header />
     <slot />
+    <div
+      id="mobileNavMenu"
+      class="w-full fixed inset-0 h-[calc(100vh-4rem)] z-0"
+    >
+      <MobileNavigation />
+    </div>
   </body>
 </html>
+<script>
+  import { isMobileNavOpen } from "../store.js";
+  const mobileNavMenu = document.getElementById("mobileNavMenu");
+  // Listen to changes in the store, and show/hide the mobile navigation accordingly
+  isMobileNavOpen.subscribe((open) => {
+    if (open) {
+      if (mobileNavMenu) {
+        mobileNavMenu.style.display = "block";
+        mobileNavMenu.style.transform = "translateX(0%)";
+      }
+    } else {
+      if (mobileNavMenu) {
+        mobileNavMenu.style.transform = "translateX(100%)";
+      }
+    }
+  });
+</script>
+<style>
+  #mobileNavMenu {
+    -webkit-transition-duration: 600ms;
+    transition-duration: 600ms;
+    transform: translateX(100%);
+  }
+</style>
+
 <style is:global>
   @import "https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap";
   :root {
