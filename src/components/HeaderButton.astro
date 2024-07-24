@@ -1,9 +1,11 @@
 ---
-const { text, icon } = Astro.props;
+const { text, route } = Astro.props;
 ---
 
-<div
+<a
   class="group flex w-full flex-row items-center justify-center border-t-2 border-solid border-navbar-text-color p-4 md:border-none h-1/3 md:h-fit"
+  id="header_anchor"
+  href={route}
 >
   <slot />
   <span
@@ -11,4 +13,4 @@ const { text, icon } = Astro.props;
   >
     {text}
   </span>
-</div>
+</a>

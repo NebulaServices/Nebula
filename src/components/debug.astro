@@ -92,9 +92,12 @@ const t = useTranslations(lang);
   }
 
   document.addEventListener("astro:after-swap", () => {
+    function dumbFunc() {
+      alert(1);
+    }
+    const mobileNavTrigger = document.getElementById("mobileNavTrigger");
     if (mobileNavTrigger) {
-      const mobileNavTrigger = document.getElementById("mobileNavTrigger")!;
-      mobileNavTrigger.addEventListener("click", openDialog);
+      mobileNavTrigger.addEventListener("click", dumbFunc);
     }
   });
 </script>
