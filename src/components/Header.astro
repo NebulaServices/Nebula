@@ -15,6 +15,12 @@ const t = useTranslations(lang);
   <div class="w-1/8">
     {/* Typical desktop menu */}
     <div class="relative flex-row hidden md:flex">
+      <HeaderButton text={t("header.home")} route={`/${lang}/`}>
+        <Icon
+          name="ph:house-bold"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </HeaderButton>
       <HeaderButton text={t("header.games")} route={`/${lang}/games/`}>
         <Icon
           name="ph:cube"

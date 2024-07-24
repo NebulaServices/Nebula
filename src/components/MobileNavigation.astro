@@ -9,7 +9,13 @@ const t = useTranslations(lang);
 <div
   class="h-full mt-16 flex w-full flex-col justify-evenly md:flex-row bg-navbar-color m-auto"
   id="mobileNavMenu"
->
+> 
+  <HeaderButton text={t("header.home")} route={`/${lang}/`}>
+    <Icon
+      name="ph:house-bold"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
   <HeaderButton text={t("header.games")} route={`/${lang}/games/`}>
     <Icon
       name="ph:cube"
