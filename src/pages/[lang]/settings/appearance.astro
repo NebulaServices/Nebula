@@ -1,0 +1,17 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SettingsLayout from "../../../layouts/SettingsLayout.astro";
+export function getStaticPaths() {
+  const STATIC_PATHS = [
+    { params: { lang: "en_US" } },
+    { params: { lang: "jp" } },
+  ];
+  return STATIC_PATHS;
+}
+---
+
+<Layout title="Settings">
+  <SettingsLayout title="Appearance">
+    <p>Appearance settings here!</p>
+  </SettingsLayout>
+</Layout>

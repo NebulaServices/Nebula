@@ -4,9 +4,9 @@ import Card from "../components/Card.astro";
 ---
 
 loading...
-<script>
+<script is:inline>
   let currentLang = localStorage.getItem("selectedLanguage");
-  const redirect = (loc: string) => (window.location.href = loc);
+  const redirect = (loc) => (window.location.href = loc);
   if (currentLang) {
     try {
       let parsed = JSON.parse(currentLang).value;

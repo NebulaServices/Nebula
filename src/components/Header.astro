@@ -31,7 +31,10 @@ const t = useTranslations(lang);
           /* Astro won't let us pass the icon as a prop so it's going into the outlet here. */
         }
       </HeaderButton>
-      <HeaderButton text={t("header.settings")}>
+      <HeaderButton
+        text={t("header.settings")}
+        route={`/${lang}/settings/appearance`}
+      >
         <Icon
           name="ph:wrench-fill"
           class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
