@@ -1,0 +1,24 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SettingsLayout from "../../../layouts/SettingsLayout.astro";
+import SettingsSection from "../../../layouts/SettingsSection.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+export function getStaticPaths() {
+  const STATIC_PATHS = [
+    { params: { lang: "en_US" } },
+    { params: { lang: "jp" } },
+  ];
+  return STATIC_PATHS;
+}
+---
+
+<Layout title="Settings">
+  <SettingsLayout title={t("settings.tab")}>
+    <SettingsSection title="Tab" subtitle="Customize and cloak your tab."
+      >Guhh</SettingsSection
+    >
+  </SettingsLayout>
+</Layout>

@@ -1,9 +1,45 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 const { title } = Astro.props;
+import SidebarButton from "../components/SidebarButton.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<div>
-  <p>Settings</p>
-  <p>{title}</p>
-  <slot />
+<div class="flex flex-row">
+  <div
+    class="text-text-color mt-16 overflow-y-auto fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col flex md:flex-row"
+  >
+    <div
+      class="items-center p-3 flex flex-row border-border-color gap-5 border-r-2 md:w-2/12 md:flex-col md:bg-navbar-color md:gap-0 md:p-0"
+    >
+      <SidebarButton
+        title={t("settings.appearance")}
+        route={`/${lang}/settings/appearance`}
+      >
+        <Icon
+          name="ph:palette"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </SidebarButton>
+      <SidebarButton title={t("settings.proxy")} route={`/${lang}/settings/pr`}>
+        <Icon
+          name="ph:globe-hemisphere-east-fill"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </SidebarButton>
+      <SidebarButton title={t("settings.tab")} route={`/${lang}/settings/tab/`}>
+        <Icon
+          name="ph:laptop-fill"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </SidebarButton>
+    </div>
+    <div class="p-8 md:w-10/12">
+      <p class="text-5xl font-semibold mb-5">{t("settings.settings")}</p>
+      <p class="text-2xl">{title}</p>
+      <slot />
+    </div>
+  </div>
 </div>

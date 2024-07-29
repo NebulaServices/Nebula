@@ -3,5 +3,9 @@
   "header.games": "Games",
   "header.settings": "Settings",
   "header.morelinks": "Want more links?",
-  "home.placeholder": "Search the web freely"
+  "home.placeholder": "Search the web freely",
+  "settings.settings": "Settings",
+  "settings.appearance": "Appearance",
+  "settings.proxy": "Proxy",
+  "settings.tab": "Tab"
 }
