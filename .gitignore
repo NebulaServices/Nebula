@@ -24,4 +24,3 @@ pnpm-debug.log*
 .idea/
 
 # nebula catalog database
-database.sqlite
