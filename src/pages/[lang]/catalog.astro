@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+export function getStaticPaths() {
+  const STATIC_PATHS = [
+    { params: { lang: "en_US" } },
+    { params: { lang: "jp" } },
+  ];
+  return STATIC_PATHS;
+}
+---
+
+<Layout title="Catalog">
+  <div>
+    The Nebula Catalog is a place for you to find user-created themes and
+    plugins.
+  </div>
+</Layout>
