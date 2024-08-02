@@ -28,11 +28,20 @@ const catalog_assets = sequelize.define("catalog_assets", {
   },
   tags: {
     type: DataTypes.JSON,
+    allowNull: true,
+  },
+  version: {
+    type: DataTypes.TEXT,
   },
   image: {
     type: DataTypes.TEXT,
+    allowNull: true,
   },
-  script: {
+  video: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  payload: {
     type: DataTypes.TEXT,
   },
   type: {
@@ -48,6 +57,46 @@ app.register(fastifyStatic, {
   serve: true,
   wildcard: false,
 });
+
+app.get("/api", function (request, reply) {
+  reply.send({ hello: "world" });
+});
+
+app.get("/api/catalog-assets", async (request, reply) => {
+  try {
+    // i've literally never done shit like this before so lets hope its not shit
+    const assets = await catalog_assets.findAll();
+    const response = assets.reduce((acc, asset) => {
+      acc[asset.package_name] = {
+        title: asset.title,
+        description: asset.description,
+        tags: asset.tags,
+        version: asset.version,
+        image: asset.image, // @todo: change this to a route. like "/images/" + asset.package_name and return the image there.
+        video: asset.video, // same with video.
+        payload: asset.payload,
+        type: asset.type,
+      };
+      return acc;
+    }, {});
+
+    reply.send(response);
+  } catch (error) {
+    reply.status(500).send({ error: "there was an error" });
+  }
+});
+
+await catalog_assets.create({
+  package_name: "com.fortnite.jpeg",
+  title: "fortnite.jpeg",
+  version: "6.9.420",
+  description: "a man in a blessings shirt sticking his tounge out",
+  tags: ["Fortnite", "Shit out my ass"],
+  payload: "the DAMN CSS",
+  type: "theme",
+});
+
+catalog_assets.sync();
 
 app.listen({
   port: 8080,
