@@ -27,6 +27,9 @@ const catalog_assets = sequelize.define("catalog_assets", {
   description: {
     type: DataTypes.TEXT,
   },
+  image: {
+    type: DataTypes.TEXT,
+  },
   tags: {
     type: DataTypes.JSON,
     allowNull: true,
@@ -34,11 +37,11 @@ const catalog_assets = sequelize.define("catalog_assets", {
   version: {
     type: DataTypes.TEXT,
   },
-  image: {
+  background_image: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
-  video: {
+  background_video: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
@@ -80,10 +83,11 @@ app.get("/api/catalog-assets", async (request, reply) => {
       acc[asset.package_name] = {
         title: asset.title,
         description: asset.description,
+        image: asset.image,
         tags: asset.tags,
         version: asset.version,
-        image: asset.image,
-        video: asset.video,
+        background_image: asset.background_image,
+        background_video: asset.background_video,
         payload: asset.payload,
         type: asset.type,
       };
@@ -123,10 +127,11 @@ app.get("/api/packages/:package", async (request, reply) => {
     const details = {
       title: package_row.get("title"),
       description: package_row.get("description"),
+      image: package_row.get("image"),
       tags: package_row.get("tags"),
       version: package_row.get("version"),
-      image: package_row.get("image"),
-      video: package_row.get("video"),
+      background_image: package_row.get("background_image"),
+      background_video: package_row.get("background_video"),
       payload: package_row.get("payload"),
       type: package_row.get("type"),
     };
@@ -139,6 +144,7 @@ app.get("/api/packages/:package", async (request, reply) => {
 // await catalog_assets.create({
 //   package_name: "trolled.fortnite.jpeg",
 //   title: "fortnite.jpeg",
+//   image: "fortnite.jpg"
 //   version: "6.9.420",
 //   description: "a man in a blessings shirt sticking his tounge out",
 //   tags: ["Fortnite", "Shit out my ass"],
