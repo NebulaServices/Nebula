@@ -51,6 +51,8 @@ const catalog_assets = sequelize.define("catalog_assets", {
 });
 
 app.use(express.static(publicPath));
+app.use("/images/", express.static("./database_assets/image"));
+app.use("/videos/", express.static("./database_assets/video"));
 
 app.get("/api", function (request, reply) {
   reply.send({ hello: "world" });
@@ -105,6 +107,35 @@ app.get("/api/catalog-pages", async (request, reply) => {
   }
 });
 
+// This API returns data about a single package.
+app.get("/api/packages/:package", async (request, reply) => {
+  try {
+    console.log(request.params.package);
+
+    const package_row = await catalog_assets.findOne({
+      where: { package_name: request.params.package },
+    });
+
+    if (!package_row) {
+      return reply.status(404).send({ error: "Package not found!" });
+    }
+
+    const details = {
+      title: package_row.get("title"),
+      description: package_row.get("description"),
+      tags: package_row.get("tags"),
+      version: package_row.get("version"),
+      image: package_row.get("image"),
+      video: package_row.get("video"),
+      payload: package_row.get("payload"),
+      type: package_row.get("type"),
+    };
+    reply.send(details);
+  } catch (error) {
+    reply.status(500).send({ error: "There was an error" });
+  }
+});
+
 // await catalog_assets.create({
 //   package_name: "trolled.fortnite.jpeg",
 //   title: "fortnite.jpeg",
@@ -117,6 +148,7 @@ app.get("/api/catalog-pages", async (request, reply) => {
 
 catalog_assets.sync();
 const server = createServer();
+
 server.on("request", (req, res) => {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
