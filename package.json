@@ -17,6 +17,7 @@
     "@iconify-json/ph": "^1.1.13",
     "astro": "^4.12.2",
     "astro-icon": "^1.1.0",
+    "express": "^4.19.2",
     "fastify": "^4.28.1",
     "nanostores": "^0.10.3",
     "sequelize": "^6.37.3",
