@@ -142,9 +142,9 @@ app.get("/api/packages/:package", async (request, reply) => {
 });
 
 // await catalog_assets.create({
-//   package_name: "trolled.fortnite.jpeg",
+//   package_name: "koaku.fortnite.jpeg",
 //   title: "fortnite.jpeg",
-//   image: "fortnite.jpg"
+//   image: "fortnite.jpg",
 //   version: "6.9.420",
 //   description: "a man in a blessings shirt sticking his tounge out",
 //   tags: ["Fortnite", "Shit out my ass"],

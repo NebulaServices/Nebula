@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CatalogCard from "../../components/catalog/CatalogCard.svelte";
 export function getStaticPaths() {
   const STATIC_PATHS = [
     { params: { lang: "en_US" } },
@@ -14,4 +15,5 @@ export function getStaticPaths() {
     The Nebula Catalog is a place for you to find user-created themes and
     plugins.
   </div>
+  <CatalogCard client:only="svelte" />
 </Layout>

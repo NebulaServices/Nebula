@@ -3,26 +3,30 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently \"astro dev\" \"node server.js\"",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "bstart": "astro build && node server.js",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.8.2",
+    "@astrojs/svelte": "^5.7.0",
     "@astrojs/tailwind": "^5.1.0",
     "@fastify/compress": "^7.0.3",
     "@fastify/static": "^7.0.4",
     "@iconify-json/ph": "^1.1.13",
     "astro": "^4.12.2",
     "astro-icon": "^1.1.0",
+    "concurrently": "^8.2.2",
     "express": "^4.19.2",
     "fastify": "^4.28.1",
     "nanostores": "^0.10.3",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7",
+    "svelte": "^4.2.18",
     "tailwindcss": "^3.4.6",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   }
 }
