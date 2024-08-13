@@ -1,8 +1,9 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
-
 import svelte from "@astrojs/svelte";
+
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,7 +20,15 @@ export default defineConfig({
           target: "http://localhost:8080",
           changeOrigin: true,
         },
+        "/api/packages": {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+        },
       },
     },
   },
+  output: "server",
+  adapter: node({
+    mode: "hybrid",
+  }),
 });

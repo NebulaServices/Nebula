@@ -11,18 +11,36 @@
   {#await assetPromise}
     Loading assets...
   {:then assets}
-    <ul>
+    <div class="flex flex-row gap-6">
       {#each Object.entries(assets) as [key, asset]}
-        <div class="bg-bg-primary">
-          <h2>{asset.title}</h2>
-          <p>{asset.description}</p>
-          <img src={"/images/" + asset.image} alt={asset.title} />
-          <p><strong>Tags:</strong> {asset.tags.join(", ")}</p>
-          <p><strong>Version:</strong> {asset.version}</p>
-          <p><strong>Type:</strong> {asset.type}</p>
-        </div>
+        <a href={"/assets/" + key}>
+          <div
+            class="bg-navbar-color w-64 rounded-3xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
+          >
+            <img
+              src={"/images/" + asset.image}
+              alt={asset.title}
+              class="w-full h-40 object-cover"
+            />
+            <div class="p-6 text-sm">
+              <div class="font-semibold mb-2">
+                {asset.title}
+              </div>
+              <div class="mb-4">{asset.description}</div>
+              <div>
+                <strong>Tags:</strong>
+                {asset.tags.join(", ")}
+              </div>
+              <div>
+                <strong>Version:</strong>
+                {asset.version}
+              </div>
+              <div><strong>Type:</strong> {asset.type}</div>
+            </div>
+          </div>
+        </a>
       {/each}
-    </ul>
+    </div>
   {:catch someError}
     System error: {someError.message}.
   {/await}

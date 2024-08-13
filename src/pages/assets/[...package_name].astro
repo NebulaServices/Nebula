@@ -1,0 +1,38 @@
+---
+const { package_name } = Astro.params;
+import Layout from "../../layouts/Layout.astro";
+const response = await fetch(
+  new URL("/api/packages/" + package_name, Astro.url)
+);
+const assets_json = await response.json();
+---
+
+<Layout title="Package">
+  <div
+    class="flex flex-wrap mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center"
+  >
+    {
+      assets_json.error ? (
+        <h1 class="text-text-color text-3xl">
+          Unexpected error. Are you sure you typed the name right?
+        </h1>
+      ) : (
+        <div class="flex flex-row items-center text-text-color">
+          <img
+            src={"/images/" + assets_json.image}
+            alt={assets_json.title}
+            class="w-96 h-72 object-cover rounded-xl"
+          />
+          <div class="flex flex-col ml-7">
+            <div class="text-xl">{assets_json.type}</div>
+            <div class="text-3xl">{assets_json.title}</div>
+            <div class="text-xl">{assets_json.description}</div>
+            <button class="border-text-color border-2 rounded-lg w-40">
+              Install
+            </button>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</Layout>

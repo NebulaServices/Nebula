@@ -3,11 +3,12 @@ import { createServer } from "node:http";
 import path from "path";
 import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath } from "url";
+import { handler as ssrHandler } from "./dist/server/entry.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-const publicPath = "dist";
+const publicPath = "dist/client";
 const sequelize = new Sequelize("database", "user", "password", {
   host: "localhost",
   dialect: "sqlite",
@@ -25,6 +26,9 @@ const catalog_assets = sequelize.define("catalog_assets", {
     type: DataTypes.TEXT,
   },
   description: {
+    type: DataTypes.TEXT,
+  },
+  author: {
     type: DataTypes.TEXT,
   },
   image: {
@@ -53,10 +57,6 @@ const catalog_assets = sequelize.define("catalog_assets", {
   },
 });
 
-app.use(express.static(publicPath));
-app.use("/images/", express.static("./database_assets/image"));
-app.use("/videos/", express.static("./database_assets/video"));
-
 app.get("/api", function (request, reply) {
   reply.send({ hello: "world" });
 });
@@ -83,6 +83,7 @@ app.get("/api/catalog-assets", async (request, reply) => {
       acc[asset.package_name] = {
         title: asset.title,
         description: asset.description,
+        author: asset.author,
         image: asset.image,
         tags: asset.tags,
         version: asset.version,
@@ -128,6 +129,7 @@ app.get("/api/packages/:package", async (request, reply) => {
       title: package_row.get("title"),
       description: package_row.get("description"),
       image: package_row.get("image"),
+      author: package_row.get("author"),
       tags: package_row.get("tags"),
       version: package_row.get("version"),
       background_image: package_row.get("background_image"),
@@ -141,10 +143,16 @@ app.get("/api/packages/:package", async (request, reply) => {
   }
 });
 
+app.use("/images/", express.static("./database_assets/image"));
+app.use("/videos/", express.static("./database_assets/video"));
+app.use(ssrHandler);
+app.use(express.static(publicPath));
+
 // await catalog_assets.create({
-//   package_name: "koaku.fortnite.jpeg",
+//   package_name: "com.dababy.fortnite",
 //   title: "fortnite.jpeg",
 //   image: "fortnite.jpg",
+//   author: "DaBaby LETS GOOOOOOOOOOOOOOOOOOOOOOO"
 //   version: "6.9.420",
 //   description: "a man in a blessings shirt sticking his tounge out",
 //   tags: ["Fortnite", "Shit out my ass"],
