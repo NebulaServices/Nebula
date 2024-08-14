@@ -61,15 +61,31 @@ const assets_json = await response.json();
       )
     }
   </div>
-  <script is:inline define:vars={{ assets_json }}>
+  <script is:inline define:vars={{ assets_json, package_name }}>
     document.getElementById("install").addEventListener("click", install);
-
     function install() {
+      let installedThemes = localStorage.getItem("installed_themes");
+
+      if (installedThemes) {
+        // If it exists, append it
+        installedThemes = JSON.parse(installedThemes);
+        installedThemes.push(package_name);
+      } else {
+        // If it doesn't exist, create a new array
+        installedThemes = [package_name];
+      }
+
+      localStorage.setItem("installed_themes", JSON.stringify(installedThemes));
+
       if (assets_json.background_video) {
         localStorage.setItem("background_video", assets_json.background_video);
+      } else {
+        localStorage.removeItem("video");
       }
       if (assets_json.background_image) {
         localStorage.setItem("background_image", assets_json.background_image);
+      } else {
+        localStorage.removeItem("background_image");
       }
       if (assets_json.type == "theme") {
         localStorage.setItem("stylesheet", "/styles/" + assets_json.payload);
