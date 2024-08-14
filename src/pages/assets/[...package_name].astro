@@ -18,16 +18,42 @@ const assets_json = await response.json();
         </h1>
       ) : (
         <div class="flex flex-row items-center text-text-color">
-          <img
-            src={"/images/" + assets_json.image}
-            alt={assets_json.title}
-            class="w-96 h-72 object-cover rounded-xl"
-          />
+          {assets_json.background_video ? (
+            // Background video
+            <video
+              src={`/videos/${assets_json.background_video}`}
+              controls
+              class="w-96 h-72 object-cover rounded-xl"
+            >
+              Your browser does not support the video tag.
+            </video>
+          ) : assets_json.backgroundImage ? (
+            // Background image
+            <div
+              style={{
+                backgroundImage: `url(/images/${assets_json.backgroundImage})`,
+              }}
+              class="w-96 h-72 bg-cover bg-center rounded-xl"
+            />
+          ) : (
+            // Fallback to cover image
+            <img
+              src={`/images/${assets_json.image}`}
+              alt={assets_json.title}
+              class="w-96 h-72 object-cover rounded-xl"
+            />
+          )}
           <div class="flex flex-col ml-7">
             <div class="text-xl">{assets_json.type}</div>
             <div class="text-3xl">{assets_json.title}</div>
+            <div class="text-xl">
+              By <strong>{assets_json.author}</strong>
+            </div>
             <div class="text-xl">{assets_json.description}</div>
-            <button class="border-text-color border-2 rounded-lg w-40">
+            <button
+              class="border-text-color border-2 rounded-lg w-40"
+              id="install"
+            >
               Install
             </button>
           </div>
@@ -35,4 +61,20 @@ const assets_json = await response.json();
       )
     }
   </div>
+  <script is:inline define:vars={{ assets_json }}>
+    document.getElementById("install").addEventListener("click", install);
+
+    function install() {
+      if (assets_json.background_video) {
+        localStorage.setItem("background_video", assets_json.background_video);
+      }
+      if (assets_json.background_image) {
+        localStorage.setItem("background_image", assets_json.background_image);
+      }
+      if (assets_json.type == "theme") {
+        localStorage.setItem("stylesheet", "/styles/" + assets_json.payload);
+      }
+      location.reload();
+    }
+  </script>
 </Layout>

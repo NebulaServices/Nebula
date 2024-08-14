@@ -6,7 +6,7 @@ import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import ThemeCard from "../../../components/settings/ThemeCard.astro";
 import { Icon } from "astro-icon/components";
 import fortnite from "../../../assets/fortnite.jpg";
-
+import ClassicNebula from "../../../assets/classic_theme.png";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {
@@ -26,11 +26,9 @@ export const prerender = true;
       subtitle="Choose a theme so your eyes don't hate us."
     >
       <div class="flex flex-row flex-wrap gap-4">
-        <ThemeCard image={fortnite} title="Fortnite.jpg Theme" />
-        <ThemeCard image={fortnite} title="Fortnite.jpg Theme" />
-        <ThemeCard image={fortnite} title="Fortnite.jpg Theme" />
-        <ThemeCard image={fortnite} title="Fortnite.jpg Theme" />
-        <ThemeCard image={fortnite} title="Fortnite.jpg Theme" />
+        <div onclick="install()">
+          <ThemeCard image={ClassicNebula} title="Classic Nebula" />
+        </div>
         <div class="rounded-3xl bg-navbar-color w-64 flex flex-col">
           <div class="w-full items-center justify-center flex aspect-[16/9]">
             <Icon name="ph:plus-bold" class="h-16 w-16" />
@@ -43,3 +41,11 @@ export const prerender = true;
     </SettingsSection>
   </SettingsLayout>
 </Layout>
+<script is:inline>
+  function install() {
+    localStorage.removeItem("background_video");
+    localStorage.removeItem("background_image");
+    localStorage.removeItem("stylesheet");
+    location.reload();
+  }
+</script>

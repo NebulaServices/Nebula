@@ -20,6 +20,14 @@ export default defineConfig({
           target: "http://localhost:8080",
           changeOrigin: true,
         },
+        "/videos": {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+        },
+        "/styles": {
+          target: "http://localhost:8080",
+          changeOrigin: true,
+        },
         "/api/packages": {
           target: "http://localhost:8080",
           changeOrigin: true,

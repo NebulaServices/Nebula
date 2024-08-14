@@ -7,11 +7,11 @@
   }
 </script>
 
-<div class="text-3xl font-bold underline text-text-color">
+<div class="text-3xl roboto font-bold text-text-color p-10">
   {#await assetPromise}
     Loading assets...
   {:then assets}
-    <div class="flex flex-row gap-6">
+    <div class="flex flex-row gap-6 flex-wrap">
       {#each Object.entries(assets) as [key, asset]}
         <a href={"/assets/" + key}>
           <div
@@ -23,13 +23,18 @@
               class="w-full h-40 object-cover"
             />
             <div class="p-6 text-sm">
-              <div class="font-semibold mb-2">
+              <div class="font-semibold text-2xl mb-2">
                 {asset.title}
               </div>
               <div class="mb-4">{asset.description}</div>
-              <div>
-                <strong>Tags:</strong>
-                {asset.tags.join(", ")}
+              <div class="flex flex-wrap gap-2 mb-4">
+                {#each asset.tags as tag}
+                  <div
+                    class="bg-navbar-text-color text-navbar-color font-bold px-3 py-1 rounded-md text-center"
+                  >
+                    {tag}
+                  </div>
+                {/each}
               </div>
               <div>
                 <strong>Version:</strong>

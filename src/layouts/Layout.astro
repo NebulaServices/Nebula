@@ -1,7 +1,6 @@
 ---
 import Header from "../components/Header.astro";
 import { ViewTransitions } from "astro:transitions";
-import "../themes/nebula.css";
 import MobileNavigation from "../components/MobileNavigation.astro";
 
 interface Props {
@@ -20,6 +19,12 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="stylesheet"
+      href="/nebula.css"
+      id="stylesheet"
+      transition:persist
+    />
+    <link
+      rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
     />
     <meta name="generator" content={Astro.generator} />
@@ -28,14 +33,32 @@ const { title } = Astro.props;
   </head>
   <body class="h-full bg-primary">
     <Header />
-    <slot />
+    <div class="h-full z-10 w-full fixed">
+      <slot />
+    </div>
     <div
       id="mobileNavMenu"
-      class="w-full fixed inset-0 h-[calc(100%-4rem)] z-0"
+      class="w-full fixed inset-0 h-[calc(100%-4rem)] z-20"
       transition:persist
     >
       <MobileNavigation />
     </div>
+    <video
+      autoplay
+      muted
+      loop
+      id="nebulaVideo"
+      class="absolute z-0 h-[calc(100%-4rem)] w-full object-cover"
+      transition:persist
+    >
+      <source type="video/mp4" id="videosource" />
+    </video>
+    <img
+      src=""
+      class="absolute z-0 h-[calc(100%-4rem)] w-full object-cover hidden"
+      id="nebulaImage"
+      transition:persist
+    />
     <script>
       import { isMobileNavOpen } from "../store.js";
       const mobileNavMenu = document.getElementById("mobileNavMenu");
@@ -52,6 +75,30 @@ const { title } = Astro.props;
           }
         }
       });
+
+      const stylesheet_link = localStorage.getItem("stylesheet");
+      const stylesheet = document.getElementById(
+        "stylesheet"
+      )! as HTMLAnchorElement;
+
+      if (stylesheet_link) {
+        stylesheet.href = stylesheet_link;
+      }
+
+      const video_link = localStorage.getItem("background_video");
+
+      const image_link = localStorage.getItem("background_image");
+
+      const image_source = document.getElementById("nebulaImage")! as any;
+      const source = document.getElementById("nebulaVideo")! as any;
+
+      if (video_link) {
+        source.src = "/videos/" + video_link;
+      }
+      if (image_link) {
+        image_source.style.display = "block";
+        image_source.src = "/images/" + image_link;
+      }
     </script>
     <style>
       #mobileNavMenu {
