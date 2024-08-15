@@ -1,8 +1,8 @@
 <script>
+  export let page;
   let assetPromise = get_assets();
-
   async function get_assets() {
-    const response = await fetch("/api/catalog-assets");
+    const response = await fetch("/api/catalog-assets?page=" + page);
     const data = await response.json();
     return data.assets;
   }
@@ -13,7 +13,7 @@
     Loading assets...
   {:then assets}
     {#if Object.keys(assets).length > 1}
-      <div class="flex flex-row gap-6 flex-wrap">
+      <div class="flex flex-row gap-6 flex-wrap justify-center">
         {#each Object.entries(assets) as [key, asset]}
           <a href={"/assets/" + key}>
             <div
