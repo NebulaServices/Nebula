@@ -7,6 +7,7 @@ import ThemeCard from "../../../components/settings/ThemeCard.astro";
 import { Icon } from "astro-icon/components";
 import fortnite from "../../../assets/fortnite.jpg";
 import ClassicNebula from "../../../assets/classic_theme.png";
+import InstalledThemes from "../../../components/catalog/InstalledThemes.svelte";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {
@@ -25,27 +26,20 @@ export const prerender = true;
       title="Theme"
       subtitle="Choose a theme so your eyes don't hate us."
     >
-      <div class="flex flex-row flex-wrap gap-4">
-        <div onclick="install()">
-          <ThemeCard image={ClassicNebula} title="Classic Nebula" />
-        </div>
-        <div class="rounded-3xl bg-navbar-color w-64 flex flex-col">
-          <div class="w-full items-center justify-center flex aspect-[16/9]">
-            <Icon name="ph:plus-bold" class="h-16 w-16" />
+      <div class="flex flex-row flex-wrap gap-4 items-center roboto">
+        <div class="flex flex-row gap-6 flex-wrap">
+          <InstalledThemes client:only="svelte" />
+          <div class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+            <div class="w-full items-center justify-center flex aspect-[16/9]">
+              <Icon name="ph:plus-bold" class="h-16 w-16" />
+            </div>
+            <div class="h-2/6 text-center content-center p-3 font-semibold">
+              Get more themes in the <strong>Nebula Catalog!</strong>
+            </div>
           </div>
-          <div class="h-2/6 text-center content-center p-3 font-semibold">
-            Get more themes in the <strong>Nebula Catalog!</strong>
-          </div>
         </div>
+        <div class="text-3xl roboto font-bold text-text-color"></div>
       </div>
     </SettingsSection>
   </SettingsLayout>
 </Layout>
-<script is:inline>
-  function install() {
-    localStorage.removeItem("background_video");
-    localStorage.removeItem("background_image");
-    localStorage.removeItem("stylesheet");
-    location.reload();
-  }
-</script>
