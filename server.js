@@ -163,18 +163,18 @@ app.use(express.static(publicPath));
 //   type: "theme",
 // });
 
-await catalog_assets.create({
-  package_name: "com.neptune.neptune",
-  title: "Neptune",
-  image: "neptune.webp",
-  author: "Neptune",
-  version: "1.0.0",
-  description: "Neptune image",
-  tags: ["Image", "Funny"],
-  payload: "neptune.css",
-  background_image: "neptune.webp",
-  type: "theme",
-});
+// await catalog_assets.create({
+//   package_name: "com.neptune.neptune",
+//   title: "Neptune",
+//   image: "neptune.webp",
+//   author: "Neptune",
+//   version: "1.0.0",
+//   description: "Neptune image",
+//   tags: ["Image", "Funny"],
+//   payload: "neptune.css",
+//   background_image: "neptune.webp",
+//   type: "theme",
+// });
 
 catalog_assets.sync();
 const server = createServer();
