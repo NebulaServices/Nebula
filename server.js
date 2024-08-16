@@ -62,10 +62,13 @@ app.get("/api", function (request, reply) {
 });
 
 // This API returns a list of the assets in the database (SW plugins and themes).
+// It also returns the number of pages in the database.
 // It can take a `?page=x` argument to display a different page, with a limit of 20 assets per page.
 app.get("/api/catalog-assets", async (request, reply) => {
   try {
     const page = parseInt(request.query.page, 10) || 1; // default to page 1
+
+    const totalItems = await catalog_assets.count();
 
     if (page < 1) {
       reply.status(400).send({ error: "Page must be a positive number!" });
@@ -95,18 +98,7 @@ app.get("/api/catalog-assets", async (request, reply) => {
       return acc;
     }, {});
 
-    reply.send({ assets });
-  } catch (error) {
-    reply.status(500).send({ error: "There was an error" });
-  }
-});
-
-// This API returns the total number of pages in the database.
-app.get("/api/catalog-pages", async (request, reply) => {
-  try {
-    const totalItems = await catalog_assets.count();
-
-    reply.send({ pages: Math.ceil(totalItems / 20) });
+    reply.send({ assets, pages: Math.ceil(totalItems / 20) });
   } catch (error) {
     reply.status(500).send({ error: "There was an error" });
   }
