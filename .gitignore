@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # nebula catalog database
 database.sqlite
+
+# Goofy PNPM problem
+~/

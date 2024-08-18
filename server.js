@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "node:http";
 import path from "path";
+import wisp from "wisp-server-node";
 import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath } from "url";
 import { handler as ssrHandler } from "./dist/server/entry.mjs";
@@ -176,6 +177,13 @@ server.on("request", (req, res) => {
   res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
   app(req, res);
 });
+
+server.on("upgrade", (req, socket, head) => {
+    if (req.url.endsWith("/wisp/")) {
+        wisp.routeRequest(req, socket, head);
+    }
+})
+
 server.listen({
   port: 8080,
 });

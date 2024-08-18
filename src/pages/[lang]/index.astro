@@ -29,8 +29,36 @@ const t = useTranslations(lang);
       </h1>
     </div>
     <input
+      id="nebula-input"
       class="font-roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
       placeholder={t("home.placeholder")}
     />
+    <iframe id="neb-iframe" class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"></iframe>
   </div>
 </Layout>
+<script>
+    import { initSw } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+    import { search } from "@utils/search.ts"; //../../utils/search.ts
+    function proxy(term: string) {
+        return __uv$config!.prefix + __uv$config.encodeUrl!(search(term, "https://www.google.com/search?q=%s"));
+    }
+    //we need to rerun this on every page load
+    document.addEventListener("astro:page-load", function () {
+        //wrap this in a try catch as sometimes this element will not be available on the page
+        try {
+            const input = document.getElementById("nebula-input") as HTMLInputElement;
+            const iframe = document.getElementById("neb-iframe") as HTMLIframeElement;
+            input?.addEventListener("keypress", function (event: any) {
+                if (event.key === "Enter") {
+                    initSw().then(() => {
+                        iframe.classList.remove("hidden");
+                        iframe.src = proxy(input?.value);
+                    })
+                }
+            })
+        }
+        catch (_) {
+            //we purposely don't return anything
+        }
+    });
+</script>
