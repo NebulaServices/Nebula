@@ -44,7 +44,37 @@ var image_storage = multer.diskStorage({
   },
 });
 
+var video_storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "database_assets/video");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); //Appending extension
+  },
+});
+
+var style_storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "database_assets/styles");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); //Appending extension
+  },
+});
+
+var script_storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "database_assets/scripts");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); //Appending extension
+  },
+});
+
 var image_upload = multer({ storage: image_storage });
+var video_upload = multer({ storage: video_storage });
+var style_upload = multer({ storage: style_storage });
+var script_upload = multer({ storage: script_storage });
 
 const catalog_assets = sequelize.define("catalog_assets", {
   package_name: {
@@ -178,6 +208,60 @@ app.post(
     }
 
     console.log(req.file.originalname);
+    res.json({
+      message: "File uploaded successfully",
+      filename: req.file.originalname,
+    });
+  }
+);
+
+// This API is responsible for video uploads
+// PSK authentication required.
+app.post(
+  "/api/upload-video",
+  auth_psk,
+  video_upload.single("file"),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    res.json({
+      message: "File uploaded successfully",
+      filename: req.file.originalname,
+    });
+  }
+);
+
+// This API is responsible for stylesheet uploads
+// PSK authentication required.
+app.post(
+  "/api/upload-style",
+  auth_psk,
+  style_upload.single("file"),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    res.json({
+      message: "File uploaded successfully",
+      filename: req.file.originalname,
+    });
+  }
+);
+
+// This API is responsible for script/plugin uploads
+// PSK authentication required.
+app.post(
+  "/api/upload-script",
+  auth_psk,
+  script_upload.single("file"),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
     res.json({
       message: "File uploaded successfully",
       filename: req.file.originalname,
