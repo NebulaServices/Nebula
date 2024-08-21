@@ -6,6 +6,7 @@ import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath } from "url";
 import { handler as ssrHandler } from "./dist/server/entry.mjs";
 import multer from "multer";
+import config from "./config.json" assert { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +20,22 @@ const sequelize = new Sequelize("database", "user", "password", {
   storage: "database.sqlite",
 });
 
-var storage = multer.diskStorage({
+// Auth middleware
+function auth_psk(req, res, next) {
+  if (!config.marketplace_enabled) {
+    let err = "Marketplace is disabled!";
+    return next(err);
+  }
+
+  if (req.headers.psk !== config.marketplace_psk) {
+    let err = "Bad PSK!";
+    return next(err);
+  }
+
+  return next();
+}
+
+var image_storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "database_assets/image");
   },
@@ -28,7 +44,7 @@ var storage = multer.diskStorage({
   },
 });
 
-var upload = multer({ storage: storage });
+var image_upload = multer({ storage: image_storage });
 
 const catalog_assets = sequelize.define("catalog_assets", {
   package_name: {
@@ -149,20 +165,25 @@ app.get("/api/packages/:package", async (request, reply) => {
 });
 
 // This API is responsible for image uploads
-// PSK authentication required. (NOT YET IMPLEMENTED!!!!!!!!!!)
-app.post("/upload", upload.single("file"), (req, res) => {
-  console.log("Request file:", req.file);
+// PSK authentication required.
+app.post(
+  "/api/upload-image",
+  auth_psk,
+  image_upload.single("file"),
+  (req, res) => {
+    console.log("Request file:", req.file);
 
-  if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded" });
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    console.log(req.file.originalname);
+    res.json({
+      message: "File uploaded successfully",
+      filename: req.file.originalname,
+    });
   }
-
-  console.log(req.file.originalname);
-  res.json({
-    message: "File uploaded successfully",
-    filename: req.file.originalname,
-  });
-});
+);
 
 app.use("/images/", express.static("./database_assets/image"));
 app.use("/videos/", express.static("./database_assets/video"));
