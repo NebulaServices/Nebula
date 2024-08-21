@@ -6,8 +6,9 @@ import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath } from "url";
 import { handler as ssrHandler } from "./dist/server/entry.mjs";
 import multer from "multer";
-import config from "./config.json" assert { type: "json" };
+import fs from "fs";
 
+const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();

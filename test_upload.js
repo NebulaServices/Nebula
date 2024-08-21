@@ -1,8 +1,9 @@
 // This is a test file to upload files to the Nebula server
 import { FormData, File } from "formdata-node";
 import { fileFromPath } from "formdata-node/file-from-path";
-import config from "./config.json" assert { type: "json" };
+import fs from "fs";
 
+const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 const form = new FormData();
 // const file = new File(["My hovercraft is full of eels"], "example.txt");
 
