@@ -30,6 +30,7 @@ function auth_psk(req, res, next) {
 
   if (req.headers.psk !== config.marketplace_psk) {
     let err = "Bad PSK!";
+    console.log("Bad psk");
     return next(err);
   }
 
@@ -116,6 +117,8 @@ const catalog_assets = sequelize.define("catalog_assets", {
     type: DataTypes.TEXT,
   },
 });
+
+app.use(express.json());
 
 app.get("/api", function (request, reply) {
   reply.send({ hello: "world" });
@@ -269,6 +272,26 @@ app.post(
     });
   }
 );
+
+// This API is responsible for creating packages in the database.
+// PSK authentication required.
+app.post("/api/create-package", auth_psk, async function (req, res) {
+  console.log(req.body);
+  await catalog_assets.create({
+    package_name: req.body.uuid,
+    title: req.body.title,
+    image: req.body.image_path,
+    author: req.body.author,
+    version: req.body.version,
+    description: req.body.description,
+    tags: ["Hacking", "Animated", "Funny"],
+    payload: req.body.payload,
+    background_video: req.body.background_video,
+    background_image: req.body.background_image_path,
+    type: req.body.type,
+  });
+  res.send({ hello: "world" });
+});
 
 app.use("/images/", express.static("./database_assets/image"));
 app.use("/videos/", express.static("./database_assets/video"));

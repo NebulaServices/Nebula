@@ -10,7 +10,7 @@ const form = new FormData();
 form.set("file", await fileFromPath("asgard.png"));
 
 console.log(config.marketplace_psk);
-
+console.log(form);
 await fetch("http://localhost:8080/api/upload-image", {
   headers: {
     PSK: config.marketplace_psk,
