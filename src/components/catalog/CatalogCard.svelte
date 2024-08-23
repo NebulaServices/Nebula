@@ -12,7 +12,7 @@
   {#await assetPromise}
     Loading assets...
   {:then assets}
-    {#if Object.keys(assets).length > 1}
+    {#if Object.keys(assets).length > 0}
       <div class="flex flex-row gap-6 flex-wrap justify-center">
         {#each Object.entries(assets) as [key, asset]}
           <a href={"/assets/" + key}>

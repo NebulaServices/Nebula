@@ -284,7 +284,7 @@ app.post("/api/create-package", auth_psk, async function (req, res) {
     author: req.body.author,
     version: req.body.version,
     description: req.body.description,
-    tags: ["Hacking", "Animated", "Funny"],
+    tags: req.body.tags,
     payload: req.body.payload,
     background_video: req.body.background_video_path,
     background_image: req.body.background_image_path,
