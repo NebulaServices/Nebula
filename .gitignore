@@ -5,6 +5,7 @@ dist/
 .astro/
 
 # dependencies
+package-lock.json
 node_modules/
 
 # logs

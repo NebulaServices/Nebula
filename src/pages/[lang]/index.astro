@@ -40,7 +40,11 @@ const t = useTranslations(lang);
     import { initSw } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { search } from "@utils/search.ts"; //../../utils/search.ts
     function proxy(term: string) {
-        return __uv$config!.prefix + __uv$config.encodeUrl!(search(term, "https://www.google.com/search?q=%s"));
+        const searchRes = search(term, "https://www.google.com/search?q=%s");
+        if (localStorage.getItem("defaultProxy") === "aero")
+            return aeroConfig!.prefix + searchRes;
+        else
+            return __uv$config!.prefix + __uv$config.encodeUrl!(searchRes);
     }
     //we need to rerun this on every page load
     document.addEventListener("astro:page-load", function () {

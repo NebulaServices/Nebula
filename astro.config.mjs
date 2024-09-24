@@ -7,6 +7,8 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 import { baremuxPath } from '@mercuryworkshop/bare-mux';
 import { epoxyPath } from '@mercuryworkshop/epoxy-transport';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
+import aeroPath from "aero-proxy";
+import aeroSandboxPath from "aero-sandbox/path";
 
 export default defineConfig({
   integrations: [tailwind(), icon(), svelte()],
@@ -18,6 +20,16 @@ export default defineConfig({
                     src: `${uvPath}/**/*`.replace(/\\/g, '/'),
                     dest: 'uv',
                     overwrite: false
+                },
+                {
+                    src: `${aeroPath}/**/*`.replace(/\\/g, '/'),
+                    dest: 'aero',
+                    overwrite: false
+                },
+                {
+                  src: `${aeroSandboxPath}/**/*`.replace(/\\/g, '/'),
+                  dest: 'aero/sandbox',
+                  overwrite: false
                 },
                 {
                     src: `${epoxyPath}/**/*`.replace(/\\/g, '/'),

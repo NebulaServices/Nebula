@@ -1,20 +1,23 @@
+/**
+ * @type {string}
+ */
+const dirToUV = "/uv/";
+/**
+ * @type {string}
+ */
+const dirToAero = "/aero/";
 importScripts('/epoxy/index.js');
-importScripts('/uv/uv.bundle.js');
-importScripts('/uv/uv.config.js');
-importScripts(__uv$config.sw || '/uv/uv.sw.js');
+importScripts(`${dirToUV}uv.bundle.js`);
+importScripts(`${dirToUV}uv.config.js`);
+importScripts(__uv$config.sw || `${dirToUV}uv.sw.js`);
+importScripts(`${dirToAero}config.aero.js`);
+importScripts(aeroConfig.bundle["bare-mux"]);
+importScripts(aeroConfig.bundle.handle);
+importScripts(`${dirToAero}/extras/handleWithExtras.js`);
 const uv = new UVServiceWorker();
+const aeroHandlerWithExtras = patchAeroHandler(handle);
 self.addEventListener('fetch', function (event) {
-    if (event.request.url.startsWith(location.origin + __uv$config.prefix)) {
-        event.respondWith(
-            (async function () {
-                return await uv.fetch(event);
-            })()
-        );
-    } else {
-        event.respondWith(
-            (async function () {
-                return await fetch(event.request);
-            })()
-        );
-    }
+    if (event.request.url.startsWith(location.origin + __uv$config.prefix))
+		  return event.respondWith(uv.fetch(event));
+    if (routeAero(event)) return event.respondWith(aeroHandlerWithExtras(event));
 });
