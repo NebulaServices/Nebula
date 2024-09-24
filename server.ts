@@ -49,7 +49,7 @@ function routeRhRequest(req, res) {
 function routeRhUpgrade(req, socket, head) {
   rh.emit("upgrade", req, socket, head);
 }
-
+const port = parseInt(process.env.PORT) || 8080;
 const serverFactory = (handler, opts) => {
   return createServer()
     .on("request", (req, res) => {
@@ -101,13 +101,15 @@ app.setNotFoundHandler((req, res) => {
 });
 
 console.log(
-  chalk.green(`Server listening on ${chalk.bold("http://localhost:8080")}`)
+  chalk.green(`Server listening on ${chalk.bold(`http://localhost:${port}`)}`)
 );
 console.log(
-  chalk.magenta(`Server also listening on ${chalk.bold("http://0.0.0.0:8080")}`)
+  chalk.magenta(
+    `Server also listening on ${chalk.bold(`http://0.0.0.0:${port}`)}`
+  )
 );
 
 app.listen({
-  port: 8080,
+  port: port,
   host: "0.0.0.0"
 });

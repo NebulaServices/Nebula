@@ -1,28 +1,28 @@
-import {
-  SetTransport,
-  registerRemoteListener
-} from "@mercuryworkshop/bare-mux";
+import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
 //import { isIOS } from "./IosDetector";
 
 declare global {
   interface Window {
     setTransport: () => void;
+    connection: BareMuxConnection
   }
 }
 
-function changeTransport(transport: string, wispUrl: string) {
+async function changeTransport(transport: string, wispUrl: string) {
   switch (transport) {
     case "epoxy":
       localStorage.setItem("transport", "epoxy");
       console.log("Setting transport to Epoxy");
-      SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
+      await window.connection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
       break;
     case "libcurl":
       localStorage.setItem("transport", "libcurl");
       console.log("Setting transport to Libcurl");
-      SetTransport("CurlMod.LibcurlClient", {
-        wisp: wispUrl
-      });
+      await window.connection.setTransport("/libcurl/index.mjs", [
+        {
+          wisp: wispUrl
+        }
+      ]);
       break;
     case "bare":
       localStorage.setItem("transport", "bare");
@@ -30,12 +30,14 @@ function changeTransport(transport: string, wispUrl: string) {
       const bare =
         localStorage.getItem("bare") || window.location.origin + "/bare/";
       console.log("Bare URL: " + bare);
-      SetTransport("BareMod.BareClient", bare);
+      await window.connection.setTransport("/baremod/index.mjs", [bare]);
       break;
     default:
-      SetTransport("CurlMod.LibcurlClient", {
-        wisp: wispUrl
-      });
+      await window.connection.setTransport("/libcurl/index.mjs", [
+        {
+          wisp: wispUrl
+        }
+      ]);
       break;
   }
 }
@@ -48,29 +50,11 @@ const wispUrl =
   (location.protocol === "https:" ? "wss://" : "ws://") +
   location.host +
   "/wisp/";
-//registerRemoteListener(navigator.serviceWorker.controller!);
-
-//if (isIOS) {
-//  console.log("iOS device detected. Bare will be used.");
-//  changeTransport(
-//    localStorage.getItem("transport") || "libcurl",
-//    localStorage.getItem("wispUrl") || wispUrl
-//  );
-//} else {
-//  changeTransport(
-//   localStorage.getItem("transport") || "bare",
-//   localStorage.getItem("wispUrl") || wispUrl
-//  );
-//}
-
-//changeTransport(
-//    localStorage.getItem("transport") || "libcurl",
-//    localStorage.getItem("wispUrl") || wispUrl
-//);
+window.connection = new BareMuxConnection("/baremux/worker.js");
 
 // helper function for  ../routes.tsx
-function setTransport() {
-  changeTransport(
+async function setTransport() {
+  await changeTransport(
     localStorage.getItem("transport") || "epoxy",
     localStorage.getItem("wispUrl") || wispUrl
   );

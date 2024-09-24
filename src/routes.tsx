@@ -7,24 +7,10 @@ import { Radon } from "./pages/Radon";
 import { Settings } from "./pages/Settings/";
 import { AboutBlank } from "./AboutBlank";
 import { Faq } from "./pages/Faq";
-// import { registerRemoteListener } from "@mercuryworkshop/bare-mux";
 import "./style.css";
 import "./i18n";
 
 export default function Routes() {
-  const wispUrl =
-    (location.protocol === "https:" ? "wss://" : "ws://") +
-    location.host +
-    "/wisp/"; // @TODO Japan - US ping
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.ready.then(async () => {
-      //await registerRemoteListener(sw.active!)
-        console.log("SW ready")
-    });
-    navigator.serviceWorker.register("/sw.js", {
-      scope: "/"
-    });
-  }
   return (
     <LocationProvider>
       <Router>

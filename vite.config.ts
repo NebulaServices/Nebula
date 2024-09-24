@@ -8,6 +8,9 @@ import { dynamicPath } from "@nebula-services/dynamic";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 //@ts-ignore
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
+import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
+//@ts-ignore
+import { bareModulePath } from "@mercuryworkshop/bare-as-module3"
 import path from "path";
 import { createBareServer } from "@tomphttp/bare-server-node";
 import wisp from "wisp-server-node";
@@ -26,13 +29,24 @@ export default defineConfig({
           overwrite: false
         },
         {
+          src: `${baremuxPath}/**/*`.replace(/\\/g, "/"),
+          dest: "baremux",
+          overwrite: false
+        },
+        {
           src: `${epoxyPath}/**/*`.replace(/\\/g, "/"),
           dest: "epoxy",
           overwrite: false
         },
+
         {
           src: `${libcurlPath}/**/*`.replace(/\\/g, "/"),
           dest: "libcurl",
+          overwrite: false
+        },
+        {
+          src: `${bareModulePath}/**/*`.replace(/\\/g, "/"),
+          dest: "baremod",
           overwrite: false
         },
         {

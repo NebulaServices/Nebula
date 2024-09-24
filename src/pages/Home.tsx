@@ -1,28 +1,25 @@
 import { useState } from "preact/hooks";
 import { useTranslation } from "react-i18next";
 import { HeaderRoute } from "../components/HeaderRoute";
+import { LoadSuspense } from "../LoadSuspense";
 import { set } from "../util/IDB";
 import { uninstallServiceWorkers } from "../util/SWHelper";
 import prod from "./config.json"; // Set prod to true if you wish to load balance
 import { enc } from "../aes";
 import CloakedHead from "../util/CloakedHead";
 import { useEffect } from "preact/hooks";
-import { updateServiceWorkers } from "../util/SWHelper.js";
-import { setTransport } from "../util/transports";
+import { registerServiceWorker } from "../util/SWHelper.js";
 
 export function Home() {
   const [isFocused, setIsFocused] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const handleLoad = () => {
       const firstLoad = localStorage.getItem("firstLoad") || "true";
       console.log(firstLoad);
-      //make sure service workers are updated
-      //updateServiceWorkers();
-      //make sure transport is set
-      //setTransport();
       if (firstLoad == "true" && prod) {
         function changeBare(url: string) {
           set("bare", url);
@@ -89,9 +86,13 @@ export function Home() {
     setSuggestions(newSuggestions);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setTransport();
+    setLoading(true);
+    {
+      loading && <LoadSuspense />;
+    }
+    await registerServiceWorker();
     window.location.href =
       "/go/" +
       encodeURIComponent(
@@ -103,24 +104,6 @@ export function Home() {
       );
   };
 
-  useEffect(() => {
-    const epoxyScript = document.createElement("script");
-    epoxyScript.src = "/epoxy/index.js";
-
-    epoxyScript.onload = function () {
-      console.log("lazy loaded epoxy");
-    };
-
-    const libcurlScript = document.createElement("script");
-    libcurlScript.src = "/libcurl/index.js";
-
-    libcurlScript.onload = function () {
-      console.log("lazy loaded libcurl");
-    };
-
-    document.body.appendChild(epoxyScript);
-    document.body.appendChild(libcurlScript);
-  }, []);
   return (
     <HeaderRoute>
       <CloakedHead
@@ -167,17 +150,24 @@ export function Home() {
               {showSuggestions &&
                 suggestions.map((suggestion, index) => (
                   <a
-                    onClick={() => {setTransport()}}
-                    href={
-                      "/go/" +
-                      encodeURIComponent(
-                        //@ts-ignore
-                        enc(
-                          suggestion,
-                          window.location.origin.slice(8) + navigator.userAgent
-                        ).substring(10)
-                      )
-                    }
+                    onClick={async (event) => {
+                      event.preventDefault();
+                      setLoading(true);
+                      {
+                        loading && <LoadSuspense />;
+                      }
+                      await registerServiceWorker();
+                      window.location.href =
+                        "/go/" +
+                        encodeURIComponent(
+                          //@ts-ignore
+                          enc(
+                            suggestion,
+                            window.location.origin.slice(8) +
+                              navigator.userAgent
+                          ).substring(10)
+                        );
+                    }}
                   >
                     <div
                       className={`font-roboto w-110 flex h-10 flex-none shrink-0 items-center justify-center border border-input-border-color bg-input p-2 text-xl text-input-text hover:bg-dropdown-option-hover-color ${
