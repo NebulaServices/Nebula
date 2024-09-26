@@ -47,7 +47,7 @@ const t = useTranslations(lang);
         //wrap this in a try catch as sometimes this element will not be available on the page
         try {
             const input = document.getElementById("nebula-input") as HTMLInputElement;
-            const iframe = document.getElementById("neb-iframe") as HTMLIframeElement;
+            const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
