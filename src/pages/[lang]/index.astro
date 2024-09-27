@@ -96,8 +96,19 @@ const t = useTranslations(lang);
                         data.map((results: Suggestion) => {
                             let span = document.createElement("span");
                             let pTag = document.createElement("p");
-                            span.classList.add("border-b", "border-input-border-color", "last:border-none", "text-ellipsis", "whitespace-nowrap", "w-full", "text-input-text", "bg-primary", "h-9", "text-xl", "text-align-center", "overflow-hidden", "flex", "items-center", "justify-center", "hover:bg-lighter", "active:bg-primary");
-                            pTag.classList.add("text-ellipsis", "text-center", "w-full", "overflow-hidden", "whitespace-nowrap")
+                            span.classList.add("cursor-pointer", "border-b", "border-input-border-color", "last:border-none", "text-ellipsis", "whitespace-nowrap", "w-full", "text-input-text", "bg-primary", "h-9", "text-xl", "text-align-center", "overflow-hidden", "flex", "items-center", "justify-center", "hover:bg-lighter", "active:bg-primary");
+                            span.addEventListener("click", function() {
+                                //when the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
+                                const event = new KeyboardEvent("keypress", {
+                                    key: 'Enter',
+                                    code: 'Enter',
+                                    which: 13,
+                                    keyCode: 13
+                                });
+                                input.value = results.phrase;
+                                input.dispatchEvent(event);
+                            });
+                            pTag.classList.add("cursor-pointer", "text-ellipsis", "text-center", "w-full", "overflow-hidden", "whitespace-nowrap")
                             pTag.innerText = results.phrase;
                             span.appendChild(pTag);
                             omnibox.appendChild(span);
