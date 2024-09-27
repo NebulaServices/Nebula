@@ -61,8 +61,8 @@ const t = useTranslations(lang);
             const input = document.getElementById("nebula-input") as HTMLInputElement;
             const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
             const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-            let epoxyClientOptions = null;
-            let epoxyClient = null;
+            let epoxyClientOptions: any = null;
+            let epoxyClient: any = null;
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
