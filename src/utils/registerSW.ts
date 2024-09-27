@@ -1,3 +1,4 @@
+const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
 function loadProxyScripts() {
     //wrap everything in a promise to avoid race conditions
     return new Promise<void>((resolve) => {
@@ -32,8 +33,7 @@ function loadProxyScripts() {
 function setTransport(transport?: string) {
     //wrap in a promise so we don't register sw until a transport is set.
     return new Promise<void>((resolve) => {
-        const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
-            BareMux.SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
+        BareMux.SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
         resolve();
     });
 }
@@ -53,4 +53,4 @@ function initSw() {
     })
 }
 
-export { initSw, setTransport }
+export { initSw, setTransport, wispUrl }

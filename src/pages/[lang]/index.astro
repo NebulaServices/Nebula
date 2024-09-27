@@ -34,7 +34,7 @@ const t = useTranslations(lang);
             class="transition-all duration-300 font-roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
             placeholder={t("home.placeholder")}
         />
-        <div id="omnibox" class="hidden transition-all duration-300 flex flex-col w-10/12 md:w-3/12 flex-grow bg-input text-center items-center rounded-b-2xl border-input-border-color border-b border-r border-l">
+        <div id="omnibox" class="hidden p-1 transition-all duration-300 flex flex-col w-10/12 md:w-3/12 flex-grow bg-input text-center items-center rounded-b-2xl border-input-border-color border-b border-r border-l">
             <span class="w-full text-input-text bg-primary h-9 text-xl text-align-center overflow-hidden flex items-center justify-center hover:bg-lighter active:bg-primary">
                 <p>E</p>
             </span>
@@ -44,18 +44,25 @@ const t = useTranslations(lang);
   </div>
 </Layout>
 <script>
-    import { initSw } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+    import { initSw, wispUrl } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { search } from "@utils/search.ts"; //../../utils/search.ts
+    import initEpoxy, { EpoxyClient, EpoxyClientOptions } from "@mercuryworkshop/epoxy-tls";
+    type Suggestion =  {
+        phrase: string
+    }
+    await initEpoxy();
     function proxy(term: string) {
         return __uv$config!.prefix + __uv$config.encodeUrl!(search(term, "https://www.google.com/search?q=%s"));
     }
     //we need to rerun this on every page load
-    document.addEventListener("astro:page-load", function () {
+    document.addEventListener("astro:page-load", async function () {
         //wrap this in a try catch as sometimes this element will not be available on the page
         try {
             const input = document.getElementById("nebula-input") as HTMLInputElement;
             const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
             const omnibox = document.getElementById("omnibox") as HTMLDivElement;
+            let epoxyClientOptions = null;
+            let epoxyClient = null;
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
@@ -65,15 +72,37 @@ const t = useTranslations(lang);
                 }
             })
             input?.addEventListener("input", async function() {
+                console.log("EA");
+                await initEpoxy(); //This ONLY runs once 
+                if (!epoxyClient) {
+                    console.debug("Creating epoxy client");
+                    epoxyClientOptions = new EpoxyClientOptions();
+                    epoxyClient = new EpoxyClient(wispUrl, epoxyClientOptions);
+                }
                 const value = input?.value;
+                console.log(value);
                 input.classList.remove("rounded-b-2xl");
                 omnibox.classList.remove("hidden");
                 if (value.length === 0) {
                     input.classList.add("rounded-b-2xl");
                     omnibox.classList.add("hidden");
                 }
-                if (value >= 3) {
-                    //handle shit here :D
+                if (value.length >= 3) {
+                    console.log("YUH");
+                    const resp = await epoxyClient.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
+                    const data = await resp.json();
+                    if (data) {
+                        omnibox.innerHTML = "";
+                        data.map((results: Suggestion) => {
+                            let span = document.createElement("span");
+                            let pTag = document.createElement("p");
+                            span.classList.add("border-b", "border-input-border-color", "last:border-none", "text-ellipsis", "whitespace-nowrap", "w-full", "text-input-text", "bg-primary", "h-9", "text-xl", "text-align-center", "overflow-hidden", "flex", "items-center", "justify-center", "hover:bg-lighter", "active:bg-primary");
+                            pTag.classList.add("text-ellipsis", "text-center", "w-full", "overflow-hidden", "whitespace-nowrap")
+                            pTag.innerText = results.phrase;
+                            span.appendChild(pTag);
+                            omnibox.appendChild(span);
+                        })
+                    }
                 }
             });
         }
