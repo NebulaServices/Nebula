@@ -33,8 +33,11 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       '@mercuryworkshop/epoxy-tls':
-        specifier: 2.1.4-1
-        version: 2.1.4-1
+        specifier: 2.0.0-3
+        version: 2.0.0-3
+      '@mercuryworkshop/epoxy-tls-new':
+        specifier: npm:@mercuryworkshop/epoxy-tls@^2.1.4-1
+        version: '@mercuryworkshop/epoxy-tls@2.1.4-1'
       '@mercuryworkshop/epoxy-transport':
         specifier: 2.0.1
         version: 2.0.1(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@6.0.4)

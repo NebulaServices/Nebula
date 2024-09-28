@@ -43,11 +43,10 @@ const t = useTranslations(lang);
 <script>
     import { initSw, wispUrl } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { search } from "@utils/search.ts"; //../../utils/search.ts
-    import initEpoxy, { EpoxyClient, EpoxyClientOptions } from "@mercuryworkshop/epoxy-tls";
+    import initEpoxy, { EpoxyClient, EpoxyClientOptions } from "@mercuryworkshop/epoxy-tls-new";
     type Suggestion =  {
         phrase: string
     }
-    await initEpoxy();
     function proxy(term: string) {
         return __uv$config!.prefix + __uv$config.encodeUrl!(search(term, "https://www.google.com/search?q=%s"));
     }
