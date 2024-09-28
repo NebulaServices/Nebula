@@ -43,12 +43,11 @@ const t = useTranslations(lang);
 <script>
     import { initSw, wispUrl } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { search } from "@utils/search.ts"; //../../utils/search.ts
-    import epoxy from "@mercuryworkshop/epoxy-tls";
-    //@ts-ignore
-    import ROOTS from "@mercuryworkshop/epoxy-tls/certs";
+    import initEpoxy, { EpoxyClient, EpoxyClientOptions } from "@mercuryworkshop/epoxy-tls";
     type Suggestion =  {
         phrase: string
     }
+    await initEpoxy();
     function proxy(term: string) {
         return __uv$config!.prefix + __uv$config.encodeUrl!(search(term, "https://www.google.com/search?q=%s"));
     }
@@ -71,12 +70,11 @@ const t = useTranslations(lang);
             })
             input?.addEventListener("input", async function() {
                 console.log("EA");
-                const { EpoxyClient, EpoxyClientOptions } = await epoxy(); //This ONLY runs once 
+                await initEpoxy(); //This ONLY runs once 
                 if (!epoxyClient) {
                     console.debug("Creating epoxy client");
-                    epoxyClientOptions = await new EpoxyClientOptions();
-		            epoxyClientOptions.udp_extension_required = false;
-                    epoxyClient = await new EpoxyClient(wispUrl, ROOTS, epoxyClientOptions);
+                    epoxyClientOptions = new EpoxyClientOptions();
+                    epoxyClient = new EpoxyClient(wispUrl, epoxyClientOptions);
                 }
                 const value = input?.value;
                 console.log(value);

@@ -19,7 +19,7 @@
     "@fastify/static": "^7.0.4",
     "@iconify-json/ph": "^1.2.0",
     "@mercuryworkshop/bare-mux": "1.1.1",
-    "@mercuryworkshop/epoxy-tls": "2.0.0-3",
+    "@mercuryworkshop/epoxy-tls": "2.1.4-1",
     "@mercuryworkshop/epoxy-transport": "2.0.1",
     "@titaniumnetwork-dev/ultraviolet": "3.1.2",
     "astro": "^4.15.9",
