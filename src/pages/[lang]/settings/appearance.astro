@@ -24,12 +24,9 @@ export const prerender = true;
   <SettingsLayout title={t("settings.appearance")}>
     <SettingsSection
       title="Theme"
-      subtitle="Choose a theme so your eyes don't hate us."
-    >
+      subtitle="Choose a theme so your eyes don't hate us.">
       <div class="flex flex-row flex-wrap gap-4 items-center roboto">
-        <div
-          class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal"
-        >
+        <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
           <InstalledThemes client:only="svelte" />
           <div class="rounded-3xl bg-navbar-color w-64 flex flex-col">
             <div class="w-full items-center justify-center flex aspect-[16/9]">
