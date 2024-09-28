@@ -1,0 +1,53 @@
+---
+interface Inputs {
+    input: boolean;
+    required?: boolean;
+    placeholder?: string;
+}
+interface SelectOptions {
+    value: string;
+    name: string;
+    disabled: boolean;
+}
+interface Selects {
+    select: boolean;
+    name?: string;
+    multiple?: boolean;
+    options?: SelectOptions[];
+}
+interface Buttons {
+    name: string;
+    id: string;
+}
+interface Props {
+    title: string;
+    description: string;
+    input: Inputs;
+    select: Selects;
+    button: Buttons;
+}
+
+const { title, description, input, select, button } = Astro.props;
+---
+
+<div class="w-64 rounded-3xl bg-navbar-color h-64 flex flex-col items-center p-4">
+    <h1 class="text-3xl font-bold mb-2"> { title } </h1>
+    <p class="text-md w-full text-ellipsis text-center"> { description } </p>
+    <div class="w-full h-full flex-grow flex justify-center items-center flex-col gap-4">
+        <!-- We only want to render an input if it's enabled -->
+        {input.input &&
+            <input class="text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" required={input.required} placeholder={input.placeholder}></input>
+        }
+        <!-- Same with dropdown selections -->
+        {select.select &&
+            <select class="text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" multiple={select.multiple} name={select.name}>
+                {select.options!.map((option) => (
+                    <option disabled={option.disabled} value={option.value}>{option.name}</option>
+                ))}
+            </select>
+        }
+        <button id={button.id.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} class="w-36 h-10 rounded-md border border-input-border-color text-input-text bg-input hover:border-input hover:bg-input-border-color hover:text-input hover:font-bold active:bg-input active:text-input-text transition-all duration-200"> 
+            {button.name}
+        </button>
+    </div>
+</div>

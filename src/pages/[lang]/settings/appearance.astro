@@ -1,13 +1,13 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
-import SettingsLayout from "../../../layouts/SettingsLayout.astro";
-import SettingsSection from "../../../layouts/SettingsSection.astro";
+import Layout from "@layouts/Layout.astro";
+import SettingsLayout from "@layouts/SettingsLayout.astro";
+import SettingsSection from "@layouts/SettingsSection.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
-import ThemeCard from "../../../components/settings/ThemeCard.astro";
+import ThemeCard from "@components/settings/ThemeCard.astro";
 import { Icon } from "astro-icon/components";
 import fortnite from "../../../assets/fortnite.jpg";
 import ClassicNebula from "../../../assets/classic_theme.png";
-import InstalledThemes from "../../../components/catalog/InstalledThemes.svelte";
+import InstalledThemes from "@components/catalog/InstalledThemes.svelte";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {

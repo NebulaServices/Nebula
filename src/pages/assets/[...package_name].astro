@@ -1,6 +1,6 @@
 ---
 const { package_name } = Astro.params;
-import Layout from "../../layouts/Layout.astro";
+import Layout from "@layouts/Layout.astro";
 const response = await fetch(
   new URL("/api/packages/" + package_name, Astro.url)
 );

@@ -3,7 +3,7 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const { title } = Astro.props;
-import SidebarButton from "../components/SidebarButton.astro";
+import SidebarButton from "@components/SidebarButton.astro";
 import { Icon } from "astro-icon/components";
 ---
 

@@ -1,7 +1,8 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
-import SettingsLayout from "../../../layouts/SettingsLayout.astro";
-import SettingsSection from "../../../layouts/SettingsSection.astro";
+import Layout from "@layouts/Layout.astro";
+import SettingsLayout from "@layouts/SettingsLayout.astro";
+import SettingsSection from "@layouts/SettingsSection.astro";
+import SettingsCard from "@components/settings/SettingsCard.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -19,7 +20,28 @@ export const prerender = true;
 <Layout title="Settings">
   <SettingsLayout title={t("settings.tab")}>
     <SettingsSection title="Tab" subtitle="Customize and cloak your tab.">
-        Guhh
+        <div class="w-full h-full flex gap-4">
+            <SettingsCard 
+                title="Cloaking" 
+                description="Choose how your tab looks" 
+                input={{input: false}} 
+                button={{name: "Cloak!", id: "cloak"}} 
+                select={{ select: true, name: 'cloak', options: [
+                    {name: 'Google', value: 'google', disabled: false }, 
+                    { name: 'Wikipedia', value: 'wikipedia', disabled: false}
+                    ] }}>
+            </SettingsCard
+            <SettingsCard
+                title="A:B & Blob" 
+                description="Choose to open your tab in about:blank or blob" 
+                input={{input: false}} 
+                button={{name: "Go!", id: "aboutblank"}} 
+                select={{ select: true, name: 'aboutblank', options: [
+                    {name: 'About:Blank', value: 'a:b', disabled: false}, 
+                    {name: 'Blob', value: 'blob', disabled: false}
+                    ] }}>
+            </SettingsCard>
+        </div>
     </SettingsSection>
   </SettingsLayout>
 </Layout>
