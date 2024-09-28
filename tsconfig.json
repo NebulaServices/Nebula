@@ -1,12 +1,12 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": ["src"],
-  "compilerOptions": {
-      "baseUrl": ".",
-      "paths": {
-          "@components/*": ["src/components/*"],
-          "@layouts/*": ["src/layouts/*"],
-          "@utils/*" : ["src/utils/*"]
-      }
-  }
+    "extends": "astro/tsconfigs/strict",
+    "exclude": ["dist/**", "node_modules/**", "public/**", "src/ts/rammerhead.ts"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@layouts/*": ["src/layouts/*"],
+            "@utils/*": ["src/utils/*"]
+        }
+    }
 }

@@ -46,7 +46,7 @@ const { title, description, input, select, button } = Astro.props;
                 ))}
             </select>
         }
-        <button id={button.id.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} class="w-36 h-10 rounded-md border border-input-border-color text-input-text bg-input hover:border-input hover:bg-input-border-color hover:text-input hover:font-bold active:bg-input active:text-input-text transition-all duration-200"> 
+        <button id={button.id} class="w-36 h-10 rounded-md border border-input-border-color text-input-text bg-input hover:border-input hover:bg-input-border-color hover:text-input hover:font-bold active:bg-input active:text-input-text transition-all duration-200"> 
             {button.name}
         </button>
     </div>

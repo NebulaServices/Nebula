@@ -33,8 +33,8 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       '@mercuryworkshop/epoxy-tls':
-        specifier: 2.1.4-1
-        version: 2.1.4-1
+        specifier: 2.0.0-3
+        version: 2.0.0-3
       '@mercuryworkshop/epoxy-transport':
         specifier: 2.0.1
         version: 2.0.1(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@6.0.4)
@@ -596,9 +596,6 @@ packages:
 
   '@mercuryworkshop/epoxy-tls@2.0.0-3':
     resolution: {integrity: sha512-iC5CViTh2xn44xtjvDW4YW9qoeoJcCBOqcNmffBx3RHdK7FAzAWFHLTUBtdlnMVv6cjYZtV+eUTzxyreqlgOVA==}
-
-  '@mercuryworkshop/epoxy-tls@2.1.4-1':
-    resolution: {integrity: sha512-kRbW12tU4TAf9GuoLfyFYvUATqFZq6n9ScRSfwAECceOBWDlr+bACnSH45lLDXvjBKwxZotTyYE5aNc+Ow+M3Q==}
 
   '@mercuryworkshop/epoxy-transport@2.0.1':
     resolution: {integrity: sha512-iGuH/CT5hCVRYBa+5ZrlTG0DWII9VOCMHnmv9CPFLM17obE84y9EUXpTp9hXdfENnuAcNzQVPizjwVas7HiYQA==}
@@ -4130,8 +4127,6 @@ snapshots:
       uuid: 9.0.1
 
   '@mercuryworkshop/epoxy-tls@2.0.0-3': {}
-
-  '@mercuryworkshop/epoxy-tls@2.1.4-1': {}
 
   '@mercuryworkshop/epoxy-transport@2.0.1(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@6.0.4)':
     dependencies:
