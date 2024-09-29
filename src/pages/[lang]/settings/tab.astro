@@ -3,8 +3,9 @@ import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
 import SettingsCard from "@components/settings/SettingsCard.astro";
+import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
+import Toast from "@components/toasts/Toast.svelte";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
-
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {
@@ -20,17 +21,21 @@ export const prerender = true;
 <Layout title="Settings">
   <SettingsLayout title={t("settings.tab")}>
     <SettingsSection title="Tab" subtitle="Customize and cloak your tab.">
-        <div class="w-full h-full flex gap-4">
+        <div class="w-full h-full flex flex-col items-center justify-center md:flex-row md:items-start md:justify-start gap-4">
             <SettingsCard 
                 title="Cloaking" 
                 description="Choose how your tab looks" 
                 input={{input: false}} 
                 button={{name: "Cloak!", id: "cloak"}} 
-                select={{ select: true, name: 'cloak', options: [
-                    {name: 'Google', value: 'google', disabled: false }, 
-                    { name: 'Wikipedia', value: 'wikipedia', disabled: false}
-                    ] }}>
-            </SettingsCard>
+                select={{ select: true, name: 'cloakselect', options: [
+                    {name: 'Default', value: 'reset', disabled: false},
+                    {name: 'Google', value: 'google', disabled: false },
+                    {name: 'Wikipedia', value: 'wikipedia', disabled: false},
+                    {name: 'Canvas', value: 'canvas', disabled: false},
+                    {name: 'Google Classroom', value: 'classroom', disabled: false},
+                    {name: 'Powerschool', value: 'powerschool', disabled: false}
+                    ] }}
+            />
             <SettingsCard
                 title="A:B & Blob" 
                 description="Choose to open your tab in about:blank or blob" 
@@ -39,9 +44,39 @@ export const prerender = true;
                 select={{ select: true, name: 'aboutblank', options: [
                     {name: 'About:Blank', value: 'a:b', disabled: false}, 
                     {name: 'Blob', value: 'blob', disabled: false}
-                    ] }}>
-            </SettingsCard>
+                    ] }}
+            />
         </div>
     </SettingsSection>
   </SettingsLayout>
+  { /* The toast notifications :D */ }
+  <ToastWrapper client:load>
+    <Toast toastProp={{toastType: "success", text: "Successfully set cloak!", class: "cloakMessageSuccess"}} client:load />
+  </ToastWrapper>
 </Layout>
+
+<script>
+    import { toast } from "@utils/toast.ts"; //A helper function so we don't have to run this logic everytime.
+    import { cloakTab } from "@utils/settings.ts";
+    function setup(cloakValue: HTMLSelectElement) {
+        const cloakLocal = localStorage.getItem("nebula||tabCloak");
+        if (cloakLocal === "default") {
+            cloakValue.value = "reset";
+        }
+        else {
+            cloakValue.value = cloakLocal;
+        }
+    }
+    document.addEventListener("astro:page-load", function() {
+        try {
+            const cloakButton = document.getElementById("cloak") as HTMLElement;
+            const cloakValue = document.getElementById("cloakselect") as HTMLSelectElement;
+            setup(cloakValue);
+            cloakButton.addEventListener("click", () => {
+                cloakTab(cloakValue.value);
+                toast('.cloakMessageSuccess');
+            });
+        }
+        catch (_) { /* We don't want to return anything on purpose */ }
+    })
+</script>

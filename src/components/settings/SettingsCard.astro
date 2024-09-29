@@ -40,7 +40,7 @@ const { title, description, input, select, button } = Astro.props;
         }
         <!-- Same with dropdown selections -->
         {select.select &&
-            <select class="text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" multiple={select.multiple} name={select.name}>
+        <select id={select.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} class="text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" multiple={select.multiple} name={select.name}>
                 {select.options!.map((option) => (
                     <option disabled={option.disabled} value={option.value}>{option.name}</option>
                 ))}

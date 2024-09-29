@@ -1,0 +1,7 @@
+<script>
+    import { cloakTab } from "@utils/settings.ts";
+    // This loads the settings in a nice way
+    document.addEventListener("astro:after-swap", function() {
+        cloakTab(localStorage.getItem("nebula||tabCloak") as string || "default");
+    });
+</script>

@@ -82,7 +82,6 @@ const t = useTranslations(lang);
                     omnibox.classList.add("hidden");
                 }
                 if (value.length >= 3) {
-                    console.log("YUH");
                     const resp = await epoxyClient.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
                     const data = await resp.json();
                     if (data) {
