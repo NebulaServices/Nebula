@@ -11,6 +11,11 @@ import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 export default defineConfig({
   integrations: [tailwind(), icon(), svelte()],
   vite: {
+    build: {
+        rollupOptions: {
+            external: ['@mercuryworkshop/epoxy-tls-new']
+        }
+    },
     plugins: [
         viteStaticCopy({
             targets: [
