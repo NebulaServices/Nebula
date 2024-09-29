@@ -59,6 +59,7 @@ const t = useTranslations(lang);
             const omnibox = document.getElementById("omnibox") as HTMLDivElement;
             let epoxyClientOptions: any = null;
             let epoxyClient: any = null;
+            await initEpoxy(); //This ONLY runs once 
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
@@ -68,15 +69,12 @@ const t = useTranslations(lang);
                 }
             })
             input?.addEventListener("input", async function() {
-                console.log("EA");
-                await initEpoxy(); //This ONLY runs once 
                 if (!epoxyClient) {
                     console.debug("Creating epoxy client");
                     epoxyClientOptions = new EpoxyClientOptions();
                     epoxyClient = new EpoxyClient(wispUrl, epoxyClientOptions);
                 }
                 const value = input?.value;
-                console.log(value);
                 input.classList.remove("rounded-b-2xl");
                 omnibox.classList.remove("hidden");
                 if (value.length === 0) {
