@@ -2,5 +2,7 @@
     import { Toaster } from "svelte-french-toast";
 </script>
 
-<Toaster />
-<slot />
+<div class="hidden" id="toastwrapper">
+    <Toaster />
+    <slot />
+</div>

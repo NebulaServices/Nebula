@@ -1,8 +1,9 @@
 <script>
-    import { cloakTab, Settings } from "@utils/settings.ts";
+    import { tabSettings, proxySettings, Settings } from "@utils/settings.ts";
     // This loads the settings in a nice way
-    cloakTab(localStorage.getItem(Settings.tabCloak) as string || "default");
+    tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
+    proxySettings.changeProxy(localStorage.getItem(Settings.ProxySettings.proxy as string) || "automatic");
     document.addEventListener("astro:after-swap", function() {
-        cloakTab(localStorage.getItem(Settings.tabCloak) as string || "default");
+        tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
     });
 </script>

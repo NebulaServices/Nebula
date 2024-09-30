@@ -2,6 +2,9 @@
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
+import SettingsCard from "@components/settings/SettingsCard.astro";
+import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
+import Toast from "@components/toasts/Toast.svelte";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -18,8 +21,109 @@ export const prerender = true;
 
 <Layout title="Settings">
   <SettingsLayout title={t("settings.proxy")}>
-    <SettingsSection title="Proxy" subtitle="Choose the rewriter/proxy to use.">
-        Guhh
+  <SettingsSection title="Proxy" subtitle="A wide variety of settings for the proxy/rewriter itself.">
+    <div class="w-full h-full flex flex-col items-center justify-center flex-wrap md:flex-row md:items-start md:justify-start gap-4">
+        <SettingsCard 
+            title="Proxy"
+            description="Choose the proxy/rewriter that fits your needs"
+            input={{input:false}}
+            button={{name: 'Change', id: 'setproxy'}}
+            select={{
+                select: true,
+                name: 'proxy',
+                options: [
+                    {name: 'Automatic', value: 'automatic', disabled: false},
+                    {name: 'Ultraviolet', value: 'uv', disabled: false},
+                    {name: 'Rammerhead', value: 'rh', disabled: false}
+                ]
+            }}
+        />
+        <SettingsCard
+            title="Open in"
+            description="Choose how to open your sites"
+            input={{input:false}}
+            button={{name: 'Set', id: 'setopenin'}}
+            select={{
+                select: true,
+                name: 'openin',
+                options: [
+                    {name: 'Embed', value: 'embed', disabled: false},
+                    {name: 'About:Blank', value: 'a:b', disabled: false},
+                    {name: 'Blob', value: 'blob', disabled: false}
+                ]
+            }}
+        />
+        <SettingsCard
+            title="Search Engine"
+            description="Choose your search engine"
+            input={{input: false}}
+            button={{name: 'Set Search Engine', id: 'setsearchengine'}}
+            select={{
+                select: true,
+                name: 'searchengine',
+                options: [
+                    {name: 'DuckDuckGo', value: 'ddg', disabled: false},
+                    {name: 'Google', value: 'google', disabled: false},
+                    {name: 'Bing', value: 'bing', disabled: false}
+                ]
+            }}
+        />
+        <SettingsCard
+            title="Wisp Server"
+            description="Choose the wisp server you feel is the fastest"
+            input={{input: false}}
+            button={{name: 'Select', id: 'setwispurl'}}
+            select={{
+                select: true,
+                name: 'wispurl',
+                options: [
+                    {name: 'Automatic', value: 'automatic', disabled: false},
+                    {name: 'US-1', value: 'us-1', disabled: true}
+                ]
+            }}
+        />
+        <SettingsCard
+            title="Transport"
+            description="Select the transport to use"
+            input={{input: false}}
+            button={{name: 'Set transport', id: 'settransport'}}
+            select={{
+                select: true,
+                name: 'transport',
+                options: [
+                    {name: 'Libcurl', value: 'libcurl', disabled: false},
+                    {name: 'Epoxy', value: 'epoxy', disabled: false}
+                ]
+            }}
+        />
+      </div>
     </SettingsSection>
   </SettingsLayout>
+  <ToastWrapper client:load>
+    <Toast toastProp={{
+            toastType: 'success',
+            text: 'Successfully changed proxy!',
+            class: 'proxyMessage'
+        }}
+    client:load />
+  </ToastWrapper>
 </Layout>
+<script>
+    import { toast } from "@utils/toast.ts";
+    import { proxySettings, Settings as SettingsEnum } from "@utils/settings.ts";
+    function setup(proxySelectVal: HTMLSelectElement) {
+        proxySelectVal.value = localStorage.getItem(SettingsEnum.ProxySettings.proxy) as string;
+    }
+    document.addEventListener("astro:page-load", () => {
+        try {
+            const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
+            const proxySelectVal = document.getElementById('proxy') as HTMLSelectElement;
+            setup(proxySelectVal);
+            proxyButton.addEventListener("click", () => {
+                proxySettings.changeProxy(proxySelectVal.value);
+                toast('.proxyMessage');
+            });
+        }
+        catch(_) {/* Don't return anything on purpose */}
+    })
+</script>
