@@ -1,7 +1,12 @@
-type TabCloaks = "default" | "google" | "wikipedia" | "canvas" | "classroom" | "powerschool"
+enum Settings {
+    "tabCloak" = "nebula||tabCloak",
+    "abblob" = "nebula||abBlob"
+}
+type TabCloaks = "default" | "google" | "wikipedia" | "canvas" | "classroom" | "powerschool";
+type AbCloaks = "a:b" | "blob"
 function cloakTab(cloak: TabCloaks | string) {
     const faviconElement = document.getElementById("favicon") as HTMLLinkElement;
-    localStorage.setItem("nebula||tabCloak", cloak); 
+    localStorage.setItem(Settings.tabCloak, cloak); 
     switch(cloak) {
         case "google":
             document.title = "Google";
@@ -32,4 +37,45 @@ function cloakTab(cloak: TabCloaks | string) {
     }
 }
 
-export { cloakTab }
+function abCloak(type: AbCloaks | string) {
+    localStorage.setItem(Settings.abblob, type);
+    switch(type) {
+        case "a:b":
+            window.location.replace('https://google.com');
+            const win = window.open();
+            win!.document.body.style.margin = '0';
+            win!.document.body.style.height = '100vh';
+            const iframe = win!.document.createElement('iframe');
+            iframe.style.border = 'none';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.margin = '0';
+            const url = window.location.href;
+            iframe.src = url;
+            win!.document.body.appendChild(iframe);
+            break;
+        case "blob":
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <style type="text/css">
+                body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+                </style>
+                </head>
+                <body>
+                <iframe style="border: none; width: 100%; height: 100vh;" src="${window.location.href}"></iframe>
+                </body>
+                </html>
+            `;
+            window.location.replace("https://google.com");
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const blobURL = URL.createObjectURL(blob);
+            window.open(blobURL, '_blank');
+            break;
+        default:
+            return;
+    }
+}
+
+export { cloakTab, abCloak, Settings }

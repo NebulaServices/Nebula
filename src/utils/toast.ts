@@ -1,4 +1,4 @@
-type ToastType = "success" | "error" | "promise" | "multiline";
+type ToastType = "success" | "error" | "multiline";
 type Position = "top-left" | "top-middle" | "top-right" | "bottom-left" | "bottom-right" | "bottom-center";
 interface Props {
     toastType: ToastType;
