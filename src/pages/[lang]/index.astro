@@ -41,14 +41,27 @@ const t = useTranslations(lang);
   </div>
 </Layout>
 <script>
-    import { initSw, wispUrl } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+    import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+    import { WispServerURLS, SearchEngines, Settings, cloak } from "@utils/settings";
     import { search } from "@utils/search.ts"; //../../utils/search.ts
     import initEpoxy, { EpoxyClient, EpoxyClientOptions } from "@mercuryworkshop/epoxy-tls-new";
     type Suggestion =  {
         phrase: string
     }
     function proxy(term: string) {
-        return __uv$config!.prefix + __uv$config.encodeUrl!(search(term, "https://www.google.com/search?q=%s"));
+        const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
+        const proxy = localStorage.getItem(Settings.ProxySettings.proxy);
+        const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
+        const proxyUrl = __uv$config!.prefix + __uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg));
+        if (openIn === "a:b" || openIn === "blob") {
+            return cloak(openIn as string, "https://google.com", `${window.location.origin}${proxyUrl}`);
+        }
+        else if(openIn === "direct") {
+            return window.location.href = proxyUrl;
+        }
+        else {
+            return proxyUrl;
+        }
     }
     //we need to rerun this on every page load
     document.addEventListener("astro:page-load", async function () {
@@ -63,8 +76,13 @@ const t = useTranslations(lang);
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
-                        iframe.classList.remove("hidden");
-                        iframe.src = proxy(input?.value);
+                        setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(() => {
+                            iframe.classList.remove("hidden");
+                            const url = proxy(input?.value);
+                            if (url) {
+                                iframe.src = url;
+                            }
+                        })
                     })
                 }
             })
@@ -72,7 +90,7 @@ const t = useTranslations(lang);
                 if (!epoxyClient) {
                     console.debug("Creating epoxy client");
                     epoxyClientOptions = new EpoxyClientOptions();
-                    epoxyClient = new EpoxyClient(wispUrl, epoxyClientOptions);
+                    epoxyClient = new EpoxyClient(WispServerURLS.default, epoxyClientOptions);
                 }
                 const value = input?.value;
                 input.classList.remove("rounded-b-2xl");

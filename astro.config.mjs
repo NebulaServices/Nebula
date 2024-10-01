@@ -6,6 +6,7 @@ import node from "@astrojs/node";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { baremuxPath } from '@mercuryworkshop/bare-mux';
 import { epoxyPath } from '@mercuryworkshop/epoxy-transport';
+import { libcurlPath } from '@mercuryworkshop/libcurl-transport';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
 
 export default defineConfig({
@@ -27,6 +28,11 @@ export default defineConfig({
                 {
                     src: `${epoxyPath}/**/*`.replace(/\\/g, '/'),
                     dest: 'epoxy',
+                    overwrite: false 
+                },
+                {
+                    src: `${libcurlPath}/**/*`.replace(/\\/g, '/'),
+                    dest: 'libcurl',
                     overwrite: false 
                 },
                 {

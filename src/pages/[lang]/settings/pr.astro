@@ -48,6 +48,7 @@ export const prerender = true;
                 name: 'openin',
                 options: [
                     {name: 'Embed', value: 'embed', disabled: false},
+                    {name: 'Direct', value: 'direct', disabled: false},
                     {name: 'About:Blank', value: 'a:b', disabled: false},
                     {name: 'Blob', value: 'blob', disabled: false}
                 ]
@@ -77,8 +78,8 @@ export const prerender = true;
                 select: true,
                 name: 'wispurl',
                 options: [
-                    {name: 'Automatic', value: 'automatic', disabled: false},
-                    {name: 'US-1', value: 'us-1', disabled: true}
+                    {name: 'Default', value: 'default', disabled: false},
+                    {name: 'Ruby Network (US)', value: 'ruby', disabled: false}
                 ]
             }}
         />
@@ -91,8 +92,8 @@ export const prerender = true;
                 select: true,
                 name: 'transport',
                 options: [
-                    {name: 'Libcurl', value: 'libcurl', disabled: false},
-                    {name: 'Epoxy', value: 'epoxy', disabled: false}
+                    {name: 'Epoxy', value: 'epoxy', disabled: false},
+                    {name: 'Libcurl', value: 'libcurl', disabled: false}
                 ]
             }}
         />
@@ -106,22 +107,74 @@ export const prerender = true;
             class: 'proxyMessage'
         }}
     client:load />
+    <Toast toastProp={{
+        toastType: 'success',
+        text: 'Saved selection!',
+        class: 'openInMessage'
+        }}
+    client:load />
+    <Toast toastProp={{
+        toastType: 'success',
+        text: 'Saved Search Engine Selection!',
+        class: 'searchEngineMessage'
+        }}
+    client:load />
+    <Toast toastProp={{
+        toastType: 'success',
+        text: 'Wisp server selected!',
+        class: 'wispUrlMessage'
+        }}
+    client:load />
+    <Toast toastProp={{
+        toastType: 'success',
+        text: 'Transport set!',
+        class: 'transportMessage'
+        }}
+    client:load />
   </ToastWrapper>
 </Layout>
 <script>
     import { toast } from "@utils/toast.ts";
     import { proxySettings, Settings as SettingsEnum } from "@utils/settings.ts";
-    function setup(proxySelectVal: HTMLSelectElement) {
+    function setup(proxySelectVal: HTMLSelectElement, openInVal: HTMLSelectElement, searchEngineVal: HTMLSelectElement, wispServerVal: HTMLSelectElement, transportVal: HTMLSelectElement) {
         proxySelectVal.value = localStorage.getItem(SettingsEnum.ProxySettings.proxy) as string;
+        openInVal.value = localStorage.getItem(SettingsEnum.ProxySettings.openIn) as string;
+        searchEngineVal.value = localStorage.getItem(SettingsEnum.ProxySettings.searchEngine) as string;
+        wispServerVal.value = localStorage.getItem(SettingsEnum.ProxySettings.wispServerURL) as string;
+        transportVal.value = localStorage.getItem(SettingsEnum.ProxySettings.transport) as string;
     }
     document.addEventListener("astro:page-load", () => {
         try {
             const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
             const proxySelectVal = document.getElementById('proxy') as HTMLSelectElement;
-            setup(proxySelectVal);
+            const openInButton = document.getElementById('setopenin') as HTMLButtonElement;
+            const openInVal = document.getElementById('openin') as HTMLSelectElement;
+            const searchEngineButton = document.getElementById('setsearchengine') as HTMLButtonElement;
+            const searchEngineVal = document.getElementById('searchengine') as HTMLSelectElement;
+            const wispServerButton = document.getElementById('setwispurl') as HTMLButtonElement;
+            const wispServerVal = document.getElementById('wispurl') as HTMLSelectElement;
+            const transportButton = document.getElementById('settransport') as HTMLButtonElement;
+            const transportVal = document.getElementById('transport') as HTMLSelectElement;
+            setup(proxySelectVal, openInVal, searchEngineVal, wispServerVal, transportVal);
             proxyButton.addEventListener("click", () => {
                 proxySettings.changeProxy(proxySelectVal.value);
                 toast('.proxyMessage');
+            });
+            openInButton.addEventListener("click", () => {
+                proxySettings.openIn(openInVal.value)
+                toast('.openInMessage');
+            });
+            searchEngineButton.addEventListener('click', () => {
+                proxySettings.setSearchEngine(searchEngineVal.value);
+                toast('.searchEngineMessage');
+            });
+            wispServerButton.addEventListener('click', () => {
+                proxySettings.setWispURL(wispServerVal.value);
+                toast('.wispUrlMessage');
+            });
+            transportButton.addEventListener('click', () => {
+                proxySettings.setTransport(transportVal.value);
+                toast('.transportMessage');
             });
         }
         catch(_) {/* Don't return anything on purpose */}

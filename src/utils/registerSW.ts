@@ -1,4 +1,4 @@
-const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+import { WispServerURLS, Settings } from "./settings";
 function loadProxyScripts() {
     //wrap everything in a promise to avoid race conditions
     return new Promise<void>((resolve) => {
@@ -7,6 +7,10 @@ function loadProxyScripts() {
         epoxyScript.src = '/epoxy/index.js';
         epoxyScript.defer = true;
         document.body.appendChild(epoxyScript);
+        const libCurlScript = document.createElement('script');
+        libCurlScript.src = '/libcurl/index.js';
+        libCurlScript.defer = true;
+        document.body.appendChild(libCurlScript);
         const uvBundle = document.createElement('script');
         uvBundle.src = '/uv/uv.bundle.js';
         uvBundle.defer = true;
@@ -32,8 +36,16 @@ function loadProxyScripts() {
 
 function setTransport(transport?: string) {
     //wrap in a promise so we don't register sw until a transport is set.
+    const wispServer = localStorage.getItem(Settings.ProxySettings.wispServerURL);
     return new Promise<void>((resolve) => {
-        BareMux.SetTransport("EpxMod.EpoxyClient", { wisp: wispUrl });
+        switch(transport) {
+            case "epoxy":
+                BareMux.SetTransport("EpxMod.EpoxyClient", { wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default });
+                break;
+            case "libcurl":
+                BareMux.SetTransport("CurlMod.LibcurlClient", { wisp: wispServer? WispServerURLS[wispServer]: WispServerURLS.default});
+                break;
+        }
         resolve();
     });
 }
@@ -45,7 +57,6 @@ function initSw() {
             navigator.serviceWorker.ready.then(async () => {
                 console.debug('Service worker ready!');
                 await loadProxyScripts();
-                await setTransport();
                 resolve();
             });
             navigator.serviceWorker.register('/sw.js', { scope: '/' });
@@ -53,4 +64,4 @@ function initSw() {
     })
 }
 
-export { initSw, setTransport, wispUrl }
+export { initSw, setTransport }

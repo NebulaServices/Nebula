@@ -63,7 +63,7 @@ export const prerender = true;
         const cloakLocal = localStorage.getItem(SettingsEnum.TabSettings.tabCloak);
         const abCloakLocal = localStorage.getItem(SettingsEnum.TabSettings.abblob);
         cloakLocal === "default" ? cloakValue.value = "reset" : cloakValue.value = cloakLocal as string;
-        abValue.value = abCloakLocal as string;
+        abValue.value = abCloakLocal as string || 'a:b';
     }
     document.addEventListener("astro:page-load", function() {
         try {

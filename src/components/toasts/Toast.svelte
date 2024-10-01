@@ -37,5 +37,5 @@
         }
     }
 </script>
-<!-- A hacky way to get this to be called. Just click this button (see ../../utils/toast.ts) -->
-<button id={toastProp.id} class:hidden={'hidden'} class={toastProp.class} on:click={() => {return handleToast(toastProp)}}>Auto clicked for toast notifs</button>
+<!-- A hacky way to get this to be called. Just click this button (preferably via an EVENT) (see ../../utils/toast.ts) -->
+<button id={toastProp.id} class:invisible={'invisible'} class:hidden={'hidden'} class={toastProp.class} on:click={() => {return handleToast(toastProp)}}>Auto clicked for toast notifs</button>
