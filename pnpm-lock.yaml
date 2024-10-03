@@ -35,9 +35,6 @@ importers:
       '@mercuryworkshop/epoxy-tls':
         specifier: 2.0.0-3
         version: 2.0.0-3
-      '@mercuryworkshop/epoxy-tls-new':
-        specifier: npm:@mercuryworkshop/epoxy-tls@^2.1.4-1
-        version: '@mercuryworkshop/epoxy-tls@2.1.4-1'
       '@mercuryworkshop/epoxy-transport':
         specifier: 2.0.1
         version: 2.0.1(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@6.0.4)
@@ -68,6 +65,9 @@ importers:
       formdata-node:
         specifier: ^6.0.3
         version: 6.0.3
+      libcurl.js-new:
+        specifier: npm:libcurl.js@^0.6.16
+        version: libcurl.js@0.6.16
       multer:
         specifier: 1.4.5-lts.1
         version: 1.4.5-lts.1
@@ -605,9 +605,6 @@ packages:
 
   '@mercuryworkshop/epoxy-tls@2.0.0-3':
     resolution: {integrity: sha512-iC5CViTh2xn44xtjvDW4YW9qoeoJcCBOqcNmffBx3RHdK7FAzAWFHLTUBtdlnMVv6cjYZtV+eUTzxyreqlgOVA==}
-
-  '@mercuryworkshop/epoxy-tls@2.1.4-1':
-    resolution: {integrity: sha512-kRbW12tU4TAf9GuoLfyFYvUATqFZq6n9ScRSfwAECceOBWDlr+bACnSH45lLDXvjBKwxZotTyYE5aNc+Ow+M3Q==}
 
   '@mercuryworkshop/epoxy-transport@2.0.1':
     resolution: {integrity: sha512-iGuH/CT5hCVRYBa+5ZrlTG0DWII9VOCMHnmv9CPFLM17obE84y9EUXpTp9hXdfENnuAcNzQVPizjwVas7HiYQA==}
@@ -1995,6 +1992,9 @@ packages:
 
   libcurl.js@0.6.15:
     resolution: {integrity: sha512-rKcGhvJiju/V6RoH0mYW0l/w9GnTRFtidp8qC+3cMliHXHEHnbqwpOPzauMeOd2CtcEW5ZPZ29PpXLJ1bdHbyQ==}
+
+  libcurl.js@0.6.16:
+    resolution: {integrity: sha512-aR56ZgHjzUVRVU3l+XQIBIuZwTc7k6CUrwbH0v6GAyXreL5rluWjLOc3GtDAgK9JEBZi1aVSrNdBtqE669NGCw==}
 
   light-my-request@5.13.0:
     resolution: {integrity: sha512-9IjUN9ZyCS9pTG+KqTDEQo68Sui2lHsYBrfMyVUTTZ3XhH8PMZq7xO94Kr+eP9dhi/kcKsx4N41p2IXEBil1pQ==}
@@ -4172,8 +4172,6 @@ snapshots:
 
   '@mercuryworkshop/epoxy-tls@2.0.0-3': {}
 
-  '@mercuryworkshop/epoxy-tls@2.1.4-1': {}
-
   '@mercuryworkshop/epoxy-transport@2.0.1(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@6.0.4)':
     dependencies:
       '@mercuryworkshop/epoxy-tls': 2.0.0-3
@@ -5812,6 +5810,8 @@ snapshots:
   kolorist@1.8.0: {}
 
   libcurl.js@0.6.15: {}
+
+  libcurl.js@0.6.16: {}
 
   light-my-request@5.13.0:
     dependencies:

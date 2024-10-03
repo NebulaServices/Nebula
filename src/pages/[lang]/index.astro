@@ -44,7 +44,7 @@ const t = useTranslations(lang);
     import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { WispServerURLS, SearchEngines, Settings, cloak } from "@utils/settings";
     import { search } from "@utils/search.ts"; //../../utils/search.ts
-    import initEpoxy, { EpoxyClient, EpoxyClientOptions } from "@mercuryworkshop/epoxy-tls-new";
+    import { libcurl } from "libcurl.js-new/bundled";
     type Suggestion =  {
         phrase: string
     }
@@ -70,9 +70,9 @@ const t = useTranslations(lang);
             const input = document.getElementById("nebula-input") as HTMLInputElement;
             const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
             const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-            let epoxyClientOptions: any = null;
-            let epoxyClient: any = null;
-            await initEpoxy(); //This ONLY runs once 
+            await libcurl.load_wasm();
+            libcurl.set_websocket(WispServerURLS.default);
+            console.debug("Libucurl ready?", libcurl.ready);
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
@@ -87,20 +87,15 @@ const t = useTranslations(lang);
                 }
             })
             input?.addEventListener("input", async function() {
-                if (!epoxyClient) {
-                    console.debug("Creating epoxy client");
-                    epoxyClientOptions = new EpoxyClientOptions();
-                    epoxyClient = new EpoxyClient(WispServerURLS.default, epoxyClientOptions);
-                }
                 const value = input?.value;
                 input.classList.remove("rounded-b-2xl");
-                omnibox.classList.remove("hidden");
+                omnibox.classList.remove("hidden"); 
                 if (value.length === 0) {
                     input.classList.add("rounded-b-2xl");
                     omnibox.classList.add("hidden");
                 }
                 if (value.length >= 3) {
-                    const resp = await epoxyClient.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
+                    const resp = await libcurl.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
                     const data = await resp.json();
                     if (data) {
                         omnibox.innerHTML = "";
@@ -130,6 +125,7 @@ const t = useTranslations(lang);
         }
         catch (_) {
             //we purposely don't return anything
+            //console.debug(err);
         }
     });
 </script>
