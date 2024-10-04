@@ -46,6 +46,7 @@ const t = useTranslations(lang);
     import { search } from "@utils/search.ts"; //../../utils/search.ts
     //@ts-expect-error No types, expected. See: https://github.com/ading2210/libcurl.js for docs on how to use.
     import { libcurl } from "libcurl.js-new/bundled";
+    let libcurlClient: boolean = false;
     type Suggestion =  {
         phrase: string
     }
@@ -70,10 +71,7 @@ const t = useTranslations(lang);
         try {
             const input = document.getElementById("nebula-input") as HTMLInputElement;
             const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
-            const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-            await libcurl.load_wasm();
-            libcurl.set_websocket(WispServerURLS.default);
-            console.debug("Libucurl ready?", libcurl.ready);
+            const omnibox = document.getElementById("omnibox") as HTMLDivElement; 
             input?.addEventListener("keypress", function (event: any) {
                 if (event.key === "Enter") {
                     initSw().then(() => {
@@ -88,6 +86,12 @@ const t = useTranslations(lang);
                 }
             })
             input?.addEventListener("input", async function() {
+                if (!libcurlClient) {
+                    await libcurl.load_wasm();
+                    libcurl.set_websocket(WispServerURLS.default);
+                    console.debug("Libucurl ready?", libcurl.ready);
+                    libcurlClient = true;
+                }
                 const value = input?.value;
                 input.classList.remove("rounded-b-2xl");
                 omnibox.classList.remove("hidden"); 
