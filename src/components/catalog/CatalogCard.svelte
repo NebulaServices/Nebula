@@ -1,11 +1,11 @@
 <script>
-  export let page;
-  let assetPromise = get_assets();
-  async function get_assets() {
-    const response = await fetch("/api/catalog-assets?page=" + page);
-    const data = await response.json();
-    return data.assets;
-  }
+export let page;
+let assetPromise = get_assets();
+async function get_assets() {
+  const response = await fetch("/api/catalog-assets?page=" + page);
+  const data = await response.json();
+  return data.assets;
+}
 </script>
 
 <div class="text-3xl roboto font-bold text-text-color p-10">

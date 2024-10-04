@@ -1,12 +1,12 @@
-import express from "express";
+import fs from "fs";
 import { createServer } from "node:http";
 import path from "path";
-import wisp from "wisp-server-node";
-import { Sequelize, DataTypes } from "sequelize";
 import { fileURLToPath } from "url";
-import { handler as ssrHandler } from "./dist/server/entry.mjs";
+import express from "express";
 import multer from "multer";
-import fs from "fs";
+import { DataTypes, Sequelize } from "sequelize";
+import wisp from "wisp-server-node";
+import { handler as ssrHandler } from "./dist/server/entry.mjs";
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +18,7 @@ const sequelize = new Sequelize("database", "user", "password", {
   dialect: "sqlite",
   logging: false,
   // SQLite only
-  storage: "database.sqlite",
+  storage: "database.sqlite"
 });
 
 // Auth middleware
@@ -43,7 +43,7 @@ var image_storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); //Appending extension
-  },
+  }
 });
 
 var video_storage = multer.diskStorage({
@@ -52,7 +52,7 @@ var video_storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); //Appending extension
-  },
+  }
 });
 
 var style_storage = multer.diskStorage({
@@ -61,7 +61,7 @@ var style_storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); //Appending extension
-  },
+  }
 });
 
 var script_storage = multer.diskStorage({
@@ -70,7 +70,7 @@ var script_storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname); //Appending extension
-  },
+  }
 });
 
 var image_upload = multer({ storage: image_storage });
@@ -81,41 +81,41 @@ var script_upload = multer({ storage: script_storage });
 const catalog_assets = sequelize.define("catalog_assets", {
   package_name: {
     type: DataTypes.TEXT,
-    unique: true,
+    unique: true
   },
   title: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT
   },
   description: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT
   },
   author: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT
   },
   image: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT
   },
   tags: {
     type: DataTypes.JSON,
-    allowNull: true,
+    allowNull: true
   },
   version: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT
   },
   background_image: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: true
   },
   background_video: {
     type: DataTypes.TEXT,
-    allowNull: true,
+    allowNull: true
   },
   payload: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT
   },
   type: {
-    type: DataTypes.TEXT,
-  },
+    type: DataTypes.TEXT
+  }
 });
 
 app.use(express.json());
@@ -142,7 +142,7 @@ app.get("/api/catalog-assets", async (request, reply) => {
 
     const db_assets = await catalog_assets.findAll({
       offset: offset,
-      limit: 20,
+      limit: 20
     });
 
     const assets = db_assets.reduce((acc, asset) => {
@@ -156,7 +156,7 @@ app.get("/api/catalog-assets", async (request, reply) => {
         background_image: asset.background_image,
         background_video: asset.background_video,
         payload: asset.payload,
-        type: asset.type,
+        type: asset.type
       };
       return acc;
     }, {});
@@ -173,7 +173,7 @@ app.get("/api/packages/:package", async (request, reply) => {
     console.log(request.params.package);
 
     const package_row = await catalog_assets.findOne({
-      where: { package_name: request.params.package },
+      where: { package_name: request.params.package }
     });
 
     if (!package_row) {
@@ -190,7 +190,7 @@ app.get("/api/packages/:package", async (request, reply) => {
       background_image: package_row.get("background_image"),
       background_video: package_row.get("background_video"),
       payload: package_row.get("payload"),
-      type: package_row.get("type"),
+      type: package_row.get("type")
     };
     reply.send(details);
   } catch (error) {
@@ -200,78 +200,58 @@ app.get("/api/packages/:package", async (request, reply) => {
 
 // This API is responsible for image uploads
 // PSK authentication required.
-app.post(
-  "/api/upload-image",
-  auth_psk,
-  image_upload.single("file"),
-  (req, res) => {
-    console.log("Request file:", req.file);
+app.post("/api/upload-image", auth_psk, image_upload.single("file"), (req, res) => {
+  console.log("Request file:", req.file);
 
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-
-    console.log(req.file.originalname);
-    res.json({
-      message: "File uploaded successfully",
-      filename: req.file.originalname,
-    });
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
   }
-);
+
+  console.log(req.file.originalname);
+  res.json({
+    message: "File uploaded successfully",
+    filename: req.file.originalname
+  });
+});
 
 // This API is responsible for video uploads
 // PSK authentication required.
-app.post(
-  "/api/upload-video",
-  auth_psk,
-  video_upload.single("file"),
-  (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-
-    res.json({
-      message: "File uploaded successfully",
-      filename: req.file.originalname,
-    });
+app.post("/api/upload-video", auth_psk, video_upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
   }
-);
+
+  res.json({
+    message: "File uploaded successfully",
+    filename: req.file.originalname
+  });
+});
 
 // This API is responsible for stylesheet uploads
 // PSK authentication required.
-app.post(
-  "/api/upload-style",
-  auth_psk,
-  style_upload.single("file"),
-  (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-
-    res.json({
-      message: "File uploaded successfully",
-      filename: req.file.originalname,
-    });
+app.post("/api/upload-style", auth_psk, style_upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
   }
-);
+
+  res.json({
+    message: "File uploaded successfully",
+    filename: req.file.originalname
+  });
+});
 
 // This API is responsible for script/plugin uploads
 // PSK authentication required.
-app.post(
-  "/api/upload-script",
-  auth_psk,
-  script_upload.single("file"),
-  (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-
-    res.json({
-      message: "File uploaded successfully",
-      filename: req.file.originalname,
-    });
+app.post("/api/upload-script", auth_psk, script_upload.single("file"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded" });
   }
-);
+
+  res.json({
+    message: "File uploaded successfully",
+    filename: req.file.originalname
+  });
+});
 
 // This API is responsible for creating packages in the database.
 // PSK authentication required.
@@ -288,7 +268,7 @@ app.post("/api/create-package", auth_psk, async function (req, res) {
     payload: req.body.payload,
     background_video: req.body.background_video_path,
     background_image: req.body.background_image_path,
-    type: req.body.type,
+    type: req.body.type
   });
   res.send({ hello: "world" });
 });
@@ -342,5 +322,5 @@ server.on("upgrade", (req, socket, head) => {
 });
 
 server.listen({
-  port: 8080,
+  port: 8080
 });

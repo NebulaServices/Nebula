@@ -5,5 +5,5 @@ export const defaultLang = "en_US";
 
 export const ui = {
   en_US,
-  jp,
+  jp
 };

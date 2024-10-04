@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "concurrently \"astro dev\" \"node server.js\"",
-    "start": "astro dev",
+    "start": "node server.js",
     "build": "astro check && astro build",
     "bstart": "astro build && node server.js",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format:code": "biome format . --write",
+    "format:imports": "biome check . --write",
+    "format": "concurrently -m 1 \"npm:format:code\" \"npm:format:imports\""
   },
   "dependencies": {
     "@astrojs/check": "^0.8.3",

@@ -1,9 +1,9 @@
 ---
+import { Icon } from "astro-icon/components";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { isMobileNavOpen } from "../store.js";
-import Logo from "./Logo.astro";
 import HeaderButton from "./HeaderButton.astro";
-import { Icon } from "astro-icon/components";
+import Logo from "./Logo.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

@@ -13,9 +13,9 @@ export default {
       "input-text": "var(--input-text-color)",
       "input-border-color": "var(--input-border-color)",
       "dropdown-option-hover-color": "var(--dropdown-option-hover-color)",
-      "border-color": "var(--border-color)",
+      "border-color": "var(--border-color)"
     },
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 };

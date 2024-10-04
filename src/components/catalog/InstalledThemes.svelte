@@ -1,66 +1,66 @@
 <script>
-  let assetPromise = get_all_assets();
-  async function logItem(item) {
-    // hell
-    try {
-      const response = await fetch(`/api/packages/${item}`);
-      const data = await response.json();
+let assetPromise = get_all_assets();
+async function logItem(item) {
+  // hell
+  try {
+    const response = await fetch(`/api/packages/${item}`);
+    const data = await response.json();
 
-      return {
-        ...data,
-        package_name: item,
-      };
-    } catch (error) {
-      console.error("error: failed to fetch", error);
-      return null;
-    }
+    return {
+      ...data,
+      package_name: item
+    };
+  } catch (error) {
+    console.error("error: failed to fetch", error);
+    return null;
   }
+}
 
-  async function get_all_assets() {
-    let items = JSON.parse(localStorage.getItem("installed_themes")) || [];
-    const promises = items.map(logItem);
-    const dataArray = await Promise.all(promises);
+async function get_all_assets() {
+  let items = JSON.parse(localStorage.getItem("installed_themes")) || [];
+  const promises = items.map(logItem);
+  const dataArray = await Promise.all(promises);
 
-    const accumulatedData = dataArray.filter((data) => data !== null);
-    console.log(JSON.stringify(accumulatedData));
-    return accumulatedData;
+  const accumulatedData = dataArray.filter((data) => data !== null);
+  console.log(JSON.stringify(accumulatedData));
+  return accumulatedData;
+}
+
+function install(assets_json, package_name) {
+  if (assets_json.background_video) {
+    localStorage.setItem("background_video", assets_json.background_video);
+  } else {
+    localStorage.removeItem("video");
   }
-
-  function install(assets_json, package_name) {
-    if (assets_json.background_video) {
-      localStorage.setItem("background_video", assets_json.background_video);
-    } else {
-      localStorage.removeItem("video");
-    }
-    if (assets_json.background_image) {
-      localStorage.setItem("background_image", assets_json.background_image);
-    } else {
-      localStorage.removeItem("background_image");
-    }
-    if (assets_json.type == "theme") {
-      localStorage.setItem("stylesheet", "/styles/" + assets_json.payload);
-    }
-    location.reload();
-  }
-
-  function reset_theme() {
-    localStorage.removeItem("background_video");
+  if (assets_json.background_image) {
+    localStorage.setItem("background_image", assets_json.background_image);
+  } else {
     localStorage.removeItem("background_image");
-    localStorage.removeItem("stylesheet");
-    location.reload();
   }
-
-  function delete_theme(key) {
-    let items = JSON.parse(localStorage.getItem("installed_themes")) || [];
-
-    const index = items.indexOf(key);
-
-    items.splice(index, 1);
-
-    localStorage.setItem("installed_themes", JSON.stringify(items));
-
-    reset_theme();
+  if (assets_json.type == "theme") {
+    localStorage.setItem("stylesheet", "/styles/" + assets_json.payload);
   }
+  location.reload();
+}
+
+function reset_theme() {
+  localStorage.removeItem("background_video");
+  localStorage.removeItem("background_image");
+  localStorage.removeItem("stylesheet");
+  location.reload();
+}
+
+function delete_theme(key) {
+  let items = JSON.parse(localStorage.getItem("installed_themes")) || [];
+
+  const index = items.indexOf(key);
+
+  items.splice(index, 1);
+
+  localStorage.setItem("installed_themes", JSON.stringify(items));
+
+  reset_theme();
+}
 </script>
 
 {#await assetPromise}

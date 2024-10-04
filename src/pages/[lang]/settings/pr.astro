@@ -1,19 +1,16 @@
 ---
+import SettingsCard from "@components/settings/SettingsCard.astro";
+import Toast from "@components/toasts/Toast.svelte";
+import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
-import SettingsCard from "@components/settings/SettingsCard.astro";
-import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
-import Toast from "@components/toasts/Toast.svelte";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {
-  const STATIC_PATHS = [
-    { params: { lang: "en_US" } },
-    { params: { lang: "jp" } },
-  ];
+  const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
   return STATIC_PATHS;
 }
 export const prerender = true;

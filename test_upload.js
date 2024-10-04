@@ -1,7 +1,7 @@
-// This is a test file to upload files to the Nebula server
-import { FormData, File } from "formdata-node";
-import { fileFromPath } from "formdata-node/file-from-path";
 import fs from "fs";
+// This is a test file to upload files to the Nebula server
+import { File, FormData } from "formdata-node";
+import { fileFromPath } from "formdata-node/file-from-path";
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 const form = new FormData();
@@ -13,8 +13,8 @@ console.log(config.marketplace_psk);
 console.log(form);
 await fetch("http://localhost:8080/api/upload-image", {
   headers: {
-    PSK: config.marketplace_psk,
+    PSK: config.marketplace_psk
   },
   method: "post",
-  body: form,
+  body: form
 });
