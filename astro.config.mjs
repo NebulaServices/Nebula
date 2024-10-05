@@ -7,15 +7,15 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 import { baremuxPath } from '@mercuryworkshop/bare-mux';
 import { epoxyPath } from '@mercuryworkshop/epoxy-transport';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
-import aeroPath from "aero-proxy";
-import aeroSandboxPath from "aero-sandbox/path";
+import { default as aeroPath, aeroExtrasPath } from "aero-proxy";
+import aeroSandboxPath from "aero-sandbox/path.js";
 
 export default defineConfig({
   integrations: [tailwind(), icon(), svelte()],
   vite: {
     plugins: [
-        viteStaticCopy({
-            targets: [
+      viteStaticCopy({
+        targets: [
                 {
                     src: `${uvPath}/**/*`.replace(/\\/g, '/'),
                     dest: 'uv',
@@ -27,9 +27,14 @@ export default defineConfig({
                     overwrite: false
                 },
                 {
-                  src: `${aeroSandboxPath}/**/*`.replace(/\\/g, '/'),
-                  dest: 'aero/sandbox',
-                  overwrite: false
+                    src: `${aeroExtrasPath}/**/*`.replace(/\\/g, '/'),
+                    dest: "aero/extras",
+                    overwrite: false
+                }
+                {
+                    src: `${aeroSandboxPath}/**/*`.replace(/\\/g, '/'),
+                    dest: 'aero/sandbox',
+                    overwrite: false
                 },
                 {
                     src: `${epoxyPath}/**/*`.replace(/\\/g, '/'),
@@ -60,10 +65,10 @@ export default defineConfig({
           changeOrigin: true,
         },
         "/wisp/" : {
-            target: "ws://localhost:8080/wisp/",
-            changeOrigin: true,
-            ws: true,
-            rewrite: (path) => path.replace(/^\/wisp\//, '')
+          target: "ws://localhost:8080/wisp/",
+          changeOrigin: true,
+          ws: true,
+          rewrite: (path) => path.replace(/^\/wisp\//, '')
         },
         "/styles": {
           target: "http://localhost:8080",
