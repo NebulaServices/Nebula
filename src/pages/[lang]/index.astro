@@ -3,7 +3,10 @@ import Logo from "@components/Logo.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 export function getStaticPaths() {
-  const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
+  const STATIC_PATHS = [
+    { params: { lang: "en_US" } },
+    { params: { lang: "jp" } },
+  ];
   return STATIC_PATHS;
 }
 export const prerender = true;
@@ -14,120 +17,174 @@ const t = useTranslations(lang);
 <Layout title="Welcome to Astro.">
   <div
     class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center"
+  >
+    <div
+      class="w-full flex flex-col justify-center items-center content-center h-2/4"
     >
-    <div class="w-full flex flex-col justify-center items-center content-center h-2/4">
-        <div class="flex flex-row items-center mb-8">
-            <div class="h-32 w-32 fill-navbar-text-color">
-                <Logo />
-            </div>
-            <h1
-                class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
-            >
-                nebula.
-            </h1>
+      <div class="flex flex-row items-center mb-8">
+        <div class="h-32 w-32 fill-navbar-text-color">
+          <Logo />
         </div>
-        <input
-            id="nebula-input"
-            class="transition-all duration-300 font-roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
-            placeholder={t("home.placeholder")}
-        />
-        <div id="omnibox" class="hidden p-1 transition-all duration-300 flex flex-col w-10/12 md:w-3/12 h-full flex-grow bg-input text-center items-center rounded-b-2xl border-input-border-color border-b border-r border-l">
-        </div>
+        <h1
+          class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
+        >
+          nebula.
+        </h1>
+      </div>
+      <input
+        id="nebula-input"
+        class="transition-all duration-300 font-roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
+        placeholder={t("home.placeholder")}
+      />
+      <div
+        id="omnibox"
+        class="hidden p-1 transition-all duration-300 flex flex-col w-10/12 md:w-3/12 h-full flex-grow bg-input text-center items-center rounded-b-2xl border-input-border-color border-b border-r border-l"
+      >
+      </div>
     </div>
-    <iframe id="neb-iframe" class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"></iframe>
+    <iframe
+      id="neb-iframe"
+      class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"
+    ></iframe>
   </div>
 </Layout>
 <script>
-    import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
-    import { WispServerURLS, SearchEngines, Settings, cloak } from "@utils/settings";
-    import { search } from "@utils/search.ts"; //../../utils/search.ts
-    //@ts-expect-error No types, expected. See: https://github.com/ading2210/libcurl.js for docs on how to use.
-    import { libcurl } from "libcurl.js-new/bundled";
-    let libcurlClient: boolean = false;
-    type Suggestion =  {
-        phrase: string
+  import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+  import {
+    WispServerURLS,
+    SearchEngines,
+    Settings,
+    cloak,
+  } from "@utils/settings";
+  import { search } from "@utils/search.ts"; //../../utils/search.ts
+  //@ts-expect-error No types, expected. See: https://github.com/ading2210/libcurl.js for docs on how to use.
+  import { libcurl } from "libcurl.js-new/bundled";
+  let libcurlClient: boolean = false;
+  type Suggestion = {
+    phrase: string;
+  };
+  function proxy(term: string) {
+    const searchEngine = localStorage.getItem(
+      Settings.ProxySettings.searchEngine
+    );
+    const proxy = localStorage.getItem(Settings.ProxySettings.proxy);
+    const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
+    const proxyUrl =
+      __uv$config!.prefix +
+      __uv$config.encodeUrl!(
+        search(
+          term,
+          searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
+        )
+      );
+    if (openIn === "a:b" || openIn === "blob") {
+      return cloak(
+        openIn as string,
+        "https://google.com",
+        `${window.location.origin}${proxyUrl}`
+      );
+    } else if (openIn === "direct") {
+      return (window.location.href = proxyUrl);
+    } else {
+      return proxyUrl;
     }
-    function proxy(term: string) {
-        const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
-        const proxy = localStorage.getItem(Settings.ProxySettings.proxy);
-        const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-        const proxyUrl = __uv$config!.prefix + __uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg));
-        if (openIn === "a:b" || openIn === "blob") {
-            return cloak(openIn as string, "https://google.com", `${window.location.origin}${proxyUrl}`);
-        }
-        else if(openIn === "direct") {
-            return window.location.href = proxyUrl;
-        }
-        else {
-            return proxyUrl;
-        }
-    }
-    //we need to rerun this on every page load
-    document.addEventListener("astro:page-load", async function () {
-        //wrap this in a try catch as sometimes this element will not be available on the page
-        try {
-            const input = document.getElementById("nebula-input") as HTMLInputElement;
-            const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
-            const omnibox = document.getElementById("omnibox") as HTMLDivElement; 
-            input?.addEventListener("keypress", function (event: any) {
-                if (event.key === "Enter") {
-                    initSw().then(() => {
-                        setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(() => {
-                            iframe.classList.remove("hidden");
-                            const url = proxy(input?.value);
-                            if (url) {
-                                iframe.src = url;
-                            }
-                        })
-                    })
-                }
-            })
-            input?.addEventListener("input", async function() {
-                if (!libcurlClient) {
-                    await libcurl.load_wasm();
-                    libcurl.set_websocket(WispServerURLS.default);
-                    console.debug("Libucurl ready?", libcurl.ready);
-                    libcurlClient = true;
-                }
-                const value = input?.value;
-                input.classList.remove("rounded-b-2xl");
-                omnibox.classList.remove("hidden"); 
-                if (value.length === 0) {
-                    input.classList.add("rounded-b-2xl");
-                    omnibox.classList.add("hidden");
-                }
-                if (value.length >= 3) {
-                    const resp = await libcurl.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
-                    const data = await resp.json();
-                    if (data) {
-                        omnibox.innerHTML = "";
-                        data.map((results: Suggestion) => {
-                            let span = document.createElement("span");
-                            let pTag = document.createElement("p");
-                            span.classList.add("cursor-pointer", "border-b", "border-input-border-color", "last:rounded-b-xl", "last:border-none", "text-ellipsis", "whitespace-nowrap", "w-full", "text-input-text", "bg-primary", "h-9", "text-xl", "text-align-center", "overflow-hidden", "flex", "items-center", "justify-center", "hover:bg-lighter", "active:bg-primary");
-                            span.addEventListener("click", function() {
-                                //When the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
-                                const event = new KeyboardEvent("keypress", {
-                                    key: 'Enter',
-                                    code: 'Enter',
-                                    which: 13,
-                                    keyCode: 13
-                                });
-                                input.value = results.phrase;
-                                input.dispatchEvent(event);
-                            });
-                            pTag.classList.add("cursor-pointer", "text-ellipsis", "text-center", "w-full", "overflow-hidden", "whitespace-nowrap")
-                            pTag.innerText = results.phrase;
-                            span.appendChild(pTag);
-                            omnibox.appendChild(span);
-                        })
-                    }
-                }
+  }
+  //we need to rerun this on every page load
+  document.addEventListener("astro:page-load", async function () {
+    //wrap this in a try catch as sometimes this element will not be available on the page
+    try {
+      const input = document.getElementById("nebula-input") as HTMLInputElement;
+      const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
+      const omnibox = document.getElementById("omnibox") as HTMLDivElement;
+      input?.addEventListener("keypress", function (event: any) {
+        if (event.key === "Enter") {
+          initSw().then(() => {
+            setTransport(
+              localStorage.getItem(Settings.ProxySettings.transport) as string
+            ).then(() => {
+              iframe.classList.remove("hidden");
+              const url = proxy(input?.value);
+              if (url) {
+                iframe.src = url;
+              }
             });
+          });
         }
-        catch (_) {
-            //we purposely don't return anything
-            //console.debug(err);
+      });
+      input?.addEventListener("input", async function () {
+        if (!libcurlClient) {
+          await libcurl.load_wasm();
+          libcurl.set_websocket(WispServerURLS.default);
+          console.debug("Libucurl ready?", libcurl.ready);
+          libcurlClient = true;
         }
-    });
+        const value = input?.value;
+        input.classList.remove("rounded-b-2xl");
+        omnibox.classList.remove("hidden");
+        if (value.length === 0) {
+          input.classList.add("rounded-b-2xl");
+          omnibox.classList.add("hidden");
+        }
+        if (value.length >= 3) {
+          const resp = await libcurl.fetch(
+            `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`
+          );
+          const data = await resp.json();
+          if (data) {
+            omnibox.innerHTML = "";
+            data.map((results: Suggestion) => {
+              let span = document.createElement("span");
+              let pTag = document.createElement("p");
+              span.classList.add(
+                "cursor-pointer",
+                "roboto",
+                "border-b",
+                "border-input-border-color",
+                "last:rounded-b-xl",
+                "last:border-none",
+                "text-ellipsis",
+                "whitespace-nowrap",
+                "w-full",
+                "text-input-text",
+                "h-9",
+                "text-xl",
+                "text-align-center",
+                "overflow-hidden",
+                "flex",
+                "items-center",
+                "justify-center",
+                "hover:bg-lighter",
+                "active:bg-primary"
+              );
+              span.addEventListener("click", function () {
+                //When the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
+                const event = new KeyboardEvent("keypress", {
+                  key: "Enter",
+                  code: "Enter",
+                  which: 13,
+                  keyCode: 13,
+                });
+                input.value = results.phrase;
+                input.dispatchEvent(event);
+              });
+              pTag.classList.add(
+                "cursor-pointer",
+                "text-ellipsis",
+                "text-center",
+                "w-full",
+                "overflow-hidden",
+                "whitespace-nowrap"
+              );
+              pTag.innerText = results.phrase;
+              span.appendChild(pTag);
+              omnibox.appendChild(span);
+            });
+          }
+        }
+      });
+    } catch (_) {
+      //we purposely don't return anything
+      //console.debug(err);
+    }
+  });
 </script>
