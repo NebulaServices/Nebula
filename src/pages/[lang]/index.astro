@@ -50,6 +50,7 @@ const t = useTranslations(lang);
 </Layout>
 <script>
   import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+  import { RammerheadEncode } from "@rubynetwork/rammerhead-browser";
   import {
     WispServerURLS,
     SearchEngines,
@@ -63,20 +64,13 @@ const t = useTranslations(lang);
   type Suggestion = {
     phrase: string;
   };
-  function proxy(term: string) {
+  async function proxy(term: string) {
     const searchEngine = localStorage.getItem(
       Settings.ProxySettings.searchEngine
     );
-    const proxy = localStorage.getItem(Settings.ProxySettings.proxy);
+    const proxySelection = localStorage.getItem(Settings.ProxySettings.proxy);
     const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-    const proxyUrl =
-      __uv$config!.prefix +
-      __uv$config.encodeUrl!(
-        search(
-          term,
-          searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
-        )
-      );
+    const proxyUrl = proxySelection === "uv" ? __uv$config!.prefix + __uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg)) : await RammerheadEncode(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg));
     if (openIn === "a:b" || openIn === "blob") {
       return cloak(
         openIn as string,
@@ -84,7 +78,7 @@ const t = useTranslations(lang);
         `${window.location.origin}${proxyUrl}`
       );
     } else if (openIn === "direct") {
-      return (window.location.href = proxyUrl);
+      return (window.location.href = proxyUrl as string);
     } else {
       return proxyUrl;
     }
@@ -96,19 +90,28 @@ const t = useTranslations(lang);
       const input = document.getElementById("nebula-input") as HTMLInputElement;
       const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
       const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-      input?.addEventListener("keypress", function (event: any) {
+      input?.addEventListener("keypress", async function (event: any) {
         if (event.key === "Enter") {
-          initSw().then(() => {
-            setTransport(
-              localStorage.getItem(Settings.ProxySettings.transport) as string
-            ).then(() => {
-              iframe.classList.remove("hidden");
-              const url = proxy(input?.value);
-              if (url) {
-                iframe.src = url;
-              }
+          if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
+            initSw().then(() => {
+                setTransport(
+                localStorage.getItem(Settings.ProxySettings.transport) as string
+                ).then(async () => {
+                    iframe.classList.remove("hidden");
+                    const url = await proxy(input?.value);
+                    if (url) {
+                        iframe.src = url as string;
+                    }
+                });
             });
-          });
+          }
+          else {
+              iframe.classList.remove("hidden");
+              const url = await proxy(input?.value);
+              if (url) {
+                  iframe.src = "/" + url as string;
+              }
+          }
         }
       });
       input?.addEventListener("input", async function () {

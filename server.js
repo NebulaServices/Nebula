@@ -6,11 +6,19 @@ import express from "express";
 import multer from "multer";
 import { DataTypes, Sequelize } from "sequelize";
 import wisp from "wisp-server-node";
+import { createRammerhead, shouldRouteRh, routeRhUpgrade, routeRhRequest } from "@rubynetwork/rammerhead";
 import { handler as ssrHandler } from "./dist/server/entry.mjs";
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+//create the rh server.
+const rh = createRammerhead({
+    logLevel: 'debug',
+    reverseProxy: true,
+    disableLocalStorageSync: false,
+    disableHttp2: false
+});
 const app = express();
 const publicPath = "dist/client";
 const sequelize = new Sequelize("database", "user", "password", {
@@ -312,11 +320,19 @@ const server = createServer();
 server.on("request", (req, res) => {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-  app(req, res);
+  if (shouldRouteRh(req)) {
+    routeRhRequest(rh, req, res);
+  }
+  else {
+      app(req, res);
+  }
 });
 
 server.on("upgrade", (req, socket, head) => {
-  if (req.url.endsWith("/wisp/")) {
+  if (shouldRouteRh(req)) {
+      routeRhUpgrade(rh, req, socket, head);
+  }
+  else if (req.url.endsWith("/wisp/")) {
     wisp.routeRequest(req, socket, head);
   }
 });
