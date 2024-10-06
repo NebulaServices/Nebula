@@ -40,14 +40,14 @@ function setTransport(transport?: string) {
   return new Promise<void>((resolve) => {
     switch (transport) {
       case "epoxy":
-        BareMux.SetTransport("EpxMod.EpoxyClient", {
+        BareMux.SetTransport("EpxMod.default", {
           wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default
         });
         break;
       case "libcurl":
-        BareMux.SetTransport("CurlMod.LibcurlClient", {
+        BareMux.SetTransport("CurlMod.default", {
           wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default
-        });
+      });
         break;
     }
     resolve();

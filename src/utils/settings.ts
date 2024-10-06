@@ -1,4 +1,3 @@
-import { setTransport as transportSet } from "./registerSW";
 const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
 const TabSettings = {
   tabCloak: "nebula||tabCloak",
