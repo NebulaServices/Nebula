@@ -45,8 +45,8 @@
 
 ## Contributors
 
+- [Rifting](https://github.com/rifting) - Owner & Maintainer
 - [MotorTruck1221](https://motortruck1221.com) - Maintainer
-- [Rifting](https://github.com/rifting) - Maintainer
 ---
 
 ## Tech Stack
