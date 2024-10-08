@@ -3,9 +3,8 @@
 <img src="https://socialify.git.ci/nebulaservices/nebula/image?description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark" alt="ruby" width="640" height="320" />
 
 <img alt="repo size" src="https://img.shields.io/github/repo-size/nebulaservices/nebula?style=for-the-badge"></img>
-<img alt="website status" src="https://img.shields.io/website?url=https%3A%2F%2Fincog.nebula.christmas&style=for-the-badge"></img>
+<img alt="website status" src="https://img.shields.io/website?url=https%3A%2F%2Fnebulaproxy.io&style=for-the-badge"></img>
 <img alt="commit a week" src="https://img.shields.io/github/commit-activity/w/nebulaservices/nebula?style=for-the-badge"></img>
-<a href="https://github.com/caracal-js/incognito" target="_blank" rel="noopener noreferer"><img alt="original repo" src="https://img.shields.io/badge/Original-Repo-gray?style=for-the-badge&link=https%3A%2F%2Fgithub.com%2Fcaracal-js%2Fincognito"></img></a>
 
 </div>
 
@@ -26,20 +25,18 @@
 
 ## NOTE:
 
--   For Cyclic users this will unfortunatley *not* work due to Cyclic supporting very little languages
 -   This will **NOT** deploy on Github Pages, Netlify, Vercel, Gitlab Pages or any other _static_ host
 -   This will **NOT** work on Render
 ---
 
 ## How to get links
 
+[![Nebula Services Discord](https://invidget.switchblade.xyz/unblocker?theme=darl)](https://discord.gg/unblocker)
 [![Titanium Network Discord](https://invidget.switchblade.xyz/unblock?theme=dark)](https://discord.gg/unblock)
 
 ---
 
 ## Features
-
-- Lots and lots of games
 
 -   Multiple Proxy "Backends":
     -   [Ultraviolet](https://github.com/titaniumnetwork-dev/ultraviolet)
@@ -50,25 +47,17 @@
 
 - [MotorTruck1221](https://motortruck1221.com) - Maintainer
 - [Rifting](https://github.com/rifting) - Maintainer
-- [caracal-js](https://github.com/caracal-js) - Original Creator
 ---
 
 ## Tech Stack
 
 -   [Astro](https://astro.build)
 -   [Fastify](https://fastify.dev)
--   [Bare Server Node](https://github.com/tomphttp/bare-server-node)
 -   [Ultraviolet](https://github.com/titaniumnetwork-dev/ultraviolet)
 -   [RammerHead](https://github.com/binary-person/rammerhead)
 -   [Epoxy](https://github.com/mercuryworkshop/epoxy-tls)
+-   [Libcurl.js](https://github.com/ading2210/libcurl.js)
 -   HTML, CSS, and JavaScript (DUH)
----
-
-## Roadmap
-
-- [ ] - [i18n](https://github.com/alexandre-fernandez/astro-i18n)
-- [ ] - More themes
-- [ ] - Other transports
 ---
 
 ## Deployment
