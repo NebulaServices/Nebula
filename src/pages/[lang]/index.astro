@@ -92,7 +92,7 @@ const t = useTranslations(lang);
       const omnibox = document.getElementById("omnibox") as HTMLDivElement;
       input?.addEventListener("keypress", async function (event: any) {
         if (event.key === "Enter") {
-          if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
+          if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv" || localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
             initSw().then(() => {
                 setTransport(
                 localStorage.getItem(Settings.ProxySettings.transport) as string
@@ -185,9 +185,9 @@ const t = useTranslations(lang);
           }
         }
       });
-    } catch (_) {
+    } catch (err) {
       //we purposely don't return anything
-      //console.debug(err);
+        //console.debug(err);
     }
   });
 </script>

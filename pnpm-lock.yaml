@@ -33,8 +33,8 @@ importers:
         specifier: 1.1.1
         version: 1.1.1
       '@mercuryworkshop/epoxy-transport':
-        specifier: ^2.1.13
-        version: 2.1.13
+        specifier: github:motortruck1221/epoxytransport
+        version: https://codeload.github.com/motortruck1221/epoxytransport/tar.gz/5e8205cdfef67e1cf73fbba7fb56cb181de070f7
       '@mercuryworkshop/libcurl-transport':
         specifier: ^1.3.10
         version: 1.3.10(typescript@5.6.2)
@@ -677,8 +677,9 @@ packages:
   '@mercuryworkshop/epoxy-tls@2.1.6-1':
     resolution: {integrity: sha512-drnffDo9Ls73Fpmcup2Ys1z+BjzK+WLnzyfS4APFfWr9cJ0gu7567tx4M06XH5PUZMOS1J1Z3wqnRaBh/RX5bQ==}
 
-  '@mercuryworkshop/epoxy-transport@2.1.13':
-    resolution: {integrity: sha512-2F3B+QCuuLSbi0449Xn31VdyrTzRcAlA6z4OLEVGNs9bi4HfTkFVKryarcts55euCZuVVGH7XtLqTXJUn0MX0g==}
+  '@mercuryworkshop/epoxy-transport@https://codeload.github.com/motortruck1221/epoxytransport/tar.gz/5e8205cdfef67e1cf73fbba7fb56cb181de070f7':
+    resolution: {tarball: https://codeload.github.com/motortruck1221/epoxytransport/tar.gz/5e8205cdfef67e1cf73fbba7fb56cb181de070f7}
+    version: 2.1.13
 
   '@mercuryworkshop/libcurl-transport@1.3.10':
     resolution: {integrity: sha512-XLSkk1n4uMu6M0sS5Rh5ZNT7dBGILHDneJYD9oOpWMU5yxzNDlwcmJggNaYqMfH7B8jjLmw5sK2gPU5hDFPAVg==}
@@ -4459,7 +4460,7 @@ snapshots:
 
   '@mercuryworkshop/epoxy-tls@2.1.6-1': {}
 
-  '@mercuryworkshop/epoxy-transport@2.1.13':
+  '@mercuryworkshop/epoxy-transport@https://codeload.github.com/motortruck1221/epoxytransport/tar.gz/5e8205cdfef67e1cf73fbba7fb56cb181de070f7':
     dependencies:
       '@mercuryworkshop/epoxy-tls': 2.1.6-1
 
