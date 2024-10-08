@@ -70,7 +70,7 @@ Prerequisites:
 
 1. Clone the repo:
 ```bash
-git clone https://github.com/nebulaservices/nebula && cd incognito
+git clone https://github.com/nebulaservices/nebula && cd nebula
 ```
 
 2. Install all of the dependencies:
@@ -123,7 +123,7 @@ Prerequisites:
 
 1. Clone the repo (skip if using prebuilt image):
 ```bash
-git clone https://github.com/titaniumnetwork/incognito && cd incognito
+git clone https://github.com/nebulaservices/nebula && cd nebula
 ```
 
 2. Create an .env file (if using prebuilt image, copy the example from the repo):
@@ -146,7 +146,7 @@ For info on the build arg check [here](#environment)
 
     - Prebuilt:
     ```bash
-    docker run --env-file ./.env motortruck1221/incognito:latest
+    docker run --env-file ./.env motortruck1221/nebula:latest
     ```
     - Image you built yourself:
     ```bash
@@ -193,7 +193,7 @@ docker compose -f ./docker-compose.build.yml build
 
 ## Environment
 
-- There are a couple of environment variables for incognito. Most of the time, the defaults are fine, but there are instances where you may not want certain options enabled or certain things running.
+- There are a couple of environment variables for nebula. Most of the time, the defaults are fine, but there are instances where you may not want certain options enabled or certain things running.
 
 | Variable               | Description                                                                                              | Default |
 |------------------------|----------------------------------------------------------------------------------------------------------|---------|
