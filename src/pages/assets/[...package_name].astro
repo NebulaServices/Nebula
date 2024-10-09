@@ -2,34 +2,34 @@
 const { package_name } = Astro.params;
 import Layout from "@layouts/Layout.astro";
 const response = await fetch(new URL("/api/packages/" + package_name, Astro.url));
-const assets_json = await response.json();
+const assetsJson = await response.json();
 ---
 
 <Layout title="Package">
   <div class="flex flex-wrap mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center pb-64 roboto">
-    {assets_json.error ? (
+    {assetsJson.error ? (
         <h1 class="text-text-color text-3xl"> Unexpected error. Are you sure you typed the name right? </h1>
       ) : (
         <div class="flex flex-row items-center text-text-color bg-navbar-color rounded-2xl">
-          {assets_json.background_video ? (
+          {assetsJson.background_video ? (
             // Background video
-            <video src={`/videos/${assets_json.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
+            <video src={`/videos/${assetsJson.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
               Your browser does not support the video tag.
             </video>
-          ) : assets_json.backgroundImage ? (
+          ) : assetsJson.backgroundImage ? (
             // Background image
-            <div style={{backgroundImage: `url(/images/${assets_json.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
+            <div style={{backgroundImage: `url(/images/${assetsJson.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
           ) : (
             // Fallback to cover image
-            <img src={`/images/${assets_json.image}`} alt={assets_json.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>
+            <img src={`/images/${assetsJson.image}`} alt={assetsJson .title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>
           )}
           <div class="flex flex-col ml-7 p-16">
-            <div class="text-xl">{assets_json.type}</div>
-            <div class="text-4xl roboto font-semibold">{assets_json.title}</div>
+            <div class="text-xl">{assetsJson.type}</div>
+            <div class="text-4xl roboto font-semibold">{assetsJson.title}</div>
             <div class="text-xl">
-              By <strong>{assets_json.author}</strong>
+              By <strong>{assetsJson.author}</strong>
             </div>
-            <div class="text-xl">{assets_json.description}</div>
+            <div class="text-xl">{assetsJson.description}</div>
             <button class="bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="install">
               Install
             </button>
@@ -38,7 +38,7 @@ const assets_json = await response.json();
       )
     }
   </div>
-  <script is:inline define:vars={{ assets_json, package_name }}>
+  <script is:inline define:vars={{ assetsJson, package_name }}>
     // determine if this is installed
     let items = JSON.parse(localStorage.getItem("installed_themes")) || [];
 
@@ -77,24 +77,24 @@ const assets_json = await response.json();
           JSON.stringify(installedThemes)
         );
 
-        if (assets_json.background_video) {
+        if (assetsJson.background_video) {
           localStorage.setItem(
             "background_video",
-            assets_json.background_video
+            assetsJson.background_video
           );
         } else {
           localStorage.removeItem("video");
         }
-        if (assets_json.background_image) {
+        if (assetsJson.background_image) {
           localStorage.setItem(
             "background_image",
-            assets_json.background_image
+            assetsJson.background_image
           );
         } else {
           localStorage.removeItem("background_image");
         }
-        if (assets_json.type == "theme") {
-          localStorage.setItem("stylesheet", "/styles/" + assets_json.payload);
+        if (assetsJson.type == "theme") {
+          localStorage.setItem("stylesheet", "/styles/" + assetsJson.payload);
         }
         location.reload();
       }

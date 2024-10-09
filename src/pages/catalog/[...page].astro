@@ -7,11 +7,11 @@ const { page } = Astro.params;
 
 const response = await fetch(new URL("/api/catalog-assets/", Astro.url));
 console.log(new URL("/api/catalog-assets/", Astro.url));
-const assets_json = await response.json();
+const assetsJson = await response.json();
 
-const next_page = parseInt(page!) + 1;
-const previous_page = parseInt(page!) - 1;
-const last_page = assets_json.pages;
+const nextPage = parseInt(page!) + 1;
+const previousPage = parseInt(page!) - 1;
+const lastPage = assetsJson.pages;
 ---
 
 <Layout title="Catalog">
@@ -24,22 +24,22 @@ const last_page = assets_json.pages;
           <a href={"/catalog/" + 1} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"> 1 </a>
         )
       }
-      {previous_page > 0 && (
-          <a href={"/catalog/" + previous_page} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{previous_page}</a>
+      {previousPage > 0 && (
+          <a href={"/catalog/" + previousPage} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{previousPage}</a>
         )
       }
       {/* The greyed out page the user is currently on */}
       <a class="w-8 h-8 bg-lighter items-center text-center content-center text-text-color rounded-md">{page}</a>
-      {next_page < last_page && (
-        <a href={"/catalog/" + next_page} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{next_page}</a>
+      {nextPage < lastPage && (
+        <a href={"/catalog/" + nextPage} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{nextPage}</a>
         )
       }
       {/* Pagnation input */}
       <Pagnation />
       {/* The last page. If the user is on this page, don't show it. */}
-      {page != last_page && (
-          <a href={"/catalog/" + assets_json.pages} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">
-            {assets_json.pages}
+      {page != lastPage && (
+          <a href={"/catalog/" + assetsJson.pages} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">
+            {assetsJson.pages}
           </a>
         )
       }
