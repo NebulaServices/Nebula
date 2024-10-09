@@ -6,40 +6,22 @@ const assets_json = await response.json();
 ---
 
 <Layout title="Package">
-  <div
-    class="flex flex-wrap mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center pb-64 roboto"
-  >
-    {
-      assets_json.error ? (
-        <h1 class="text-text-color text-3xl">
-          Unexpected error. Are you sure you typed the name right?
-        </h1>
+  <div class="flex flex-wrap mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center pb-64 roboto">
+    {assets_json.error ? (
+        <h1 class="text-text-color text-3xl"> Unexpected error. Are you sure you typed the name right? </h1>
       ) : (
         <div class="flex flex-row items-center text-text-color bg-navbar-color rounded-2xl">
           {assets_json.background_video ? (
             // Background video
-            <video
-              src={`/videos/${assets_json.background_video}`}
-              controls
-              class="w-[44rem] h-[25rem] object-cover rounded-xl"
-            >
+            <video src={`/videos/${assets_json.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
               Your browser does not support the video tag.
             </video>
           ) : assets_json.backgroundImage ? (
             // Background image
-            <div
-              style={{
-                backgroundImage: `url(/images/${assets_json.backgroundImage})`,
-              }}
-              class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"
-            />
+            <div style={{backgroundImage: `url(/images/${assets_json.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
           ) : (
             // Fallback to cover image
-            <img
-              src={`/images/${assets_json.image}`}
-              alt={assets_json.title}
-              class="w-[44rem] h-[25rem] object-cover rounded-xl"
-            />
+            <img src={`/images/${assets_json.image}`} alt={assets_json.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>
           )}
           <div class="flex flex-col ml-7 p-16">
             <div class="text-xl">{assets_json.type}</div>
@@ -48,10 +30,7 @@ const assets_json = await response.json();
               By <strong>{assets_json.author}</strong>
             </div>
             <div class="text-xl">{assets_json.description}</div>
-            <button
-              class="bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9"
-              id="install"
-            >
+            <button class="bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="install">
               Install
             </button>
           </div>

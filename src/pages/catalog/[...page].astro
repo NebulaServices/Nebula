@@ -15,65 +15,30 @@ const last_page = assets_json.pages;
 ---
 
 <Layout title="Catalog">
-  <div
-    class="flex mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center overflow-auto"
-  >
-    <div>
-      {page}
-      The Nebula Catalog is a place for you to find user-created themes and plugins.
-    </div>
+  <div class="flex mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center overflow-auto">
+    <div> The Nebula Catalog is a place for you to find user-created themes and plugins. </div>
     <CatalogCard client:only="svelte" page={page} />
     <div class="flex flex-row pb-8 gap-4 roboto">
-      {
-        /* The first page. If the user is on this page, or the one after it, don't show it. */
-      }
-      {
-        parseInt(page!) > 2 && (
-          <a
-            href={"/catalog/" + 1}
-            class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"
-          >
-            1
-          </a>
+      {/* The first page. If the user is on this page, or the one after it, don't show it. */}
+      {parseInt(page!) > 2 && (
+          <a href={"/catalog/" + 1} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"> 1 </a>
         )
       }
-      {
-        previous_page > 0 && (
-          <a
-            href={"/catalog/" + previous_page}
-            class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"
-          >
-            {previous_page}
-          </a>
+      {previous_page > 0 && (
+          <a href={"/catalog/" + previous_page} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{previous_page}</a>
         )
       }
-
       {/* The greyed out page the user is currently on */}
-      <a
-        class="w-8 h-8 bg-lighter items-center text-center content-center text-text-color rounded-md"
-      >
-        {page}
-      </a>
-
-      {
-        next_page < last_page && (
-          <a
-            href={"/catalog/" + next_page}
-            class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"
-          >
-            {next_page}
-          </a>
+      <a class="w-8 h-8 bg-lighter items-center text-center content-center text-text-color rounded-md">{page}</a>
+      {next_page < last_page && (
+        <a href={"/catalog/" + next_page} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{next_page}</a>
         )
       }
       {/* Pagnation input */}
       <Pagnation />
       {/* The last page. If the user is on this page, don't show it. */}
-      {
-        page != last_page && (
-          <a
-            href={"/catalog/" + assets_json.pages}
-            class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"
-          >
+      {page != last_page && (
+          <a href={"/catalog/" + assets_json.pages} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">
             {assets_json.pages}
           </a>
         )
