@@ -47,7 +47,7 @@ function setTransport(transport?: string) {
       case "libcurl":
         BareMux.SetTransport("CurlMod.default", {
           wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default
-      });
+        });
         break;
     }
     resolve();

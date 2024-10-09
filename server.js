@@ -2,11 +2,16 @@ import fs from "fs";
 import { createServer } from "node:http";
 import path from "path";
 import { fileURLToPath } from "url";
+import {
+  createRammerhead,
+  routeRhRequest,
+  routeRhUpgrade,
+  shouldRouteRh
+} from "@rubynetwork/rammerhead";
 import express from "express";
 import multer from "multer";
 import { DataTypes, Sequelize } from "sequelize";
 import wisp from "wisp-server-node";
-import { createRammerhead, shouldRouteRh, routeRhUpgrade, routeRhRequest } from "@rubynetwork/rammerhead";
 import { handler as ssrHandler } from "./dist/server/entry.mjs";
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf8"));
@@ -14,10 +19,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 //create the rh server.
 const rh = createRammerhead({
-    logLevel: 'debug',
-    reverseProxy: true,
-    disableLocalStorageSync: false,
-    disableHttp2: false
+  logLevel: "debug",
+  reverseProxy: true,
+  disableLocalStorageSync: false,
+  disableHttp2: false
 });
 const app = express();
 const publicPath = "dist/client";
@@ -322,17 +327,15 @@ server.on("request", (req, res) => {
   res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
   if (shouldRouteRh(req)) {
     routeRhRequest(rh, req, res);
-  }
-  else {
-      app(req, res);
+  } else {
+    app(req, res);
   }
 });
 
 server.on("upgrade", (req, socket, head) => {
   if (shouldRouteRh(req)) {
-      routeRhUpgrade(rh, req, socket, head);
-  }
-  else if (req.url.endsWith("/wisp/")) {
+    routeRhUpgrade(rh, req, socket, head);
+  } else if (req.url.endsWith("/wisp/")) {
     wisp.routeRequest(req, socket, head);
   }
 });
