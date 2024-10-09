@@ -125,4 +125,4 @@ const proxySettings = {
   }
 };
 
-export { tabSettings, proxySettings, Settings, WispServerURLS, SearchEngines, cloak };
+export { tabSettings, proxySettings, Settings, WispServerURLS, SearchEngines, cloak, type Proxy };

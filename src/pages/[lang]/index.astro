@@ -51,6 +51,7 @@ const t = useTranslations(lang);
 <script>
   import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
   import { RammerheadEncode } from "@rubynetwork/rammerhead-browser";
+  import { SupportedSites } from "@utils/siteSupport";
   import {
     WispServerURLS,
     SearchEngines,
@@ -64,23 +65,39 @@ const t = useTranslations(lang);
   type Suggestion = {
     phrase: string;
   };
-  async function proxy(term: string) {
-    const searchEngine = localStorage.getItem(
-      Settings.ProxySettings.searchEngine
-    );
-    const proxySelection = localStorage.getItem(Settings.ProxySettings.proxy);
+  async function proxy(term: string, rh: boolean) {
+    const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
     const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-    const proxyUrl = proxySelection === "uv" ? __uv$config!.prefix + __uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg)) : await RammerheadEncode(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg));
+    let proxyUrl: any = __uv$config!.prefix + __uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg)); 
+    if (rh) {
+        proxyUrl = await RammerheadEncode(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg));
+    }
     if (openIn === "a:b" || openIn === "blob") {
-      return cloak(
-        openIn as string,
-        "https://google.com",
-        `${window.location.origin}${proxyUrl}`
-      );
-    } else if (openIn === "direct") {
+      return cloak(openIn as string, "https://google.com", `${window.location.origin}${proxyUrl}`);
+    } 
+    else if (openIn === "direct") {
       return (window.location.href = proxyUrl as string);
-    } else {
+    } 
+    else {
       return proxyUrl;
+    }
+  }
+  function uv(iframe: HTMLIFrameElement, term: string) {
+    initSw().then(() => {
+      setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
+        iframe.classList.remove("hidden");
+        const url = await proxy(term, false);
+        if (url) {
+          iframe.src = url as string;
+        }
+      });
+    });
+  }
+  async function rh(iframe: HTMLIFrameElement, term: string) {
+    iframe.classList.remove("hidden");
+    const url = await proxy(term, true);
+    if (url) {
+      iframe.src = "/" + url as string;
     }
   }
   //we need to rerun this on every page load
@@ -92,25 +109,25 @@ const t = useTranslations(lang);
       const omnibox = document.getElementById("omnibox") as HTMLDivElement;
       input?.addEventListener("keypress", async function (event: any) {
         if (event.key === "Enter") {
-          if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv" || localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
-            initSw().then(() => {
-                setTransport(
-                localStorage.getItem(Settings.ProxySettings.transport) as string
-                ).then(async () => {
-                    iframe.classList.remove("hidden");
-                    const url = await proxy(input?.value);
-                    if (url) {
-                        iframe.src = url as string;
-                    }
-                });
-            });
-          }
-          else {
-              iframe.classList.remove("hidden");
-              const url = await proxy(input?.value);
-              if (url) {
-                  iframe.src = "/" + url as string;
+          if (localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
+              const key = SupportedSites[input?.value];
+              switch(key) {
+                  case "uv":
+                      uv(iframe, input?.value);
+                      break;
+                  case "rh":
+                      rh(iframe, input?.value);
+                      break;
+                  default:
+                      uv(iframe, input?.value);
+                      break;
               }
+          }
+          else if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
+            uv(iframe, input?.value);
+          }
+          else if (localStorage.getItem(Settings.ProxySettings.proxy) === "rh") { 
+            rh(iframe, input?.value);
           }
         }
       });
