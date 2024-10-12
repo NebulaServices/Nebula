@@ -37,7 +37,7 @@ const assetsJson = await response.json();
     <variable-define data-assets={JSON.stringify(assetsJson)} data-name={packageName} data-type={assetsJson.type} />
 </Layout>
 <script>
-    import { Settings, type PackageType, marketPlaceSettings } from "@utils/settings";
+    import { settings, Settings, type PackageType } from "@utils/settings/index";
     let packageName: string;
     let assetsJson: any;
     let packageType: string;
@@ -63,13 +63,13 @@ const assetsJson = await response.json();
                 installButton.classList.add("hidden");
             }
             installButton.addEventListener("click", () => {
-                marketPlaceSettings.install({theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}}, packageName, payload.payload).then(() => {
+                settings.marketPlaceSettings.install({theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}}, packageName, payload.payload).then(() => {
                     installButton.classList.add("hidden");
                     uninstallButton.classList.remove("hidden");
                 })
             });
             uninstallButton.addEventListener("click", () => {
-                marketPlaceSettings.uninstall(packageType as PackageType, packageName).then(() => {
+                settings.marketPlaceSettings.uninstall(packageType as PackageType, packageName).then(() => {
                     uninstallButton.classList.add("hidden")
                     installButton.classList.remove("hidden");
                 });

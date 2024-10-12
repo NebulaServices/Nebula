@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Settings } from "@utils/settings";
+import { Settings } from "@utils/settings/index";
 import { Suspense } from "@svelte-drama/suspense";
 export let page;
 async function getAssets() {

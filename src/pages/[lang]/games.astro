@@ -12,7 +12,7 @@ export const prerender = true;
 </Layout>
 <script>
     import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
-    import { Settings } from "@utils/settings.ts";
+    import { Settings } from "@utils/settings/index";
     document.addEventListener("astro:page-load", async function () {
         try {
             const iframe = document.getElementById("chango") as HTMLIFrameElement;

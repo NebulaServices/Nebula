@@ -1,4 +1,4 @@
-import { Settings, WispServerURLS } from "./settings";
+import { Settings, WispServerURLS } from "./settings/index";
 function loadProxyScripts() {
   //wrap everything in a promise to avoid race conditions
   return new Promise<void>((resolve) => {

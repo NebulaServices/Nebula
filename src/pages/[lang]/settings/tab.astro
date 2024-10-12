@@ -55,7 +55,7 @@ export const prerender = true;
 
 <script>
     import { toast } from "@utils/toast.ts"; //A helper function so we don't have to run this logic everytime.
-    import { tabSettings, Settings as SettingsEnum } from "@utils/settings.ts";
+    import { settings, Settings as SettingsEnum } from "@utils/settings/index";
     function setup(cloakValue: HTMLSelectElement, abValue: HTMLSelectElement) {
         const cloakLocal = localStorage.getItem(SettingsEnum.TabSettings.tabCloak);
         const abCloakLocal = localStorage.getItem(SettingsEnum.TabSettings.abblob);
@@ -70,12 +70,12 @@ export const prerender = true;
             const abValue = document.getElementById("aboutblank") as HTMLSelectElement;
             setup(cloakValue, abValue);
             cloakButton.addEventListener("click", () => {
-                tabSettings.cloakTab(cloakValue.value);
+                settings.tabSettings.cloakTab(cloakValue.value);
                 toast('.cloakMessageSuccess');
             });
             abButton.addEventListener("click", () => {
                 toast('.abCloakMessage');
-                tabSettings.abCloak(abValue.value);
+                settings.tabSettings.abCloak(abValue.value);
             });
         }
         catch (_) { /* We don't want to return anything on purpose */ }

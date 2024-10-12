@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Suspense } from "@svelte-drama/suspense";
-    import { Settings, marketPlaceSettings } from '@utils/settings';
+    import { Settings, settings } from '@utils/settings/index';
     import Parent from "./Parent.svelte";
     async function getItem(item) {
         try {
@@ -28,7 +28,7 @@
 </script>
 <Suspense let:suspend>
     <div class="rounded-3xl bg-navbar-color w-64 flex flex-col cursor-pointer">
-        <div class="w-full" on:click={() => {marketPlaceSettings.changeTheme(true)}}>
+        <div class="w-full" on:click={() => {settings.marketPlaceSettings.changeTheme(true)}}>
             <img src='/classic_theme.png' alt="Classic Nebula" class="aspect-[16/9] rounded-t-3xl"/>
         </div>
         <div class="h-2/6 text-center content-center p-3 font-semibold items-center flex flex-col text-2xl">
@@ -39,13 +39,13 @@
     {#each Object.entries(data) as [key, asset]}
         <Parent bind:this={compRef[key]}>
             <div class="rounded-3xl bg-navbar-color w-64 flex flex-col cursor-pointer">
-                <div class="w-full" on:click={() => {marketPlaceSettings.changeTheme(false, asset.payload, asset.background_video, asset.background_image)}}>
+                <div class="w-full" on:click={() => {settings.marketPlaceSettings.changeTheme(false, asset.payload, asset.background_video, asset.background_image)}}>
                     <img src={`/images/${asset.image}`} alt="theme" class="aspect-[16/9] rounded-t-3xl"/>
                 </div>
                 <div class="h-2/6 text-center content-center p-3 font-semibold items-center flex flex-col">
                     <div class="text-2xl"> {asset.title} </div>
                     <div class="flex flex-row">
-                        <div class="h-8 w-8 cursor-pointer" on:click={() => {marketPlaceSettings.uninstall("theme", asset.package_name); marketPlaceSettings.changeTheme(true); compRef[key].$destroy()}}>
+                        <div class="h-8 w-8 cursor-pointer" on:click={() => {settings.marketPlaceSettings.uninstall("theme", asset.package_name); settings.marketPlaceSettings.changeTheme(true); compRef[key].$destroy()}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256" {...$$props}>
                                 <path fill="currentColor" d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M112 168a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm0-120H96v-8a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8Z" />
                             </svg>
