@@ -299,11 +299,11 @@ app.use(express.static(publicPath));
 //    image: "cyber_monay.jpg",
 //    author: "Nebula Services",
 //    version: "1.0.0",
- //   description: 'A parody of the famous "Cyber Monay" hack!',
- //   tags: ["Hacking", "Animated", "Funny"],
-  //  payload: "com.nebula.cybermonay.css",
-   // background_video: "cyber_monay_test.mp4",
-    //type: "theme",
+//   description: 'A parody of the famous "Cyber Monay" hack!',
+//   tags: ["Hacking", "Animated", "Funny"],
+//  payload: "com.nebula.cybermonay.css",
+// background_video: "cyber_monay_test.mp4",
+//type: "theme",
 //});
 
 // await catalog_assets.create({

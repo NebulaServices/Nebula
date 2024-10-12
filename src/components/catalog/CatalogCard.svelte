@@ -1,6 +1,6 @@
 <script lang="ts">
-import { Settings } from "@utils/settings/index";
 import { Suspense } from "@svelte-drama/suspense";
+import { Settings } from "@utils/settings/index";
 export let page;
 async function getAssets() {
   const response = await fetch("/api/catalog-assets?page=" + page);

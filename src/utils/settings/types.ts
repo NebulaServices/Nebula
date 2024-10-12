@@ -3,15 +3,15 @@ type TabCloaks = "default" | "google" | "wikipedia" | "canvas" | "classroom" | "
 type AbCloaks = "a:b" | "blob";
 type OpenIn = "a:b" | "blob" | "direct" | "embed";
 type Proxy = "automatic" | "uv" | "rh";
-type Transport = "epoxy" | "libcurl";    
-type PackageType = "theme" | "plugin"
+type Transport = "epoxy" | "libcurl";
+type PackageType = "theme" | "plugin";
 interface Package {
-    theme?: {
-        payload: string,
-        video?: string
-        bgImage?: string
-    }
-    plugin?: {}
+  theme?: {
+    payload: string;
+    video?: string;
+    bgImage?: string;
+  };
+  plugin?: {};
 }
 const SearchEngines: Record<string, string> = {
   ddg: "https://duckduckgo.com/?q=%s",
@@ -24,4 +24,16 @@ const WispServerURLS: Record<string, string> = {
   ruby: "wss://ruby.rubynetwork.co/wisp/"
 };
 
-export { type TabCloaks, type AbCloaks, type OpenIn, type Proxy, type Transport, type PackageType, type Package, SearchEngines, type SearchEngine, WispServerURLS, wispUrl }
+export {
+  type TabCloaks,
+  type AbCloaks,
+  type OpenIn,
+  type Proxy,
+  type Transport,
+  type PackageType,
+  type Package,
+  SearchEngines,
+  type SearchEngine,
+  WispServerURLS,
+  wispUrl
+};

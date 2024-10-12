@@ -1,5 +1,5 @@
 //Proxy specific settings.
-import { type Proxy, type OpenIn, type SearchEngine, type Transport } from "./types";
+import { type OpenIn, type Proxy, type SearchEngine, type Transport } from "./types";
 const ProxySettings = {
   proxy: "nebula||proxy",
   openIn: "nebula||open",
