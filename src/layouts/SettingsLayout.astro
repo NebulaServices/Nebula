@@ -8,32 +8,16 @@ import { Icon } from "astro-icon/components";
 ---
 
 <div class="flex flex-row">
-  <div
-    class="text-text-color mt-16 fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col flex md:flex-row"
-  >
-    <div
-      class="items-center p-3 flex flex-row border-border-color gap-5 border-r-2 md:w-2/12 md:flex-col md:bg-navbar-color md:gap-0 md:p-0"
-    >
-      <SidebarButton
-        title={t("settings.appearance")}
-        route={`/${lang}/settings/appearance`}
-      >
-        <Icon
-          name="ph:palette"
-          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
-        />
+  <div class="text-text-color mt-16 fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col flex md:flex-row">
+    <div class="items-center p-3 flex flex-row border-border-color gap-5 border-r-2 md:w-2/12 md:flex-col md:bg-navbar-color md:gap-0 md:p-0">
+      <SidebarButton title={t("settings.appearance")} route={`/${lang}/settings/appearance`}>
+        <Icon name="ph:palette" class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6" />
       </SidebarButton>
       <SidebarButton title={t("settings.proxy")} route={`/${lang}/settings/pr`}>
-        <Icon
-          name="ph:globe-hemisphere-east-fill"
-          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
-        />
+        <Icon name="ph:globe-hemisphere-east-fill" class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6" />
       </SidebarButton>
       <SidebarButton title={t("settings.tab")} route={`/${lang}/settings/tab/`}>
-        <Icon
-          name="ph:laptop-fill"
-          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
-        />
+        <Icon name="ph:laptop-fill" class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6" />
       </SidebarButton>
     </div>
     <div class="p-8 md:w-10/12 overflow-y-auto">

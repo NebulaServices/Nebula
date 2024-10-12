@@ -26,6 +26,7 @@
     "@mercuryworkshop/libcurl-transport": "^1.3.10",
     "@rubynetwork/rammerhead": "^1.3.5",
     "@rubynetwork/rammerhead-browser": "^1.0.9",
+    "@svelte-drama/suspense": "0.5.1",
     "@titaniumnetwork-dev/ultraviolet": "3.1.2",
     "astro": "^4.15.11",
     "astro-icon": "^1.1.1",

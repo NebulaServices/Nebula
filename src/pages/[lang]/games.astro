@@ -19,7 +19,7 @@ export const prerender = true;
             if (iframe) {
                 initSw().then(() => {
                     setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
-                        iframe.src = __uv$config!.prefix + __uv$config.encodeUrl("https://radon.games");
+                        iframe.src = __uv$config!.prefix + __uv$config.encodeUrl!("https://radon.games");
                     });
                 });
             }

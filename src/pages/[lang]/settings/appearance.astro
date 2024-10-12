@@ -1,12 +1,9 @@
 ---
 import InstalledThemes from "@components/catalog/InstalledThemes.svelte";
-import ThemeCard from "@components/settings/ThemeCard.astro";
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
 import { Icon } from "astro-icon/components";
-import ClassicNebula from "../../../assets/classic_theme.png";
-import fortnite from "../../../assets/fortnite.jpg";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -24,15 +21,15 @@ export const prerender = true;
       subtitle="Choose a theme so your eyes don't hate us.">
       <div class="flex flex-row flex-wrap gap-4 items-center roboto">
         <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
-          <InstalledThemes client:only="svelte" />
-          <div class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+            <InstalledThemes client:only="svelte" />
+          <a href="/catalog/1" class="rounded-3xl bg-navbar-color w-64 flex flex-col">
             <div class="w-full items-center justify-center flex aspect-[16/9]">
               <Icon name="ph:plus-bold" class="h-16 w-16" />
             </div>
             <div class="h-2/6 text-center content-center p-3 font-semibold">
               Get more themes in the <strong>Nebula Catalog!</strong>
             </div>
-          </div>
+          </a>
         </div>
         <div class="text-3xl roboto font-bold text-text-color"></div>
       </div>

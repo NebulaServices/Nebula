@@ -77,30 +77,6 @@ const { title, noHeader } = Astro.props;
           }
         }
       });
-
-      const stylesheet_link = localStorage.getItem("stylesheet");
-      const stylesheet = document.getElementById(
-        "stylesheet"
-      )! as HTMLAnchorElement;
-
-      if (stylesheet_link) {
-        stylesheet.href = stylesheet_link;
-      }
-
-      const video_link = localStorage.getItem("background_video");
-
-      const image_link = localStorage.getItem("background_image");
-
-      const image_source = document.getElementById("nebulaImage")! as any;
-      const source = document.getElementById("nebulaVideo")! as any;
-
-      if (video_link) {
-        source.src = "/videos/" + video_link;
-      }
-      if (image_link) {
-        image_source.style.display = "block";
-        image_source.src = "/images/" + image_link;
-      }
     </script>
     <style>
         #mobileNavMenu {

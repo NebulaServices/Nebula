@@ -44,6 +44,9 @@ importers:
       '@rubynetwork/rammerhead-browser':
         specifier: ^1.0.9
         version: 1.0.9
+      '@svelte-drama/suspense':
+        specifier: 0.5.1
+        version: 0.5.1(svelte@4.2.19)
       '@titaniumnetwork-dev/ultraviolet':
         specifier: 3.1.2
         version: 3.1.2
@@ -828,6 +831,11 @@ packages:
 
   '@shikijs/vscode-textmate@9.3.0':
     resolution: {integrity: sha512-jn7/7ky30idSkd/O5yDBfAnVt+JJpepofP/POZ1iMOxK59cOfqIgg/Dj0eFsjOTMw+4ycJN0uhZH/Eb0bs/EUA==}
+
+  '@svelte-drama/suspense@0.5.1':
+    resolution: {integrity: sha512-fovSQHYDxb9fEnMVBHxBi4v39CR+Hrsp16lSYOHm+aPfm8FyBQtG8VsrIg9BszNWz8GCEFIVCaE/Iqty1ovB6Q==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0
 
   '@sveltejs/vite-plugin-svelte-inspector@2.1.0':
     resolution: {integrity: sha512-9QX28IymvBlSCqsCll5t0kQVxipsfhFFL+L2t3nTWfXnddYwxBuAEtTtlaVQpRz9c37BhJjltSeY4AJSC03SSg==}
@@ -4602,6 +4610,10 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@9.3.0': {}
+
+  '@svelte-drama/suspense@0.5.1(svelte@4.2.19)':
+    dependencies:
+      svelte: 4.2.19
 
   '@sveltejs/vite-plugin-svelte-inspector@2.1.0(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.5))':
     dependencies:

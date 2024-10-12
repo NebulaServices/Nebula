@@ -1,0 +1,80 @@
+---
+const { packageName } = Astro.params;
+import Layout from "@layouts/Layout.astro";
+const response = await fetch(new URL("/api/packages/" + packageName, Astro.url));
+const assetsJson = await response.json();
+---
+
+<Layout title={`Package: ${packageName}`}>
+    <div class="flex flex-wrap mt-16 w-full fixed inset-0 h-full md:h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center md:pb-64 roboto max-md:p-4">
+        {assetsJson.error && <h1 class="text-text-color text-3xl font-bold"> Unexpected error. Is the name right? </h1>}
+        {!assetsJson.error &&
+            <div class="flex flex-col md:flex-row items-center text-text-color bg-navbar-color rounded-2xl">
+                {assetsJson.background_video && 
+                    <video src={`/videos/${assetsJson.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
+                        Your browser does not support the video tag.
+                    </video>
+                }
+                {assetsJson.backgroundImage && 
+                    <div style={{backgroundImage: `url(/images/${assetsJson.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
+                }
+                {!assetsJson.background_video && !assetsJson.backgroundImage && <img src={`/images/${assetsJson.image}`} alt={assetsJson .title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
+                <div class="flex flex-col ml-7 p-16">
+                    <p class="text-xl">{assetsJson.type}</p>
+                    <h1 class="text-4xl roboto font-semibold">{assetsJson.title}</h1>
+                    <p class="text-xl"> By: <strong>{assetsJson.author}</strong></p>
+                    <p class="text-xl">{assetsJson.description}</p>
+                    <button class="bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="install">
+                        Install
+                    </button>
+                    <button class="hidden bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="uninstall">
+                        Uninstall
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+    <variable-define data-assets={JSON.stringify(assetsJson)} data-name={packageName} data-type={assetsJson.type} />
+</Layout>
+<script>
+    import { Settings, type PackageType, marketPlaceSettings } from "@utils/settings";
+    let packageName: string;
+    let assetsJson: any;
+    let packageType: string;
+    //some weird trickery to get the variables.
+    class VariableDefiner extends HTMLElement {
+        constructor() {
+            super();
+            assetsJson = this.dataset.assets;
+            packageName = this.dataset.name as string;
+            packageType = this.dataset.type as PackageType;
+        }
+    }
+    customElements.define('variable-define', VariableDefiner); 
+    document.addEventListener('astro:page-load', () => {
+        try {
+            const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes) as string) || [];
+            const itemExists = items.indexOf(packageName) !== -1;
+            const installButton = document.getElementById("install") as HTMLButtonElement;
+            const uninstallButton = document.getElementById("uninstall") as HTMLButtonElement;
+            const payload = assetsJson ? JSON.parse(assetsJson) : undefined;
+            if (itemExists) {
+                uninstallButton.classList.remove("hidden");
+                installButton.classList.add("hidden");
+            }
+            installButton.addEventListener("click", () => {
+                marketPlaceSettings.install({theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}}, packageName, payload.payload).then(() => {
+                    installButton.classList.add("hidden");
+                    uninstallButton.classList.remove("hidden");
+                })
+            });
+            uninstallButton.addEventListener("click", () => {
+                marketPlaceSettings.uninstall(packageType as PackageType, packageName).then(() => {
+                    uninstallButton.classList.add("hidden")
+                    installButton.classList.remove("hidden");
+                });
+            })
+        }
+        catch (err) { /* DEBUGGING ONLY: console.error(err) */ }
+    });
+</script>
