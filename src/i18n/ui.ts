@@ -4,6 +4,6 @@ import jp from "./jp.json";
 export const defaultLang = "en_US";
 
 export const ui = {
-  en_US,
-  jp
+    en_US,
+    jp
 };

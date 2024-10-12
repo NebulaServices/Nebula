@@ -3,25 +3,25 @@ import { Suspense } from "@svelte-drama/suspense";
 import { Settings, settings } from "@utils/settings/index";
 import Parent from "./Parent.svelte";
 async function getItem(item) {
-  try {
-    const response = await fetch(`/api/packages/${item}`);
-    const data = await response.json();
-    return {
-      ...data,
-      package_name: item
-    };
-  } catch (error) {
-    console.error("error: failed to fetch", error);
-    return null;
-  }
+    try {
+        const response = await fetch(`/api/packages/${item}`);
+        const data = await response.json();
+        return {
+            ...data,
+            package_name: item
+        };
+    } catch (error) {
+        console.error("error: failed to fetch", error);
+        return null;
+    }
 }
 async function getAssets() {
-  const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes)) || [];
-  const promises = items.map(getItem);
-  const dataArray = await Promise.all(promises);
-  const accumulatedData = dataArray.filter((data) => data !== null);
-  console.log(JSON.stringify(accumulatedData));
-  return accumulatedData;
+    const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes)) || [];
+    const promises = items.map(getItem);
+    const dataArray = await Promise.all(promises);
+    const accumulatedData = dataArray.filter((data) => data !== null);
+    console.log(JSON.stringify(accumulatedData));
+    return accumulatedData;
 }
 let assets = getAssets();
 let compRef = [];

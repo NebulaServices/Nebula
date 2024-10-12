@@ -1,8 +1,8 @@
 ---
 import Layout from "@layouts/Layout.astro";
 export function getStaticPaths() {
-  const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
-  return STATIC_PATHS;
+    const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
+    return STATIC_PATHS;
 }
 export const prerender = true;
 ---

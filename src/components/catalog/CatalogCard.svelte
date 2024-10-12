@@ -3,9 +3,9 @@ import { Suspense } from "@svelte-drama/suspense";
 import { Settings } from "@utils/settings/index";
 export let page;
 async function getAssets() {
-  const response = await fetch("/api/catalog-assets?page=" + page);
-  const data = await response.json();
-  return data.assets;
+    const response = await fetch("/api/catalog-assets?page=" + page);
+    const data = await response.json();
+    return data.assets;
 }
 const assets = getAssets();
 </script>

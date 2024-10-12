@@ -3,45 +3,45 @@ import { AppearanceSettings, marketPlaceSettings } from "./marketplace";
 import { ProxySettings, proxySettings } from "./proxy";
 import { TabSettings, cloak, tabSettings } from "./tab";
 import {
-  type AbCloaks,
-  type OpenIn,
-  type Package,
-  type PackageType,
-  type Proxy,
-  type SearchEngine,
-  SearchEngines,
-  type TabCloaks,
-  type Transport,
-  WispServerURLS,
-  wispUrl
+    type AbCloaks,
+    type OpenIn,
+    type Package,
+    type PackageType,
+    type Proxy,
+    type SearchEngine,
+    SearchEngines,
+    type TabCloaks,
+    type Transport,
+    WispServerURLS,
+    wispUrl
 } from "./types";
 
 const Settings = {
-  AppearanceSettings,
-  TabSettings,
-  ProxySettings
+    AppearanceSettings,
+    TabSettings,
+    ProxySettings
 };
 
 const settings = {
-  marketPlaceSettings,
-  tabSettings,
-  proxySettings
+    marketPlaceSettings,
+    tabSettings,
+    proxySettings
 };
 
 //export all of the stuffs
 export {
-  Settings,
-  settings,
-  SearchEngines,
-  WispServerURLS,
-  wispUrl,
-  cloak,
-  type TabCloaks,
-  type AbCloaks,
-  type OpenIn,
-  type Proxy,
-  type Transport,
-  type PackageType,
-  type Package,
-  type SearchEngine
+    Settings,
+    settings,
+    SearchEngines,
+    WispServerURLS,
+    wispUrl,
+    cloak,
+    type TabCloaks,
+    type AbCloaks,
+    type OpenIn,
+    type Proxy,
+    type Transport,
+    type PackageType,
+    type Package,
+    type SearchEngine
 };
