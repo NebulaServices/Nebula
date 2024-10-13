@@ -6,7 +6,7 @@ import Pagnation from "./pagnation.astro";
 const { page } = Astro.params;
 
 const response = await fetch(new URL("/api/catalog-assets/", Astro.url));
-console.log(new URL("/api/catalog-assets/", Astro.url));
+//console.log(new URL("/api/catalog-assets/", Astro.url));
 const assetsJson = await response.json();
 
 const nextPage = parseInt(page!) + 1;
