@@ -75,6 +75,6 @@ export default defineConfig({
     },
     output: "server",
     adapter: node({
-        mode: "hybrid"
+        mode: "middleware"
     })
 });

@@ -1,11 +1,13 @@
 # build output
 dist/
+server/*.js
 
 # generated types
 .astro/
 
 # dependencies
 node_modules/
+package-lock.json
 
 # logs
 npm-debug.log*
@@ -25,6 +27,10 @@ pnpm-debug.log*
 
 # nebula catalog database
 database.sqlite
+
+
+# YOUR config
+config.toml
 
 # Goofy PNPM problem
 ~/

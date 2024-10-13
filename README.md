@@ -191,9 +191,10 @@ docker compose -f ./docker-compose.build.yml build
     ```
 ---
 
-## Environment
+## Config
 
-- There are a couple of environment variables for nebula. Most of the time, the defaults are fine, but there are instances where you may not want certain options enabled or certain things running.
+- There are a couple of configuration options for nebula. Most of the time, the defaults are fine, but there are instances where you may not want certain options enabled or certain things running.
+- An example config file is located [here](./config.example.toml). Config format is TOML
 
 | Variable               | Description                                                                                              | Default |
 |------------------------|----------------------------------------------------------------------------------------------------------|---------|

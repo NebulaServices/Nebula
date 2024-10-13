@@ -37,6 +37,7 @@ const assetsJson = await response.json();
     <variable-define data-assets={JSON.stringify(assetsJson)} data-name={packageName} data-type={assetsJson.type} />
 </Layout>
 <script>
+    import { pageLoad } from "@utils/events";
     import { settings, Settings, type PackageType } from "@utils/settings/index";
     let packageName: string;
     let assetsJson: any;
@@ -51,30 +52,28 @@ const assetsJson = await response.json();
         }
     }
     customElements.define('variable-define', VariableDefiner); 
-    document.addEventListener('astro:page-load', () => {
-        try {
-            const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes) as string) || [];
-            const itemExists = items.indexOf(packageName) !== -1;
-            const installButton = document.getElementById("install") as HTMLButtonElement;
-            const uninstallButton = document.getElementById("uninstall") as HTMLButtonElement;
-            const payload = assetsJson ? JSON.parse(assetsJson) : undefined;
-            if (itemExists) {
-                uninstallButton.classList.remove("hidden");
-                installButton.classList.add("hidden");
-            }
-            installButton.addEventListener("click", () => {
-                settings.marketPlaceSettings.install({theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}}, packageName, payload.payload).then(() => {
-                    installButton.classList.add("hidden");
-                    uninstallButton.classList.remove("hidden");
-                })
-            });
-            uninstallButton.addEventListener("click", () => {
-                settings.marketPlaceSettings.uninstall(packageType as PackageType, packageName).then(() => {
-                    uninstallButton.classList.add("hidden")
-                    installButton.classList.remove("hidden");
-                });
-            })
+    const fn = () => {
+        const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes) as string) || [];
+        const itemExists = items.indexOf(packageName) !== -1;
+        const installButton = document.getElementById("install") as HTMLButtonElement;
+        const uninstallButton = document.getElementById("uninstall") as HTMLButtonElement;
+        const payload = assetsJson ? JSON.parse(assetsJson) : undefined;
+        if (itemExists) {
+            uninstallButton.classList.remove("hidden");
+            installButton.classList.add("hidden");
         }
-        catch (err) { /* DEBUGGING ONLY: console.error(err) */ }
-    });
+        installButton.addEventListener("click", () => {
+            settings.marketPlaceSettings.install({theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}}, packageName, payload.payload).then(() => {
+                installButton.classList.add("hidden");
+                uninstallButton.classList.remove("hidden");
+            })
+        });
+        uninstallButton.addEventListener("click", () => {
+            settings.marketPlaceSettings.uninstall(packageType as PackageType, packageName).then(() => {
+                uninstallButton.classList.add("hidden")
+                installButton.classList.remove("hidden");
+            });
+        });
+    }
+    pageLoad(fn);
 </script>

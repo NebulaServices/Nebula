@@ -133,6 +133,7 @@ export const prerender = true;
 <script>
     import { toast } from "@utils/toast.ts";
     import { settings, Settings as SettingsEnum } from "@utils/settings/index";
+    import { pageLoad } from "@utils/events";
     function setup(proxySelectVal: HTMLSelectElement, openInVal: HTMLSelectElement, searchEngineVal: HTMLSelectElement, wispServerVal: HTMLSelectElement, transportVal: HTMLSelectElement) {
         proxySelectVal.value = localStorage.getItem(SettingsEnum.ProxySettings.proxy) as string;
         openInVal.value = localStorage.getItem(SettingsEnum.ProxySettings.openIn) as string;
@@ -140,40 +141,37 @@ export const prerender = true;
         wispServerVal.value = localStorage.getItem(SettingsEnum.ProxySettings.wispServerURL) as string;
         transportVal.value = localStorage.getItem(SettingsEnum.ProxySettings.transport) as string;
     }
-    document.addEventListener("astro:page-load", () => {
-        try {
-            const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
-            const proxySelectVal = document.getElementById('proxy') as HTMLSelectElement;
-            const openInButton = document.getElementById('setopenin') as HTMLButtonElement;
-            const openInVal = document.getElementById('openin') as HTMLSelectElement;
-            const searchEngineButton = document.getElementById('setsearchengine') as HTMLButtonElement;
-            const searchEngineVal = document.getElementById('searchengine') as HTMLSelectElement;
-            const wispServerButton = document.getElementById('setwispurl') as HTMLButtonElement;
-            const wispServerVal = document.getElementById('wispurl') as HTMLSelectElement;
-            const transportButton = document.getElementById('settransport') as HTMLButtonElement;
-            const transportVal = document.getElementById('transport') as HTMLSelectElement;
-            setup(proxySelectVal, openInVal, searchEngineVal, wispServerVal, transportVal);
-            proxyButton.addEventListener("click", () => {
-                settings.proxySettings.changeProxy(proxySelectVal.value);
-                toast('.proxyMessage');
-            });
-            openInButton.addEventListener("click", () => {
-                settings.proxySettings.openIn(openInVal.value)
-                toast('.openInMessage');
-            });
-            searchEngineButton.addEventListener('click', () => {
-                settings.proxySettings.setSearchEngine(searchEngineVal.value);
-                toast('.searchEngineMessage');
-            });
-            wispServerButton.addEventListener('click', () => {
-                settings.proxySettings.setWispURL(wispServerVal.value);
-                toast('.wispUrlMessage');
-            });
-            transportButton.addEventListener('click', () => {
-                settings.proxySettings.setTransport(transportVal.value);
-                toast('.transportMessage');
-            });
-        }
-        catch(_) {/* Don't return anything on purpose */}
+    pageLoad(() => {
+        const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
+        const proxySelectVal = document.getElementById('proxy') as HTMLSelectElement;
+        const openInButton = document.getElementById('setopenin') as HTMLButtonElement;
+        const openInVal = document.getElementById('openin') as HTMLSelectElement;
+        const searchEngineButton = document.getElementById('setsearchengine') as HTMLButtonElement;
+        const searchEngineVal = document.getElementById('searchengine') as HTMLSelectElement;
+        const wispServerButton = document.getElementById('setwispurl') as HTMLButtonElement;
+        const wispServerVal = document.getElementById('wispurl') as HTMLSelectElement;
+        const transportButton = document.getElementById('settransport') as HTMLButtonElement;
+        const transportVal = document.getElementById('transport') as HTMLSelectElement;
+        setup(proxySelectVal, openInVal, searchEngineVal, wispServerVal, transportVal);
+        proxyButton.addEventListener("click", () => {
+            settings.proxySettings.changeProxy(proxySelectVal.value);
+            toast('.proxyMessage');
+        });
+        openInButton.addEventListener("click", () => {
+            settings.proxySettings.openIn(openInVal.value)
+            toast('.openInMessage');
+        });
+        searchEngineButton.addEventListener('click', () => {
+            settings.proxySettings.setSearchEngine(searchEngineVal.value);
+            toast('.searchEngineMessage');
+        });
+        wispServerButton.addEventListener('click', () => {
+            settings.proxySettings.setWispURL(wispServerVal.value);
+            toast('.wispUrlMessage');
+        });
+        transportButton.addEventListener('click', () => {
+            settings.proxySettings.setTransport(transportVal.value);
+            toast('.transportMessage');
+        });
     })
 </script>

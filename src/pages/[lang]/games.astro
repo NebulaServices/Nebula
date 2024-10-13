@@ -13,18 +13,15 @@ export const prerender = true;
 <script>
     import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { Settings } from "@utils/settings/index";
-    document.addEventListener("astro:page-load", async function () {
-        try {
-            const iframe = document.getElementById("chango") as HTMLIFrameElement;
-            if (iframe) {
-                initSw().then(() => {
-                    setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
-                        iframe.src = __uv$config!.prefix + __uv$config.encodeUrl!("https://radon.games");
-                    });
+    import { pageLoad } from "@utils/events";
+    pageLoad(async () => {
+        const iframe = document.getElementById("chango") as HTMLIFrameElement;
+        if (iframe) {
+            initSw().then(() => {
+                setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
+                    iframe.src = __uv$config!.prefix + __uv$config.encodeUrl!("https://radon.games");
                 });
-            }
-        }
-        catch (_) {
+            });
         }
     });
 </script>
