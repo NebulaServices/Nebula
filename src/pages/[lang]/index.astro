@@ -9,22 +9,17 @@ export function getStaticPaths() {
 export const prerender = true;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+import { VERSION } from "astro:env/client";
 ---
 
 <Layout title="Nebula">
-  <div
-    class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center"
-  >
-    <div
-      class="w-full flex flex-col justify-center items-center content-center h-2/4"
-    >
+  <div class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center">
+    <div class="w-full flex flex-col justify-center items-center content-center h-2/4">
       <div class="flex flex-row items-center mb-8">
         <div class="h-32 w-32 fill-navbar-text-color">
           <Logo />
         </div>
-        <h1
-          class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
-        >
+        <h1 class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto">
           nebula.
         </h1>
       </div>
@@ -42,7 +37,11 @@ const t = useTranslations(lang);
     <iframe
       id="neb-iframe"
       class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"
-    ></iframe>
+      ></iframe>
+    <div id="version" class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between"> 
+        <p> Version: { VERSION } </p>
+        <p> &copy; Nebula Services 2024 </p>
+    </div>
   </div>
 </Layout>
 <script>
@@ -146,9 +145,10 @@ const t = useTranslations(lang);
             `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`
           );
           const data = await resp.json();
-          if (data) {
+          const filteredData = data.slice(0,8) //Trim to only about 8 results. Any more and our omnibox dies
+          if (filteredData) {
             omnibox.innerHTML = "";
-            data.map((results: Suggestion) => {
+            filteredData.map((results: Suggestion) => {
               let span = document.createElement("span");
               let pTag = document.createElement("p");
               span.classList.add(

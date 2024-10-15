@@ -3,6 +3,7 @@ const { packageName } = Astro.params;
 import Layout from "@layouts/Layout.astro";
 const response = await fetch(new URL("/api/packages/" + packageName, Astro.url));
 const assetsJson = await response.json();
+import { Icon } from "astro-icon/components";
 ---
 
 <Layout title={`Package: ${packageName}`}>

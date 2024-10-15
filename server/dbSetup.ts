@@ -31,15 +31,14 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
     //We have some packages that need to be installed if they aren't.
     const items: Items[] = [
         { 
-            package_name: 'com.nebula.cybermonay', 
-            title: 'Cyber Monay', 
-            image: 'cyber_monay.jpg',
+            package_name: 'com.nebula.gruvbox', 
+            title: 'Gruvbox', 
+            image: 'com.nebula.gruvbox.jpeg',
             author: 'Nebula Services',
             version: '1.0.0',
-            description: 'A parody of the famous "Cyber Monay" hack!',
-            tags: ["Hacking", "Animated", "Funny"],
-            payload: "com.nebula.cybermonay.css",
-            background_video: "cyber_monay_test.mp4",
+            description: 'The gruvbox theme',
+            tags: ["Theme", "Simple"],
+            payload: "com.nebula.gruvbox.css",
             type: 'theme'
         }
     ]

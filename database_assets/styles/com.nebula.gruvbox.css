@@ -1,0 +1,22 @@
+:root {
+    --background-primary: #282828;
+    --background-lighter: #3c3836;
+    --navbar-color: #504945;
+    --navbar-height: 60px;
+    --navbar-text-color: #fbf1c7;
+    --navbar-link-color: #ebdbb2;
+    --navbar-link-hover-color: #fabd2f;
+    --navbar-font: "Roboto", sans-serif;
+    --input-text-color: #b8bb26;
+    --input-placeholder-color: #928374;
+    --input-background-color: #1d2021;
+    --input-border-color: #b8bb26;
+    --input-border-size: 1.3px;
+    --navbar-logo-filter: none;
+    --dropdown-option-hover-color: #665c54;
+    --tab-color: #1d2021;
+    --border-color: #b8bb26;
+    --highlight-color: #fe8019;
+    --accent-color: #83a598;
+    --secondary-text-color: #d3869b;
+}
