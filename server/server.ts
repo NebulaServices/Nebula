@@ -24,6 +24,8 @@ const db = new Sequelize(parsedDoc.db.name, parsedDoc.db.username, parsedDoc.db.
     storage: 'database.sqlite' //this is sqlite only
 });
 
+type CatalogType = "theme" | "plugin"
+
 interface Catalog {
     package_name: string
     title: string
@@ -35,7 +37,7 @@ interface Catalog {
     background_image: string
     background_video: string 
     payload: string
-    type: string
+    type: CatalogType
 }
 
 interface CatalogModel extends Catalog, Model<InferAttributes<CatalogModel>, InferCreationAttributes<CatalogModel>> {};

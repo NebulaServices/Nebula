@@ -1,7 +1,7 @@
 {
   "name": "nebula-astro",
   "type": "module",
-  "version": "0.0.1",
+  "version": "9.0.0",
   "scripts": {
     "dev": "concurrently \"astro dev\" \"tsx --watch server/server.ts\"",
     "start": "node server/server.js",

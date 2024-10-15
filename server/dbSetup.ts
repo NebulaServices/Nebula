@@ -16,7 +16,7 @@ async function installItems(db: ModelStatic<CatalogModel>, items: Items[]) {
             title: item.title,
             image: item.image,
             author: item.author,
-            version: item.author,
+            version: item.version,
             description: item.description,
             tags: item.tags,
             payload: item.payload,
@@ -39,6 +39,17 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             description: 'The gruvbox theme',
             tags: ["Theme", "Simple"],
             payload: "com.nebula.gruvbox.css",
+            type: 'theme'
+        },
+        {
+            package_name: 'com.nebula.oled',
+            title: 'Oled theme',
+            image: 'com.nebula.oled.jpg',
+            author: 'Nebula Services',
+            version: '1.0.0',
+            description: 'A sleek & simple Oled theme for Nebula',
+            tags: ['Theme', 'Simple', 'Sleek'],
+            payload: 'com.nebula.oled.css',
             type: 'theme'
         }
     ]
