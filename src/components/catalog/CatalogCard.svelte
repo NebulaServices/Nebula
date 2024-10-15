@@ -19,7 +19,7 @@ const assets = getAssets();
             {#if Object.keys(data).length > 0}
                 <div class="flex flex-row gap-6 flex-wrap justify-center">
                     {#each Object.entries(data) as [key, asset]}
-                        <a href={`/assets/${key}`}>
+                        <a href={`/catalog/package/${key}`}>
                             <div class="bg-navbar-color w-64 rounded-3xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
                                 <img src={`/images/${asset.image}`} alt={asset.title} class="w-full h-40 object-cover" />
                                 <div class="p-6 text-sm">

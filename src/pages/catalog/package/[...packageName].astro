@@ -3,7 +3,6 @@ const { packageName } = Astro.params;
 import Layout from "@layouts/Layout.astro";
 const response = await fetch(new URL("/api/packages/" + packageName, Astro.url));
 const assetsJson = await response.json();
-import { Icon } from "astro-icon/components";
 ---
 
 <Layout title={`Package: ${packageName}`}>
@@ -19,7 +18,7 @@ import { Icon } from "astro-icon/components";
                 {assetsJson.backgroundImage && 
                     <div style={{backgroundImage: `url(/images/${assetsJson.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
                 }
-                {!assetsJson.background_video && !assetsJson.backgroundImage && <img src={`/images/${assetsJson.image}`} alt={assetsJson .title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
+                {!assetsJson.background_video && !assetsJson.backgroundImage && <img loading="lazy" src={`/images/${assetsJson.image}`} alt={assetsJson.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
                 <div class="flex flex-col ml-7 p-16">
                     <p class="text-xl">{assetsJson.type}</p>
                     <h1 class="text-4xl roboto font-semibold">{assetsJson.title}</h1>
