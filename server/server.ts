@@ -234,7 +234,7 @@ app.post("/api/create-package", async (request: CreateReq, reply) => {
             payload: request.body.payload,
             background_video: request.body.background_video,
             background_image: request.body.background_image,
-            type: request.body.type
+            type: request.body.type as CatalogType
         });
     })
     .catch(async () => {
