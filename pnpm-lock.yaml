@@ -95,6 +95,9 @@ importers:
       nanostores:
         specifier: ^0.10.3
         version: 0.10.3
+      ora:
+        specifier: ^8.1.0
+        version: 8.1.0
       pg:
         specifier: ^8.13.0
         version: 8.13.0

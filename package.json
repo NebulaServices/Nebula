@@ -45,6 +45,7 @@
     "libcurl.js-new": "npm:libcurl.js@^0.6.16",
     "multer": "1.4.5-lts.1",
     "nanostores": "^0.10.3",
+    "ora": "^8.1.0",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.4",

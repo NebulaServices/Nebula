@@ -24,7 +24,7 @@ const db = new Sequelize(parsedDoc.db.name, parsedDoc.db.username, parsedDoc.db.
     storage: 'database.sqlite' //this is sqlite only
 });
 
-interface CatalogModel extends Model<InferAttributes<CatalogModel>, InferCreationAttributes<CatalogModel>> {
+interface Catalog {
     package_name: string
     title: string
     description: string
@@ -37,6 +37,9 @@ interface CatalogModel extends Model<InferAttributes<CatalogModel>, InferCreatio
     payload: string
     type: string
 }
+
+interface CatalogModel extends Catalog, Model<InferAttributes<CatalogModel>, InferCreationAttributes<CatalogModel>> {};
+
 const catalogAssets = db.define<CatalogModel>("catalog_assets", {
     package_name: { type: DataTypes.TEXT, unique: true },
     title: { type: DataTypes.TEXT },
@@ -254,11 +257,11 @@ const titleColors = {
 
 
 console.log(gradient(Object.values(titleColors)).multiline(titleText as string));
-app.listen({ port: port, host: '0.0.0.0' }).then(() => {
+app.listen({ port: port, host: '0.0.0.0' }).then(async () => {
     console.log(chalk.hex('#7967dd')(`Server listening on ${chalk.hex('#eb6f92').bold('http://localhost:' + port + '/')}`));
     console.log(chalk.hex('#7967dd')(`Server also listening on ${chalk.hex('#eb6f92').bold('http://0.0.0.0:' + port + '/')}`));
-    catalogAssets.sync();
-    setupDB(catalogAssets);
+    await catalogAssets.sync()
+    await setupDB(catalogAssets);
 });
 
-export { CatalogModel }
+export { CatalogModel, Catalog }
