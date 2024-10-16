@@ -60,6 +60,7 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.3",
     "bufferutil": "^4.0.8",
+    "sharp": "^0.33.5",
     "tsx": "^4.19.1"
   }
 }
