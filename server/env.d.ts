@@ -1,1 +1,1 @@
-declare module '@rubynetwork/rammerhead/src/server/index.js';
+declare module "@rubynetwork/rammerhead/src/server/index.js";

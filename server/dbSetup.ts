@@ -1,12 +1,12 @@
-import chalk from "chalk";
-import { CatalogModel, Catalog } from "./server.js";
-import { ModelStatic } from "sequelize";
 import { fileURLToPath } from "node:url";
-import ora from 'ora';
+import chalk from "chalk";
+import ora from "ora";
+import { ModelStatic } from "sequelize";
+import { Catalog, CatalogModel } from "./server.js";
 
 interface Items extends Omit<Catalog, "background_video" | "background_image"> {
-    background_video?: string
-    background_image?: string
+    background_video?: string;
+    background_image?: string;
 }
 
 async function installItems(db: ModelStatic<CatalogModel>, items: Items[]) {
@@ -30,35 +30,35 @@ async function installItems(db: ModelStatic<CatalogModel>, items: Items[]) {
 async function setupDB(db: ModelStatic<CatalogModel>) {
     //We have some packages that need to be installed if they aren't.
     const items: Items[] = [
-        { 
-            package_name: 'com.nebula.gruvbox', 
-            title: 'Gruvbox', 
-            image: 'gruvbox.jpeg',
-            author: 'Nebula Services',
-            version: '1.0.0',
-            description: 'The gruvbox theme',
+        {
+            package_name: "com.nebula.gruvbox",
+            title: "Gruvbox",
+            image: "gruvbox.jpeg",
+            author: "Nebula Services",
+            version: "1.0.0",
+            description: "The gruvbox theme",
             tags: ["Theme", "Simple"],
             payload: "gruvbox.css",
-            type: 'theme'
+            type: "theme"
         },
         {
-            package_name: 'com.nebula.oled',
-            title: 'Oled theme',
-            image: 'oled.jpg',
-            author: 'Nebula Services',
-            version: '1.0.0',
-            description: 'A sleek & simple Oled theme for Nebula',
-            tags: ['Theme', 'Simple', 'Sleek'],
-            payload: 'oled.css',
-            type: 'theme'
+            package_name: "com.nebula.oled",
+            title: "Oled theme",
+            image: "oled.jpg",
+            author: "Nebula Services",
+            version: "1.0.0",
+            description: "A sleek & simple Oled theme for Nebula",
+            tags: ["Theme", "Simple", "Sleek"],
+            payload: "oled.css",
+            type: "theme"
         }
-    ]
+    ];
     const dbItems = await db.findAll();
     if (dbItems.length === 0) {
-        const spinner = ora(chalk.hex('#7967dd')('Performing DB setup...')).start();
+        const spinner = ora(chalk.hex("#7967dd")("Performing DB setup...")).start();
         await installItems(db, items);
-        spinner.succeed(chalk.hex('#eb6f92')('DB setup complete!'));
+        spinner.succeed(chalk.hex("#eb6f92")("DB setup complete!"));
     }
 }
 
-export { setupDB }
+export { setupDB };

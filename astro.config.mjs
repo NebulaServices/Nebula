@@ -4,9 +4,9 @@ import tailwind from "@astrojs/tailwind";
 import { baremuxPath } from "@mercuryworkshop/bare-mux";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
+import playformCompress from "@playform/compress";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import icon from "astro-icon";
-import playformCompress from "@playform/compress";
 import { defineConfig, envField } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { version } from "./package.json";
@@ -14,12 +14,17 @@ export default defineConfig({
     experimental: {
         env: {
             schema: {
-                VERSION: envField.string({ context: 'client', access: 'public', optional: true, default: version })
+                VERSION: envField.string({
+                    context: "client",
+                    access: "public",
+                    optional: true,
+                    default: version
+                })
             }
         }
     },
     integrations: [
-        tailwind(), 
+        tailwind(),
         icon(),
         svelte(),
         playformCompress({
@@ -82,7 +87,7 @@ export default defineConfig({
                 "/styles": {
                     target: "http://localhost:8080",
                     changeOrigin: true
-                },
+                }
             }
         }
     },

@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import { type ImageMetadata } from "astro";
 const images = import.meta.glob<{ default: ImageMetadata }>(
-    '/src/assets/contribs/*.{jpeg,jpg,png,gif,webp}'
+    "/src/assets/contribs/*.{jpeg,jpg,png,gif,webp}"
 );
 
 interface Props {
