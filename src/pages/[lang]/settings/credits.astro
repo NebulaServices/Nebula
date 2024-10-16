@@ -1,0 +1,34 @@
+---
+import InstalledThemes from "@components/catalog/InstalledThemes.svelte";
+import Layout from "@layouts/Layout.astro";
+import SettingsLayout from "@layouts/SettingsLayout.astro";
+import SettingsSection from "@layouts/SettingsSection.astro";
+import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+export function getStaticPaths() {
+    const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
+    return STATIC_PATHS;
+}
+export const prerender = true;
+import CreditsCard from "@components/settings/CreditsCard.astro";
+---
+
+<Layout title="Settings">
+  <SettingsLayout title="Credits">
+    <SettingsSection title="Site Developers & Maintainers" subtitle="Thank you to all of the devs and maintainers!">
+      <div class="flex flex-row flex-wrap gap-4 items-center roboto">
+        <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
+            <CreditsCard image="/src/assets/contribs/rift.jpeg" name="Rifting" link="https://github.com/rifting" />
+            <CreditsCard image="/src/assets/contribs/motortruck1221.png" name="MotorTruck1221" link="https://motortruck1221.com" />
+        </div>
+      </div>
+    </SettingsSection>
+    <SettingsSection title="Tools & Project" subtitle="Nebula wouldn't be possible without these tools">
+        <div class="flex flex-row flex-wrap gap-6 items-center roboto"></div>
+    </SettingsSection>
+    <SettingsSection title="Translators" subtitle="Translations are made possible by these lovely individuals">
+    </SettingsSection>
+  </SettingsLayout>
+</Layout>

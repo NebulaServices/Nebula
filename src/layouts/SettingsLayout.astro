@@ -22,6 +22,9 @@ import { Icon } from "astro-icon/components";
       <SidebarButton title="Misc" route={`/${lang}/settings/misc`}>
         <Icon name="ph:gear" class="h-6 w-6 text-text-color transistion duration-500 group-hover:text-text-hover-color md:h-6 md:w=6" />
       </SidebarButton>
+      <SidebarButton title="Credits" route={`/${lang}/settings/credits`}>
+        <Icon name="ph:user" class="h-6 w-6 text-text-color transistion duration-500 group-hover:text-text-hover-color md:h-6 md:w=6" />
+      </SidebarButton>
     </div>
     <div class="p-8 md:w-10/12 overflow-y-auto">
       <p class="text-5xl font-semibold mb-5">{t("settings.settings")}</p>
