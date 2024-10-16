@@ -51,6 +51,17 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple", "Sleek"],
             payload: "oled.css",
             type: "theme"
+        },
+        {
+            package_name: "com.nebula.lightTheme",
+            title: "Light Theme",
+            image: "light.png",
+            author: "Nebula Services",
+            version: "1.0.0",
+            description: "A sleek light theme for Nebula",
+            tags: ["Theme", "Simple", "light", "light mode"],
+            payload: "light.css",
+            type: "theme"
         }
     ];
     const dbItems = await db.findAll();
