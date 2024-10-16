@@ -2,6 +2,7 @@
 import { type Package, type PackageType } from "./types";
 const AppearanceSettings = {
     themes: "nebula||themes",
+    themeName: "nebula||themeName",
     stylePayload: "nebula||stylepayload",
     video: "nebula||video",
     image: "nebula||image"
@@ -16,7 +17,7 @@ const marketPlaceSettings = {
                 if (!themes.find((theme: any) => theme === packageName)) {
                     themes.push(packageName);
                     localStorage.setItem(AppearanceSettings.themes, JSON.stringify(themes));
-                    this.changeTheme(false, payload, p.theme.video, p.theme.bgImage);
+                    this.changeTheme(false, payload, p.theme.video, p.theme.bgImage, packageName);
                 }
                 resolve();
             }
@@ -41,11 +42,13 @@ const marketPlaceSettings = {
         reset: Boolean,
         payload?: any,
         videoSource?: string,
-        bgSource?: string
+        bgSource?: string,
+        name?: string
     ) {
         async function resetCSS() {
             const stylesheet = document.getElementById("stylesheet")! as HTMLLinkElement;
             localStorage.removeItem(AppearanceSettings.stylePayload);
+            localStorage.removeItem(AppearanceSettings.themeName);
             stylesheet.href = "/nebula.css";
         }
         function resetVideo() {
@@ -72,7 +75,7 @@ const marketPlaceSettings = {
             if (!localStorage.getItem(AppearanceSettings.video)) {
                 localStorage.setItem(AppearanceSettings.video, videoSource as string);
             }
-            source.src = `/videos/${videoSource ? videoSource : localStorage.getItem(AppearanceSettings.video)}`;
+            source.src = `/packages/${name}/${videoSource ? videoSource : localStorage.getItem(AppearanceSettings.video)}`;
         }
         if (bgSource || localStorage.getItem(AppearanceSettings.image)) {
             resetVideo();
@@ -82,18 +85,19 @@ const marketPlaceSettings = {
                 localStorage.setItem(AppearanceSettings.image, bgSource as string);
             }
             image.style.display = "block";
-            image.src = `/images/${bgSource ? bgSource : localStorage.getItem(AppearanceSettings.image)}`;
+            image.src = `/packages/${name}/${bgSource ? bgSource : localStorage.getItem(AppearanceSettings.image)}`;
         }
         if (payload) {
             const stylesheet = document.getElementById("stylesheet")! as HTMLLinkElement;
             if (localStorage.getItem(AppearanceSettings.stylePayload) !== payload) {
                 localStorage.setItem(AppearanceSettings.stylePayload, payload);
+                localStorage.setItem(AppearanceSettings.themeName, name as string);
             }
-            stylesheet.href = `/styles/${localStorage.getItem(AppearanceSettings.stylePayload)}`;
+            stylesheet.href = `/packages/${name}/${localStorage.getItem(AppearanceSettings.stylePayload)}`;
         } else {
             if (localStorage.getItem(AppearanceSettings.stylePayload)) {
                 const stylesheet = document.getElementById("stylesheet")! as HTMLLinkElement;
-                stylesheet.href = `/styles/${localStorage.getItem(AppearanceSettings.stylePayload)}`;
+                stylesheet.href = `/packages/${localStorage.getItem(AppearanceSettings.themeName)}/${localStorage.getItem(AppearanceSettings.stylePayload)}`;
             }
         }
     }

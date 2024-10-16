@@ -13,6 +13,7 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize }
 import { pipeline } from "node:stream/promises";
 import { createWriteStream } from "node:fs";
 import { setupDB } from "./dbSetup.js";
+import { access, constants, mkdir } from "node:fs/promises";
 
 
 const app = Fastify({ logger: parsedDoc.server.server.logging, ignoreDuplicateSlashes: true, ignoreTrailingSlash: true, serverFactory: serverFactory });
@@ -43,7 +44,7 @@ interface Catalog {
 interface CatalogModel extends Catalog, Model<InferAttributes<CatalogModel>, InferCreationAttributes<CatalogModel>> {};
 
 const catalogAssets = db.define<CatalogModel>("catalog_assets", {
-    package_name: { type: DataTypes.TEXT, unique: true },
+    package_name: { type: DataTypes.STRING, unique: true },
     title: { type: DataTypes.TEXT },
     description: { type: DataTypes.TEXT },
     author: { type: DataTypes.TEXT },
@@ -68,24 +69,9 @@ await app.register(fastifyStatic, {
 });
 
 await app.register(fastifyStatic, {
-    root: fileURLToPath(new URL('../database_assets/image', import.meta.url)),
-    prefix: '/images/',
+    root: fileURLToPath(new URL('../database_assets', import.meta.url)),
+    prefix: '/packages/',
     decorateReply: false
-});
-await app.register(fastifyStatic, {
-    root: fileURLToPath(new URL('../database_assets/video', import.meta.url)),
-    prefix: '/videos/',
-    decorateReply: false 
-});
-await app.register(fastifyStatic, {
-    root: fileURLToPath(new URL('../database_assets/styles', import.meta.url)),
-    prefix: '/styles/',
-    decorateReply: false 
-});
-await app.register(fastifyStatic, {
-    root: fileURLToPath(new URL('../database_assets/scripts', import.meta.url)),
-    prefix: '/scripts/',
-    decorateReply: false 
 });
 
 await app.register(fastifyMiddie);
@@ -155,75 +141,65 @@ app.get("/api/packages/:package", async (request: PackageReq, reply) => {
     }
 });
 
-type UploadReq = FastifyRequest<{Headers: { psk: string }}>;
-type CreateReq = FastifyRequest<{Headers: { psk: string}, Body: { uuid: string, title: string, image: string, author: string, version: string, description: string, tags: object | any, payload: string, background_video: string, background_image: string, type: string }}>;
-async function verifyReq(request: UploadReq | CreateReq, reply: FastifyReply, upload: Boolean, data: any) {
-    return new Promise<void>((resolve, reject) => {
-        if (parsedDoc.marketplace.enabled === false) {
-            reply.status(500).send({ error: 'Marketplace is disabled!' });
-            reject();
-        }
-        else if (request.headers.psk !== parsedDoc.marketplace.psk) {
-            reply.status(403).send({ error: 'PSK not correct!' });
-            reject();
-        }
-        else if (upload && !data) {
-            reply.status(400).send({ error: 'No file uploaded!' });
-            reject();
-        }
-        else { resolve(); }
-    });
+type UploadReq = FastifyRequest<{Headers: { psk: string, packagename: string }}>;
+type CreateReq = FastifyRequest<{Headers: { psk: string }, 
+    Body: { 
+        uuid: string, 
+        title: string, 
+        image: string, 
+        author: string, 
+        version: string, 
+        description: string, 
+        tags: object | any,
+        payload: string, 
+        background_video: string, 
+        background_image: string, 
+        type: CatalogType 
+}}>;
+interface VerifyStatus {
+    status: number;
+    error?: Error;
+}
+async function verifyReq(request: UploadReq | CreateReq, upload: Boolean, data: any): Promise<VerifyStatus> {
+    if (parsedDoc.marketplace.enabled === false) {
+        return {status: 500, error: new Error('Marketplace Is disabled!')};
+    }
+    else if (request.headers.psk !== parsedDoc.marketplace.psk) {
+        return {status: 403, error: new Error("PSK isn't correct!")};
+    }
+    else if(upload && !request.headers.packagename) {
+        return {status: 500, error: new Error('No packagename defined!')};
+    }
+    else if (upload && !data) {
+        return {status: 400, error: new Error('No file uploaded!')};
+    }
+    else { return {status: 200 }; }
 }
 
-app.post("/api/upload-image", async (request: UploadReq, reply) => {
+app.post("/api/upload-asset", async (request: UploadReq, reply) => {
     const data = await request.file();
-    verifyReq(request, reply, true, data)
-    .then(async () => {
-        await pipeline(data.file, createWriteStream(fileURLToPath(new URL(`../database_assets/image/${data.filename}`, import.meta.url))));
-        reply.send({ message: 'File uploaded successfully!', filename: data.filename });
-    })
-    .catch(() => { 
-        if (parsedDoc.server.server.logging) { console.error(chalk.yellow.bold('Caught error from verify function. \n Error caused while uploading image')) };
-    });
-});
-app.post("/api/upload-video", async (request: UploadReq, reply) => {
-    const data = await request.file();
-    verifyReq(request, reply, true, data)
-    .then(async () => {
-        await pipeline(data.file, createWriteStream(fileURLToPath(new URL(`../database_assets/video/${data.filename}`, import.meta.url))));
-        reply.send({ message: 'File uploaded successfully!', filename: data.filename });
-    })
-    .catch(() => { 
-        if (parsedDoc.server.server.logging) { console.error(chalk.yellow.bold('Caught error from verify function. \n Error caused while uploading video')) };
-    });
-});
-app.post("/api/upload-style", async (request: UploadReq, reply) => {
-    const data = await request.file();
-    verifyReq(request, reply, true, data)
-    .then(async () => {
-        await pipeline(data.file, createWriteStream(fileURLToPath(new URL(`../database_assets/styles/${data.filename}`, import.meta.url))));
-        reply.send({ message: 'File uploaded successfully!', filename: data.filename });
-    })
-    .catch(() => { 
-        if (parsedDoc.server.server.logging) { console.error(chalk.yellow.bold('Caught error from verify function. \n Error caused while uploading style')) };
-    });
-});
-app.post("/api/upload-script", async (request: UploadReq, reply) => {
-    const data = await request.file();
-    verifyReq(request, reply, true, data)
-    .then(async () => {
-        await pipeline(data.file, createWriteStream(fileURLToPath(new URL(`../database_assets/video/${data.filename}`, import.meta.url))));
-        reply.send({ message: 'File uploaded successfully!', filename: data.filename });
-    })
-    .catch(() => { 
-        if (parsedDoc.server.server.logging) { console.error(chalk.yellow.bold('Caught error from verify function. \n Error caused while uploading script')) };
-    });
+    const verify: VerifyStatus = await verifyReq(request, true, data);
+    if (verify.error !== undefined) {
+        reply.status(verify.status).send({ status: verify.error.message });
+    }
+    else {
+        try { 
+            await pipeline(data.file, createWriteStream(fileURLToPath(new URL(`../database_assets/${request.headers.packagename}/${data.filename}`, import.meta.url))));
+        }
+        catch (error) {
+            return reply.status(500).send({ status: `File couldn't be uploaded! (Package most likely doesn't exist)` });
+        }
+        return reply.status(verify.status).send({ status: 'File uploaded successfully!' });
+    }
 });
 
 app.post("/api/create-package", async (request: CreateReq, reply) => {
-    verifyReq(request, reply, false, undefined)
-    .then(async () => {
-       await catalogAssets.create({
+    const verify: VerifyStatus = await verifyReq(request, false, undefined);
+    if (verify.error !== undefined) {
+        reply.status(verify.status).send({ status: verify.error.message });
+    }
+    else {
+       const body: Catalog = {
             package_name: request.body.uuid,
             title: request.body.title,
             image: request.body.image,
@@ -235,11 +211,30 @@ app.post("/api/create-package", async (request: CreateReq, reply) => {
             background_video: request.body.background_video,
             background_image: request.body.background_image,
             type: request.body.type as CatalogType
+       }
+       await catalogAssets.create({
+            package_name: body.package_name,
+            title: body.title,
+            image: body.image,
+            author: body.author,
+            version: body.version,
+            description: body.description,
+            tags: body.tags,
+            payload: body.payload,
+            background_video: body.background_video,
+            background_image: body.background_image,
+            type: body.type
         });
-    })
-    .catch(async () => {
-        if (parsedDoc.server.server.logging) { console.error(chalk.yellow.bold('Caught error from verify function. \n Error caused while creating package')) };
-    });
+        const assets = fileURLToPath(new URL('../database_assets', import.meta.url));
+        try {
+            await access(`${assets}/${body.package_name}/`, constants.F_OK);
+            return reply.status(500).send({ status: 'Package already exists!' });
+        }
+        catch (err) {
+            await mkdir(`${assets}/${body.package_name}/`);
+            return reply.status(verify.status).send({ status: 'Package created successfully!' });
+        }
+    }
 });
 
 app.use(ssrHandler);

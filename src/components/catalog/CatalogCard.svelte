@@ -21,7 +21,7 @@ const assets = getAssets();
                     {#each Object.entries(data) as [key, asset]}
                         <a href={`/catalog/package/${key}`}>
                             <div class="bg-navbar-color w-64 rounded-3xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-                                <img src={`/images/${asset.image}`} alt={asset.title} class="w-full h-40 object-cover" />
+                                <img src={`/packages/${key}/${asset.image}`} alt={asset.title} class="w-full h-40 object-cover" />
                                 <div class="p-6 text-sm">
                                     <p class="font-semibold text-2xl mb-2"> {asset.title} </p>
                                     <p class="mb-4"> {asset.description} </p>

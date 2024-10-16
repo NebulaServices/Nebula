@@ -33,23 +33,23 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
         { 
             package_name: 'com.nebula.gruvbox', 
             title: 'Gruvbox', 
-            image: 'com.nebula.gruvbox.jpeg',
+            image: 'gruvbox.jpeg',
             author: 'Nebula Services',
             version: '1.0.0',
             description: 'The gruvbox theme',
             tags: ["Theme", "Simple"],
-            payload: "com.nebula.gruvbox.css",
+            payload: "gruvbox.css",
             type: 'theme'
         },
         {
             package_name: 'com.nebula.oled',
             title: 'Oled theme',
-            image: 'com.nebula.oled.jpg',
+            image: 'oled.jpg',
             author: 'Nebula Services',
             version: '1.0.0',
             description: 'A sleek & simple Oled theme for Nebula',
             tags: ['Theme', 'Simple', 'Sleek'],
-            payload: 'com.nebula.oled.css',
+            payload: 'oled.css',
             type: 'theme'
         }
     ]

@@ -64,11 +64,12 @@ export default defineConfig({
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api\/catalog-assets/, "")
                 },
-                "/images": {
-                    target: "http://localhost:8080",
-                    changeOrigin: true
+                "/api/packages": {
+                    target: "http://localhost:8080/api/packages",
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/api\/packages/, "")
                 },
-                "/videos": {
+                "/packages": {
                     target: "http://localhost:8080",
                     changeOrigin: true
                 },
@@ -82,14 +83,6 @@ export default defineConfig({
                     target: "http://localhost:8080",
                     changeOrigin: true
                 },
-                "/api/packages": {
-                    target: "http://localhost:8080",
-                    changeOrigin: true
-                },
-                "/api/catalog-pages": {
-                    target: "http://localhost:8080",
-                    changeOrigin: true
-                }
             }
         }
     },

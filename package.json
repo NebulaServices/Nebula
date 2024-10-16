@@ -41,7 +41,6 @@
     "concurrently": "^8.2.2",
     "fastify": "^5.0.0",
     "form-data": "^4.0.1",
-    "formdata-node": "^6.0.3",
     "gradient-string": "^3.0.0",
     "libcurl.js-new": "npm:libcurl.js@^0.6.16",
     "nanostores": "^0.10.3",

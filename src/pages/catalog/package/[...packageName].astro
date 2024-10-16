@@ -11,14 +11,14 @@ const assetsJson = await response.json();
         {!assetsJson.error &&
             <div class="flex flex-col md:flex-row items-center text-text-color bg-navbar-color rounded-2xl">
                 {assetsJson.background_video && 
-                    <video src={`/videos/${assetsJson.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
+                    <video src={`/packages/${packageName}/${assetsJson.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
                         Your browser does not support the video tag.
                     </video>
                 }
                 {assetsJson.backgroundImage && 
-                    <div style={{backgroundImage: `url(/images/${assetsJson.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
+                    <div style={{backgroundImage: `url(/packages/${packageName}/${assetsJson.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
                 }
-                {!assetsJson.background_video && !assetsJson.backgroundImage && <img loading="lazy" src={`/images/${assetsJson.image}`} alt={assetsJson.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
+                {!assetsJson.background_video && !assetsJson.backgroundImage && <img loading="lazy" src={`/packages/${packageName}/${assetsJson.image}`} alt={assetsJson.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
                 <div class="flex flex-col ml-7 p-16">
                     <p class="text-xl">{assetsJson.type}</p>
                     <h1 class="text-4xl roboto font-semibold">{assetsJson.title}</h1>
