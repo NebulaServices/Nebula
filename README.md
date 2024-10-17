@@ -78,12 +78,12 @@ git clone https://github.com/nebulaservices/nebula && cd nebula
 npm i
 ```
 
-3. Create a .env file
+3. Create a `config.toml` file
 ```bash
-cp .env.example .env
+cp config.example.toml config.toml
 ```
 
-4. Modify the .env file to you liking (docs [here](#environment))
+4. Modify the `config.toml` file to you liking (docs [here](#environment))
 ```
 nano .env
 ```
@@ -101,13 +101,6 @@ npm start
 > [!NOTE]
 > You can run `npm run bstart` to build and start together
 ---
-
-### Games
-
-- By default, games are reverse proxied by the server
-    - Game assets are located [here](https://github.com/ruby-network/ruby-assets)
-- To turn off Games, and access to them see [#environment](#environment)
-
 
 ### Docker
 
@@ -194,8 +187,31 @@ docker compose -f ./docker-compose.build.yml build
 ## Config
 
 - There are a couple of configuration options for nebula. Most of the time, the defaults are fine, but there are instances where you may not want certain options enabled or certain things running.
-- An example config file is located [here](./config.example.toml). Config format is TOML
+- An example config file is located [here](./config.example.toml). 
+- Config format is in TOML
 
-| Variable               | Description                                                                                              | Default |
-|------------------------|----------------------------------------------------------------------------------------------------------|---------|
-| | | |
+| Variable | Description | Type | Default |
+|:----------:|:-------------:|:------:|:---------:|
+| `marketplace` | The options below are for the marketplace section | `object` | N/A |
+| `enabled` | Enable marketplace functionality | `boolean` | `true` |
+| `psk` | The password and authentication key for the marketplace. ***CHANGE FROM DEFAULT*** | `string` | `CHANGEME` |
+|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+| `db` | The below options are for the db (database) section | `object` | N/A |
+| `name` | The database name to use | `string` | `database` |
+| `username` | The username for the DB | `string` | `username` |
+| `password` | The database password. ***CHANGE FROM DEFAULT VALUE*** | `string` | `password` |
+| `postgres` | Whether to use postgres over sqlite *(recommended for large production instances)* | `boolean` | `false` |
+|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+| `postgres` | The below options are for the postgres section. (Only worry about this if you enabled postgres in the db section.) | `object` | N/A |
+| `domain` | Either the TLD or the IP address of your postgres server. | `string` | `''` |
+| `port` | The port your postgres server is listening on | `number` | `5432` |
+|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+| `server.server` | The below options are to configure the server. | `object` | N/A |
+| `port` | What port the server should listen on. *(Note: Can also be configured via environment variable `PORT`)* | `number` | `8080` |
+| `wisp` | Whether the server should use the inbuilt wisp server. (Disabled if your using an external wisp server) | `boolean` | `true` |
+| `logging` | Whether or not to enable logging. *Note: Logs are massive* | `boolean` | `true` |
+|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+| `server.rammerhead` | Configure the Rammerhead server. ***DO NOT TOUCH UNLESS YOU ARE CERTAIN YOU KNOW WHAT YOU ARE DOING*** | `object` | N/A |
+| `reverseproxy` | Whether or not the Rammerhead server is behind a reverse proxy | `boolean` | `true` |
+| `localstorage_sync` | Whether or not to use localstorage sync | `boolean` | `true` |
+| `http2` | Whether to allow http2 or not | `boolean` | `true` |
