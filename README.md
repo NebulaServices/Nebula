@@ -67,6 +67,8 @@
 - For big production instances I would recommend using Postgres over SQLite. To do this see [#config](#config)
 - By default, the Docker images use Postgres. If you would like to disable this, see [#docker](#docker)
 
+---
+
 ## Deployment
 
 ### Terminal
