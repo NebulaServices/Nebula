@@ -60,6 +60,13 @@
 -   HTML, CSS, and JavaScript (DUH)
 ---
 
+## Catalog/Marketplace
+
+- By default the marketplace is enabled, and uses SQLite
+- If you would like to disable the catalog, see [#config](#config)
+- For big production instances I would recommend using Postgres over SQLite. To do this see [#config](#config)
+- By default, the Docker images use Postgres. If you would like to disable this, see [#docker](#docker)
+
 ## Deployment
 
 ### Terminal

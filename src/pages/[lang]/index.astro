@@ -131,6 +131,7 @@ import { VERSION } from "astro:env/client";
         }
       });
       input?.addEventListener("input", async function () {
+        omnibox.innerHTML = "";
         if (!libcurlClient) {
           await libcurl.load_wasm();
           libcurl.set_websocket(WispServerURLS.default);
