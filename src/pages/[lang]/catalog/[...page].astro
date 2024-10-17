@@ -2,6 +2,9 @@
 import CatalogCard from "@components/catalog/CatalogCard.svelte";
 import Layout from "@layouts/Layout.astro";
 import Pagnation from "./pagnation.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const { page } = Astro.params;
 
@@ -20,28 +23,28 @@ const lastPage = assetsJson.pages;
           <h1 class="text-5xl font-bold"> Nebula Catalog </h1>
           <p class="text-xl"> The Nebula Catalog is a place for you to find user-created themes and plugins. </p>
       </div>
-    <CatalogCard client:only="svelte" page={page} />
+      <CatalogCard client:only="svelte" page={page} lang={lang} />
     <div class="flex flex-row pb-8 gap-4 roboto">
       {/* The first page. If the user is on this page, or the one after it, don't show it. */}
       {parseInt(page!) > 2 && (
-          <a href={"/catalog/" + 1} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"> 1 </a>
+      <a href={`/${lang}/catalog/${1}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"> 1 </a>
         )
       }
       {previousPage > 0 && (
-          <a href={"/catalog/" + previousPage} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{previousPage}</a>
+      <a href={`/${lang}/catalog/${previousPage}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{previousPage}</a>
         )
       }
       {/* The greyed out page the user is currently on */}
       <a class="w-8 h-8 bg-lighter items-center text-center content-center text-text-color rounded-md">{page}</a>
       {nextPage < lastPage && (
-        <a href={"/catalog/" + nextPage} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{nextPage}</a>
+      <a href={`/${lang}/catalog/${nextPage}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{nextPage}</a>
         )
       }
       {/* Pagnation input */}
       <Pagnation />
       {/* The last page. If the user is on this page, don't show it. */}
       {page != lastPage && (
-          <a href={"/catalog/" + assetsJson.pages} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">
+      <a href={`/${lang}/catalog/${assetsJson.pages}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">
             {assetsJson.pages}
           </a>
         )

@@ -42,7 +42,7 @@ export const prerender = true;
     import { pageLoad } from "@utils/events";
     import { navigate } from "astro:transitions/client";
     function setup() {
-        const lang = JSON.parse(localStorage.getItem('selectedLanguage') as string || '{ value: "en_US" }');
+        const lang = JSON.parse(localStorage.getItem('selectedLanguage') as string) || JSON.parse('{"value": "en_US"}');
         const languageVal = document.getElementById('lang') as HTMLSelectElement;
         languageVal!.value = lang.value;
     }
