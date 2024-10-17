@@ -1,19 +1,18 @@
 :root {
-    --background-primary: #aea2f2;
-    --background-lighter: #aea2f2;
-    --navbar-color: #d8d2fc;
+    --background-primary: hsl(310 50% 90%);
+    --background-lighter: hsl(310 50% 90%);
+    --navbar-color: hsl(310 50% 100%);
     --navbar-height: 60px;
-    --navbar-text-color: #ed1a56;
-    --navbar-link-color: #eb1a56;
-    --navbar-link-hover-color: #eb6f92;
+    --navbar-text-color: hsl(310 50% 15%);
+    --navbar-link-color: hsl(310 50% 15%);
+    --navbar-link-hover-color: hsl(310 50% 90%);
     --navbar-font: "Roboto";
-    --input-text-color: #ed1a56;
+    --input-text-color: hsl(310 50% 15%);
     --input-placeholder-color: white;
-    --input-background-color: #d8d2fc;
-    --input-border-color: #eb6f92;
+    --input-background-color: hsl(310 50% 100%);
+    --input-border-color: hsl(310 50% 25%);
     --input-border-size: 1.3px;
     --navbar-logo-filter: none;
-    --dropdown-option-hover-color: #ae2f2;
     --tab-color: var(--black);
-    --border-color: #eb6f92;
+    --border-color: hsl(310 50% 25%);
 }
