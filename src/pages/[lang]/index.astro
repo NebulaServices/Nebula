@@ -37,6 +37,8 @@ import { VERSION } from "astro:env/client";
     <iframe
       id="neb-iframe"
       class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"
+      src="/loading"
+      preload="lazy"
       ></iframe>
     <div id="version" class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between roboto"> 
         <p> Version: { VERSION } </p>
@@ -102,8 +104,10 @@ import { VERSION } from "astro:env/client";
       const input = document.getElementById("nebula-input") as HTMLInputElement;
       const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
       const omnibox = document.getElementById("omnibox") as HTMLDivElement;
+      const copyright = document.getElementById("version") as HTMLDivElement;
       input?.addEventListener("keypress", async function (event: any) {
-        if (event.key === "Enter") {
+          if (event.key === "Enter") {
+              copyright.classList.add("hidden");
           if (localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
               const key = SupportedSites[input?.value];
               switch(key) {
