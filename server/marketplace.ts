@@ -139,9 +139,7 @@ function marketplaceAPI(app: FastifyInstance) {
         upload: Boolean,
         data: any
     ): Promise<VerifyStatus> {
-        if (parsedDoc.marketplace.enabled === false) {
-            return { status: 500, error: new Error("Marketplace Is disabled!") };
-        } else if (request.headers.psk !== parsedDoc.marketplace.psk) {
+        if (request.headers.psk !== parsedDoc.marketplace.psk) {
             return { status: 403, error: new Error("PSK isn't correct!") };
         } else if (upload && !request.headers.packagename) {
             return { status: 500, error: new Error("No packagename defined!") };
