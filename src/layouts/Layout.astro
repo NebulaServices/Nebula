@@ -96,10 +96,11 @@ const { title, noHeader } = Astro.props;
           rgb(var(--accent)),
           rgb(var(--accent-light)) 30%,
           white 60%
-        );
+              );
+        font-family: Roboto, sans-serif;
       }
       html {
-        font-family: system-ui, sans-serif;
+          font-family: var(--font-family), Roboto, sans-serif;
         background: #13151a;
         background-size: 224px;
       }
@@ -115,7 +116,7 @@ const { title, noHeader } = Astro.props;
           monospace;
       }
       .roboto {
-        font-family: Roboto;
+          font-family: var(--font-family), Roboto;
       }
     </style>
   </body>

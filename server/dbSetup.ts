@@ -59,8 +59,19 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             author: "Nebula Services",
             version: "1.0.0",
             description: "A sleek light theme for Nebula",
-            tags: ["Theme", "Simple", "light", "light mode"],
+            tags: ["Theme", "Simple", "Light"],
             payload: "light.css",
+            type: "theme"
+        },
+        {
+            package_name: "com.nebula.retro",
+            title: "Retro Theme",
+            image: "retro.png",
+            author: "Nebula Services",
+            version: "1.0.0",
+            description: "Give a retro look to Nebula",
+            tags: ["Theme", "Simple", "Dark", "Retro"],
+            payload: "retro.css",
             type: "theme"
         }
     ];

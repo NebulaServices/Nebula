@@ -115,9 +115,9 @@ app.get("/api/catalog-assets/", async (request: CatalogAssetsReq, reply) => {
             };
             return acc;
         }, {});
-        reply.send({ assets, pages: Math.ceil(totalItems / 20) });
+        return reply.send({ assets, pages: Math.ceil(totalItems / 20) });
     } catch (error) {
-        reply.status(500).send({ error: "An error occured" });
+        return reply.status(500).send({ error: "An error occured" });
     }
 });
 

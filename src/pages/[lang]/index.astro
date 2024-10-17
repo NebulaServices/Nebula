@@ -19,13 +19,13 @@ import { VERSION } from "astro:env/client";
         <div class="h-32 w-32 fill-navbar-text-color">
           <Logo />
         </div>
-        <h1 class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto">
+        <h1 class="roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto">
           nebula.
         </h1>
       </div>
       <input
         id="nebula-input"
-        class="transition-all duration-300 font-roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
+        class="transition-all duration-300 roboto h-14 rounded-t-2xl w-10/12 rounded-b-2xl border border-input-border-color bg-input p-2 text-center text-xl text-input-text placeholder:text-input-text roboto focus:outline-none md:w-3/12"
         placeholder={t("home.placeholder")}
       />
       <div
@@ -38,7 +38,7 @@ import { VERSION } from "astro:env/client";
       id="neb-iframe"
       class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"
       ></iframe>
-    <div id="version" class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between"> 
+    <div id="version" class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between roboto"> 
         <p> Version: { VERSION } </p>
         <p> &copy; Nebula Services 2024 </p>
     </div>
