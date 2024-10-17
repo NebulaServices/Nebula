@@ -2,7 +2,7 @@ import { fileURLToPath } from "node:url";
 import chalk from "chalk";
 import ora from "ora";
 import { ModelStatic } from "sequelize";
-import { Catalog, CatalogModel } from "./server.js";
+import { Catalog, CatalogModel } from "./marketplace.js";
 
 interface Items extends Omit<Catalog, "background_video" | "background_image"> {
     background_video?: string;

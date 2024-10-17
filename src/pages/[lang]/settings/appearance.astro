@@ -12,6 +12,7 @@ export function getStaticPaths() {
     return STATIC_PATHS;
 }
 export const prerender = true;
+import { MARKETPLACE_ENABLED } from "astro:env/client";
 ---
 
 <Layout title="Settings">
@@ -22,14 +23,16 @@ export const prerender = true;
       <div class="flex flex-row flex-wrap gap-4 items-center roboto">
         <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
             <InstalledThemes client:only="svelte" />
-          <a href="/catalog/1" class="rounded-3xl bg-navbar-color w-64 flex flex-col">
-            <div class="w-full items-center justify-center flex aspect-[16/9]">
-              <Icon name="ph:plus-bold" class="h-16 w-16" />
-            </div>
-            <div class="h-2/6 text-center content-center p-3 font-semibold">
-              Get more themes in the <strong>Nebula Catalog!</strong>
-            </div>
-          </a>
+          {MARKETPLACE_ENABLED && 
+            <a href="/catalog/1" class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+                <div class="w-full items-center justify-center flex aspect-[16/9]">
+                    <Icon name="ph:plus-bold" class="h-16 w-16" />
+                </div>
+                <div class="h-2/6 text-center content-center p-3 font-semibold">
+                    Get more themes in the <strong>Nebula Catalog!</strong>
+                </div>
+            </a>
+          }
         </div>
         <div class="text-3xl roboto font-bold text-text-color"></div>
       </div>

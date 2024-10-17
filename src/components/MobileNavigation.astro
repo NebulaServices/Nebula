@@ -4,6 +4,7 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import HeaderButton from "./HeaderButton.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+import { MARKETPLACE_ENABLED } from "astro:env/client";
 ---
 
 <div
@@ -31,12 +32,14 @@ const t = useTranslations(lang);
       class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
     />
   </HeaderButton>
-  <HeaderButton text={t("header.catalog")} route={`/catalog/1`}>
-    <Icon
-      name="ph:shopping-bag-open-fill"
-      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
-    />
-  </HeaderButton>
+  {MARKETPLACE_ENABLED &&
+    <HeaderButton text={t("header.catalog")} route={`/catalog/1`}>
+        <Icon
+            name="ph:shopping-bag-open-fill"
+        class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+    </HeaderButton>
+  }
   <HeaderButton text={t("header.morelinks")}>
     <Icon
       name="ph:link-bold"

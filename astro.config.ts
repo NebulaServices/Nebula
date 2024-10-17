@@ -10,6 +10,7 @@ import icon from "astro-icon";
 import { defineConfig, envField } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { version } from "./package.json";
+import { parsedDoc } from "./server/config.js";
 export default defineConfig({
     experimental: {
         env: {
@@ -19,6 +20,12 @@ export default defineConfig({
                     access: "public",
                     optional: true,
                     default: version
+                }),
+                MARKETPLACE_ENABLED: envField.boolean({
+                    context: 'client',
+                    access: 'public',
+                    optional: true,
+                    default: parsedDoc.marketplace.enabled 
                 })
             }
         }
