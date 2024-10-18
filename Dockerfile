@@ -12,7 +12,7 @@ RUN cp -n config.example.toml config.toml
 RUN npm i -g pnpm
 RUN pnpm install
 RUN pnpm run build
-RUN export TERM=xterm-256colo
+RUN export TERM=xterm-256color
 VOLUME /app
 EXPOSE 8080
 ENTRYPOINT ["pnpm"]
