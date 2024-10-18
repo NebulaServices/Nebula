@@ -7,6 +7,7 @@ import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
+const origin = Astro.url.origin;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {
@@ -34,8 +35,53 @@ export const prerender = true;
                 ]
             }}
         />
+        <SettingsCard
+            title="Proxy Catalog"
+            description="Whether or not to proxy the Catalog"
+            input={{input: false}}
+            button={{name: 'Set', id: 'setmp' }}
+            select={{
+                select: true,
+                name: 'mp',
+                options: [
+                    {name: 'False', value: 'false', disabled: false},
+                    {name: 'True', value: 'true', disabled: false}
+                ]
+            }}
+            />
+        <SettingsCard
+            title="Catalog URL"
+            description="Change which marketplace your using"
+            input={{
+                input: true,
+                required: true,
+                placeholder: `${origin}/api/catalog-assets`
+            }}
+            button={{name: 'Change', id: 'setcataloghostname' }}
+            select={{select: false}}
+        />
     </SettingsSection>
   </SettingsLayout>
+  <ToastWrapper client:load>
+    <Toast toastProp={{
+            toastType: 'success',
+            text: 'Catalog is now proxied',
+            class: 'mpMessage'
+        }}
+    client:load />
+    <Toast toastProp={{
+        toastType: 'success',
+        text: 'Catalog URL set!',
+        class: 'cataloghostnameSuccess'
+        }}
+    client:load />
+    <Toast toastProp={{
+        toastType: 'error',
+        text: "Catalog doesn't exist!",
+        class: 'cataloghosnameError'
+      }}
+    client:load/>
+  </ToastWrapper>
 <script>
     import { toast } from "@utils/toast.ts";
     import { settings, Settings as SettingsEnum } from "@utils/settings/index";
