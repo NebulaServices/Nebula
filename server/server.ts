@@ -10,6 +10,7 @@ import chalk from "chalk";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import gradient from "gradient-string";
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+//@ts-ignore WHY would I want this typechecked AT ALL
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
 import { parsedDoc } from "./config.js";
 import { setupDB } from "./dbSetup.js";

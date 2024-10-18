@@ -65,7 +65,7 @@
 - By default the marketplace is enabled, and uses SQLite
 - If you would like to disable the catalog, see [#config](#config)
 - For big production instances I would recommend using Postgres over SQLite. To do this see [#config](#config)
-- By default, the Docker images use Postgres. If you would like to disable this, see [#docker](#docker)
+- To use postgres via the provided docker-compose files, see [#docker](#docker)
 
 ---
 
@@ -94,10 +94,10 @@ cp config.example.toml config.toml
 
 4. Modify the `config.toml` file to you liking (docs [here](#environment))
 ```
-nano .env
+nano config.toml
 ```
 
-5. Build the frontend:
+5. Build the frontend & server:
 ```bash
 npm run build
 ```
@@ -128,31 +128,29 @@ Prerequisites:
 git clone https://github.com/nebulaservices/nebula && cd nebula
 ```
 
-2. Create an .env file (if using prebuilt image, copy the example from the repo):
+2. Create an `config.toml` file (if using prebuilt image, copy the example from the repo):
 ```bash
-cp .env.example .env
+cp config.example.toml config.toml
 ```
 
-3. Modify the .env file to your liking (docs [here](#environment))
+3. Modify the `config.toml` file to your liking (docs [here](#environment))
 ```bash
-nano .env
+nano config.toml
 ```
 
 4. Build the docker image (skip if using prebuilt):
 ```bash
-docker build --build-arg BARE_SERVER_OPTION=true GAMES_LINK=true RAMMERHEAD_OPTION=true -t incog:latest
+docker build nebula:latest
 ```
-For info on the build arg check [here](#environment)
-
 5. Run the docker images:
 
     - Prebuilt:
     ```bash
-    docker run --env-file ./.env motortruck1221/nebula:latest
+    docker run -v ./config.toml:/app/config.toml ghcr.io/nebulaservices/nebula:latest
     ```
     - Image you built yourself:
     ```bash
-    docker run --env-file ./.env incog:latest
+    docker run -v ./config.toml:/app/config.toml nebula:latest
     ```
 
 #### Docker Compose
@@ -166,14 +164,14 @@ Prerequisites:
 git clone https://github.com/nebulaservices/nebula
 ```
 
-2. Create an .env file (if using prebuilt image, copy the example from the repo):
+2. Create an `config.toml` file (if using prebuilt image, copy the example from the repo):
 ```bash
-cp .env.example .env
+cp config.example.toml config.toml
 ```
 
-3. Modify the .env file to your liking (docs on that [here](#environment)]
+3. Modify the `config.toml` file to your liking (docs on that [here](#environment)]
 ```bash
-nano .env
+nano config.toml
 ```
 
 4. Build the docker image (skip if using prebuilt):
@@ -191,6 +189,11 @@ docker compose -f ./docker-compose.build.yml build
     ```bash
     docker compose -f ./docker-compose.build.yml up
     ```
+#### Extra (Postgres)
+
+- To use Postgres over SQlite, uncomment the DB section in the `docker-compose` file (or use your own postgres DB!). Then, modify the `config.toml` (See: [#config](#config) for knowledge on how to do this)
+- To use Postgres over SQlite in a normal docker environment (no compose), you'll have to set one up and then modify the `config.toml` to use it. (See: [#config](#config) for knowledge on how to do this)
+
 ---
 
 ## Config

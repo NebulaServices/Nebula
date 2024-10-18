@@ -1,0 +1,16 @@
+node_modules/
+.vscode
+npm-debug.log
+yarn-error.log
+.github/
+.env.example
+.env
+dist/
+.git/
+.astro/
+~/
+.gitignore
+biome.json
+docker-compose.yml
+Dockerfile
+README.md
