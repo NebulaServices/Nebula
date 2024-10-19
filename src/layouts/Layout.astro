@@ -26,7 +26,7 @@ const { title, noHeader } = Astro.props;
       transition:persist
     />
     <link
-      rel="stylesheet"
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
     />
     <meta name="generator" content={Astro.generator} />
@@ -118,6 +118,13 @@ const { title, noHeader } = Astro.props;
       .roboto {
           font-family: var(--font-family), Roboto;
       }
-    </style>
+      .hide-the-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+     .hide-the-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+  </style>
   </body>
 </html>

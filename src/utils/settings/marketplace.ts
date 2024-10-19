@@ -5,7 +5,9 @@ const AppearanceSettings = {
     themeName: "nebula||themeName",
     stylePayload: "nebula||stylepayload",
     video: "nebula||video",
-    image: "nebula||image"
+    image: "nebula||image",
+    proxy: "nebula||marketplaceProxy",
+    hostname: "nebula||marketplaceHostname"
 };
 
 const marketPlaceSettings = {
