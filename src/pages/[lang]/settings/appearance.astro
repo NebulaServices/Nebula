@@ -20,7 +20,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     <SettingsSection
       title="Theme"
       subtitle="Choose a theme so your eyes don't hate us.">
-      <div class="flex flex-row flex-wrap gap-4 items-center roboto">
+      <div class="flex flex-row flex-wrap gap-4 items-center font-roboto">
         <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
             <InstalledThemes client:only="svelte" />
           {MARKETPLACE_ENABLED && 
@@ -34,7 +34,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
             </a>
           }
         </div>
-        <div class="text-3xl roboto font-bold text-text-color"></div>
+        <div class="text-3xl font-roboto font-bold text-text-color"></div>
       </div>
     </SettingsSection>
   </SettingsLayout>

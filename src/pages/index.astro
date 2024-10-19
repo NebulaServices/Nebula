@@ -6,15 +6,17 @@ import Layout from "@layouts/Layout.astro";
 <Layout title="Loading..." noHeader="true">
     <Loading />
 </Layout>
-<script is:inline>
-  let currentLang = localStorage.getItem("selectedLanguage");
-  const redirect = (loc) => (window.location.href = loc);
-  if (currentLang) {
-    try {
-      let parsed = JSON.parse(currentLang).value;
-      switch (parsed) {
-        case "en_US":
-          redirect("/en_US/");
+<script>
+  import { pageLoad } from "@utils/events";
+  pageLoad(() => {
+    let currentLang = localStorage.getItem("selectedLanguage");
+    const redirect = (loc: any) => (window.location.href = loc);
+    if (currentLang) {
+        try {
+            let parsed = JSON.parse(currentLang).value;
+            switch (parsed) {
+                case "en_US":
+                    redirect("/en_US/");
           break;
         case "jp":
           redirect("/jp/");
@@ -39,5 +41,6 @@ import Layout from "@layouts/Layout.astro";
       redirect("/en_US/");
     }
   }
+  });
 </script>
 <noscript></noscript>You need to enable JavaScript to run this app.

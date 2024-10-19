@@ -15,6 +15,9 @@ export default {
             "dropdown-option-hover-color": "var(--dropdown-option-hover-color)",
             "border-color": "var(--border-color)"
         },
+        fontFamily: {
+            roboto: 'var(--font-family), Roboto'
+        },
         extend: {}
     },
     plugins: []

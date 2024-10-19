@@ -6,6 +6,7 @@ import fastifyCompress from "@fastify/compress";
 import fastifyMiddie from "@fastify/middie";
 import fastifyMultipart from "@fastify/multipart";
 import fastifyStatic from "@fastify/static";
+import fastifyHelmet from "@fastify/helmet";
 import chalk from "chalk";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import gradient from "gradient-string";
@@ -30,9 +31,15 @@ await app.register(fastifyCompress, {
 
 await app.register(fastifyMultipart);
 
+await app.register(fastifyHelmet, {
+    xPoweredBy: false,
+    crossOriginEmbedderPolicy: true,
+    crossOriginOpenerPolicy: true,
+    contentSecurityPolicy: false //Disabled because astro DOES NOT LIKE IT
+});
+
 await app.register(fastifyStatic, {
     root: fileURLToPath(new URL("../dist/client", import.meta.url)),
-    decorateReply: false
 });
 
 //Our marketplace API. Not middleware as I don't want to deal with that LOL. Just a function that passes our app to it.

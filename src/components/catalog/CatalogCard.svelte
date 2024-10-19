@@ -11,7 +11,7 @@ async function getAssets() {
 const assets = getAssets();
 </script>
 
-<div class="text-3xl roboto font-bold text-text-color p-10">
+<div class="text-3xl font-roboto font-bold text-text-color p-10">
     <Suspense let:suspend>
         <div slot="loading">
             <p class="text-4xl"> Loading... </p>

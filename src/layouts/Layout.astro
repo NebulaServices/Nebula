@@ -28,7 +28,10 @@ const { title, noHeader } = Astro.props;
     <link
       rel="preload"
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
-    />
+      as="style"
+      crossorigin="anonymous"
+      />
+    <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ViewTransitions />
@@ -87,44 +90,9 @@ const { title, noHeader } = Astro.props;
     </style>
 
     <style is:global>
-      :root {
-        --accent: 136, 58, 234;
-        --accent-light: 224, 204, 250;
-        --accent-dark: 49, 10, 101;
-        --accent-gradient: linear-gradient(
-          45deg,
-          rgb(var(--accent)),
-          rgb(var(--accent-light)) 30%,
-          white 60%
-              );
-        font-family: Roboto, sans-serif;
-      }
-      html {
-          font-family: var(--font-family), Roboto, sans-serif;
-        background: #13151a;
-        background-size: 224px;
-      }
-      code {
-        font-family:
-          Menlo,
-          Monaco,
-          Lucida Console,
-          Liberation Mono,
-          DejaVu Sans Mono,
-          Bitstream Vera Sans Mono,
-          Courier New,
-          monospace;
-      }
       .roboto {
           font-family: var(--font-family), Roboto;
       }
-      .hide-the-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-     .hide-the-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
   </style>
   </body>
 </html>
