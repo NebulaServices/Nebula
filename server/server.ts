@@ -3,10 +3,10 @@ import { constants, access, mkdir } from "node:fs/promises";
 import { pipeline } from "node:stream/promises";
 import { fileURLToPath } from "node:url";
 import fastifyCompress from "@fastify/compress";
+import fastifyHelmet from "@fastify/helmet";
 import fastifyMiddie from "@fastify/middie";
 import fastifyMultipart from "@fastify/multipart";
 import fastifyStatic from "@fastify/static";
-import fastifyHelmet from "@fastify/helmet";
 import chalk from "chalk";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import gradient from "gradient-string";
@@ -15,8 +15,8 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize }
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
 import { parsedDoc } from "./config.js";
 import { setupDB } from "./dbSetup.js";
+import { catalogAssets, marketplaceAPI } from "./marketplace.js";
 import { serverFactory } from "./serverFactory.js";
-import { marketplaceAPI, catalogAssets } from "./marketplace.js";
 
 const app = Fastify({
     logger: parsedDoc.server.server.logging,
@@ -39,7 +39,7 @@ await app.register(fastifyHelmet, {
 });
 
 await app.register(fastifyStatic, {
-    root: fileURLToPath(new URL("../dist/client", import.meta.url)),
+    root: fileURLToPath(new URL("../dist/client", import.meta.url))
 });
 
 //Our marketplace API. Not middleware as I don't want to deal with that LOL. Just a function that passes our app to it.

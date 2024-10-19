@@ -22,10 +22,10 @@ export default defineConfig({
                     default: version
                 }),
                 MARKETPLACE_ENABLED: envField.boolean({
-                    context: 'client',
-                    access: 'public',
+                    context: "client",
+                    access: "public",
                     optional: true,
-                    default: parsedDoc.marketplace.enabled 
+                    default: parsedDoc.marketplace.enabled
                 })
             }
         }

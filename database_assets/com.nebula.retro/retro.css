@@ -15,10 +15,10 @@
     --dropdown-option-hover-color: #000000;
     --tab-color: #000000;
     --border-color: #3cb371;
-    --font-family: 'terminal';
+    --font-family: "terminal";
 }
 
 @font-face {
     font-family: terminal;
-    src: url('./terminal.ttf');
+    src: url("./terminal.ttf");
 }

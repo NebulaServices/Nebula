@@ -1,10 +1,10 @@
 ---
+import { MARKETPLACE_ENABLED } from "astro:env/client";
 import { Icon } from "astro-icon/components";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { isMobileNavOpen } from "../store.js";
 import HeaderButton from "./HeaderButton.astro";
 import Logo from "./Logo.astro";
-import { MARKETPLACE_ENABLED } from "astro:env/client";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---

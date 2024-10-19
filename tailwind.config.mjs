@@ -16,7 +16,7 @@ export default {
             "border-color": "var(--border-color)"
         },
         fontFamily: {
-            roboto: 'var(--font-family), Roboto'
+            roboto: "var(--font-family), Roboto"
         },
         extend: {}
     },

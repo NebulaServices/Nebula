@@ -1,10 +1,10 @@
-import { Sequelize, Model, InferAttributes, InferCreationAttributes, DataTypes } from "sequelize";
-import { parsedDoc } from "./config.js";
-import { FastifyInstance, FastifyRequest } from "fastify";
-import { fileURLToPath } from "node:url";
-import { pipeline } from "node:stream/promises";
 import { createWriteStream } from "node:fs";
-import { access, mkdir, constants } from "node:fs/promises";
+import { constants, access, mkdir } from "node:fs/promises";
+import { pipeline } from "node:stream/promises";
+import { fileURLToPath } from "node:url";
+import { FastifyInstance, FastifyRequest } from "fastify";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+import { parsedDoc } from "./config.js";
 
 const db = new Sequelize(parsedDoc.db.name, parsedDoc.db.username, parsedDoc.db.password, {
     host: parsedDoc.db.postgres ? `${parsedDoc.postgres.domain}` : "localhost",
@@ -169,9 +169,9 @@ function marketplaceAPI(app: FastifyInstance) {
                     )
                 );
             } catch (error) {
-                return reply
-                    .status(500)
-                    .send({ status: `File couldn't be uploaded! (Package most likely doesn't exist)` });
+                return reply.status(500).send({
+                    status: `File couldn't be uploaded! (Package most likely doesn't exist)`
+                });
             }
             return reply.status(verify.status).send({ status: "File uploaded successfully!" });
         }
@@ -214,10 +214,12 @@ function marketplaceAPI(app: FastifyInstance) {
                 return reply.status(500).send({ status: "Package already exists!" });
             } catch (err) {
                 await mkdir(`${assets}/${body.package_name}/`);
-                return reply.status(verify.status).send({ status: "Package created successfully!" });
+                return reply
+                    .status(verify.status)
+                    .send({ status: "Package created successfully!" });
             }
         }
     });
 }
 
-export { marketplaceAPI, db, catalogAssets, Catalog, CatalogModel }
+export { marketplaceAPI, db, catalogAssets, Catalog, CatalogModel };

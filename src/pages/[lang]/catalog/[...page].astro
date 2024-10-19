@@ -1,8 +1,8 @@
 ---
 import CatalogCard from "@components/catalog/CatalogCard.svelte";
 import Layout from "@layouts/Layout.astro";
-import Pagnation from "./pagnation.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import Pagnation from "./pagnation.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
