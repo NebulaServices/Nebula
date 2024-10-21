@@ -56,12 +56,12 @@ importers:
       '@rubynetwork/rammerhead-browser':
         specifier: ^1.0.9
         version: 1.0.9
+      '@rubynetwork/ultraviolet':
+        specifier: 3.2.7-ruby.1
+        version: 3.2.7-ruby.1
       '@svelte-drama/suspense':
         specifier: 0.5.1
         version: 0.5.1(svelte@4.2.19)
-      '@titaniumnetwork-dev/ultraviolet':
-        specifier: 3.1.2
-        version: 3.1.2
       '@types/node':
         specifier: ^22.7.5
         version: 22.7.5
@@ -871,6 +871,9 @@ packages:
   '@mercuryworkshop/bare-mux@1.1.1':
     resolution: {integrity: sha512-qKOnTsIjwv4wBvToek3Jm+y3F/BcFtjy6HOsdyzIUemCOw51kodzRsvWvU9Pf/JYDVPV8or0zbsg+qOKtasjhA==}
 
+  '@mercuryworkshop/bare-mux@1.1.4':
+    resolution: {integrity: sha512-mJPezqEpiKTCs+wu/3TowilnVXQgFs4SqoQnnbCbOc5cV6bDggaolKkyYjDnmOB9t/nptIIXDWDB31oS9vX9kA==}
+
   '@mercuryworkshop/epoxy-tls@2.1.6-1':
     resolution: {integrity: sha512-drnffDo9Ls73Fpmcup2Ys1z+BjzK+WLnzyfS4APFfWr9cJ0gu7567tx4M06XH5PUZMOS1J1Z3wqnRaBh/RX5bQ==}
 
@@ -1017,6 +1020,9 @@ packages:
   '@rubynetwork/rh@1.2.74':
     resolution: {integrity: sha512-qbVueaMHxSXF8dysQE3eL2Fj8x5L1cBMzk5G6iVokntQjYxCHcV+vWvZbykXspvPJjs4b5uYnZ+D/rMHmSVhrg==}
 
+  '@rubynetwork/ultraviolet@3.2.7-ruby.1':
+    resolution: {integrity: sha512-JaIlRFRObrXk5lWCfOs4CQ+caRm0aqRqZFMvFhXoRXK02YbhemF01/+JQEHwWgC1XeldyHf60LfL4JKhGqD3MA==}
+
   '@shikijs/core@1.22.0':
     resolution: {integrity: sha512-S8sMe4q71TJAW+qG93s5VaiihujRK6rqDFqBnxqvga/3LvqHEnxqBIOPkt//IdXVtHkQWKu4nOQNk0uBGicU7Q==}
 
@@ -1051,9 +1057,6 @@ packages:
     peerDependencies:
       svelte: ^4.0.0 || ^5.0.0-next.0
       vite: ^5.0.0
-
-  '@titaniumnetwork-dev/ultraviolet@3.1.2':
-    resolution: {integrity: sha512-PvhyL9IQtSwHTVRRpNGn+YCWkSzP7JEk0wX7M5YfUSobBicoRLOJhCC4u6T9qh/vObDpLDE3TfP4GKqMTSa2rw==}
 
   '@tootallnate/once@1.1.2':
     resolution: {integrity: sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==}
@@ -1276,6 +1279,10 @@ packages:
 
   array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
+
+  astring@1.9.0:
+    resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
+    hasBin: true
 
   astro-icon@1.1.1:
     resolution: {integrity: sha512-HKBesWk2Faw/0+klLX+epQVqdTfSzZz/9+5vxXUjTJaN/HnpDf608gRPgHh7ZtwBPNJMEFoU5GLegxoDcT56OQ==}
@@ -2146,6 +2153,9 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
+  idb@8.0.0:
+    resolution: {integrity: sha512-l//qvlAKGmQO31Qn7xdzagVPPaHTxXx199MhrAFuVBTPqydcPYBWjkrbv4Y0ktB+GmWOiwHl237UUOrLmQxLvw==}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -2533,6 +2543,10 @@ packages:
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
+
+  meriyah@6.0.2:
+    resolution: {integrity: sha512-RHlo7GK3qrswKzVcMJ/2bMMkMChpn4L/JUOBfs81c3SKp/ZOS5u2aC/qY+sZCiE4qPkrC+a1yNPfGieh0uz19Q==}
+    engines: {node: '>=18.0.0'}
 
   micromark-core-commonmark@2.0.1:
     resolution: {integrity: sha512-CUQyKr1e///ZODyD1U3xit6zXwy1a8q2a1S1HKtIlmgvurrEpaw/Y9y6KSIbF8P59cn/NjzHyO+Q2fAyYLQrAA==}
@@ -4834,6 +4848,11 @@ snapshots:
       '@types/uuid': 9.0.8
       uuid: 9.0.1
 
+  '@mercuryworkshop/bare-mux@1.1.4':
+    dependencies:
+      '@types/uuid': 9.0.8
+      uuid: 9.0.1
+
   '@mercuryworkshop/epoxy-tls@2.1.6-1': {}
 
   '@mercuryworkshop/epoxy-transport@https://codeload.github.com/motortruck1221/epoxytransport/tar.gz/5e8205cdfef67e1cf73fbba7fb56cb181de070f7':
@@ -5001,6 +5020,16 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@rubynetwork/ultraviolet@3.2.7-ruby.1':
+    dependencies:
+      '@mercuryworkshop/bare-mux': 1.1.4
+      astring: 1.9.0
+      events: 3.3.0
+      idb: 8.0.0
+      meriyah: 6.0.2
+      parse5: 7.2.0
+      set-cookie-parser: 2.7.0
+
   '@shikijs/core@1.22.0':
     dependencies:
       '@shikijs/engine-javascript': 1.22.0
@@ -5054,8 +5083,6 @@ snapshots:
       vitefu: 0.2.5(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1))
     transitivePeerDependencies:
       - supports-color
-
-  '@titaniumnetwork-dev/ultraviolet@3.1.2': {}
 
   '@tootallnate/once@1.1.2':
     optional: true
@@ -5308,6 +5335,8 @@ snapshots:
   aria-query@5.3.2: {}
 
   array-iterate@2.0.1: {}
+
+  astring@1.9.0: {}
 
   astro-icon@1.1.1:
     dependencies:
@@ -6389,6 +6418,8 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  idb@8.0.0: {}
+
   ieee754@1.2.1: {}
 
   import-meta-resolve@4.1.0: {}
@@ -6809,6 +6840,8 @@ snapshots:
       readable-stream: 2.3.8
 
   merge2@1.4.1: {}
+
+  meriyah@6.0.2: {}
 
   micromark-core-commonmark@2.0.1:
     dependencies:

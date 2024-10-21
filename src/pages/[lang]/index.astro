@@ -54,7 +54,8 @@ import { VERSION } from "astro:env/client";
     WispServerURLS,
     SearchEngines,
     Settings,
-    cloak,
+      cloak,
+      settings
   } from "@utils/settings/index";
   import { search } from "@utils/search.ts"; //../../utils/search.ts
   //@ts-expect-error No types, expected. See: https://github.com/ading2210/libcurl.js for docs on how to use.
@@ -81,14 +82,16 @@ import { VERSION } from "astro:env/client";
     }
   }
   function uv(iframe: HTMLIFrameElement, term: string) {
-    initSw().then(() => {
-      setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
-        iframe.classList.remove("hidden");
-        const url = await proxy(term, false);
-        if (url) {
-          iframe.src = url as string;
-        }
-      });
+    initSw().then((reg) => {
+        settings.marketPlaceSettings.handlePlugins(reg).then(() => {
+            setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
+                iframe.classList.remove("hidden");
+                const url = await proxy(term, false);
+                if (url) {
+                    iframe.src = url as string;
+                }
+            });
+        });
     });
   }
   async function rh(iframe: HTMLIFrameElement, term: string) {

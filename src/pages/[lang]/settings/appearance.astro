@@ -24,7 +24,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
         <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
             <InstalledThemes client:only="svelte" />
           {MARKETPLACE_ENABLED && 
-            <a href="/catalog/1" class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+            <a href={`/${lang}/catalog/1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
                 <div class="w-full items-center justify-center flex aspect-[16/9]">
                     <Icon name="ph:plus-bold" class="h-16 w-16" />
                 </div>

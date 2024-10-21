@@ -1,14 +1,22 @@
 //marketplace code & handlers
-import { type Package, type PackageType } from "./types";
+import { Settings } from ".";
+import { type Package, type PackageType, type Plugin, type PluginType, type SWPlugin } from "./types";
 const AppearanceSettings = {
     themes: "nebula||themes",
     themeName: "nebula||themeName",
     stylePayload: "nebula||stylepayload",
     video: "nebula||video",
     image: "nebula||image",
+};
+
+const PluginSettings = {
+    plugins: "nebula||plugins"
+}
+
+const MarketPlaceExtras = {
     proxy: "nebula||marketplaceProxy",
     hostname: "nebula||marketplaceHostname"
-};
+}
 
 const marketPlaceSettings = {
     install: function (p: Package, packageName: string, payload?: any) {
@@ -20,6 +28,16 @@ const marketPlaceSettings = {
                     themes.push(packageName);
                     localStorage.setItem(AppearanceSettings.themes, JSON.stringify(themes));
                     this.changeTheme(false, payload, p.theme.video, p.theme.bgImage, packageName);
+                }
+                resolve();
+            }
+            if (p.plugin) {
+                let plugins = localStorage.getItem(PluginSettings.plugins) as any;
+                plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
+                //@ts-ignore
+                if (!plugins.find(({ name }) => name === packageName)) {
+                    plugins.push({name: packageName, src: p.plugin.src, type: p.plugin.type, entryFunc: p.plugin.entryFunc} as unknown as Plugin)
+                    localStorage.setItem(PluginSettings.plugins, JSON.stringify(plugins));
                 }
                 resolve();
             }
@@ -38,6 +56,31 @@ const marketPlaceSettings = {
                 }
                 resolve();
             }
+            if (p === "plugin") {
+                let plugins = localStorage.getItem(PluginSettings.plugins) as any;
+                plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
+                //@ts-ignore
+                if (plugins.find(({name}) => name === packageName)) {
+                    const idx = plugins.indexOf(packageName);
+                    plugins.splice(idx, 1);
+                    localStorage.setItem(PluginSettings.plugins, JSON.stringify(plugins));
+                }
+                resolve();
+            }
+        });
+    },
+    handlePlugins: function(worker: never | ServiceWorkerRegistration) {
+        return new Promise<void>((resolve) => {
+            const plugins = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+            plugins.forEach(async (plugin: Plugin) => {
+                if (plugin.type === "page") {
+                    const pluginScript = await fetch(`/packages/${plugin.name}/${plugin.src}`).then((res) => res.text());
+                    const script = eval(pluginScript);
+                    const inject = script() as unknown as SWPlugin;
+                    worker.active?.postMessage([{host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);
+                }
+            });
+            resolve();
         });
     },
     changeTheme: async function (
@@ -105,4 +148,4 @@ const marketPlaceSettings = {
     }
 };
 
-export { AppearanceSettings, marketPlaceSettings };
+export { AppearanceSettings, PluginSettings, MarketPlaceExtras, marketPlaceSettings };

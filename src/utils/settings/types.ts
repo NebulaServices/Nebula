@@ -5,14 +5,6 @@ type OpenIn = "a:b" | "blob" | "direct" | "embed";
 type Proxy = "automatic" | "uv" | "rh";
 type Transport = "epoxy" | "libcurl";
 type PackageType = "theme" | "plugin";
-interface Package {
-    theme?: {
-        payload: string;
-        video?: string;
-        bgImage?: string;
-    };
-    plugin?: {};
-}
 const SearchEngines: Record<string, string> = {
     ddg: "https://duckduckgo.com/?q=%s",
     google: "https://google.com/search?q=%s",
@@ -24,6 +16,27 @@ const WispServerURLS: Record<string, string> = {
     ruby: "wss://ruby.rubynetwork.co/wisp/"
 };
 
+type PluginType = "page" | "serviceWorker"
+interface Plugin {
+    name: string;
+    src: string;
+    type: PluginType;
+    entryFunc: () => unknown | unknown;
+}
+interface SWPlugin {
+    host: string;
+    html: string;
+    injectTo: "head" | "body";
+}
+interface Package {
+    theme?: {
+        payload: string;
+        video?: string;
+        bgImage?: string;
+    };
+    plugin?: Plugin;
+}
+
 export {
     type TabCloaks,
     type AbCloaks,
@@ -32,6 +45,9 @@ export {
     type Transport,
     type PackageType,
     type Package,
+    type PluginType,
+    type Plugin,
+    type SWPlugin,
     SearchEngines,
     type SearchEngine,
     WispServerURLS,

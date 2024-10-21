@@ -6,6 +6,8 @@ import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import InstalledPlugins from "@components/catalog/InstalledPlugins.svelte";
+import { Icon } from "astro-icon/components";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -95,7 +97,20 @@ export const prerender = true;
             }}
         />
       </div>
-    </SettingsSection>
+  </SettingsSection>
+  <SettingsSection title="Plugins" subtitle="Plugins allow you to modify the way the proxy works (UV only)">
+    <div class="flex flex-row gap-6 justify-center md:justify-normal">
+        <InstalledPlugins client:only="svelte" />
+        <a href={`/${lang}/catalog/1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+            <div class="w-full items-center justify-center flex aspect-[16/9]">
+                    <Icon name="ph:plus-bold" class="h-16 w-16" />
+            </div>
+            <div class="h-2/6 text-center content-center p-3 font-semibold">
+                Get more plugins in the <strong>Nebula Catalog!</strong>
+            </div>
+        </a>
+    </div>
+  </SettingsSection>
   </SettingsLayout>
   <ToastWrapper client:load>
     <Toast toastProp={{

@@ -56,12 +56,12 @@ function setTransport(transport?: string) {
 
 function initSw() {
     //this is wrapped in a promise to mostly solve the bare-mux v1 problems
-    return new Promise<void>((resolve) => {
+    return new Promise<ServiceWorkerRegistration>((resolve) => {
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.ready.then(async () => {
+            navigator.serviceWorker.ready.then(async (reg) => {
                 console.debug("Service worker ready!");
                 await loadProxyScripts();
-                resolve();
+                resolve(reg);
             });
             navigator.serviceWorker.register("/sw.js", { scope: "/" });
         }

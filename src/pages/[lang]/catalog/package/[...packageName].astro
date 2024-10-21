@@ -53,17 +53,24 @@ const assetsJson = await response.json();
     }
     customElements.define('variable-define', VariableDefiner); 
     const fn = () => {
-        const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes) as string) || [];
-        const itemExists = items.indexOf(packageName) !== -1;
+        const cssItems = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes) as string) || [];
+        const cssItemExists = cssItems.indexOf(packageName) !== -1;
+        const pluginItems = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+        //@ts-ignore
+        const pluginItemExists = pluginItems.find(({ name }) => name === packageName);
         const installButton = document.getElementById("install") as HTMLButtonElement;
         const uninstallButton = document.getElementById("uninstall") as HTMLButtonElement;
         const payload = assetsJson ? JSON.parse(assetsJson) : undefined;
-        if (itemExists) {
+        if (cssItemExists || pluginItemExists) {
             uninstallButton.classList.remove("hidden");
             installButton.classList.add("hidden");
         }
         installButton.addEventListener("click", () => {
-            settings.marketPlaceSettings.install({theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}}, packageName, payload.payload).then(() => {
+            settings.marketPlaceSettings.install(
+                payload.type === "theme" ? {theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}} :
+                {plugin: {name: packageName, src: payload.payload, type: "page", entryFunc: payload.entryFunc }},
+                packageName, payload.payload
+            ).then(() => {
                 installButton.classList.add("hidden");
                 uninstallButton.classList.remove("hidden");
             })
