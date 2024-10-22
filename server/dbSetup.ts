@@ -41,7 +41,6 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple"],
             payload: "gruvbox.css",
             type: "theme",
-            entryFunc: null
         },
         {
             package_name: "com.nebula.oled",
@@ -53,7 +52,6 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple", "Sleek"],
             payload: "oled.css",
             type: "theme",
-            entryFunc: null
         },
         {
             package_name: "com.nebula.lightTheme",
@@ -65,7 +63,6 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple", "Light"],
             payload: "light.css",
             type: "theme",
-            entryFunc: null
         },
         {
             package_name: "com.nebula.retro",
@@ -77,7 +74,6 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple", "Dark", "Retro"],
             payload: "retro.css",
             type: "theme",
-            entryFunc: null
         },
         {
             package_name: "com.nebula.darkMode",
@@ -89,7 +85,6 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Plugin", "Dark Mode", "Noctura"],
             payload: "index.js",
             type: "plugin",
-            entryFunc: "entryFunc"
         }
     ];
     const dbItems = await db.findAll();

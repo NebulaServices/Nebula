@@ -21,12 +21,13 @@ interface Plugin {
     name: string;
     src: string;
     type: PluginType;
-    entryFunc: () => unknown | unknown;
+    remove?: boolean;
 }
 interface SWPlugin {
     host: string;
     html: string;
     injectTo: "head" | "body";
+    remove?: boolean;
 }
 interface Package {
     theme?: {

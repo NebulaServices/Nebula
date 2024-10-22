@@ -35,9 +35,14 @@ const marketPlaceSettings = {
                 let plugins = localStorage.getItem(PluginSettings.plugins) as any;
                 plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
                 //@ts-ignore
-                if (!plugins.find(({ name }) => name === packageName)) {
-                    plugins.push({name: packageName, src: p.plugin.src, type: p.plugin.type, entryFunc: p.plugin.entryFunc} as unknown as Plugin)
+                const plugin = plugins.find(({ name }) => name === packageName) as Plugin
+                if (!plugin) {
+                    plugins.push({name: packageName, src: p.plugin.src, type: p.plugin.type} as unknown as Plugin)
                     localStorage.setItem(PluginSettings.plugins, JSON.stringify(plugins));
+                }
+                else if (plugin && plugin.remove) {
+                    plugin.remove = false;
+                    localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plugins));
                 }
                 resolve();
             }
@@ -60,9 +65,9 @@ const marketPlaceSettings = {
                 let plugins = localStorage.getItem(PluginSettings.plugins) as any;
                 plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
                 //@ts-ignore
-                if (plugins.find(({name}) => name === packageName)) {
-                    const idx = plugins.indexOf(packageName);
-                    plugins.splice(idx, 1);
+                const plugin = plugins.find(({name}) => name === packageName);
+                if (plugin) {
+                    plugin.remove = true;
                     localStorage.setItem(PluginSettings.plugins, JSON.stringify(plugins));
                 }
                 resolve();
@@ -72,15 +77,28 @@ const marketPlaceSettings = {
     handlePlugins: function(worker: never | ServiceWorkerRegistration) {
         return new Promise<void>((resolve) => {
             const plugins = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+            if (plugins.length === 0) {
+                console.log('Plugin length is not greater then 0. Resolving.');
+                return resolve();
+            }
             plugins.forEach(async (plugin: Plugin) => {
                 if (plugin.type === "page") {
                     const pluginScript = await fetch(`/packages/${plugin.name}/${plugin.src}`).then((res) => res.text());
                     const script = eval(pluginScript);
                     const inject = script() as unknown as SWPlugin;
-                    worker.active?.postMessage([{host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);
+                    if (plugin.remove) {
+                        const idx = plugins.indexOf(plugin.name);
+                        worker.active?.postMessage([{remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);
+                        plugins.splice(idx, 1);
+                        localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plugins));
+                    }
+                    else {
+                        worker.active?.postMessage([{host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);
+                    }
+                    //only resolve AFTER we have postMessaged to the SW.
+                    resolve();
                 }
             });
-            resolve();
         });
     },
     changeTheme: async function (

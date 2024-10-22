@@ -28,7 +28,6 @@ interface Catalog {
     background_video: string;
     payload: string;
     type: CatalogType;
-    entryFunc: string;
 }
 
 interface CatalogModel
@@ -47,7 +46,6 @@ const catalogAssets = db.define<CatalogModel>("catalog_assets", {
     background_video: { type: DataTypes.TEXT, allowNull: true },
     payload: { type: DataTypes.TEXT },
     type: { type: DataTypes.TEXT },
-    entryFunc: { type: DataTypes.STRING }
 });
 
 function marketplaceAPI(app: FastifyInstance) {
@@ -81,7 +79,6 @@ function marketplaceAPI(app: FastifyInstance) {
                     background_video: asset.background_video,
                     payload: asset.payload,
                     type: asset.type,
-                    entryFunc: asset.entryFunc
                 };
                 return acc;
             }, {});
@@ -109,7 +106,6 @@ function marketplaceAPI(app: FastifyInstance) {
                 background_video: packageRow.get("background_video"),
                 payload: packageRow.get("payload"),
                 type: packageRow.get("type"),
-                entryFunc: packageRow.get("entryFunc")
             };
             reply.send(details);
         } catch (error) {
@@ -132,7 +128,6 @@ function marketplaceAPI(app: FastifyInstance) {
             background_video: string;
             background_image: string;
             type: CatalogType;
-            entryFunc: string;
         };
     }>;
     interface VerifyStatus {
@@ -199,7 +194,6 @@ function marketplaceAPI(app: FastifyInstance) {
                 background_video: request.body.background_video,
                 background_image: request.body.background_image,
                 type: request.body.type as CatalogType,
-                entryFunc: request.body.entryFunc
             };
             await catalogAssets.create({
                 package_name: body.package_name,
@@ -213,7 +207,6 @@ function marketplaceAPI(app: FastifyInstance) {
                 background_video: body.background_video,
                 background_image: body.background_image,
                 type: body.type,
-                entryFunc: body.entryFunc
             });
             const assets = fileURLToPath(new URL("../database_assets", import.meta.url));
             try {
