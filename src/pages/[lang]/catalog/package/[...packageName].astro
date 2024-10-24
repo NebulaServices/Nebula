@@ -68,7 +68,7 @@ const assetsJson = await response.json();
         installButton.addEventListener("click", () => {
             settings.marketPlaceSettings.install(
                 payload.type === "theme" ? {theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}} :
-                {plugin: {name: packageName, src: payload.payload, type: "page", entryFunc: payload.entryFunc }},
+                {plugin: {name: packageName, src: payload.payload, type: "page" }},
                 packageName, payload.payload
             ).then(() => {
                 installButton.classList.add("hidden");

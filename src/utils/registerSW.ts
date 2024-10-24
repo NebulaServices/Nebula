@@ -1,16 +1,9 @@
 import { Settings, WispServerURLS } from "./settings/index";
+import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
 function loadProxyScripts() {
     //wrap everything in a promise to avoid race conditions
-    return new Promise<void>((resolve) => {
-        //create and append then scripts tags to the body (this is how we lazy load things)
-        const epoxyScript = document.createElement("script");
-        epoxyScript.src = "/epoxy/index.js";
-        epoxyScript.defer = true;
-        document.body.appendChild(epoxyScript);
-        const libCurlScript = document.createElement("script");
-        libCurlScript.src = "/libcurl/index.js";
-        libCurlScript.defer = true;
-        document.body.appendChild(libCurlScript);
+    return new Promise<BareMuxConnection>((resolve) => {
+        const conn = new BareMuxConnection("/baremux/worker.js");
         const uvBundle = document.createElement("script");
         uvBundle.src = "/uv/uv.bundle.js";
         uvBundle.defer = true;
@@ -19,49 +12,51 @@ function loadProxyScripts() {
         uvConfig.src = "/uv/uv.config.js";
         uvConfig.defer = true;
         document.body.appendChild(uvConfig);
-        const bareMux = document.createElement("script");
-        bareMux.src = "/baremux/bare.cjs";
-        bareMux.defer = true;
-        document.body.appendChild(bareMux);
-        const checkScripts = setInterval(() => {
-            //If both of these aren't defined this will repeat until they are
-            //this allows use to wait for all of the scripts to be ready *before* we setup the serviceworker
-            if (typeof EpxMod !== "undefined" && typeof BareMux !== "undefined") {
-                clearInterval(checkScripts);
-                resolve();
+        const checkScript = setInterval(() => {
+            if (typeof __uv$config !== 'undefined') {
+                clearInterval(checkScript);
+                resolve(conn);
             }
         }, 100);
     });
 }
 
-function setTransport(transport?: string) {
+function setTransport(conn: BareMuxConnection, transport?: string) {
     //wrap in a promise so we don't register sw until a transport is set.
     const wispServer = localStorage.getItem(Settings.ProxySettings.wispServerURL);
     return new Promise<void>((resolve) => {
         switch (transport) {
             case "epoxy":
-                BareMux.SetTransport("EpxMod.default", {
-                    wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default
-                });
+                conn.setTransport("/epoxy/index.mjs", [
+                    {wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default}
+                ]);
                 break;
             case "libcurl":
-                BareMux.SetTransport("CurlMod.default", {
-                    wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default
-                });
+                conn.setTransport("/libcurl/index.mjs", [
+                    {wisp: wispServer ? WispServerURLS[wispServer]: WispServerURLS.default}
+                ]);
                 break;
         }
         resolve();
     });
 }
 
+type SWInitResolve = {
+    sw: ServiceWorkerRegistration,
+    conn: BareMuxConnection
+}
 function initSw() {
     //this is wrapped in a promise to mostly solve the bare-mux v1 problems
-    return new Promise<ServiceWorkerRegistration>((resolve) => {
+    return new Promise<SWInitResolve>((resolve) => {
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.ready.then(async (reg) => {
                 console.debug("Service worker ready!");
-                await loadProxyScripts();
-                resolve(reg);
+                const conn = await loadProxyScripts();
+                const resolveVal: SWInitResolve = {
+                    sw: reg,
+                    conn: conn
+                }
+                resolve(resolveVal);
             });
             navigator.serviceWorker.register("/sw.js", { scope: "/" });
         }

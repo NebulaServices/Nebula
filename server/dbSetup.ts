@@ -23,7 +23,6 @@ async function installItems(db: ModelStatic<CatalogModel>, items: Items[]) {
             background_video: item.background_video,
             background_image: item.background_image,
             type: item.type,
-            entryFunc: item.entryFunc
         });
     });
 }

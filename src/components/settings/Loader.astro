@@ -6,7 +6,7 @@
     settings.proxySettings.openIn(localStorage.getItem(Settings.ProxySettings.openIn) as string || "embed");
     settings.proxySettings.setSearchEngine(localStorage.getItem(Settings.ProxySettings.searchEngine) as string || "ddg");
     settings.proxySettings.setWispURL(localStorage.getItem(Settings.ProxySettings.wispServerURL) as string || "default");
-    settings.proxySettings.setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string || "epoxy");
+    settings.proxySettings.setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string || "libcurl");
     settings.marketPlaceSettings.changeTheme(false, undefined, localStorage.getItem(Settings.AppearanceSettings.video) as string, localStorage.getItem(Settings.AppearanceSettings.image) as string);
     document.addEventListener("astro:after-swap", function() {
         settings.tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");

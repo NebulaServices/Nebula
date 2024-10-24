@@ -1,11 +1,11 @@
-const script = `
-console.error('GYATT')
-`
-
-self.entryFunc = function(){
+async function loadVencord() {
+    const loadCss = await fetch("https://raw.githubusercontent.com/Vencord/builds/main/browser.css");
+    const css = await loadCss.text();
     return {
-        host: 'example.com',
-        html: `<script>${script}</script>`,
-        injectTo: 'body'
+        host: 'discord.com',
+        html: `<style>${css}</script>`,
+        injectTo: 'head'
     }
 }
+
+self.entryFunc = loadVencord;

@@ -1,11 +1,11 @@
 import node from "@astrojs/node";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
-import { baremuxPath } from "@mercuryworkshop/bare-mux";
+import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import playformCompress from "@playform/compress";
-import { uvPath } from "@rubynetwork/ultraviolet";
+import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import icon from "astro-icon";
 import { defineConfig, envField } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
