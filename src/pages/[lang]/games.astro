@@ -17,8 +17,8 @@ export const prerender = true;
     pageLoad(async () => {
         const iframe = document.getElementById("chango") as HTMLIFrameElement;
         if (iframe) {
-            initSw().then(() => {
-                setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
+            initSw().then((init) => {
+                setTransport(init.conn, localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
                     iframe.src = __uv$config!.prefix + __uv$config.encodeUrl!("https://radon.games");
                 });
             });

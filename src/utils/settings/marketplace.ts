@@ -85,7 +85,7 @@ const marketPlaceSettings = {
                 if (plugin.type === "page") {
                     const pluginScript = await fetch(`/packages/${plugin.name}/${plugin.src}`).then((res) => res.text());
                     const script = eval(pluginScript);
-                    const inject = script() as unknown as SWPlugin;
+                    const inject = await script() as unknown as SWPlugin;
                     if (plugin.remove) {
                         const idx = plugins.indexOf(plugin.name);
                         worker.active?.postMessage([{remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);

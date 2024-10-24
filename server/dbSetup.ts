@@ -73,18 +73,7 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple", "Dark", "Retro"],
             payload: "retro.css",
             type: "theme",
-        },
-        {
-            package_name: "com.nebula.darkMode",
-            title: "Dark Mode",
-            image: "dark.png",
-            author: "Nebula Services",
-            version: "1.0.0",
-            description: "Force dark mode on all websites",
-            tags: ["Plugin", "Dark Mode", "Noctura"],
-            payload: "index.js",
-            type: "plugin",
-        }
+        } 
     ];
     const dbItems = await db.findAll();
     if (dbItems.length === 0) {
