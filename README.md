@@ -79,7 +79,7 @@ Prerequisites:
 
 1. Clone the repo:
 ```bash
-git clone https://github.com/nebulaservices/nebula && cd nebula
+git clone https://github.com/nebulaservices/nebula --recursive && cd nebula
 ```
 
 2. Install all of the dependencies:
@@ -125,7 +125,7 @@ Prerequisites:
 
 1. Clone the repo (skip if using prebuilt image):
 ```bash
-git clone https://github.com/nebulaservices/nebula && cd nebula
+git clone https://github.com/nebulaservices/nebula --recursive && cd nebula
 ```
 
 2. Create an `config.toml` file (if using prebuilt image, copy the example from the repo):
@@ -161,7 +161,7 @@ Prerequisites:
 
 1. Clone the repo (skip if using prebuilt image):
 ```bash
-git clone https://github.com/nebulaservices/nebula
+git clone https://github.com/nebulaservices/nebula --recursive
 ```
 
 2. Create an `config.toml` file (if using prebuilt image, copy the example from the repo):
