@@ -77,25 +77,30 @@ const marketPlaceSettings = {
     handlePlugins: function(worker: never | ServiceWorkerRegistration) {
         return new Promise<void>((resolve) => {
             const plugins = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+            const swPlugins: SWPlugin[] = [];
             if (plugins.length === 0) {
                 console.log('Plugin length is not greater then 0. Resolving.');
                 return resolve();
             }
-            plugins.forEach(async (plugin: Plugin) => {
+            plugins.forEach(async (plugin: Plugin) => { 
                 if (plugin.type === "page") {
                     const pluginScript = await fetch(`/packages/${plugin.name}/${plugin.src}`).then((res) => res.text());
+                    console.log(`Plugin: ${plugin.name} has the following: ${pluginScript}`);
                     const script = eval(pluginScript);
                     const inject = await script() as unknown as SWPlugin;
                     if (plugin.remove) {
                         const idx = plugins.indexOf(plugin.name);
-                        worker.active?.postMessage([{remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);
+                        swPlugins.splice(idx, 1);
+                        swPlugins.push({remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo});
                         plugins.splice(idx, 1);
                         localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plugins));
                     }
                     else {
-                        worker.active?.postMessage([{host: inject.host, html: inject.html, injectTo: inject.injectTo}] as SWPlugin[]);
+                        swPlugins.push({host: inject.host, html: inject.html, injectTo: inject.injectTo});
+                        console.log(swPlugins);
                     }
                     //only resolve AFTER we have postMessaged to the SW.
+                    worker.active?.postMessage(swPlugins);
                     resolve();
                 }
             });

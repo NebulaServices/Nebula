@@ -4,6 +4,7 @@ function loadProxyScripts() {
     //wrap everything in a promise to avoid race conditions
     return new Promise<BareMuxConnection>((resolve) => {
         const conn = new BareMuxConnection("/baremux/worker.js");
+        if (typeof __uv$config !== 'undefined') { return resolve(conn) };
         const uvBundle = document.createElement("script");
         uvBundle.src = "/uv/uv.bundle.js";
         uvBundle.defer = true;
@@ -41,26 +42,17 @@ function setTransport(conn: BareMuxConnection, transport?: string) {
     });
 }
 
-type SWInitResolve = {
-    sw: ServiceWorkerRegistration,
-    conn: BareMuxConnection
-}
 function initSw() {
     //this is wrapped in a promise to mostly solve the bare-mux v1 problems
-    return new Promise<SWInitResolve>((resolve) => {
+    return new Promise<ServiceWorkerRegistration>((resolve) => {
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.ready.then(async (reg) => {
                 console.debug("Service worker ready!");
-                const conn = await loadProxyScripts();
-                const resolveVal: SWInitResolve = {
-                    sw: reg,
-                    conn: conn
-                }
-                resolve(resolveVal);
+                resolve(reg);
             });
             navigator.serviceWorker.register("/sw.js", { scope: "/" });
         }
     });
 }
 
-export { initSw, setTransport };
+export { initSw, setTransport, loadProxyScripts };

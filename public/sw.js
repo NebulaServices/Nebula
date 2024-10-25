@@ -5,26 +5,20 @@ const uv = new UVServiceWorker();
 
 //where we handle our plugins!!!
 self.addEventListener("message", function(event) {
-    //console.log(event.data);
-    if (uv.config.inject === undefined) {
-        uv.config.inject = [];
-    }
+    console.log(event.data);
+    uv.config.inject = [];
     //loop over the required data (we don't verify here as types will take care of us :D)
-    event.data.forEach((data) => { 
+    event.data.forEach((data) => {
         if (data.remove) {
-            if (uv.config.inject.find(({ host }) => host === data.host)) {
-                const idx = uv.config.inject.indexOf(data.host);
-                uv.config.inject.splice(idx, 1);
-            }
+            const idx = uv.config.inject.indexOf(data.host);
+            uv.config.inject.splice(idx, 1);
         }
         else {
-            if (!uv.config.inject.find(({ host }) => host === data.host)) {
-                uv.config.inject.push({
-                    host: data.host,
-                    html: data.html,
-                    injectTo: data.injectTo
-                });
-            }
+            uv.config.inject.push({
+                host: data.host,
+                html: data.html,
+                injectTo: data.injectTo
+            });
         }
     });
     console.log(uv.config.inject);

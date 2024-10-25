@@ -46,21 +46,18 @@ import { VERSION } from "astro:env/client";
   </div>
 </Layout>
 <script>
-  import { initSw, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+    import { initSw, setTransport, loadProxyScripts } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { pageLoad } from "@utils/events";
   import { RammerheadEncode } from "@rubynetwork/rammerhead-browser";
   import { SupportedSites } from "@utils/siteSupport";
   import {
-    WispServerURLS,
     SearchEngines,
     Settings,
       cloak,
       settings
   } from "@utils/settings/index";
-  import { search } from "@utils/search.ts"; //../../utils/search.ts
-  //@ts-expect-error No types, expected. See: https://github.com/ading2210/libcurl.js for docs on how to use.
-  import { libcurl } from "libcurl.js-new/bundled";
-  let libcurlClient: boolean = false;
+  import { search } from "@utils/search.ts"; //../../utils/search.ts 
+  const libcurl = await import('@utils/libcurl');
   type Suggestion = {
     phrase: string;
   };
@@ -81,18 +78,16 @@ import { VERSION } from "astro:env/client";
       return proxyUrl;
     }
   }
-  function uv(iframe: HTMLIFrameElement, term: string) {
-    initSw().then((init) => {
-        settings.marketPlaceSettings.handlePlugins(init.sw).then(() => {
-            setTransport(init.conn, localStorage.getItem(Settings.ProxySettings.transport) as string).then(async () => {
-                iframe.classList.remove("hidden");
-                const url = await proxy(term, false);
-                if (url) {
-                    iframe.src = url as string;
-                }
-            });
-        });
-    });
+  async function uv(iframe: HTMLIFrameElement, term: string) {
+      const conn = await loadProxyScripts();
+      await setTransport(conn, localStorage.getItem(Settings.ProxySettings.transport) as string);
+      const sw = await initSw();
+      await settings.marketPlaceSettings.handlePlugins(sw);
+      iframe.classList.remove("hidden");
+      const url = await proxy(term, false);
+      if (url) {
+          iframe.src = url;
+      }
   }
   async function rh(iframe: HTMLIFrameElement, term: string) {
     iframe.classList.remove("hidden");
@@ -134,12 +129,6 @@ import { VERSION } from "astro:env/client";
       });
       input?.addEventListener("input", async function () {
         omnibox.innerHTML = "";
-        if (!libcurlClient) {
-          await libcurl.load_wasm();
-          libcurl.set_websocket(WispServerURLS.default);
-          console.debug("Libucurl ready?", libcurl.ready);
-          libcurlClient = true;
-        }
         const value = input?.value;
         input.classList.remove("rounded-b-2xl");
         omnibox.classList.remove("hidden");
@@ -147,11 +136,12 @@ import { VERSION } from "astro:env/client";
           input.classList.add("rounded-b-2xl");
           omnibox.classList.add("hidden");
         }
-        if (value.length >= 3) {
-          const resp = await libcurl.fetch(
-            `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`
-          );
-          const data = await resp.json();
+          if (value.length >= 3) {
+            await libcurl.client.initLibcurl();
+          const data = await libcurl.client.fetchFromLibcurl(
+              `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`,
+              'json'
+          ) as [];
           const filteredData = data.slice(0,8); //Trim to only about 8 results. Any more and our omnibox dies
           if (filteredData) {
             omnibox.innerHTML = "";
