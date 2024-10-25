@@ -85,7 +85,6 @@ const marketPlaceSettings = {
             plugins.forEach(async (plugin: Plugin) => { 
                 if (plugin.type === "page") {
                     const pluginScript = await fetch(`/packages/${plugin.name}/${plugin.src}`).then((res) => res.text());
-                    console.log(`Plugin: ${plugin.name} has the following: ${pluginScript}`);
                     const script = eval(pluginScript);
                     const inject = await script() as unknown as SWPlugin;
                     if (plugin.remove) {
