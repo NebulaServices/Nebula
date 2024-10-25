@@ -89,6 +89,7 @@ const marketPlaceSettings = {
                     const script = eval(pluginScript);
                     const inject = await script() as unknown as SWPlugin;
                     if (plugin.remove) {
+                        //@ts-ignore freaking types BRO
                         const plug = plugins.filter(({ name }) => name !== plugin.name);
                         swPlugins.push({remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo});
                         localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plug));
