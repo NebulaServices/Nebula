@@ -89,15 +89,12 @@ const marketPlaceSettings = {
                     const script = eval(pluginScript);
                     const inject = await script() as unknown as SWPlugin;
                     if (plugin.remove) {
-                        const idx = plugins.indexOf(plugin.name);
-                        swPlugins.splice(idx, 1);
+                        const plug = plugins.filter(({ name }) => name !== plugin.name);
                         swPlugins.push({remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo});
-                        plugins.splice(idx, 1);
-                        localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plugins));
+                        localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plug));
                     }
                     else {
                         swPlugins.push({host: inject.host, html: inject.html, injectTo: inject.injectTo});
-                        console.log(swPlugins);
                     }
                     //only resolve AFTER we have postMessaged to the SW.
                     worker.active?.postMessage(swPlugins);
