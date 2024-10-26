@@ -1,10 +1,12 @@
-import { Settings, WispServerURLS } from "./settings/index";
 import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
+import { Settings, WispServerURLS } from "./settings/index";
 function loadProxyScripts() {
     //wrap everything in a promise to avoid race conditions
     return new Promise<BareMuxConnection>((resolve) => {
         const conn = new BareMuxConnection("/baremux/worker.js");
-        if (typeof __uv$config !== 'undefined') { return resolve(conn) };
+        if (typeof __uv$config !== "undefined") {
+            return resolve(conn);
+        }
         const uvBundle = document.createElement("script");
         uvBundle.src = "/uv/uv.bundle.js";
         uvBundle.defer = true;
@@ -14,7 +16,7 @@ function loadProxyScripts() {
         uvConfig.defer = true;
         document.body.appendChild(uvConfig);
         const checkScript = setInterval(() => {
-            if (typeof __uv$config !== 'undefined') {
+            if (typeof __uv$config !== "undefined") {
                 clearInterval(checkScript);
                 resolve(conn);
             }
@@ -29,12 +31,12 @@ function setTransport(conn: BareMuxConnection, transport?: string) {
         switch (transport) {
             case "epoxy":
                 conn.setTransport("/epoxy/index.mjs", [
-                    {wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default}
+                    { wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default }
                 ]);
                 break;
             case "libcurl":
                 conn.setTransport("/libcurl/index.mjs", [
-                    {wisp: wispServer ? WispServerURLS[wispServer]: WispServerURLS.default}
+                    { wisp: wispServer ? WispServerURLS[wispServer] : WispServerURLS.default }
                 ]);
                 break;
         }

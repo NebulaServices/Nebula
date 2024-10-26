@@ -1,7 +1,7 @@
+import { WispServerURLS } from "@utils/settings/index";
 //helper for libcurl as we have to use it in multiple locations and we don't want to re-download the WASM every time
 //@ts-expect-error No types, expected. See: https://github.com/ading2210/libcurl.js for docs on how to use.
 import { libcurl } from "libcurl.js-new/bundled";
-import { WispServerURLS } from "@utils/settings/index";
 let clientExists: boolean = false;
 async function initLibcurl() {
     if (!clientExists) {
@@ -12,7 +12,7 @@ async function initLibcurl() {
     }
 }
 
-type fetchType = "json" | "text"
+type fetchType = "json" | "text";
 
 async function fetchFromLibcurl(url: string, type: fetchType): Promise<string | [] | {}> {
     const res = await libcurl.fetch(url);
@@ -23,6 +23,6 @@ async function fetchFromLibcurl(url: string, type: fetchType): Promise<string | 
 const client = {
     initLibcurl,
     fetchFromLibcurl
-}
+};
 
 export { client };

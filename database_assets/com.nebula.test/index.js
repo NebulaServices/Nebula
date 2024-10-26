@@ -1,9 +1,9 @@
 function gyatt() {
     return {
-        host: 'example.com',
+        host: "example.com",
         html: '<script>console.error("GYATT")</script>',
-        injectTo: 'head'
-    }
+        injectTo: "head"
+    };
 }
 
 //We need to return the refrence to the function and NOT the function itself

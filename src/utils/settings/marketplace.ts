@@ -1,22 +1,29 @@
 //marketplace code & handlers
 import { Settings } from ".";
-import { type Package, type PackageType, type Plugin, type PluginType, type SWPagePlugin, type SWPlugin } from "./types";
+import {
+    type Package,
+    type PackageType,
+    type Plugin,
+    type PluginType,
+    type SWPagePlugin,
+    type SWPlugin
+} from "./types";
 const AppearanceSettings = {
     themes: "nebula||themes",
     themeName: "nebula||themeName",
     stylePayload: "nebula||stylepayload",
     video: "nebula||video",
-    image: "nebula||image",
+    image: "nebula||image"
 };
 
 const PluginSettings = {
     plugins: "nebula||plugins"
-}
+};
 
 const MarketPlaceExtras = {
     proxy: "nebula||marketplaceProxy",
     hostname: "nebula||marketplaceHostname"
-}
+};
 
 const marketPlaceSettings = {
     install: function (p: Package, packageName: string, payload?: any) {
@@ -35,12 +42,15 @@ const marketPlaceSettings = {
                 let plugins = localStorage.getItem(PluginSettings.plugins) as any;
                 plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
                 //@ts-ignore
-                const plugin = plugins.find(({ name }) => name === packageName) as Plugin
+                const plugin = plugins.find(({ name }) => name === packageName) as Plugin;
                 if (!plugin) {
-                    plugins.push({name: packageName, src: p.plugin.src, type: p.plugin.type} as unknown as Plugin)
+                    plugins.push({
+                        name: packageName,
+                        src: p.plugin.src,
+                        type: p.plugin.type
+                    } as unknown as Plugin);
                     localStorage.setItem(PluginSettings.plugins, JSON.stringify(plugins));
-                }
-                else if (plugin && plugin.remove) {
+                } else if (plugin && plugin.remove) {
                     plugin.remove = false;
                     localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plugins));
                 }
@@ -65,7 +75,7 @@ const marketPlaceSettings = {
                 let plugins = localStorage.getItem(PluginSettings.plugins) as any;
                 plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
                 //@ts-ignore
-                const plugin = plugins.find(({name}) => name === packageName.toLowerCase());
+                const plugin = plugins.find(({ name }) => name === packageName.toLowerCase());
                 if (plugin) {
                     plugin.remove = true;
                     localStorage.setItem(PluginSettings.plugins, JSON.stringify(plugins));
@@ -74,47 +84,75 @@ const marketPlaceSettings = {
             }
         });
     },
-    handlePlugins: function(worker: never | ServiceWorkerRegistration) {
+    handlePlugins: function (worker: never | ServiceWorkerRegistration) {
         return new Promise<void>((resolve) => {
-            const plugins = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+            const plugins =
+                JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
             const swPagePlugins: SWPagePlugin[] = [];
             const swPlugins: SWPlugin[] = [];
             if (plugins.length === 0) {
-                console.log('Plugin length is not greater then 0. Resolving.');
+                console.log("Plugin length is not greater then 0. Resolving.");
                 return resolve();
             }
-            plugins.forEach(async (plugin: Plugin) => { 
+            plugins.forEach(async (plugin: Plugin) => {
                 if (plugin.type === "page") {
-                    const pluginScript = await fetch(`/packages/${plugin.name.toLowerCase()}/${plugin.src}`).then((res) => res.text());
+                    const pluginScript = await fetch(
+                        `/packages/${plugin.name.toLowerCase()}/${plugin.src}`
+                    ).then((res) => res.text());
                     const script = eval(pluginScript);
-                    const inject = await script() as unknown as SWPagePlugin;
+                    const inject = (await script()) as unknown as SWPagePlugin;
                     if (plugin.remove) {
                         //@ts-ignore freaking types BRO
-                        const plug = plugins.filter(({ name }) => name !== plugin.name.toLowerCase());
-                        swPagePlugins.push({remove: true, host: inject.host, html: inject.html, injectTo: inject.injectTo, type: "page"});
+                        const plug = plugins.filter(
+                            ({ name }) => name !== plugin.name.toLowerCase()
+                        );
+                        swPagePlugins.push({
+                            remove: true,
+                            host: inject.host,
+                            html: inject.html,
+                            injectTo: inject.injectTo,
+                            type: "page"
+                        });
                         localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plug));
-                    }
-                    else {
-                        swPagePlugins.push({host: inject.host, html: inject.html, injectTo: inject.injectTo, type: "page"});
+                    } else {
+                        swPagePlugins.push({
+                            host: inject.host,
+                            html: inject.html,
+                            injectTo: inject.injectTo,
+                            type: "page"
+                        });
                     }
                     //only resolve AFTER we have postMessaged to the SW.
                     worker.active?.postMessage(swPagePlugins);
-                }
-                else if (plugin.type === "serviceWorker") {
-                    const pluginScript = await fetch(`/packages/${plugin.name.toLowerCase()}/${plugin.src}`).then((res) => res.text());
+                } else if (plugin.type === "serviceWorker") {
+                    const pluginScript = await fetch(
+                        `/packages/${plugin.name.toLowerCase()}/${plugin.src}`
+                    ).then((res) => res.text());
                     const script = eval(pluginScript);
-                    const inject = await script() as unknown as SWPlugin;
+                    const inject = (await script()) as unknown as SWPlugin;
                     if (plugin.remove) {
                         //@ts-ignore
-                        const plug = plugins.filter(({ name }) => name !== plugin.name.toLowerCase());
-                        swPlugins.push({remove: true, function: inject.function.toString(), name: plugin.name, events: inject.events, type: "serviceWorker"});
+                        const plug = plugins.filter(
+                            ({ name }) => name !== plugin.name.toLowerCase()
+                        );
+                        swPlugins.push({
+                            remove: true,
+                            function: inject.function.toString(),
+                            name: plugin.name,
+                            events: inject.events,
+                            type: "serviceWorker"
+                        });
                         localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plug));
-                    }
-                    else {
-                        swPlugins.push({function: inject.function.toString(), name: plugin.name, events: inject.events, type: "serviceWorker"});
+                    } else {
+                        swPlugins.push({
+                            function: inject.function.toString(),
+                            name: plugin.name,
+                            events: inject.events,
+                            type: "serviceWorker"
+                        });
                     }
                     worker.active?.postMessage(swPlugins);
-                } 
+                }
                 resolve();
             });
         });

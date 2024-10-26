@@ -1,5 +1,10 @@
 //Combine all of the other settings into one object. And export that (along with types and other things)
-import { AppearanceSettings, MarketPlaceExtras, PluginSettings, marketPlaceSettings } from "./marketplace";
+import {
+    AppearanceSettings,
+    MarketPlaceExtras,
+    PluginSettings,
+    marketPlaceSettings
+} from "./marketplace";
 import { ProxySettings, proxySettings } from "./proxy";
 import { TabSettings, cloak, tabSettings } from "./tab";
 import {

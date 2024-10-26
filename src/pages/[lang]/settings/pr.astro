@@ -1,13 +1,13 @@
 ---
+import InstalledPlugins from "@components/catalog/InstalledPlugins.svelte";
 import SettingsCard from "@components/settings/SettingsCard.astro";
 import Toast from "@components/toasts/Toast.svelte";
 import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
-import InstalledPlugins from "@components/catalog/InstalledPlugins.svelte";
 import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

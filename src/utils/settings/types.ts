@@ -16,7 +16,7 @@ const WispServerURLS: Record<string, string> = {
     ruby: "wss://ruby.rubynetwork.co/wisp/"
 };
 
-type PluginType = "page" | "serviceWorker"
+type PluginType = "page" | "serviceWorker";
 interface Plugin {
     name: string;
     src: string;

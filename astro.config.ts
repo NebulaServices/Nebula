@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import node from "@astrojs/node";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -11,8 +12,7 @@ import { defineConfig, envField } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import { version } from "./package.json";
 import { parsedDoc } from "./server/config.js";
-import { fileURLToPath } from "node:url";
-const workerwarePath = fileURLToPath(new URL('./workerware/src', import.meta.url));
+const workerwarePath = fileURLToPath(new URL("./workerware/src", import.meta.url));
 
 export default defineConfig({
     experimental: {
@@ -71,7 +71,7 @@ export default defineConfig({
                     },
                     {
                         src: `${workerwarePath}/**/*`.replace(/\\/g, "/"),
-                        dest: 'workerware',
+                        dest: "workerware",
                         overwrite: false
                     }
                 ]

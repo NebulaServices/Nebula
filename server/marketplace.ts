@@ -45,14 +45,14 @@ const catalogAssets = db.define<CatalogModel>("catalog_assets", {
     background_image: { type: DataTypes.TEXT, allowNull: true },
     background_video: { type: DataTypes.TEXT, allowNull: true },
     payload: { type: DataTypes.TEXT },
-    type: { type: DataTypes.TEXT },
+    type: { type: DataTypes.TEXT }
 });
 
 function marketplaceAPI(app: FastifyInstance) {
     app.get("/api/catalog-stats/", (request, reply) => {
-        reply.send({ 
-            version: '1.0.0',
-            spec: 'Nebula Services',
+        reply.send({
+            version: "1.0.0",
+            spec: "Nebula Services",
             enabled: true
         });
     });
@@ -82,7 +82,7 @@ function marketplaceAPI(app: FastifyInstance) {
                     background_image: asset.background_image,
                     background_video: asset.background_video,
                     payload: asset.payload,
-                    type: asset.type,
+                    type: asset.type
                 };
                 return acc;
             }, {});
@@ -109,7 +109,7 @@ function marketplaceAPI(app: FastifyInstance) {
                 background_image: packageRow.get("background_image"),
                 background_video: packageRow.get("background_video"),
                 payload: packageRow.get("payload"),
-                type: packageRow.get("type"),
+                type: packageRow.get("type")
             };
             reply.send(details);
         } catch (error) {
@@ -197,7 +197,7 @@ function marketplaceAPI(app: FastifyInstance) {
                 payload: request.body.payload,
                 background_video: request.body.background_video,
                 background_image: request.body.background_image,
-                type: request.body.type as CatalogType,
+                type: request.body.type as CatalogType
             };
             await catalogAssets.create({
                 package_name: body.package_name,
@@ -210,7 +210,7 @@ function marketplaceAPI(app: FastifyInstance) {
                 payload: body.payload,
                 background_video: body.background_video,
                 background_image: body.background_image,
-                type: body.type,
+                type: body.type
             });
             const assets = fileURLToPath(new URL("../database_assets", import.meta.url));
             try {
