@@ -79,6 +79,11 @@ export default defineConfig({
         ],
         server: {
             proxy: {
+                "/api/catalog-stats": {
+                    target: "http://localhost:8080/api/catalog-stats",
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/api\/catalog-stats/, "")
+                },
                 "/api/catalog-assets": {
                     target: "http://localhost:8080/api/catalog-assets",
                     changeOrigin: true,

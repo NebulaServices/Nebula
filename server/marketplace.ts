@@ -49,8 +49,12 @@ const catalogAssets = db.define<CatalogModel>("catalog_assets", {
 });
 
 function marketplaceAPI(app: FastifyInstance) {
-    app.get("/api", (request, reply) => {
-        reply.send({ Server: "Active" });
+    app.get("/api/catalog-stats/", (request, reply) => {
+        reply.send({ 
+            version: '1.0.0',
+            spec: 'Nebula Services',
+            enabled: true
+        });
     });
 
     // This API returns a list of the assets in the database (SW plugins and themes).

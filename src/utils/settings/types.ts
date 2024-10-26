@@ -23,12 +23,17 @@ interface Plugin {
     type: PluginType;
     remove?: boolean;
 }
-interface SWPlugin {
+interface SWPagePlugin extends Omit<Plugin, "name" | "src"> {
     host: string;
     html: string;
     injectTo: "head" | "body";
-    remove?: boolean;
 }
+
+interface SWPlugin extends Omit<Plugin, "src"> {
+    function: any;
+    events: [];
+}
+
 interface Package {
     theme?: {
         payload: string;
@@ -48,6 +53,7 @@ export {
     type Package,
     type PluginType,
     type Plugin,
+    type SWPagePlugin,
     type SWPlugin,
     SearchEngines,
     type SearchEngine,

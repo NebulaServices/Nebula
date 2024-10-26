@@ -1,7 +1,9 @@
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");
+importScripts("/workerware/workerware.js");
 importScripts(__uv$config.sw || "/uv/uv.sw.js");
 const uv = new UVServiceWorker();
+const ww = new WorkerWare({ debug: false });
 
 //where we handle our plugins!!!
 self.addEventListener("message", function(event) {
@@ -10,32 +12,51 @@ self.addEventListener("message", function(event) {
     //loop over the required data (we don't verify here as types will take care of us :D)
     event.data.forEach((data) => {
         if (data.remove) {
-            const idx = uv.config.inject.indexOf(data.host);
-            uv.config.inject.splice(idx, 1);
+            if (data.type === "page") {
+                const idx = uv.config.inject.indexOf(data.host);
+                uv.config.inject.splice(idx, 1);
+            }
+            else if (data.type === "serviceWorker") {
+                ww.deleteByName(data.name);
+            }
         }
         else {
-            uv.config.inject.push({
-                host: data.host,
-                html: data.html,
-                injectTo: data.injectTo
-            });
+            if (data.type === "page") {
+                uv.config.inject.push({
+                    host: data.host,
+                    html: data.html,
+                    injectTo: data.injectTo
+                });
+            }
+            else if (data.type === "serviceWorker") {
+                const wwFunction = eval(data.function);
+                ww.use({
+                    function: wwFunction ? wwFunction : new Function(data.function),
+                    name: data.name,
+                    events: data.events
+                })
+            }
+            else {
+                console.error('NO type exists for that. Only serviceWorker & page exist.');
+                return;
+            }
         }
     });
-    console.log(uv.config.inject);
 });
 
 self.addEventListener("fetch", function (event) {
-    if (event.request.url.startsWith(location.origin + __uv$config.prefix)) {
-        event.respondWith(
-            (async function () {
+    event.respondWith(
+        (async () => {
+            const wwRes = await ww.run(event)();
+            if (wwRes.includes(null)) {
+                return;
+            }
+            if (event.request.url.startsWith(location.origin + __uv$config.prefix)) {
                 return await uv.fetch(event);
-            })()
-        );
-    } else {
-        event.respondWith(
-            (async function () {
+            }
+            else {
                 return await fetch(event.request);
-            })()
-        );
-    }
+            }
+        })()
+    );
 });
