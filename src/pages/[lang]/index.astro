@@ -57,7 +57,7 @@ import { VERSION } from "astro:env/client";
       settings
   } from "@utils/settings/index";
   import { search } from "@utils/search.ts"; //../../utils/search.ts 
-  const libcurl = await import('@utils/libcurl');
+    import { client as libcurlClient } from "@utils/libcurl";
   type Suggestion = {
     phrase: string;
   };
@@ -195,5 +195,5 @@ import { VERSION } from "astro:env/client";
           }
         }
       });
-  }, true);
+  });
 </script>
