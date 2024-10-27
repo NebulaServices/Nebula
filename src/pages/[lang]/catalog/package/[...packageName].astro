@@ -58,7 +58,7 @@ import type { SWPagePlugin } from "@utils/settings/types";
         const cssItemExists = cssItems.indexOf(packageName) !== -1;
         const pluginItems = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
         //@ts-ignore
-        const pluginItemExists = pluginItems.find(({ name }) => name === packageName);
+        const pluginItemExists = pluginItems.find(({ name, remove }) => name === packageName && remove !== true);
         const installButton = document.getElementById("install") as HTMLButtonElement;
         const uninstallButton = document.getElementById("uninstall") as HTMLButtonElement;
         const payload = assetsJson ? JSON.parse(assetsJson) : undefined;

@@ -19,7 +19,8 @@ async function getAssets() {
     const items = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins)) || [];
     const promises = items.map(getItem);
     const dataArray = await Promise.all(promises);
-    const accumulatedData = dataArray.filter((data) => data !== null);
+    let accumulatedData = dataArray.filter((data) => data !== null);
+    accumulatedData = accumulatedData.filter(({ remove }) => remove === true);
     console.log(JSON.stringify(accumulatedData));
     return accumulatedData;
 }
@@ -37,7 +38,7 @@ let compRef = [];
                 <div class="h-2/6 text-center content-center p-3 font-semibold items-center flex flex-col">
                     <div class="text-2xl"> {asset.title} </div>
                     <div class="flex flex-row">
-                        <div class="h-8 w-8 cursor-pointer" on:click={() => {settings.marketPlaceSettings.uninstall(asset.type, asset.name); compRef[key].$destroy()}}>
+                        <div class="h-8 w-8 cursor-pointer" on:click={() => {settings.marketPlaceSettings.uninstall(asset.type === "page" ? "plugin-page" : "plugin-sw", asset.package_name); compRef[key].$destroy()}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256" {...$$props}>
                                 <path fill="currentColor" d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M112 168a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm0-120H96v-8a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8Z" />
                             </svg>
