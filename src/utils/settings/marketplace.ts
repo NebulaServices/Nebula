@@ -59,6 +59,7 @@ const marketPlaceSettings = {
         });
     },
     uninstall: function (p: PackageType, packageName: string) {
+        console.log(p);
         return new Promise<void>((resolve) => {
             if (p === "theme") {
                 let items = localStorage.getItem(AppearanceSettings.themes) as any;
@@ -71,7 +72,7 @@ const marketPlaceSettings = {
                 }
                 resolve();
             }
-            if (p === "plugin") {
+            if (p === "plugin-page" || p === "plugin-sw") {
                 let plugins = localStorage.getItem(PluginSettings.plugins) as any;
                 plugins ? (plugins = JSON.parse(plugins)) : (plugins = []);
                 //@ts-ignore
@@ -86,7 +87,7 @@ const marketPlaceSettings = {
     },
     handlePlugins: function (worker: never | ServiceWorkerRegistration) {
         return new Promise<void>((resolve) => {
-            const plugins =
+            let plugins =
                 JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
             const swPagePlugins: SWPagePlugin[] = [];
             const swPlugins: SWPlugin[] = [];
@@ -102,8 +103,8 @@ const marketPlaceSettings = {
                     const script = eval(pluginScript);
                     const inject = (await script()) as unknown as SWPagePlugin;
                     if (plugin.remove) {
-                        //@ts-ignore freaking types BRO
-                        const plug = plugins.filter(
+                        plugins = plugins.filter(
+                            //@ts-ignore freaking types BRO
                             ({ name }) => name !== plugin.name.toLowerCase()
                         );
                         swPagePlugins.push({
@@ -113,7 +114,6 @@ const marketPlaceSettings = {
                             injectTo: inject.injectTo,
                             type: "page"
                         });
-                        localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plug));
                     } else {
                         swPagePlugins.push({
                             host: inject.host,
@@ -131,8 +131,8 @@ const marketPlaceSettings = {
                     const script = eval(pluginScript);
                     const inject = (await script()) as unknown as SWPlugin;
                     if (plugin.remove) {
-                        //@ts-ignore
-                        const plug = plugins.filter(
+                        plugins = plugins.filter(
+                            //@ts-ignore
                             ({ name }) => name !== plugin.name.toLowerCase()
                         );
                         swPlugins.push({
@@ -142,7 +142,6 @@ const marketPlaceSettings = {
                             events: inject.events,
                             type: "serviceWorker"
                         });
-                        localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plug));
                     } else {
                         swPlugins.push({
                             function: inject.function.toString(),
@@ -153,6 +152,7 @@ const marketPlaceSettings = {
                     }
                     worker.active?.postMessage(swPlugins);
                 }
+                localStorage.setItem(Settings.PluginSettings.plugins, JSON.stringify(plugins));
                 resolve();
             });
         });

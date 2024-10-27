@@ -14,7 +14,7 @@ const db = new Sequelize(parsedDoc.db.name, parsedDoc.db.username, parsedDoc.db.
     storage: "database.sqlite" //this is sqlite only
 });
 
-type CatalogType = "theme" | "plugin";
+type CatalogType = "theme" | "plugin-page" | "plugin-sw";
 
 interface Catalog {
     package_name: string;

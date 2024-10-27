@@ -137,8 +137,8 @@ import { VERSION } from "astro:env/client";
           omnibox.classList.add("hidden");
         }
           if (value.length >= 3) {
-            await libcurl.client.initLibcurl();
-          const data = await libcurl.client.fetchFromLibcurl(
+            await libcurlClient.initLibcurl();
+          const data = await libcurlClient.fetchFromLibcurl(
               `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`,
               'json'
           ) as [];

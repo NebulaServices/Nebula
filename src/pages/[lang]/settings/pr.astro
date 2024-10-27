@@ -16,6 +16,7 @@ export function getStaticPaths() {
     return STATIC_PATHS;
 }
 export const prerender = true;
+import { MARKETPLACE_ENABLED } from "astro:env/client";
 ---
 
 <Layout title="Settings">
@@ -98,19 +99,21 @@ export const prerender = true;
         />
       </div>
   </SettingsSection>
-  <SettingsSection title="Plugins" subtitle="Plugins allow you to modify the way the proxy works (UV only)">
-    <div class="flex flex-row gap-6 justify-center md:justify-normal">
-        <InstalledPlugins client:only="svelte" />
-        <a href={`/${lang}/catalog/1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
-            <div class="w-full items-center justify-center flex aspect-[16/9]">
+  {MARKETPLACE_ENABLED &&
+    <SettingsSection title="Plugins" subtitle="Plugins allow you to modify the way the proxy works (UV only, plugins are auto applied)">
+        <div class="flex flex-row gap-6 justify-center md:justify-normal">
+            <InstalledPlugins client:only="svelte" />
+            <a href={`/${lang}/catalog/1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+                <div class="w-full items-center justify-center flex aspect-[16/9]">
                     <Icon name="ph:plus-bold" class="h-16 w-16" />
-            </div>
-            <div class="h-2/6 text-center content-center p-3 font-semibold">
-                Get more plugins in the <strong>Nebula Catalog!</strong>
-            </div>
-        </a>
-    </div>
-  </SettingsSection>
+                </div>
+                <div class="h-2/6 text-center content-center p-3 font-semibold">
+                    Get more plugins in the <strong>Nebula Catalog!</strong>
+                </div>
+            </a>
+        </div>
+    </SettingsSection>
+    }
   </SettingsLayout>
   <ToastWrapper client:load>
     <Toast toastProp={{

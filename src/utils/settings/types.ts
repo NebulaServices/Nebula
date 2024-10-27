@@ -4,7 +4,6 @@ type AbCloaks = "a:b" | "blob";
 type OpenIn = "a:b" | "blob" | "direct" | "embed";
 type Proxy = "automatic" | "uv" | "rh";
 type Transport = "epoxy" | "libcurl";
-type PackageType = "theme" | "plugin";
 const SearchEngines: Record<string, string> = {
     ddg: "https://duckduckgo.com/?q=%s",
     google: "https://google.com/search?q=%s",
@@ -16,7 +15,11 @@ const WispServerURLS: Record<string, string> = {
     ruby: "wss://ruby.rubynetwork.co/wisp/"
 };
 
+
 type PluginType = "page" | "serviceWorker";
+type MarketplacePluginType = "plugin-page" | "plugin-sw";
+type PackageType = "theme" | MarketplacePluginType;
+
 interface Plugin {
     name: string;
     src: string;

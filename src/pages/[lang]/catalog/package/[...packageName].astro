@@ -20,7 +20,7 @@ const assetsJson = await response.json();
                 }
                 {!assetsJson.background_video && !assetsJson.backgroundImage && <img loading="lazy" src={`/packages/${packageName}/${assetsJson.image}`} alt={assetsJson.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
                 <div class="flex flex-col ml-7 p-16">
-                    <p class="text-xl">{assetsJson.type}</p>
+                    <p class="text-xl">{assetsJson.type === "plugin-page" || assetsJson.type === "plugin-sw" ? "plugin": assetsJson.type}</p>
                     <h1 class="text-4xl font-roboto font-semibold">{assetsJson.title}</h1>
                     <p class="text-xl"> By: <strong>{assetsJson.author}</strong></p>
                     <p class="text-xl">{assetsJson.description}</p>
@@ -39,6 +39,7 @@ const assetsJson = await response.json();
 <script>
     import { pageLoad } from "@utils/events";
     import { settings, Settings, type PackageType } from "@utils/settings/index";
+import type { SWPagePlugin } from "@utils/settings/types";
     let packageName: string;
     let assetsJson: any;
     let packageType: string;
@@ -66,9 +67,10 @@ const assetsJson = await response.json();
             installButton.classList.add("hidden");
         }
         installButton.addEventListener("click", () => {
+            console.log(payload);
             settings.marketPlaceSettings.install(
                 payload.type === "theme" ? {theme: {payload: payload.payload, video: payload.background_video, bgImage: payload.background_image}} :
-                {plugin: {name: packageName, src: payload.payload, type: "page" }},
+                payload.type === "plugin-page" ? {plugin: {name: packageName, src: payload.payload, type: "page" }} : {plugin: { name: packageName, src: payload.payload, type: "serviceWorker" } },
                 packageName, payload.payload
             ).then(() => {
                 installButton.classList.add("hidden");

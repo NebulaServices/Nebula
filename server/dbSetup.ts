@@ -83,7 +83,7 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             description: "gyatt",
             tags: [],
             payload: "index.js",
-            type: "plugin"
+            type: "plugin-page"
         },
         {
             package_name: "com.nebula.test-2",
@@ -94,7 +94,7 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             description: "gyatt",
             tags: [],
             payload: "index.js",
-            type: "plugin"
+            type: "plugin-sw"
         }
     ];
     const dbItems = await db.findAll();

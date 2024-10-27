@@ -35,7 +35,7 @@ const assets = getAssets();
                                         <strong>Version:</strong>
                                         {asset.version}
                                     </div>
-                                    <div><strong>Type:</strong> {asset.type}</div>
+                                    <div><strong>Type:</strong> {asset.type === "plugin-page" || asset.type === "plugin-sw" ? "plugin" : asset.type}</div>
                                 </div>
                             </div>
                         </a>

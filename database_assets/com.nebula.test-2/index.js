@@ -1,8 +1,10 @@
+const example = () => {console.log('Gyatt... 2')};
+
 function gyatt2() {
     return {
-        host: "example.com",
-        html: '<script>console.error("GYATT... 2")</script>',
-        injectTo: "head"
+        function: example,
+        name: 'gyatt2',
+        events: ['fetch']
     };
 }
 
