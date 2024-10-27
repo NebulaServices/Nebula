@@ -121,9 +121,9 @@ touch index.js
     ```
 
 > [!WARNING]
-> The only *allowed* way to create a plugin is either with a string or arrow function ***NOT*** a named function. 
-> Example: `function example() {/* Some form of code */}`
-> This will not be approved nor will it work properly.
+> The only *allowed* way to pass code to the `function` param is either a string or an arrow function. Named functions ***WILL NOT WORK***. 
+> Example of a named function: `function example() {/* Some form of code */}`.
+> If a named function is used where it shouldn't be, your plugin will not be approved nor will it work properly.
 
 3. Submit your plugin in the [Discord](https://discord.gg/unblocker)!
 
