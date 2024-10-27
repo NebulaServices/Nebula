@@ -129,6 +129,33 @@ touch index.js
 
 3. Submit your plugin in the [Discord](https://discord.gg/unblocker)!
 
+##### Proxied page plugins
+
+- The allow modification of websites that UV proxies, (EX: you could add vencord to discord with this)
+
+1. Create an index.js file (or another file name)
+```bash
+touch index.js
+```
+
+2. Edit that file with your code and the following:
+```js
+//Name this whatever.
+function example() {
+    //You MUST return the following
+    return {
+        host: "example.com", //The host to match (so if the user visits example.com it will inject the html below.
+        html: "<script>console.log('Example')</script>", //Must return a string (and be valid HTML or your plugin will break). How you get that string is up to you
+        injectTo: "head" // Can be "head" or "body"
+    }
+}
+
+//Technically this could be named anything, recommended to call it `entryFunc`
+self.entryFunc = example; //DO NOT run the function here. That will cause errors. Only assign the reference to the function here.
+```
+
+3. Submit it in our [Discord](https://discord.gg/unblocker)!
+
 ---
 
 ## Deployment
