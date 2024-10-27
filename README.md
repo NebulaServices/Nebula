@@ -67,6 +67,66 @@
 - For big production instances I would recommend using Postgres over SQLite. To do this see [#config](#config)
 - To use postgres via the provided docker-compose files, see [#docker](#docker)
 
+
+### How to make a plugin
+
+- Plugins extend the functionality of either the proxied page(s) or the service worker.
+- This guide provides an incredibly basic example of how to make either.
+
+#### Prerequisites:
+  - Make sure you have joined our [Discord server](https://discord.gg/unblocker) so you can submit your plugin.
+  - Some knowledge of JS/TS
+
+##### Serviceworker plugin:
+
+- These plugins are handled by Workerware see [here](https://github.com/mercuryworkshop/workerware) for docs.
+
+1. Create an index.js (or other file name) file:
+```bash
+touch index.js
+```
+
+2. Edit that file to include the either of these:
+    - Code encased in a string:
+    ```js
+    function setup() {
+        // This function MUST return the following attributes:
+        return {
+            function: `console.log('Example code.')`,
+            name: 'com.example', // Technically could be named anything. Recommended to use the same name for everything (name when submitting and this)        
+            events: ['fetch'] // See: https://github.com/mercuryworkshop/workerware for the event types you can use. (Also typed if your using typescript)
+        }
+    }
+    
+    //This can be named anything. However, it's recommended to use `entryFunc`
+    self.entryFunc = setup; //DO NOT call the function here. Only assign the reference otherwise, it will error.
+    ```
+    - Code in an arrow function:    
+    ```js
+    const example = () => {
+        console.log('Example code')
+    }
+
+    function setup() {
+        //This function MUST return the following attributes:
+        return {
+            function: example, //Do not call the function, only assign the reference to the function.
+            name: 'com.example', // Technicall could be name anything. Recommended to use the same name for everything (name when submitting and this)
+            event: ['fetch'] // Se https://github.com/mercuryworkshop/workerware for the event types you can use. (Also typed if using typescript)
+        }
+    }
+
+    //This can be named anything. However, it's recommended to use `entryFunc`
+    self.entryFunc = setup; //DO NOT call the function here. Only assign the reference otherwise, it will error.
+    ```
+
+    [!NOTE]
+    > The only *allowed* way to create a plugin is either with a string or arrow function ***NOT*** a named function. 
+    > Example: `function example() {/* Some form of code */}`
+    > This will not be approved nor will it work properly.
+
+3. Submit your plugin in the [Discord](https://discord.gg/unblocker)!
+
 ---
 
 ## Deployment
