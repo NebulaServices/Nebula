@@ -120,7 +120,7 @@ touch index.js
     self.entryFunc = setup; //DO NOT call the function here. Only assign the reference otherwise, it will error.
     ```
 
-    [!NOTE]
+    > [!WARN]
     > The only *allowed* way to create a plugin is either with a string or arrow function ***NOT*** a named function. 
     > Example: `function example() {/* Some form of code */}`
     > This will not be approved nor will it work properly.
