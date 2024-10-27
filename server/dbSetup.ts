@@ -73,29 +73,8 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: ["Theme", "Simple", "Dark", "Retro"],
             payload: "retro.css",
             type: "theme"
-        },
-        {
-            package_name: "com.nebula.test",
-            title: "GYATT",
-            image: "gyatt.png",
-            author: "NBS",
-            version: "0.0.0",
-            description: "gyatt",
-            tags: [],
-            payload: "index.js",
-            type: "plugin-page"
-        },
-        {
-            package_name: "com.nebula.test-2",
-            title: "GYATT...2",
-            image: "gyatt.png",
-            author: "NBS",
-            version: "0.0.0",
-            description: "gyatt",
-            tags: [],
-            payload: "index.js",
-            type: "plugin-sw"
         }
+        //To add plugins: plugin types consist of plugin-sw (workerware) & plugin-page (uv.config.inject)
     ];
     const dbItems = await db.findAll();
     if (dbItems.length === 0) {
