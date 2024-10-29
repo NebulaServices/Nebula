@@ -1,3 +1,4 @@
+import { type PackageType, type Package, type PluginType, type Plugin, type SWPagePlugin, type SWPlugin } from "./marketplace/types";
 const wispUrl = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
 type TabCloaks = "default" | "google" | "wikipedia" | "canvas" | "classroom" | "powerschool";
 type AbCloaks = "a:b" | "blob";
@@ -15,36 +16,6 @@ const WispServerURLS: Record<string, string> = {
     ruby: "wss://ruby.rubynetwork.co/wisp/"
 };
 
-
-type PluginType = "page" | "serviceWorker";
-type MarketplacePluginType = "plugin-page" | "plugin-sw";
-type PackageType = "theme" | MarketplacePluginType;
-
-interface Plugin {
-    name: string;
-    src: string;
-    type: PluginType;
-    remove?: boolean;
-}
-interface SWPagePlugin extends Omit<Plugin, "name" | "src"> {
-    host: string;
-    html: string;
-    injectTo: "head" | "body";
-}
-
-interface SWPlugin extends Omit<Plugin, "src"> {
-    function: any;
-    events: [];
-}
-
-interface Package {
-    theme?: {
-        payload: string;
-        video?: string;
-        bgImage?: string;
-    };
-    plugin?: Plugin;
-}
 
 export {
     type TabCloaks,
