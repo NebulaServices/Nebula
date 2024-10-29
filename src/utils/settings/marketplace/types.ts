@@ -15,7 +15,7 @@ interface SWPagePlugin extends Omit<Plug, "name" | "src"> {
     injectTo: "head" | "body";
 }
 
-type SWPluginFunction<T extends unknown> = (args: T) => void | any;
+type SWPluginFunction<T extends unknown> = (args: T) => void | unknown;
 
 type Events =  
     "abortpayment" | 
@@ -40,7 +40,7 @@ type Events =
     "sync"
 
 interface SWPlugin extends Omit<Plug, "src"> {
-    function: string | SWPluginFunction<unknown>;
+    function: string | SWPluginFunction<any>;
     events: Events[]
 }
 
