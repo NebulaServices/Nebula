@@ -67,7 +67,56 @@
 - For big production instances I would recommend using Postgres over SQLite. To do this see [#config](#config)
 - To use postgres via the provided docker-compose files, see [#docker](#docker)
 
+### How to make a theme
 
+- Themes allow you to customize the *look* of Nebula.
+
+#### Prerequisites:
+  - Make sure you have our [Discord server](https://discord.gg/unblocker) so you can submit your theme
+
+##### Making the themes:
+
+1. Firstly, copy the css vars:
+```css
+:root {
+    --background-primary: /*Your stuff here */;
+    --background-lighter: ;
+    --navbar-color: ;
+    --navbar-text-color: ;
+    --navbar-link-color: ; 
+    --navbar-link-hover-color: ; 
+    --input-text-color: ;
+    --input-placeholder-color: ; 
+    --input-background-color: ;
+    --input-border-color: ;
+    --tab-color: ;
+    --border-color: ; 
+}
+```
+
+> [!NOTE]
+>
+> You can add a custom font as well! To do so add this to your :root
+> 
+> ```css
+> --font-family: /* Font family name */;
+> ```
+> 
+> And this to the bottom of your css file/submition:
+> ```css
+> @font-face {
+>    font-family: /* Name */;
+>    src: url(/* Where the font is located! Local or external work! */);
+>   }
+>  ```
+>
+> A good example of using a custom font is the built in `retro` theme [here](./database_assets/com.nebula.retro)
+
+2. Add your colors and test! (Either with a self hosted version of Nebula OR via a live preview (no clue when this will happen)
+
+3. Once your satisfied with said colors, submit your theme in the [Discord Server](https://discord.gg/unblocker)!
+
+---
 ### How to make a plugin
 
 - Plugins extend the functionality of either the proxied page(s) or the service worker.
@@ -98,7 +147,7 @@ touch index.js
         }
     }
     
-    //This can be named anything. However, it's recommended to use `entryFunc`
+    //This can be named anything. However, it's recommended to use `entryFunc` (with types, the naming IS enforced)
     self.entryFunc = setup; //DO NOT call the function here. Only assign the reference otherwise, it will error.
     ```
     - Code in an arrow function:    
@@ -116,7 +165,7 @@ touch index.js
         }
     }
 
-    //This can be named anything. However, it's recommended to use `entryFunc`
+    //This can be named anything. However, it's recommended to use `entryFunc` (with types, the naming IS enforced)
     self.entryFunc = setup; //DO NOT call the function here. Only assign the reference otherwise, it will error.
     ```
 
