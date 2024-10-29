@@ -93,6 +93,59 @@ const { title, noHeader } = Astro.props;
       .roboto {
           font-family: var(--font-family), Roboto;
       }
+      /* Custom scrollbar because the default ones look like ASS */
+      ::-webkit-scrollbar {
+          width: 0.5rem;
+          height: 0.5rem;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--navbar-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--navbar-text-color);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--navbar-link-color);
+        }
+        ::-moz-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+        ::-moz-scrollbar-track {
+            background: var(--navbar-color);
+        }
+        ::-moz-scrollbar-thumb {
+            background: var(--navbar-text-color);
+        }
+        ::-moz-scrollbar-thumb:hover {
+             background: var(--navbar-link-color);
+        }
+        ::-ms-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+        ::-ms-scrollbar-track {
+            background: var(--navbar-color);
+        }
+        ::-ms-scrollbar-thumb {
+           background: var(--navbar-text-color);
+        }
+        ::-ms-scrollbar-thumb:hover {
+            background: var(--navbar-link-color);
+        }
+        ::-o-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+        ::-o-scrollbar-track {
+            background: var(--navbar-color);
+        }
+        ::-o-scrollbar-thumb {
+             background: var(--navbar-text-color);
+        }
+        ::-o-scrollbar-thumb:hover {
+            background: var(--navbar-link-color);
+        }
   </style>
   </body>
 </html>
