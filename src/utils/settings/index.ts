@@ -4,7 +4,7 @@ import {
     MarketPlaceExtras,
     PluginSettings,
     marketPlaceSettings
-} from "./marketplace";
+} from "./marketplace/index";
 import { ProxySettings, proxySettings } from "./proxy";
 import { TabSettings, cloak, tabSettings } from "./tab";
 import {
