@@ -3,8 +3,11 @@ import Logo from "@components/Logo.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 export function getStaticPaths() {
-    const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
-    return STATIC_PATHS;
+  const STATIC_PATHS = [
+    { params: { lang: "en_US" } },
+    { params: { lang: "jp" } },
+  ];
+  return STATIC_PATHS;
 }
 export const prerender = true;
 const lang = getLangFromUrl(Astro.url);
@@ -13,13 +16,19 @@ import { VERSION } from "astro:env/client";
 ---
 
 <Layout title="Nebula">
-  <div class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center">
-    <div class="w-full flex flex-col justify-center items-center content-center h-2/4">
+  <div
+    class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center"
+  >
+    <div
+      class="w-full flex flex-col justify-center items-center content-center h-2/4"
+    >
       <div class="flex flex-row items-center mb-8">
         <div class="h-32 w-32 fill-navbar-text-color">
           <Logo />
         </div>
-        <h1 class="font-roboto whitespace-nowrap font-bold text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto">
+        <h1
+          class="font-roboto whitespace-nowrap text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
+        >
           nebula.
         </h1>
       </div>
@@ -37,163 +46,188 @@ import { VERSION } from "astro:env/client";
     <iframe
       id="neb-iframe"
       class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"
-      src="/loading"
-      ></iframe>
-    <div id="version" class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between font-roboto"> 
-        <p> Version: { VERSION } </p>
-        <p> &copy; Nebula Services 2024 </p>
+      src="/loading"></iframe>
+    <div
+      id="version"
+      class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between font-roboto"
+    >
+      <p>Version: {VERSION}</p>
+      <p>&copy; Nebula Services 2024</p>
     </div>
   </div>
 </Layout>
 <script>
-    import { initSw, setTransport, loadProxyScripts } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
-    import { pageLoad } from "@utils/events";
+  import { initSw, setTransport, loadProxyScripts } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+  import { pageLoad } from "@utils/events";
   import { RammerheadEncode } from "@rubynetwork/rammerhead-browser";
   import { SupportedSites } from "@utils/siteSupport";
   import {
     SearchEngines,
     Settings,
-      cloak,
-      settings
+    cloak,
+    settings,
   } from "@utils/settings/index";
-  import { search } from "@utils/search.ts"; //../../utils/search.ts 
-    import { client as libcurlClient } from "@utils/libcurl";
+  import { search } from "@utils/search.ts"; //../../utils/search.ts
+  import { client as libcurlClient } from "@utils/libcurl";
   type Suggestion = {
     phrase: string;
   };
   async function proxy(term: string, rh: boolean) {
-    const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
+    const searchEngine = localStorage.getItem(
+      Settings.ProxySettings.searchEngine
+    );
     const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-    let proxyUrl: any = __uv$config!.prefix + __uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg)); 
+    let proxyUrl: any =
+      __uv$config!.prefix +
+      __uv$config.encodeUrl!(
+        search(
+          term,
+          searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
+        )
+      );
     if (rh) {
-        proxyUrl = await RammerheadEncode(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg));
+      proxyUrl = await RammerheadEncode(
+        search(
+          term,
+          searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
+        )
+      );
     }
     if (openIn === "a:b" || openIn === "blob") {
-      return cloak(openIn as string, "https://google.com", `${window.location.origin}${proxyUrl}`);
-    } 
-    else if (openIn === "direct") {
+      return cloak(
+        openIn as string,
+        "https://google.com",
+        `${window.location.origin}${proxyUrl}`
+      );
+    } else if (openIn === "direct") {
       return (window.location.href = proxyUrl as string);
-    } 
-    else {
+    } else {
       return proxyUrl;
     }
   }
   async function uv(iframe: HTMLIFrameElement, term: string) {
-      const conn = await loadProxyScripts();
-      await setTransport(conn, localStorage.getItem(Settings.ProxySettings.transport) as string);
-      const sw = await initSw();
-      await settings.marketPlaceSettings.handlePlugins(sw);
-      iframe.classList.remove("hidden");
-      const url = await proxy(term, false);
-      if (url) {
-          iframe.src = url;
-      }
+    const conn = await loadProxyScripts();
+    await setTransport(
+      conn,
+      localStorage.getItem(Settings.ProxySettings.transport) as string
+    );
+    const sw = await initSw();
+    await settings.marketPlaceSettings.handlePlugins(sw);
+    iframe.classList.remove("hidden");
+    const url = await proxy(term, false);
+    if (url) {
+      iframe.src = url;
+    }
   }
   async function rh(iframe: HTMLIFrameElement, term: string) {
     iframe.classList.remove("hidden");
     const url = await proxy(term, true);
     if (url) {
-      iframe.src = "/" + url as string;
+      iframe.src = ("/" + url) as string;
     }
   }
   //we need to rerun this on every page load
   pageLoad(async () => {
-      const input = document.getElementById("nebula-input") as HTMLInputElement;
-      const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
-      const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-      const copyright = document.getElementById("version") as HTMLDivElement;
-      input?.addEventListener("keypress", async function (event: any) {
-          if (event.key === "Enter") {
-              copyright.classList.add("hidden");
-          if (localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
-              const key = SupportedSites[input?.value];
-              switch(key) {
-                  case "uv":
-                      uv(iframe, input?.value);
-                      break;
-                  case "rh":
-                      rh(iframe, input?.value);
-                      break;
-                  default:
-                      uv(iframe, input?.value);
-                      break;
-              }
+    const input = document.getElementById("nebula-input") as HTMLInputElement;
+    const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
+    const omnibox = document.getElementById("omnibox") as HTMLDivElement;
+    const copyright = document.getElementById("version") as HTMLDivElement;
+    input?.addEventListener("keypress", async function (event: any) {
+      if (event.key === "Enter") {
+        copyright.classList.add("hidden");
+        if (
+          localStorage.getItem(Settings.ProxySettings.proxy) === "automatic"
+        ) {
+          const key = SupportedSites[input?.value];
+          switch (key) {
+            case "uv":
+              uv(iframe, input?.value);
+              break;
+            case "rh":
+              rh(iframe, input?.value);
+              break;
+            default:
+              uv(iframe, input?.value);
+              break;
           }
-          else if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
-            uv(iframe, input?.value);
-          }
-          else if (localStorage.getItem(Settings.ProxySettings.proxy) === "rh") { 
-            rh(iframe, input?.value);
-          }
+        } else if (
+          localStorage.getItem(Settings.ProxySettings.proxy) === "uv"
+        ) {
+          uv(iframe, input?.value);
+        } else if (
+          localStorage.getItem(Settings.ProxySettings.proxy) === "rh"
+        ) {
+          rh(iframe, input?.value);
         }
-      });
-      input?.addEventListener("input", async function () {
-        omnibox.innerHTML = "";
-        const value = input?.value;
-        input.classList.remove("rounded-b-2xl");
-        omnibox.classList.remove("hidden");
-        if (value.length === 0) {
-          input.classList.add("rounded-b-2xl");
-          omnibox.classList.add("hidden");
-        }
-          if (value.length >= 3) {
-            await libcurlClient.initLibcurl();
-          const data = await libcurlClient.fetchFromLibcurl(
-              `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`,
-              'json'
-          ) as [];
-          const filteredData = data.slice(0,8); //Trim to only about 8 results. Any more and our omnibox dies
-          if (filteredData) {
-            omnibox.innerHTML = "";
-            filteredData.map((results: Suggestion) => {
-              let span = document.createElement("span");
-              let pTag = document.createElement("p");
-              span.classList.add(
-                "cursor-pointer",
-                "font-roboto",
-                "border-b",
-                "border-input-border-color",
-                "last:rounded-b-xl",
-                "last:border-none",
-                "text-ellipsis",
-                "whitespace-nowrap",
-                "w-full",
-                "text-input-text",
-                "h-9",
-                "text-xl",
-                "text-align-center",
-                "overflow-hidden",
-                "flex",
-                "items-center",
-                "justify-center",
-                "hover:bg-lighter",
-                "active:bg-primary"
-              );
-              span.addEventListener("click", function () {
-                //When the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
-                const event = new KeyboardEvent("keypress", {
-                  key: "Enter",
-                  code: "Enter",
-                  which: 13,
-                  keyCode: 13,
-                });
-                input.value = results.phrase;
-                input.dispatchEvent(event);
+      }
+    });
+    input?.addEventListener("input", async function () {
+      omnibox.innerHTML = "";
+      const value = input?.value;
+      input.classList.remove("rounded-b-2xl");
+      omnibox.classList.remove("hidden");
+      if (value.length === 0) {
+        input.classList.add("rounded-b-2xl");
+        omnibox.classList.add("hidden");
+      }
+      if (value.length >= 3) {
+        await libcurlClient.initLibcurl();
+        const data = (await libcurlClient.fetchFromLibcurl(
+          `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`,
+          "json"
+        )) as [];
+        const filteredData = data.slice(0, 8); //Trim to only about 8 results. Any more and our omnibox dies
+        if (filteredData) {
+          omnibox.innerHTML = "";
+          filteredData.map((results: Suggestion) => {
+            let span = document.createElement("span");
+            let pTag = document.createElement("p");
+            span.classList.add(
+              "cursor-pointer",
+              "font-roboto",
+              "border-b",
+              "border-input-border-color",
+              "last:rounded-b-xl",
+              "last:border-none",
+              "text-ellipsis",
+              "whitespace-nowrap",
+              "w-full",
+              "text-input-text",
+              "h-9",
+              "text-xl",
+              "text-align-center",
+              "overflow-hidden",
+              "flex",
+              "items-center",
+              "justify-center",
+              "hover:bg-lighter",
+              "active:bg-primary"
+            );
+            span.addEventListener("click", function () {
+              //When the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
+              const event = new KeyboardEvent("keypress", {
+                key: "Enter",
+                code: "Enter",
+                which: 13,
+                keyCode: 13,
               });
-              pTag.classList.add(
-                "cursor-pointer",
-                "text-ellipsis",
-                "text-center",
-                "w-full",
-                "overflow-hidden",
-                "whitespace-nowrap"
-              );
-              pTag.innerText = results.phrase;
-              span.appendChild(pTag);
-              omnibox.appendChild(span);
+              input.value = results.phrase;
+              input.dispatchEvent(event);
             });
-          }
+            pTag.classList.add(
+              "cursor-pointer",
+              "text-ellipsis",
+              "text-center",
+              "w-full",
+              "overflow-hidden",
+              "whitespace-nowrap"
+            );
+            pTag.innerText = results.phrase;
+            span.appendChild(pTag);
+            omnibox.appendChild(span);
+          });
         }
-      });
+      }
+    });
   });
 </script>
