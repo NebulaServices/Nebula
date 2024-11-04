@@ -361,7 +361,3 @@ docker compose -f ./docker-compose.build.yml build
 | `wisp` | Whether the server should use the inbuilt wisp server. (Disabled if your using an external wisp server) | `boolean` | `true` |
 | `logging` | Whether or not to enable logging. *Note: Logs are massive* | `boolean` | `true` |
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
-| `server.rammerhead` | Configure the Rammerhead server. ***DO NOT TOUCH UNLESS YOU ARE CERTAIN YOU KNOW WHAT YOU ARE DOING*** | `object` | N/A |
-| `reverseproxy` | Whether or not the Rammerhead server is behind a reverse proxy | `boolean` | `true` |
-| `localstorage_sync` | Whether or not to use localstorage sync | `boolean` | `true` |
-| `http2` | Whether to allow http2 or not | `boolean` | `true` |

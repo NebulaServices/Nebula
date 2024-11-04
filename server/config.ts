@@ -14,11 +14,6 @@ interface TomlData {
             wisp: boolean;
             logging: boolean;
         };
-        rammerhead: {
-            reverseproxy: boolean;
-            localstorage_sync: boolean;
-            http2: boolean;
-        };
     };
     db: {
         name: string;
@@ -55,21 +50,9 @@ verify([
     { name: "marketplace.psk", typeOF: parsedDoc.marketplace.psk, type: "string" },
     { name: "server", typeOF: parsedDoc.server, type: "object" },
     { name: "server.server", typeOF: parsedDoc.server.server, type: "object" },
-    { name: "server.rammerhead", typeOF: parsedDoc.server.rammerhead, type: "object" },
     { name: "server.server.port", typeOF: parsedDoc.server.server.port, type: "number" },
     { name: "server.server.wisp", typeOF: parsedDoc.server.server.wisp, type: "boolean" },
     { name: "server.server.logging", typeOF: parsedDoc.server.server.logging, type: "boolean" },
-    {
-        name: "server.rammerhead.reverseproxy",
-        typeOF: parsedDoc.server.rammerhead.reverseproxy,
-        type: "boolean"
-    },
-    {
-        name: "server.rammerhead.localstorage_sync",
-        typeOF: parsedDoc.server.rammerhead.localstorage_sync,
-        type: "boolean"
-    },
-    { name: "server.rammerhead.http2", typeOF: parsedDoc.server.rammerhead.http2, type: "boolean" },
     { name: "db", typeOF: parsedDoc.db, type: "object" },
     { name: "db.name", typeOF: parsedDoc.db.name, type: "string" },
     { name: "db.username", typeOF: parsedDoc.db.username, type: "string" },

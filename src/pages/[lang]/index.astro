@@ -59,7 +59,6 @@ import { VERSION } from "astro:env/client";
 <script>
   import { initSw, setTransport, loadProxyScripts } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
   import { pageLoad } from "@utils/events";
-  import { RammerheadEncode } from "@rubynetwork/rammerhead-browser";
   import { SupportedSites } from "@utils/siteSupport";
   import {
     SearchEngines,
@@ -72,7 +71,7 @@ import { VERSION } from "astro:env/client";
   type Suggestion = {
     phrase: string;
   };
-  async function proxy(term: string, rh: boolean) {
+  async function proxy(term: string) {
     const searchEngine = localStorage.getItem(
       Settings.ProxySettings.searchEngine
     );
@@ -85,14 +84,6 @@ import { VERSION } from "astro:env/client";
           searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
         )
       );
-    if (rh) {
-      proxyUrl = await RammerheadEncode(
-        search(
-          term,
-          searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
-        )
-      );
-    }
     if (openIn === "a:b" || openIn === "blob") {
       return cloak(
         openIn as string,
@@ -114,16 +105,9 @@ import { VERSION } from "astro:env/client";
     const sw = await initSw();
     await settings.marketPlaceSettings.handlePlugins(sw);
     iframe.classList.remove("hidden");
-    const url = await proxy(term, false);
+    const url = await proxy(term);
     if (url) {
       iframe.src = url;
-    }
-  }
-  async function rh(iframe: HTMLIFrameElement, term: string) {
-    iframe.classList.remove("hidden");
-    const url = await proxy(term, true);
-    if (url) {
-      iframe.src = ("/" + url) as string;
     }
   }
   //we need to rerun this on every page load
@@ -143,9 +127,6 @@ import { VERSION } from "astro:env/client";
             case "uv":
               uv(iframe, input?.value);
               break;
-            case "rh":
-              rh(iframe, input?.value);
-              break;
             default:
               uv(iframe, input?.value);
               break;
@@ -154,10 +135,6 @@ import { VERSION } from "astro:env/client";
           localStorage.getItem(Settings.ProxySettings.proxy) === "uv"
         ) {
           uv(iframe, input?.value);
-        } else if (
-          localStorage.getItem(Settings.ProxySettings.proxy) === "rh"
-        ) {
-          rh(iframe, input?.value);
         }
       }
     });
