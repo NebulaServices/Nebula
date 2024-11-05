@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="background: #26233a">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        flex-direction: row;
+      "
+    >
+      <button
+        id="generate-otp"
+        style="
+          background: #eb6f92;
+          border-radius: 3px;
+          border: transparent;
+          width: 268px;
+          font-size: 18px;
+          height: 69px;
+          cursor: pointer;
+          font-family: 'Roboto', sans-serif;
+        "
+      >
+        Send Verification Code
+      </button>
+      <svg
+        style="color: white; font-size: 10px; width: 53px"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+        />
+      </svg>
+      <input
+        id="otp"
+        type="text"
+        placeholder="Enter the code sent to your email"
+        style="
+          width: 268px;
+          font-size: 18px;
+          height: 69px;
+          background: #1f1d2e;
+          border-color: #eb6f92;
+          border-width: 1px;
+          color: white;
+          font-style: italic;
+          border-radius: 6px;
+          text-align: center;
+        "
+      />
+      <svg
+        style="color: white; font-size: 10px; width: 53px"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+        />
+      </svg>
+      <button
+        id="validate-otp"
+        style="
+          background: #eb6f92;
+          border-radius: 3px;
+          border: transparent;
+          width: 268px;
+          font-size: 18px;
+          height: 69px;
+          cursor: pointer;
+          font-family: 'Roboto', sans-serif;
+        "
+      >
+        Submit
+      </button>
+    </div>
+    <br />
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+      "
+    >
+      <p id="checked"></p>
+    </div>
+    <hr />
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+      "
+    >
+      <p id="checked">
+        You are seeing this screen because the owner of this website has set
+        this site to require email one time password upon entry.
+      </p>
+    </div>
+    <script src="resources/v.js"></script>
+  </body>
+</html>

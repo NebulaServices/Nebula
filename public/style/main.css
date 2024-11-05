@@ -1,0 +1,500 @@
+@import url("https://fonts.googleapis.com/css2?family=Dongle&family=Roboto:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,100&display=swap");
+
+:root {
+  --background-primary: #191724;
+  --navbar-color: #26233a;
+  --navbar-height: 60px;
+  --navbar-text-color: #7967dd;
+  --navbar-link-color: #e0def4;
+  --navbar-font: "Roboto";
+  --input-text-color: #e0def4;
+  --input-placeholder-color: white;
+  --input-background-color: #1f1d2e;
+  --input-border-color: #eb6f92;
+  --input-border-size: 1.3px;
+  --navbar-logo-filter: none;
+}
+
+::-webkit-input-placeholder {
+  text-align: center;
+  font-family: "Roboto";
+}
+
+:-moz-placeholder {
+  text-align: center;
+}
+
+#navbar {
+  height: var(--navbar-height);
+  text-align: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--navbar-color);
+}
+
+.sidenav-btn {
+  display: none;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #232133;
+  padding-top: 60px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.sidenav a {
+  padding: 8px 16px 16px 32px;
+  text-decoration: none;
+  width: 100vw;
+  font-size: 24px;
+  color: #cfcfcf;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  z-index: 2;
+  left: 140px;
+}
+
+@media only screen and (max-width: 690px) {
+  /* funny number */
+
+  #navbar > ul > li {
+    display: none;
+  }
+
+  .sidenav-btn {
+    display: flex;
+
+    align-items: center;
+    position: absolute;
+    left: 90vw;
+    width: var(--navbar-height);
+    height: var(--navbar-height);
+  }
+
+  .sidenav-btn > svg {
+    width: 50px;
+    height: 50px;
+  }
+
+  #digitalCLOContainerLI {
+    display: none;
+  }
+
+  #navbar > ul > li > a > svg {
+    min-width: 24px;
+  }
+}
+
+a {
+  color: var(--navbar-link-color);
+  text-decoration: none !important;
+  font-family: "Roboto";
+}
+
+a:hover {
+  color: grey;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.down {
+  background-color: rgb(90, 24, 154);
+  left: inherit !important;
+  font-family: "Helvetica";
+  background-color: var(--navbar-color);
+  /* box-shadow: 2px 2px rgb(0 0 0 / 20%); */
+  color: white;
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  list-style-type: none;
+  position: fixed;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  list-style-type: none;
+}
+
+#navbar ul:not(.down) {
+  font-family: "Helvetica";
+  /* box-shadow: 2px 2px rgb(0 0 0 / 20%); */
+  color: white;
+  margin-left: auto;
+  list-style-type: none;
+  float: right !important;
+  margin-right: 2.3%;
+  display: flex;
+  align-items: center;
+}
+
+#navbar ul li {
+  float: left;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  padding-left: 1em;
+  padding: 1rem;
+}
+
+::placeholder,
+input[type="text"] {
+  color: var(--input-placeholder-color);
+  font-size: 20px;
+  text-align: center;
+  font-family: "Roboto";
+}
+
+#navbar ul p,
+ul a {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+*/
+/*
+  #navbar ul li p, ul li a {
+	  font-weight: normal;
+  }
+  */
+
+#navbar ul li ul {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  visibility: hidden;
+  opacity: 0;
+  margin-top: 1rem;
+  left: 0;
+  display: none;
+}
+
+#navbar ul li:hover ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+#navbar ul li p {
+  color: white;
+  font-family: "Calibri";
+  z-index: 3 !important;
+}
+
+#navbar ul li ul li {
+  clear: both;
+  width: 100%;
+}
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 98%;
+  color: white;
+  flex-direction: column;
+  font-family: "Roboto";
+}
+
+#content h1 {
+  padding-bottom: 0.5em;
+  font-weight: 100;
+  text-align: center;
+}
+
+#content img {
+  padding-left: 0.5em;
+  filter: brightness(0) invert(1);
+}
+
+#content input {
+  font-size: 20px;
+  text-align: center;
+  font-family: "Calibri";
+  border-style: solid !important;
+  border: var(--input-border-size) solid var(--input-border-color);
+  border-width: 1px;
+  border-radius: 15px;
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  width: 300px;
+  height: 50px;
+  box-shadow: none !important;
+  outline: none;
+  text-align: center;
+  font-family: "Roboto";
+}
+
+#content input:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+@keyframes inputwide {
+  0% {
+    width: 0px;
+    transition-duration: 0.5s;
+  }
+
+  100% {
+    width: 300px;
+    transition-duration: 0.5s;
+  }
+}
+
+.loader {
+  width: 283px;
+  text-align: center;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  transition: 0.1s;
+}
+
+svg path,
+svg rect {
+  fill: #eb6f92;
+}
+
+.connector {
+  color: white;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+@keyframes popout {
+  0% {
+    height: -20px;
+  }
+
+  100% {
+    height: 0px;
+  }
+}
+
+.nebHeader {
+  font-family: var(--navbar-font);
+  color: var(--navbar-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  margin-left: 0.5%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-color-primary);
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+#navbar #thumbImg {
+  transition: width 2s, height 2s, transform 2s;
+  filter: var(--navbar-logo-filter);
+}
+
+#navbar #thumbImg:hover {
+  transform: rotate(360deg);
+}
+
+.stamp {
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-weight: lighter;
+  color: whitesmoke;
+  opacity: 90%;
+  user-select: none;
+  font-size: 13px;
+  padding-left: 5px;
+  padding-bottom: 1px;
+  cursor: default;
+}
+
+.stamp:hover {
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-weight: lighter;
+  color: whitesmoke;
+  opacity: 38%;
+  user-select: none;
+  font-size: 13px;
+  padding-left: 5px;
+  padding-bottom: 1px;
+  cursor: default;
+}
+
+.github {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding-right: 10px;
+}
+
+.tos {
+  position: fixed;
+  right: 67px;
+  bottom: 0;
+  padding-right: 15px;
+}
+
+.privacy {
+  position: fixed;
+  right: 114px;
+  bottom: 0;
+  padding-right: 15px;
+}
+
+.modal-window {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.25);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  font-family: "Montserrat", sans-serif;
+}
+
+.modal-window:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-window > div {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  background: white;
+}
+
+.modal-window header {
+  font-weight: bold;
+}
+
+.modal-window h1 {
+  font-size: 150%;
+  margin: 0 0 15px;
+}
+
+.modal-close {
+  color: #aaa;
+  line-height: 50px;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 70px;
+  text-decoration: none;
+}
+
+.modal-close:hover {
+  color: black;
+}
+
+.modal-window > div {
+  border-radius: 1rem;
+}
+
+.modal-window div:not(:last-of-type) {
+  margin-bottom: 15px;
+}
+
+.logo {
+  max-width: 150px;
+  display: block;
+}
+
+small {
+  color: lightgray;
+}
+
+.btn {
+  background-color: white;
+  padding: 1em 1.5em;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.btn i {
+  padding-right: 0.3em;
+}
+
+@media only screen and (max-width: 1190px) {
+  #digitalClock {
+    display: none;
+  }
+}
+
+.clockColon {
+  opacity: 100%;
+
+  animation: blink 0.5s step-end infinite alternate;
+  transition: 0.2s;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0%;
+  }
+}
