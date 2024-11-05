@@ -9,6 +9,13 @@ server/*.js
 node_modules/
 package-lock.json
 
+#external assets
+database_assets/
+!database_assets/com.nebula.gruvbox/
+!database_assets/com.nebula.lightTheme/
+!database_assets/com.nebula.oled/
+!database_assets/com.nebula.retro/
+
 # logs
 npm-debug.log*
 yarn-debug.log*
