@@ -183,7 +183,6 @@ const marketPlaceSettings = {
         }
         if (reset === true) {
             await resetCSS();
-            await resetCSS();
             resetBGImage();
             resetVideo();
         }

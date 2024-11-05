@@ -1,0 +1,14 @@
+:root {
+    --background-primary: transparent;
+    --background-lighter: transparent;
+    --navbar-color: black;
+    --navbar-text-color: black;
+    --navbar-link-color: black; 
+    --navbar-link-hover-color: black; 
+    --input-text-color: black;
+    --input-placeholder-color: black; 
+    --input-background-color: black;
+    --input-border-color: black;
+    --tab-color: black;
+    --border-color: black; 
+}
