@@ -4,7 +4,7 @@ import { Settings, settings } from "@utils/settings/index";
 import Parent from "./Parent.svelte";
 async function getItem(item) {
     try {
-        const response = await fetch(`/api/packages/${item.name.toLowerCase()}`);
+        const response = await fetch(`/api/packages/${item.name}`);
         const data = await response.json();
         return {
             ...data,
@@ -20,7 +20,7 @@ async function getAssets() {
     const promises = items.map(getItem);
     const dataArray = await Promise.all(promises);
     let accumulatedData = dataArray.filter((data) => data !== null);
-    accumulatedData = accumulatedData.filter(({ remove }) => remove === true);
+    accumulatedData = accumulatedData.filter(({ remove }) => remove !== true);
     console.log(JSON.stringify(accumulatedData));
     return accumulatedData;
 }

@@ -17,8 +17,3 @@ port = 5432
 port = 8080
 wisp = true
 logging = true # Disable for the tons & tons of logs to go away (useful for debugging but otherwise eh)
-
-[server.rammerhead] # Don't touch this section unless you KNOW what you are doing
-reverseproxy = true
-localstorage_sync = true
-http2 = true
