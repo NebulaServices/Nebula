@@ -27,7 +27,7 @@ const { title, noHeader } = Astro.props;
     />
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       as="style"
       crossorigin="anonymous"
     />
@@ -96,6 +96,11 @@ const { title, noHeader } = Astro.props;
     </style>
 
     <style is:global>
+    .roboto {
+        font-family: var(--font-family), Roboto, sans-serif;
+        font-weight: 200;
+        font-style: normal;
+      }
       /* Custom scrollbar because the default ones look like ASS */
       ::-webkit-scrollbar {
         width: 0.5rem;
