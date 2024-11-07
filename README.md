@@ -10,7 +10,7 @@
 
 <div align="center">
     <h2>Get Started</h2>
-    <a>To get started, press one of the buttons below to deploy Incog</a>
+    <a>To get started, press one of the buttons below to deploy Nebula</a>
     <br />
     <br />
     <a href="#terminal">
