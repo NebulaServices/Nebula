@@ -5,3 +5,8 @@
   - Adds a Marketplace where users can create their own themes & plugins
   - Switches to Astro for speed
   - Other general bug fixes
+
+# v9.0.1
+
+- Bumps dependencies
+- Fixes bugs
