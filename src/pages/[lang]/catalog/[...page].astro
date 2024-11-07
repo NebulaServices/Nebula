@@ -8,13 +8,14 @@ const t = useTranslations(lang);
 
 const { page } = Astro.params;
 
-let response: any = {};
+let response: any = null;
 try {
-    const url = new URL("/api/catalog-assets", Astro.url);
-    console.log("URL: " + url);
-    response = await fetch(url);
+    response = await fetch(new URL("/api/catalog-assets/", Astro.url));
 }
-catch (err: any) { console.log('Error occured: ' + err) }
+catch (err: any) { 
+    console.log('Error occured: ' + err);
+    response = {};
+}
 //console.log(new URL("/api/catalog-assets/", Astro.url));
 const assetsJson = await response.json();
 
