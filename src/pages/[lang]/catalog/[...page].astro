@@ -16,8 +16,12 @@ catch (err: any) {
     console.log('Error occured: ' + err);
     response = {};
 }
-//console.log(new URL("/api/catalog-assets/", Astro.url));
-const assetsJson = await response.json();
+console.log(new URL("/api/catalog-assets/", Astro.url));
+let assetsJson: any = {};
+try {
+assetsJson = await response.json();
+}
+catch (e) {}
 
 const nextPage = parseInt(page!) + 1;
 const previousPage = parseInt(page!) - 1;
