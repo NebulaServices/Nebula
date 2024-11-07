@@ -25,7 +25,7 @@
 
 ## NOTE:
 
--   This will **NOT** deploy on Github Pages, Netlify, Vercel, Gitlab Pages or any other _static_ host
+-   This will **NOT** deploy on GitHub Pages, Netlify, Vercel, Gitlab Pages, or any other _static_ host
 -   This will **NOT** work on Render
 ---
 
@@ -62,21 +62,21 @@
 
 ## Catalog/Marketplace
 
-- By default the marketplace is enabled, and uses SQLite
+- By default, the marketplace is enabled and uses SQLite
 - If you would like to disable the catalog, see [#config](#config)
-- For big production instances I would recommend using Postgres over SQLite. To do this see [#config](#config)
-- To use postgres via the provided docker-compose files, see [#docker](#docker)
+- For big production instances, I recommend using PostgreSQL rather than SQLite. To do this see [#config](#config)
+- To use PostgreSQL via the provided docker-compose files, see [#docker](#docker)
 
 ### How to make a theme
 
-- Themes allow you to customize the *look* of Nebula.
+- Themes allow you to customize Nebula's *look*.
 
 #### Prerequisites:
   - Make sure you have our [Discord server](https://discord.gg/unblocker) so you can submit your theme
 
 ##### Making the themes:
 
-1. Firstly, copy the css vars:
+1. Firstly, copy the CSS vars:
 ```css
 :root {
     --background-primary: /*Your stuff here */;
@@ -96,13 +96,13 @@
 
 > [!NOTE]
 >
-> You can add a custom font as well! To do so add this to your :root
+> You can add a custom font as well! To do so, add this to your `:root`
 > 
 > ```css
 > --font-family: /* Font family name */;
 > ```
 > 
-> And this to the bottom of your css file/submition:
+> And this to the bottom of your CSS file/submission:
 > ```css
 > @font-face {
 >    font-family: /* Name */;
@@ -110,11 +110,11 @@
 >   }
 >  ```
 >
-> A good example of using a custom font is the built in `retro` theme [here](./database_assets/com.nebula.retro)
+> A good example of using a custom font is the built-in `retro` theme [here](./database_assets/com.nebula.retro)
 
-2. Add your colors and test! (Either with a self hosted version of Nebula OR via a live preview (no clue when this will happen)
+2. Add your colors and test! (Either with a self-hosted version of Nebula OR via a live preview (no clue when this will happen)
 
-3. Once your satisfied with said colors, submit your theme in the [Discord Server](https://discord.gg/unblocker)!
+3. Once you're satisfied with the colors, submit your theme to the [Discord Server](https://discord.gg/unblocker)!
 
 ---
 ### How to make a plugin
@@ -135,15 +135,15 @@
 touch index.js
 ```
 
-2. Edit that file to include the either of these:
+2. Edit that file to include either of these:
     - Code encased in a string:
     ```js
     function setup() {
         // This function MUST return the following attributes:
         return {
             function: `console.log('Example code.')`,
-            name: 'com.example', // Technically could be named anything. Recommended to use the same name for everything (name when submitting and this)        
-            events: ['fetch'] // See: https://github.com/mercuryworkshop/workerware for the event types you can use. (Also typed if your using typescript)
+            name: 'com.example', // Technically, it could be named anything. It is recommended to use the same name for everything (name when submitting and this)        
+            events: ['fetch'] // See: https://github.com/mercuryworkshop/workerware for the event types you can use. (Also typed if you are using typescript)
         }
     }
     
@@ -166,7 +166,7 @@ touch index.js
     }
 
     //This can be named anything. However, it's recommended to use `entryFunc` (with types, the naming IS enforced)
-    self.entryFunc = setup; //DO NOT call the function here. Only assign the reference otherwise, it will error.
+    self.entryFunc = setup; //DO NOT call the function here. Only assign the reference; otherwise, it will result in an error.
     ```
 
 > [!WARNING]
@@ -174,13 +174,13 @@ touch index.js
 >
 > Example of a named function: `function example() {/* Some form of code */}`.
 >
-> If a named function is used where it shouldn't be, your plugin will not be approved nor will it work properly.
+> If a named function is used where it shouldn't be, your plugin will not be approved, nor will it work properly.
 
 3. Submit your plugin in the [Discord](https://discord.gg/unblocker)!
 
 ##### Proxied page plugins
 
-- The allow modification of websites that UV proxies, (EX: you could add vencord to discord with this)
+- They allow modification of websites that UV proxies, (EX: you could add Vencord to Discord with this)
 
 1. Create an index.js file (or another file name)
 ```bash
@@ -199,7 +199,7 @@ function example() {
     }
 }
 
-//Technically this could be named anything, recommended to call it `entryFunc`
+// Technically, this could be named anything, it is recommended to call it `entryFunc`
 self.entryFunc = example; //DO NOT run the function here. That will cause errors. Only assign the reference to the function here.
 ```
 
@@ -230,12 +230,12 @@ npm i
 cp config.example.toml config.toml
 ```
 
-4. Modify the `config.toml` file to you liking (docs [here](#environment))
+4. Modify the `config.toml` file to your liking (docs [here](#environment))
 ```
 nano config.toml
 ```
 
-5. Build the frontend & server:
+5. Build the front end & server:
 ```bash
 npm run build
 ```
@@ -261,7 +261,7 @@ Prerequisites:
 - Git
 - Docker
 
-1. Clone the repo (skip if using prebuilt image):
+1. Clone the repo (skip if using a prebuilt image):
 ```bash
 git clone https://github.com/nebulaservices/nebula --recursive && cd nebula
 ```
@@ -297,7 +297,7 @@ Prerequisites:
 - Git
 - Docker w/compose
 
-1. Clone the repo (skip if using prebuilt image):
+1. Clone the repo (skip if using a prebuilt image):
 ```bash
 git clone https://github.com/nebulaservices/nebula --recursive
 ```
@@ -329,14 +329,14 @@ docker compose -f ./docker-compose.build.yml build
     ```
 #### Extra (Postgres)
 
-- To use Postgres over SQlite, uncomment the DB section in the `docker-compose` file (or use your own postgres DB!). Then, modify the `config.toml` (See: [#config](#config) for knowledge on how to do this)
-- To use Postgres over SQlite in a normal docker environment (no compose), you'll have to set one up and then modify the `config.toml` to use it. (See: [#config](#config) for knowledge on how to do this)
+- To use Postgres over SQLite, uncomment the DB section in the `docker-compose` file (or use your own Postgres DB!). Then, modify the `config.toml` (See: [#config](#config) for knowledge on how to do this)
+- To use Postgres over SQLite in a normal docker environment (no compose), you'll have to set one up and then modify the `config.toml` to use it. (See: [#config](#config) for knowledge on how to do this)
 
 ---
 
 ## Config
 
-- There are a couple of configuration options for nebula. Most of the time, the defaults are fine, but there are instances where you may not want certain options enabled or certain things running.
+There are a couple of configuration options for Nebula. The defaults are fine most of the time, but there are instances where you may not want certain options enabled or certain things running.
 - An example config file is located [here](./config.example.toml). 
 - Config format is in TOML
 
