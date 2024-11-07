@@ -11,10 +11,10 @@ const { page } = Astro.params;
 let response: any = {};
 try {
     const url = new URL("/api/catalog-assets", Astro.url);
-    response = await fetch(url);
     console.log("URL: " + url);
+    response = await fetch(url);
 }
-catch (err: any) { console.log('Error occured' + err) }
+catch (err: any) { console.log('Error occured: ' + err) }
 //console.log(new URL("/api/catalog-assets/", Astro.url));
 const assetsJson = await response.json();
 
