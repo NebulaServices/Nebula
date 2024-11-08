@@ -5,6 +5,14 @@ importScripts(__uv$config.sw || "/uv/uv.sw.js");
 const uv = new UVServiceWorker();
 const ww = new WorkerWare({ debug: false });
 
+//me when Firefox (thanks vk6)
+if (navigator.userAgent.includes("Firefox")) {
+    Object.defineProperty(globalThis, "crossOriginIsolated", {
+        value: true,
+        writable: true 
+    });
+}
+
 //where we handle our plugins!!!
 self.addEventListener("message", function (event) {
     console.log(event.data);
