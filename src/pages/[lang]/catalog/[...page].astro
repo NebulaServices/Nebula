@@ -19,8 +19,8 @@ const lastPage = assetsJson.pages;
 <Layout title="Catalog">
   <div class="flex mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center overflow-auto font-roboto">
       <div class="w-full flex flex-col gap-4 jusitfy-center items-center text-text-color mt-9"> 
-          <h1 class="text-5xl font-bold"> Nebula Catalog </h1>
-          <p class="text-xl"> The Nebula Catalog is a place for you to find user-created themes and plugins. </p>
+          <h1 class="text-3xl md:text-5xl font-bold"> Nebula Catalog </h1>
+          <p class="text-l md:text-xl max-md:text-center max-md:p-2"> The Nebula Catalog is a place for you to find user-created themes and plugins. </p>
       </div>
       <CatalogCard client:only="svelte" page={page} lang={lang} />
     <div class="flex flex-row pb-8 gap-4 font-roboto">
