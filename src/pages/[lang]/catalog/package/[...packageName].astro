@@ -6,20 +6,20 @@ const assetsJson = await response.json();
 ---
 
 <Layout title={`Package: ${packageName}`}>
-    <div class="flex flex-wrap mt-16 w-full fixed inset-0 h-full md:h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center sm:pt-64 lg:pb-64 font-roboto max-md:p-4">
+    <div class="flex flex-wrap min-[1032px]:mt-16 mt-8 w-full fixed inset-0 h-full md:h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center lg:pb-64 font-roboto max-md:p-4">
         {assetsJson.error && <h1 class="text-text-color text-3xl font-bold"> Unexpected error. Is the name right? </h1>}
         {!assetsJson.error &&
-            <div class="flex flex-col md:flex-row items-center text-text-color bg-navbar-color rounded-2xl">
+            <div class="flex flex-col max-md:min-[1032px]:justify-center md:min-[1032px]:flex-row items-center text-text-color bg-navbar-color rounded-2xl">
                 {assetsJson.background_video && 
-                    <video src={`/packages/${packageName}/${assetsJson.background_video}`} controls class="w-[44rem] h-[25rem] object-cover rounded-xl">
+                    <video src={`/packages/${packageName}/${assetsJson.background_video}`} controls class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover rounded-xl">
                         Your browser does not support the video tag.
                     </video>
                 }
                 {assetsJson.backgroundImage && 
-                    <div style={{backgroundImage: `url(/packages/${packageName}/${assetsJson.backgroundImage})`}} class="w-[44rem] h-[25rem] bg-cover bg-center rounded-xl"/>
+                    <div style={{backgroundImage: `url(/packages/${packageName}/${assetsJson.backgroundImage})`}} class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover bg-center rounded-xl"/>
                 }
-                {!assetsJson.background_video && !assetsJson.backgroundImage && <img loading="lazy" src={`/packages/${packageName}/${assetsJson.image}`} alt={assetsJson.title} class="w-[44rem] h-[25rem] object-cover rounded-xl"/>}
-                <div class="flex flex-col ml-7 p-16">
+                {!assetsJson.background_video && !assetsJson.backgroundImage && <img loading="lazy" src={`/packages/${packageName}/${assetsJson.image}`} alt={assetsJson.title} class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover rounded-xl"/>}
+                <div class="flex flex-col ml-7 md:p-16 p-10">
                     <p class="text-xl">{assetsJson.type === "plugin-page" || assetsJson.type === "plugin-sw" ? "plugin": assetsJson.type}</p>
                     <h1 class="text-4xl font-roboto font-semibold">{assetsJson.title}</h1>
                     <p class="text-xl"> By: <strong>{assetsJson.author}</strong></p>
@@ -30,6 +30,7 @@ const assetsJson = await response.json();
                     <button class="hidden bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="uninstall">
                         Uninstall
                     </button>
+                    <a href="../1" class="w-full bg-background text-text-color border-none rounded-lg text-l max-md:mt-7 px-4 py-4 h-full flex-grow md:text-right text-center font-bold underline underline-offset-4 decoration-2 hover:decoration-border-color transition-colors duration-300">Go Back</a>
                 </div>
             </div>
         }
