@@ -1,5 +1,6 @@
 <script>
     import { settings, Settings } from "@utils/settings/index";
+    import { loadProxyScripts, setTransport, initSw, setSWStuff } from "@utils/registerSW";
     // This loads the settings in a nice way
     settings.tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
     settings.proxySettings.changeProxy(localStorage.getItem(Settings.ProxySettings.proxy) as string || "automatic");
@@ -11,5 +12,14 @@
     document.addEventListener("astro:after-swap", function() {
         settings.tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
         //settings.marketPlaceSettings.changeTheme(false);
+    });
+    document.addEventListener("DOMContentLoaded", async () => {
+        const conn = await loadProxyScripts();
+        await setTransport(
+            conn,
+            localStorage.getItem(Settings.ProxySettings.transport) as string
+        );
+        const sw = await initSw();
+        await setSWStuff({sw, conn});
     });
 </script>

@@ -83,9 +83,6 @@ importers:
       gradient-string:
         specifier: ^3.0.0
         version: 3.0.0
-      libcurl.js-new:
-        specifier: npm:libcurl.js@^0.6.19
-        version: libcurl.js@0.6.19
       nanostores:
         specifier: ^0.10.3
         version: 0.10.3

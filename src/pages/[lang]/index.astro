@@ -57,7 +57,7 @@ import { VERSION } from "astro:env/client";
   </div>
 </Layout>
 <script>
-  import { initSw, setTransport, loadProxyScripts } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+  import { setTransport, getSWStuff } from "@utils/registerSW"; //../../utils/registerSW.ts
   import { pageLoad } from "@utils/events";
   import { SupportedSites } from "@utils/siteSupport";
   import {
@@ -66,8 +66,8 @@ import { VERSION } from "astro:env/client";
     cloak,
     settings,
   } from "@utils/settings/index";
-  import { search } from "@utils/search.ts"; //../../utils/search.ts
-  import { client as libcurlClient } from "@utils/libcurl";
+  import { search } from "@utils/search"; //../../utils/search.ts
+  import { BareClient } from "@mercuryworkshop/bare-mux";
   type Suggestion = {
     phrase: string;
   };
@@ -97,12 +97,11 @@ import { VERSION } from "astro:env/client";
     }
   }
   async function uv(iframe: HTMLIFrameElement, term: string) {
-    const conn = await loadProxyScripts();
+    const { sw, conn } = getSWStuff(); 
     await setTransport(
       conn,
       localStorage.getItem(Settings.ProxySettings.transport) as string
     );
-    const sw = await initSw();
     await settings.marketPlaceSettings.handlePlugins(sw);
     iframe.classList.remove("hidden");
     const url = await proxy(term);
@@ -148,12 +147,10 @@ import { VERSION } from "astro:env/client";
         omnibox.classList.add("hidden");
       }
       if (value.length >= 3) {
-        await libcurlClient.initLibcurl();
-        const data = (await libcurlClient.fetchFromLibcurl(
-          `https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`,
-          "json"
-        )) as [];
-        const filteredData = data.slice(0, 8); //Trim to only about 8 results. Any more and our omnibox dies
+        const client = new BareClient();
+        const data = await client.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
+        const dataRes = await data.json();
+        const filteredData = dataRes.slice(0, 8); //Trim to only about 8 results. Any more and our omnibox dies
         if (filteredData) {
           omnibox.innerHTML = "";
           filteredData.map((results: Suggestion) => {

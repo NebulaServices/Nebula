@@ -1,5 +1,9 @@
 import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
 import { Settings, WispServerURLS } from "./settings/index";
+
+let baremuxConn: BareMuxConnection;
+let swReg: ServiceWorkerRegistration;
+
 function loadProxyScripts() {
     //wrap everything in a promise to avoid race conditions
     return new Promise<BareMuxConnection>((resolve) => {
@@ -57,4 +61,25 @@ function initSw() {
     });
 }
 
-export { initSw, setTransport, loadProxyScripts };
+interface SWStuff {
+    sw: ServiceWorkerRegistration;
+    conn: BareMuxConnection;
+}
+
+function setSWStuff(stuff: SWStuff): Promise<void> {
+    return new Promise<void>((resolve) => {
+        swReg = stuff.sw;
+        baremuxConn = stuff.conn;
+        resolve();
+    });
+}
+
+function getSWStuff(): SWStuff {
+    const stuff: SWStuff = {
+        sw: swReg,
+        conn: baremuxConn
+    }
+    return stuff;
+}
+
+export { initSw, setTransport, loadProxyScripts, setSWStuff, getSWStuff };

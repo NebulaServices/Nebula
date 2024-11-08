@@ -43,7 +43,6 @@
     "fastify": "^5.1.0",
     "form-data": "^4.0.1",
     "gradient-string": "^3.0.0",
-    "libcurl.js-new": "npm:libcurl.js@^0.6.19",
     "nanostores": "^0.10.3",
     "ora": "^8.1.1",
     "pg": "^8.13.1",
