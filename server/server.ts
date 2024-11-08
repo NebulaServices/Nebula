@@ -28,7 +28,11 @@ await app.register(fastifyCompress, {
     encodings: ["br", "gzip", "deflate"]
 });
 
-await app.register(fastifyMultipart);
+await app.register(fastifyMultipart, {
+  limits: {
+    fileSize: 25000000,
+  },
+});
 
 await app.register(fastifyHelmet, {
     xPoweredBy: false,
