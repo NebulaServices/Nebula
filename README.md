@@ -361,3 +361,10 @@ There are a couple of configuration options for Nebula. The defaults are fine mo
 | `wisp` | Whether the server should use the inbuilt wisp server. (Disabled if your using an external wisp server) | `boolean` | `true` |
 | `logging` | Whether or not to enable logging. *Note: Logs are massive* | `boolean` | `true` |
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+
+## Deploying
+### Koyeb
+- Fork this repo
+- Create new koyeb service, and select webservice
+- Select import from github and import your forked repo
+- Change package to dockerfile and press deploy!
