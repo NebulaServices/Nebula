@@ -9,7 +9,7 @@ const ww = new WorkerWare({ debug: false });
 if (navigator.userAgent.includes("Firefox")) {
     Object.defineProperty(globalThis, "crossOriginIsolated", {
         value: true,
-        writable: true 
+        writable: true
     });
 }
 

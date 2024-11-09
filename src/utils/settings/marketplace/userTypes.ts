@@ -1,7 +1,7 @@
-import { type SWPagePlugin, type SWPlugin, type SWPluginFunction as PluginFunction } from "./types";
+import { type SWPluginFunction as PluginFunction, type SWPagePlugin, type SWPlugin } from "./types";
 
-interface PagePlugin extends Omit<SWPagePlugin, "type"> {};
-interface ServiceWorkerPlugin extends Omit<SWPlugin, "type"> {};
+interface PagePlugin extends Omit<SWPagePlugin, "type"> {}
+interface ServiceWorkerPlugin extends Omit<SWPlugin, "type"> {}
 
 declare global {
     function entryFunc(): PagePlugin | ServiceWorkerPlugin;

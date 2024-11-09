@@ -34,6 +34,7 @@ export const prerender = true;
                     {name: 'Japanese', value: 'jp', disabled: false},
                 ]
             }}
+            both={{enabled: false}}
         />
         <SettingsCard
             title="Proxy Catalog"
@@ -47,7 +48,8 @@ export const prerender = true;
                     {name: 'False', value: 'false', disabled: false},
                     {name: 'True', value: 'true', disabled: false}
                 ]
-            }}
+                }}
+                both={{enabled: false}}
             />
         <SettingsCard
             title="Catalog URL"
@@ -59,6 +61,7 @@ export const prerender = true;
             }}
             button={{name: 'Change', id: 'setcataloghostname' }}
             select={{select: false}}
+            both={{enabled: false}}
         />
     </SettingsSection>
   </SettingsLayout>

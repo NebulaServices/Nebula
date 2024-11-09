@@ -12,11 +12,8 @@ import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 export function getStaticPaths() {
-  const STATIC_PATHS = [
-    { params: { lang: "en_US" } },
-    { params: { lang: "jp" } },
-  ];
-  return STATIC_PATHS;
+    const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
+    return STATIC_PATHS;
 }
 export const prerender = true;
 import { MARKETPLACE_ENABLED } from "astro:env/client";
@@ -44,7 +41,8 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
               { name: "Ultraviolet", value: "uv", disabled: false },
               { name: "Scramjet (COMING SOON)", value: "sj", disabled: true },
             ],
-          }}
+            }}
+            both={{enabled: false}}
         />
         <SettingsCard
           title="Open in"
@@ -60,7 +58,8 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
               { name: "About:Blank", value: "a:b", disabled: false },
               { name: "Blob", value: "blob", disabled: false },
             ],
-          }}
+            }}
+            both={{enabled: false}}
         />
         <SettingsCard
           title="Search Engine"
@@ -75,12 +74,13 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
               { name: "Google", value: "google", disabled: false },
               { name: "Bing", value: "bing", disabled: false },
             ],
-          }}
+            }} 
+            both={{enabled: false}}
         />
         <SettingsCard
           title="Wisp Server"
           description="Choose the wisp server you feel is the fastest"
-          input={{ input: false }}
+          input={{ input: true, required: false, placeholder: 'wss://nebulaproxy.io/wisp' }}
           button={{ name: "Select", id: "setwispurl" }}
           select={{
             select: true,
@@ -88,8 +88,13 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
             options: [
               { name: "Default", value: "default", disabled: false },
               { name: "Ruby Network (US)", value: "ruby", disabled: false },
+              { name: "Custom", value: "custom", disabled: false }
             ],
-          }}
+            }}
+            both={{
+                enabled: true,
+                showOnSelect: {value: 'custom'}
+            }}
         />
         <SettingsCard
           title="Transport"
@@ -103,7 +108,8 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
               { name: "Libcurl", value: "libcurl", disabled: false },
               { name: "Epoxy", value: "epoxy", disabled: false },
             ],
-          }}
+            }}
+            both={{enabled: false}}
         />
       </div>
     </SettingsSection>
@@ -163,7 +169,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
         class: "wispUrlMessage",
       }}
       client:load
-    />
+      />
     <Toast
       toastProp={{
         toastType: "success",
@@ -183,7 +189,8 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     openInVal: HTMLSelectElement,
     searchEngineVal: HTMLSelectElement,
     wispServerVal: HTMLSelectElement,
-    transportVal: HTMLSelectElement
+      transportVal: HTMLSelectElement,
+      customUrl: HTMLInputElement
   ) {
     proxySelectVal.value = localStorage.getItem(
       SettingsEnum.ProxySettings.proxy
@@ -194,48 +201,34 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     searchEngineVal.value = localStorage.getItem(
       SettingsEnum.ProxySettings.searchEngine
     ) as string;
-    wispServerVal.value = localStorage.getItem(
-      SettingsEnum.ProxySettings.wispServerURL
-    ) as string;
+    wispServerVal.value = localStorage.getItem(SettingsEnum.ProxySettings.wispServerURL) as string;
+    if (wispServerVal.value === "custom") {
+        customUrl.classList.remove("hidden");
+        customUrl.value = localStorage.getItem("customWispUrl") as string;
+    }
     transportVal.value = localStorage.getItem(
       SettingsEnum.ProxySettings.transport
     ) as string;
   }
   pageLoad(() => {
-    const proxyButton = document.getElementById(
-      "setproxy"
-    ) as HTMLButtonElement;
-    const proxySelectVal = document.getElementById(
-      "proxy"
-    ) as HTMLSelectElement;
-    const openInButton = document.getElementById(
-      "setopenin"
-    ) as HTMLButtonElement;
+    const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
+    const proxySelectVal = document.getElementById("proxy") as HTMLSelectElement;
+    const openInButton = document.getElementById("setopenin") as HTMLButtonElement;
     const openInVal = document.getElementById("openin") as HTMLSelectElement;
-    const searchEngineButton = document.getElementById(
-      "setsearchengine"
-    ) as HTMLButtonElement;
-    const searchEngineVal = document.getElementById(
-      "searchengine"
-    ) as HTMLSelectElement;
-    const wispServerButton = document.getElementById(
-      "setwispurl"
-    ) as HTMLButtonElement;
-    const wispServerVal = document.getElementById(
-      "wispurl"
-    ) as HTMLSelectElement;
-    const transportButton = document.getElementById(
-      "settransport"
-    ) as HTMLButtonElement;
-    const transportVal = document.getElementById(
-      "transport"
-    ) as HTMLSelectElement;
+    const searchEngineButton = document.getElementById("setsearchengine") as HTMLButtonElement;
+    const searchEngineVal = document.getElementById("searchengine") as HTMLSelectElement;
+    const wispServerButton = document.getElementById("setwispurl") as HTMLButtonElement;
+    const wispServerVal = document.getElementById("wispurl") as HTMLSelectElement;
+    const transportButton = document.getElementById("settransport") as HTMLButtonElement;
+    const transportVal = document.getElementById("transport") as HTMLSelectElement;
+    const customWispUrl = document.getElementById("inputOnSelectValuecustom") as HTMLInputElement;
     setup(
       proxySelectVal,
       openInVal,
       searchEngineVal,
       wispServerVal,
-      transportVal
+        transportVal,
+        customWispUrl
     );
     proxyButton.addEventListener("click", () => {
       settings.proxySettings.changeProxy(proxySelectVal.value);
@@ -250,8 +243,23 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
       toast(".searchEngineMessage");
     });
     wispServerButton.addEventListener("click", () => {
-      settings.proxySettings.setWispURL(wispServerVal.value);
-      toast(".wispUrlMessage");
+        if (wispServerVal.value === "custom") {
+            if (customWispUrl.classList.contains('hidden')) {
+                customWispUrl.classList.remove("hidden");
+            }
+            else { 
+                localStorage.setItem("customWispUrl", customWispUrl.value);
+                settings.proxySettings.setWispURL(wispServerVal.value);
+                toast(".wispUrlMessage");
+            }
+        }
+        else {
+            if (!customWispUrl.classList.contains('hidden')) {
+                customWispUrl.classList.add("hidden");
+            }
+            settings.proxySettings.setWispURL(wispServerVal.value);
+            toast(".wispUrlMessage");
+        }
     });
     transportButton.addEventListener("click", () => {
       settings.proxySettings.setTransport(transportVal.value);

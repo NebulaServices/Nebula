@@ -17,31 +17,31 @@ interface SWPagePlugin extends Omit<Plug, "name" | "src"> {
 
 type SWPluginFunction<T extends unknown> = (args: T) => void | unknown;
 
-type Events =  
-    "abortpayment" | 
-    "activate" | 
-    "backgroundfetchabort" |
-    "backgroundfetchclick" |
-    "backgroundfetchfail" |
-    "backgroundfetchsuccess" |
-    "canmakepayment" |
-    "contentdelete" |
-    "cookiechange" |
-    "fetch" |
-    "install" |
-    "message" |
-    "messageerror" |
-    "notificationclick" |
-    "notificationclose" |
-    "paymentrequest" |
-    "periodicsync" |
-    "push" |
-    "pushsubscriptionchange" |
-    "sync"
+type Events =
+    | "abortpayment"
+    | "activate"
+    | "backgroundfetchabort"
+    | "backgroundfetchclick"
+    | "backgroundfetchfail"
+    | "backgroundfetchsuccess"
+    | "canmakepayment"
+    | "contentdelete"
+    | "cookiechange"
+    | "fetch"
+    | "install"
+    | "message"
+    | "messageerror"
+    | "notificationclick"
+    | "notificationclose"
+    | "paymentrequest"
+    | "periodicsync"
+    | "push"
+    | "pushsubscriptionchange"
+    | "sync";
 
 interface SWPlugin extends Omit<Plug, "src"> {
     function: string | SWPluginFunction<any>;
-    events: Events[]
+    events: Events[];
 }
 
 interface Package {
@@ -53,4 +53,13 @@ interface Package {
     plugin?: Plug;
 }
 
-export { type PluginType, type MarketplacePluginType, type PackageType, type Plug as Plugin, type SWPagePlugin, type SWPlugin, type Package, type SWPluginFunction }
+export {
+    type PluginType,
+    type MarketplacePluginType,
+    type PackageType,
+    type Plug as Plugin,
+    type SWPagePlugin,
+    type SWPlugin,
+    type Package,
+    type SWPluginFunction
+};

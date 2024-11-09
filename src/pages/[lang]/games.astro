@@ -11,15 +11,13 @@ export const prerender = true;
     <iframe id="chango" class="w-full h-full"></iframe>
 </Layout>
 <script>
-    import { initSw, loadProxyScripts, setTransport } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
+    import { setTransport, getSWStuff } from "@utils/registerSW.ts"; //../../utils/registerSW.ts
     import { Settings } from "@utils/settings/index";
     import { pageLoad } from "@utils/events";
     pageLoad(async () => {
+        const { conn } = getSWStuff();
         const iframe = document.getElementById("chango") as HTMLIFrameElement;
-        const conn = await loadProxyScripts();
         await setTransport(conn, localStorage.getItem(Settings.ProxySettings.transport) as string);
-        await initSw().then(() => {
-            if (iframe) return iframe.src = __uv$config!.prefix + __uv$config.encodeUrl!("https://radon.games");
-        });
+        if (iframe) return iframe.src = __uv$config!.prefix + __uv$config.encodeUrl!("https://radon.games");
     });
 </script>

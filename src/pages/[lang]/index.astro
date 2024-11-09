@@ -3,11 +3,8 @@ import Logo from "@components/Logo.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 export function getStaticPaths() {
-  const STATIC_PATHS = [
-    { params: { lang: "en_US" } },
-    { params: { lang: "jp" } },
-  ];
-  return STATIC_PATHS;
+    const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
+    return STATIC_PATHS;
 }
 export const prerender = true;
 const lang = getLangFromUrl(Astro.url);
@@ -115,6 +112,7 @@ import { VERSION } from "astro:env/client";
     const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
     const omnibox = document.getElementById("omnibox") as HTMLDivElement;
     const copyright = document.getElementById("version") as HTMLDivElement;
+    const client = new BareClient();
     input?.addEventListener("keypress", async function (event: any) {
       if (event.key === "Enter") {
         copyright.classList.add("hidden");
@@ -147,7 +145,6 @@ import { VERSION } from "astro:env/client";
         omnibox.classList.add("hidden");
       }
       if (value.length >= 3) {
-        const client = new BareClient();
         const data = await client.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
         const dataRes = await data.json();
         const filteredData = dataRes.slice(0, 8); //Trim to only about 8 results. Any more and our omnibox dies

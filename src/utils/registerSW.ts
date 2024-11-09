@@ -32,6 +32,7 @@ function setTransport(conn: BareMuxConnection, transport?: string) {
     //wrap in a promise so we don't register sw until a transport is set.
     const wispServer = localStorage.getItem(Settings.ProxySettings.wispServerURL);
     return new Promise<void>((resolve) => {
+        console.log(`Wisp server set: ${wispServer ? WispServerURLS[wispServer] : WispServerURLS.default}`)
         switch (transport) {
             case "epoxy":
                 conn.setTransport("/epoxy/index.mjs", [
@@ -78,7 +79,7 @@ function getSWStuff(): SWStuff {
     const stuff: SWStuff = {
         sw: swReg,
         conn: baremuxConn
-    }
+    };
     return stuff;
 }
 
