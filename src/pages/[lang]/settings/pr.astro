@@ -244,12 +244,13 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     });
     wispServerButton.addEventListener("click", () => {
         if (wispServerVal.value === "custom") {
+            settings.proxySettings.setWispURL(wispServerVal.value);
             if (customWispUrl.classList.contains('hidden')) {
                 customWispUrl.classList.remove("hidden");
+                customWispUrl.value = localStorage.getItem("customWispUrl") as string;
             }
             else { 
                 localStorage.setItem("customWispUrl", customWispUrl.value);
-                settings.proxySettings.setWispURL(wispServerVal.value);
                 toast(".wispUrlMessage");
             }
         }
