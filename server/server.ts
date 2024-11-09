@@ -30,7 +30,8 @@ await app.register(fastifyCompress, {
 
 await app.register(fastifyMultipart, {
   limits: {
-    fileSize: 25000000,
+    fileSize: 25 * 1024 * 1024,
+    parts: Infinity
   },
 });
 
