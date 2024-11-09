@@ -10,3 +10,8 @@
 
 - Bumps dependencies
 - Fixes bugs
+
+# 9.0.2
+
+- Adds the ability for a custom wisp server back
+- Increases upload fileSize capacity in hopes that bigger files can now be uploaded
