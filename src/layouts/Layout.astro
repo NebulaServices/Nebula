@@ -7,9 +7,10 @@ interface Props {
   title: string;
   noHeader?: string;
   description?: string;
+  image: string;
 }
 
-const { title, noHeader, description } = Astro.props;
+const { title, noHeader, description, image } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,6 +23,7 @@ const { title, noHeader, description } = Astro.props;
       content={description ? description : "Astro description"}
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:image" content={image ? image : ""} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" id="favicon" />
     <link
       rel="stylesheet"
@@ -100,7 +102,7 @@ const { title, noHeader, description } = Astro.props;
     </style>
 
     <style is:global>
-    .roboto {
+      .roboto {
         font-family: var(--font-family), Roboto, sans-serif;
         font-weight: 200;
         font-style: normal;
