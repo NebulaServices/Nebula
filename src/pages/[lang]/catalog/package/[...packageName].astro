@@ -123,6 +123,7 @@ const assetsJson = await response.json();
       ) || [];
     //@ts-ignore
     const pluginItemExists = pluginItems.find(
+      //@ts-ignore
       ({ name, remove }) => name === packageName && remove !== true
     );
     const installButton = document.getElementById(
