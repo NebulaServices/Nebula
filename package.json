@@ -32,7 +32,7 @@
     "@mercuryworkshop/epoxy-transport": "2.1.13",
     "@mercuryworkshop/libcurl-transport": "^1.3.12",
     "@playform/compress": "^0.1.6",
-    "@svelte-drama/suspense": "0.5.1",
+    "@svelte-drama/suspense": "0.6.5",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "@types/node": "^22.9.0",
     "@types/sequelize": "^4.28.20",
