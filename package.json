@@ -18,7 +18,7 @@
     "version": "changeset version"
   },
   "dependencies": {
-    "@astrojs/check": "^0.8.3",
+    "@astrojs/check": "^0.9.4",
     "@astrojs/node": "^8.3.4",
     "@astrojs/svelte": "^5.7.3",
     "@astrojs/tailwind": "^5.1.2",
