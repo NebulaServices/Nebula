@@ -44,7 +44,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
             }}
             both={{enabled: false}}
         />
-        <SettingsCard
+        <!-- SettingsCard
           title="Open in"
           description="Choose how to open your sites"
           input={{ input: false }}
@@ -60,7 +60,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
             ],
             }}
             both={{enabled: false}}
-        />
+        / -->
         <SettingsCard
           title="Search Engine"
           description="Choose your search engine"
@@ -146,14 +146,14 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
       }}
       client:load
     />
-    <Toast
+    <!-- Toast
       toastProp={{
         toastType: "success",
         text: "Saved selection!",
         class: "openInMessage",
       }}
       client:load
-    />
+    /-->
     <Toast
       toastProp={{
         toastType: "success",
@@ -186,7 +186,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
   import { pageLoad } from "@utils/events";
   function setup(
     proxySelectVal: HTMLSelectElement,
-    openInVal: HTMLSelectElement,
+      //openInVal: HTMLSelectElement,
     searchEngineVal: HTMLSelectElement,
     wispServerVal: HTMLSelectElement,
       transportVal: HTMLSelectElement,
@@ -195,9 +195,9 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     proxySelectVal.value = localStorage.getItem(
       SettingsEnum.ProxySettings.proxy
     ) as string;
-    openInVal.value = localStorage.getItem(
-      SettingsEnum.ProxySettings.openIn
-    ) as string;
+      //openInVal.value = localStorage.getItem(
+          //SettingsEnum.ProxySettings.openIn
+          //) as string;
     searchEngineVal.value = localStorage.getItem(
       SettingsEnum.ProxySettings.searchEngine
     ) as string;
@@ -213,8 +213,8 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
   pageLoad(() => {
     const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
     const proxySelectVal = document.getElementById("proxy") as HTMLSelectElement;
-    const openInButton = document.getElementById("setopenin") as HTMLButtonElement;
-    const openInVal = document.getElementById("openin") as HTMLSelectElement;
+      //const openInButton = document.getElementById("setopenin") as HTMLButtonElement;
+      //const openInVal = document.getElementById("openin") as HTMLSelectElement;
     const searchEngineButton = document.getElementById("setsearchengine") as HTMLButtonElement;
     const searchEngineVal = document.getElementById("searchengine") as HTMLSelectElement;
     const wispServerButton = document.getElementById("setwispurl") as HTMLButtonElement;
@@ -224,7 +224,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     const customWispUrl = document.getElementById("inputOnSelectValuecustom") as HTMLInputElement;
     setup(
       proxySelectVal,
-      openInVal,
+        //openInVal,
       searchEngineVal,
       wispServerVal,
         transportVal,
@@ -234,10 +234,10 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
       settings.proxySettings.changeProxy(proxySelectVal.value);
       toast(".proxyMessage");
     });
-    openInButton.addEventListener("click", () => {
-      settings.proxySettings.openIn(openInVal.value);
-      toast(".openInMessage");
-    });
+      //openInButton.addEventListener("click", () => {
+          //  settings.proxySettings.openIn(openInVal.value);
+          //toast(".openInMessage");
+          //});
     searchEngineButton.addEventListener("click", () => {
       settings.proxySettings.setSearchEngine(searchEngineVal.value);
       toast(".searchEngineMessage");
