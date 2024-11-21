@@ -364,6 +364,7 @@ There are a couple of configuration options for Nebula. The defaults are fine mo
 
 ## Deploying
 ### Koyeb
+- First setup the config.toml file with the docker-compose instructions!
 - Fork this repo
 - Create new koyeb service, and select webservice
 - Select import from github and import your forked repo
