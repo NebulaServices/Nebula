@@ -1,5 +1,5 @@
 [marketplace]
-enabled = true # Turn on or off the marketplace entirely
+enabled = false # Turn on or off the marketplace entirely
 psk = "CHANGEME" # Change this to something more secure.
 level = 1
 
