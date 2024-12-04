@@ -10,7 +10,7 @@ const assetsJson = await response.json();
 <Layout
   title={`Package: ${assetsJson.title}`}
   description=`${assetsJson.title} is a package on Nebula. Start using this package on Nebula today!`
-  image={assetsJson.image}
+  image={`/packages/${packageName}/${assetsJson.image}`}
 >
   <div
     class="flex flex-wrap min-[1032px]:mt-16 mt-8 w-full fixed inset-0 h-full md:h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center lg:pb-64 font-roboto max-md:p-4"

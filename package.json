@@ -38,6 +38,7 @@
     "@types/sequelize": "^4.28.20",
     "astro": "^4.16.13",
     "astro-icon": "^1.1.2",
+    "astro-seo": "^0.8.4",
     "chalk": "^5.3.0",
     "concurrently": "^8.2.2",
     "fastify": "^5.1.0",

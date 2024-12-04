@@ -29,6 +29,15 @@ export default defineConfig({
                     access: "public",
                     optional: true,
                     default: parsedDoc.marketplace.enabled
+                }),
+                SEO: envField.string({
+                    context: "client",
+                    access: "public",
+                    optional: true,
+                    default: JSON.stringify({
+                        enabled: parsedDoc.seo.enabled,
+                        domain: new URL(parsedDoc.seo.domain).host
+                    })
                 })
             }
         }

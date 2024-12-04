@@ -33,7 +33,7 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
         {
             package_name: "com.nebula.gruvbox",
             title: "Gruvbox",
-            image: "gruvbox.jpeg",
+            image: "gruvbox.jpg",
             author: "Nebula Services",
             version: "1.0.0",
             description: "The gruvbox theme",

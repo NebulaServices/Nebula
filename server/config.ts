@@ -15,6 +15,10 @@ interface TomlData {
             logging: boolean;
         };
     };
+    seo: {
+        enabled: boolean;
+        domain: string;
+    };
     db: {
         name: string;
         username: string;
@@ -31,6 +35,7 @@ interface Verify {
     name: string;
     typeOF: any;
     type: any;
+    verifyExtras?: () => boolean | Error;
 }
 
 let doc = readFileSync(fileURLToPath(new URL("../config.toml", import.meta.url))).toString();
@@ -40,6 +45,12 @@ function verify(t: Verify[]) {
     for (let i: number = 0; i !== t.length; i++) {
         if (typeof t[i].typeOF !== t[i].type) {
             throw new Error(`Invalid structure: "${t[i].name}" should be a(n) ${t[i].type}`);
+        }
+        if (t[i].verifyExtras) {
+            const extra = t[i].verifyExtras();
+            if (extra !== true) {
+                throw extra;
+            }
         }
     }
 }
@@ -53,6 +64,17 @@ verify([
     { name: "server.server.port", typeOF: parsedDoc.server.server.port, type: "number" },
     { name: "server.server.wisp", typeOF: parsedDoc.server.server.wisp, type: "boolean" },
     { name: "server.server.logging", typeOF: parsedDoc.server.server.logging, type: "boolean" },
+    { name: "seo", typeOF: parsedDoc.seo, type: "object" },
+    { name: "seo.enabled", typeOF: parsedDoc.seo.enabled, type: "boolean" },
+    { name: "seo.domain", typeOF: parsedDoc.seo.domain, type: "string", verifyExtras: () => {
+        try {
+            new URL(parsedDoc.seo.domain);
+        }
+        catch (e) {
+            return Error(e);
+        }
+        return true;
+    }},
     { name: "db", typeOF: parsedDoc.db, type: "object" },
     { name: "db.name", typeOF: parsedDoc.db.name, type: "string" },
     { name: "db.username", typeOF: parsedDoc.db.username, type: "string" },

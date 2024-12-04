@@ -3,6 +3,8 @@ import { ViewTransitions } from "astro:transitions";
 import Header from "@components/Header.astro";
 import MobileNavigation from "@components/MobileNavigation.astro";
 import SettingsLoader from "@components/settings/Loader.astro";
+import { SEO } from "astro-seo";
+import { SEO as SEOC } from "astro:env/client";
 interface Props {
   title: string;
   noHeader?: string;
@@ -11,6 +13,8 @@ interface Props {
 }
 
 const { title, noHeader, description, image } = Astro.props;
+const SEOConfig = JSON.parse(SEOC);
+const Host = Astro.url.host;
 ---
 
 <!doctype html>
@@ -18,35 +22,61 @@ const { title, noHeader, description, image } = Astro.props;
   <head>
     <SettingsLoader transition:persist />
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content={description ? description : "Astro description"}
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:image" content={image ? image : ""} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" id="favicon" />
+    <SEO
+        title={title},
+        titleTemplate=`${SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula | %s': '%s'}`,
+        titleDefault=`${SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula': ''}`,
+        description=`${SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : ''}`,
+        charset="UTF-8",
+        openGraph={{
+            basic: {
+                title: `${SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula' :''}`,
+                type: 'website',
+                url: `${SEOConfig.enabled && Host === SEOConfig.domain ? 'https://nebulaproxy.io' : ''}`,
+                image: `${SEOConfig.enabled && Host === SEOConfig.domain ? image ? image : '/logo.png': ''}`
+            },
+            optional: {
+                description: `${SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : ''}`
+            }
+        }},
+        twitter={{
+            card: "summary_large_image",
+            title: `${SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula' : ''}`,
+            description: `${SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : ''}`,
+            image: `${SEOConfig.enabled && Host === SEOConfig.domain ? image ? image : '/logo.png': ''}`,
+            imageAlt: `${image ? 'Catalog image' : `${SEOConfig.enabled && Host === SEOConfig.domain && "Nebula services's"} logo`}`
+        }},
+        extend={{
+            link: [
+                { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg', id: 'favicon' },
+                { 
+                    rel: 'preload', 
+                    href: "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap",
+                    as: 'style',
+                    crossorigin: 'anonymous'
+                },
+                {
+                    rel: 'preload',
+                    href: "https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2",
+                    as: 'font',
+                    type: 'font/woff2',
+                    crossorigin: 'anonymous'
+                }
+            ],
+            meta: [
+                { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+                { name: 'generator', content: `${Astro.generator}` }
+            ]
+        }}
+        />
+    {/* I left this out of the SEO component as we need it to persist properly : D */}
     <link
       rel="stylesheet"
       href="/nebula.css"
       id="stylesheet"
       transition:persist
     />
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      as="style"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <ViewTransitions />
+    <ViewTransitions fallback="animate" />
   </head>
   <body class="h-full bg-primary">
     {!noHeader && <Header />}
