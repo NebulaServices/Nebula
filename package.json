@@ -45,7 +45,6 @@
     "form-data": "^4.0.1",
     "gradient-string": "^3.0.0",
     "nanostores": "^0.11.3",
-    "ora": "^8.1.1",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",
