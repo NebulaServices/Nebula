@@ -8,11 +8,6 @@ import SettingsSection from "@layouts/SettingsSection.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-export function getStaticPaths() {
-    const STATIC_PATHS = [{ params: { lang: "en_US" } }, { params: { lang: "jp" } }];
-    return STATIC_PATHS;
-}
-export const prerender = true;
 ---
 
 <Layout title="Settings">

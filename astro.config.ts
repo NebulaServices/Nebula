@@ -17,7 +17,6 @@ const workerwarePath = fileURLToPath(new URL("./workerware/src", import.meta.url
 
 export default defineConfig({
     site: parsedDoc.seo.enabled ? parsedDoc.seo.domain || process.env.SITE : 'http://localhost:4321',
-    experimental: {
         env: {
             schema: {
                 VERSION: envField.string({
@@ -42,11 +41,10 @@ export default defineConfig({
                     })
                 })
             }
-        }
-    },
+        },
     integrations: [
         tailwind(),
-        sitemap(),
+        //sitemap(),
         icon(),
         svelte(),
         playformCompress({
