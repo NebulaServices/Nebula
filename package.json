@@ -4,17 +4,17 @@
   "version": "9.0.2",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"astro dev --host 0.0.0.0\" \"tsx --watch server/server.ts\"",
+    "dev": "astro dev --host 0.0.0.0 & tsx --watch server/server.ts",
     "start": "node server/server.js",
     "build:server": "tsc -p server",
     "build:client": "astro check && astro build",
-    "build": "concurrently \"npm:build:server\" \"npm:build:client\"",
+    "build": "npm run build:server & npm run build:client",
     "bstart": "npm run build && npm run start",
     "preview": "astro preview",
     "astro": "astro",
     "format:code": "biome format . --write",
     "format:imports": "biome check . --write",
-    "format": "concurrently -m 1 \"npm:format:code\" \"npm:format:imports\"",
+    "format": "npm run format:code && npm run format:imports",
     "version": "changeset version"
   },
   "dependencies": {
@@ -41,7 +41,6 @@
     "astro-icon": "^1.1.4",
     "astro-seo": "^0.8.4",
     "chalk": "^5.3.0",
-    "concurrently": "^9.1.0",
     "fastify": "^5.1.0",
     "form-data": "^4.0.1",
     "gradient-string": "^3.0.0",
