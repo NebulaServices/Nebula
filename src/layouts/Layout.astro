@@ -22,9 +22,11 @@ const Host = Astro.url.host;
   <head>
     <SettingsLoader transition:persist />
     <meta charset="UTF-8" />
+    {console.log(SEOConfig)}
+    {console.log(Host)}
     <SEO
         title={title},
-        titleTemplate=`${SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula | %s': '%s'}`,
+        titleTemplate=`${SEOConfig.enabled && Host === SEOConfig.domain && console.log(SEOConfig.domain) ? 'Nebula | %s': '%s'}`,
         titleDefault=`${SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula': ''}`,
         description=`${SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : ''}`,
         charset="UTF-8",
@@ -49,6 +51,7 @@ const Host = Astro.url.host;
         extend={{
             link: [
                 { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg', id: 'favicon' },
+                SEOConfig.enabled && Host === SEOConfig.domain && { rel: 'sitemap', href: '/sitemap-index.xml' },
                 { 
                     rel: 'preload', 
                     href: "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap",

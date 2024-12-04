@@ -2,6 +2,7 @@ import { fileURLToPath } from "node:url";
 import node from "@astrojs/node";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
+import sitemap from "@astrojs/sitemap";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
@@ -15,6 +16,7 @@ import { parsedDoc } from "./server/config.js";
 const workerwarePath = fileURLToPath(new URL("./workerware/src", import.meta.url));
 
 export default defineConfig({
+    site: parsedDoc.seo.enabled ? parsedDoc.seo.domain || process.env.SITE : 'http://localhost:4321',
     experimental: {
         env: {
             schema: {
@@ -44,6 +46,7 @@ export default defineConfig({
     },
     integrations: [
         tailwind(),
+        sitemap(),
         icon(),
         svelte(),
         playformCompress({
