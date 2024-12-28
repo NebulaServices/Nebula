@@ -64,7 +64,7 @@ const marketPlaceSettings = {
             if (p === "theme") {
                 let items = localStorage.getItem(AppearanceSettings.themes) as any;
                 items ? (items = JSON.parse(items)) : (items = []);
-                if (items.find((theme: any) => theme === packageName.toLowerCase())) {
+                if (items.find((theme: any) => theme === packageName)) {
                     const idx = items.indexOf(packageName.toLowerCase());
                     items.splice(idx, 1);
                     localStorage.setItem(AppearanceSettings.themes, JSON.stringify(items));
