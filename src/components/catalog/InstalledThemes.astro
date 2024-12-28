@@ -8,7 +8,7 @@
         </div>
     </div>
 </div>
-
+<div class="w-0 h-0 visibility-none hidden"> <asset-loader /> </div>
 <script>
     type Assets = {
         description: string,
@@ -22,7 +22,6 @@
         type: string,
         version: string
     }
-    import { pageLoad } from "@utils/events";
     import { Settings, settings } from "@utils/settings";
     async function getItem(item: any) {
         try {
@@ -105,12 +104,19 @@
         parent?.appendChild(mainDiv);
         console.log(mainDiv);
     }
-
-    pageLoad(async () => {
-        const mainElem = document.getElementById("main-theme");
-        try { attachThemeEvent(mainElem!, true) } catch(_) {}
-        const assets = await getAssets();
-        console.log(assets);
-        assets.map((asset) => { createElem(asset); });
-    }, true);
+    
+    //I don't actually want this to run on every page but defining a custom component is an easy way around it.
+    class AssetLoader extends HTMLElement {
+        constructor() {
+            super();
+            (async function() {
+                const mainElem = document.getElementById("main-theme");
+                try { attachThemeEvent(mainElem!, true) } catch(_) {}
+                const assets = await getAssets();
+                console.log(assets);
+                assets.map((asset) => { createElem(asset); });
+            })();
+        }
+    }
+    customElements.define('asset-loader', AssetLoader);
 </script>
