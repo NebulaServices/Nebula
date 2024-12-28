@@ -1,5 +1,5 @@
 ---
-import InstalledPlugins from "@components/catalog/InstalledPlugins.svelte";
+import InstalledPlugins from "@components/catalog/InstalledPlugins.astro";
 import SettingsCard from "@components/settings/SettingsCard.astro";
 import Toast from "@components/toasts/Toast.svelte";
 import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
@@ -115,7 +115,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
           subtitle="Plugins allow you to modify the way the proxy works (UV only, plugins are auto applied)"
         >
           <div class="flex flex-row gap-6 justify-center md:justify-normal">
-            <InstalledPlugins client:only="svelte" />
+            <InstalledPlugins />
             <a
               href={`/${lang}/catalog/1`}
               class="rounded-3xl bg-navbar-color w-64 flex flex-col"

@@ -1,0 +1,103 @@
+<div id="parent" class="flex flex-row flex-wrap gap-4 items-center font-roboto justify-center"> 
+</div>
+<div class="w-0 h-0 visibility-none hidden"> <asset-loader /> </div>
+<script>
+    type Assets = {
+        description: string,
+        image: string,
+        package_name: string,
+        payload: string,
+        tags: [],
+        background_video: string,
+        background_image: string,
+        title: string,
+        type: string,
+        version: string
+    }
+    import { Settings, settings } from "@utils/settings";
+    async function getItem(item: any) {
+        try {
+            const res = await fetch(new URL(`/api/packages/${item}`, window.location.origin));
+            const data = await res.json();
+            return { ...data, package_name: item }
+        }
+        catch (err: any) {
+            console.log(`Err in themes: ${err}`);
+            return null;
+        }
+    }
+
+    async function getAssets() {
+        const items = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+        const promises = items.map(getItem);
+        const dataArray = await Promise.all(promises);
+        const accumulatedData = dataArray.filter((data) => data !== null);
+        return accumulatedData;
+    } 
+
+    const attachDeleteEvent = (elem: HTMLElement, mainElem: HTMLElement, parentElem: HTMLElement, asset: Assets) => {
+        elem.addEventListener("click", () => {
+            settings.marketPlaceSettings.uninstall(asset.type === "page" ? "plugin-page" : "plugin-sw", asset.package_name);
+            parentElem.removeChild(mainElem);
+        });
+    }
+    
+    const createElem = (asset: Assets) => {
+        const parent = document.getElementById("parent");
+        const mainDiv = document.createElement("div");
+        mainDiv.classList.add("rounded-3xl", "bg-navbar-color", "w-64", "flex", "flex-col", "cursor-pointer");
+
+        const clickDiv = document.createElement("div");
+        clickDiv.classList.add("w-full");
+        const imgDiv = document.createElement("img");
+        imgDiv.classList.add("aspect-[16/9]", "rounded-t-3xl");
+        imgDiv.src = `/packages/${asset.package_name}/${asset.image}`;
+        imgDiv.alt = `${asset.type}-${asset.title}`;
+        clickDiv.appendChild(imgDiv);
+
+        const infoDiv = document.createElement("div");
+        infoDiv.classList.add("h-2/6", "text-center", "content-center", "p-3", "font-semibold", "items-center", "flex", "flex-col");
+        const infoTitle = document.createElement("p");
+        infoTitle.classList.add("text-2xl");
+        infoTitle.innerHTML = asset.title;
+
+        const elemInfoMain = document.createElement("div");
+        elemInfoMain.classList.add("flex", "flex-row");
+        const deleteButton = document.createElement("div");
+        deleteButton.classList.add("h-8", "w-8", "cursor-pointer");
+        attachDeleteEvent(deleteButton, mainDiv, parent!, asset);
+        //FUCK SVG's
+        const deleteButtonSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256"><path fill="currentColor" d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16M112 168a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm0-120H96v-8a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8Z" /></svg>`
+        deleteButton.innerHTML= deleteButtonSVG;
+        elemInfoMain.appendChild(deleteButton);
+
+        const openButton = document.createElement("a");
+        openButton.classList.add("h-8", "w-8", "cursor-pointer");
+        openButton.href = `../catalog/package/${asset.package_name}`
+        const openButtonSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 256 256"><path fill="currentColor" d="M192 136v72a16 16 0 0 1-16 16H48a16 16 0 0 1-16-16V80a16 16 0 0 1 16-16h72a8 8 0 0 1 0 16H48v128h128v-72a8 8 0 0 1 16 0m32-96a8 8 0 0 0-8-8h-64a8 8 0 0 0-5.66 13.66L172.69 72l-42.35 42.34a8 8 0 0 0 11.32 11.32L184 83.31l26.34 26.35A8 8 0 0 0 224 104Z" /></svg>`
+        openButton.innerHTML = openButtonSVG;
+        elemInfoMain.appendChild(openButton);
+
+        infoDiv.appendChild(elemInfoMain);
+        infoDiv.appendChild(infoTitle);
+        
+
+        mainDiv.appendChild(clickDiv);
+        mainDiv.appendChild(infoDiv);
+        parent?.appendChild(mainDiv);
+        console.log(mainDiv);
+    }
+    
+    //I don't actually want this to run on every page but defining a custom component is an easy way around it.
+    class AssetLoader extends HTMLElement {
+        constructor() {
+            super();
+            (async function() {
+                const assets = await getAssets();
+                console.log(assets);
+                assets.map((asset) => { createElem(asset); });
+            })();
+        }
+    }
+    customElements.define('asset-loader', AssetLoader);
+</script>
