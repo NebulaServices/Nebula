@@ -30,7 +30,7 @@
     "@fastify/static": "^8.0.3",
     "@iconify-json/ph": "^1.2.2",
     "@mercuryworkshop/bare-mux": "^2.1.7",
-    "@mercuryworkshop/epoxy-transport": "2.1.27",
+    "@mercuryworkshop/epoxy-transport": "^2.1.27",
     "@mercuryworkshop/libcurl-transport": "^1.3.15",
     "@playform/compress": "^0.1.6",
     "@svelte-drama/suspense": "0.7.0",
