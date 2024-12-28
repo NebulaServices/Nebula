@@ -15,3 +15,8 @@
 
 - Adds the ability for a custom wisp server back
 - Increases upload fileSize capacity in hopes that bigger files can now be uploaded
+
+# 9.0.3
+
+- Bugfix: themes with caps don't uninstall - fixed
+- Rewrite: InstalledThemes and InstalledPlugins are now in Astro instead of Svelte
