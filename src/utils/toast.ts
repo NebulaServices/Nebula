@@ -1,13 +1,15 @@
-type ToastType = "success" | "error" | "multiline";
-type Position =
-    | "top-left"
-    | "top-middle"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-right"
-    | "bottom-center";
+type TType = "success" | "error" | "multiline";
+type Position = "top" 
+    | "top-start"
+    | "top-end"
+    | "center"
+    | "center-start"
+    | "center-end"
+    | "bottom"
+    | "bottom-start"
+    | "bottom-end";
 interface Props {
-    toastType: ToastType;
+    TType: TType;
     text: string;
     class: string;
     id?: string;
@@ -25,4 +27,4 @@ function toast(query: string) {
     element.click();
 }
 
-export { type ToastType, type Position, type Props, toast };
+export { type TType, type Position, type Props, toast };
