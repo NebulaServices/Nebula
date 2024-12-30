@@ -20,3 +20,9 @@
 
 - Bugfix: themes with caps don't uninstall - fixed
 - Rewrite: InstalledThemes and InstalledPlugins are now in Astro instead of Svelte
+
+# 9.0.4
+
+- General Bugfixes
+- Removes Svelte except for 2 componenents
+- Scramjet :rocket:

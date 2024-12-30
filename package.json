@@ -1,7 +1,7 @@
 {
   "name": "nebula",
   "type": "module",
-  "version": "9.0.3",
+  "version": "9.0.4",
   "private": true,
   "scripts": {
     "dev": "astro dev --host 0.0.0.0 & tsx --watch server/server.ts",
