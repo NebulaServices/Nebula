@@ -1,5 +1,5 @@
 ---
-import CatalogCard from "@components/catalog/CatalogCard.svelte";
+import CatalogCard from "@components/catalog/CatalogCard.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import Pagnation from "./pagnation.astro";
@@ -22,7 +22,7 @@ const lastPage = assetsJson.pages;
           <h1 class="text-3xl md:text-5xl font-bold"> Nebula Catalog </h1>
           <p class="text-l md:text-xl max-md:text-center max-md:p-2"> The Nebula Catalog is a place for you to find user-created themes and plugins. </p>
       </div>
-      <CatalogCard client:only="svelte" page={page} lang={lang} />
+      <CatalogCard page={page} lang={lang} />
     <div class="flex flex-row pb-8 gap-4 font-roboto">
       {/* The first page. If the user is on this page, or the one after it, don't show it. */}
       {parseInt(page!) > 2 && (
