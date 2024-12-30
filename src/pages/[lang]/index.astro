@@ -63,43 +63,32 @@ import { VERSION } from "astro:env/client";
   type Suggestion = {
     phrase: string;
   };
-  async function proxy(term: string) {
-    const searchEngine = localStorage.getItem(
-      Settings.ProxySettings.searchEngine
-    );
-    const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-    let proxyUrl: any =
-      __uv$config!.prefix +
-      __uv$config.encodeUrl!(
-        search(
-          term,
-          searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg
-        )
-      );
-    if (openIn === "a:b" || openIn === "blob") {
-      return cloak(
-        openIn as string,
-        "https://google.com",
-        `${window.location.origin}${proxyUrl}`
-      );
-    } else if (openIn === "direct") {
-      return (window.location.href = proxyUrl as string);
-    } else {
-      return proxyUrl;
-    }
+  function proxy(term: string, scram: typeof ScramjetController, pr: "uv" | "sj"): string {
+      const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
+      const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
+      return pr === "uv" ? `${__uv$config!.prefix}${__uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg))}` : scram.encodeUrl(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg ))
   }
   async function uv(iframe: HTMLIFrameElement, term: string) {
-    const { sw, conn } = getSWStuff(); 
+    const { sw, conn, sj } = getSWStuff(); 
     await setTransport(
       conn,
       localStorage.getItem(Settings.ProxySettings.transport) as string
     );
     await settings.marketPlaceSettings.handlePlugins(sw);
     iframe.classList.remove("hidden");
-    const url = await proxy(term);
+    const url = proxy(term, sj, "uv");
     if (url) {
       iframe.src = url;
     }
+  }
+  async function sj(iframe: HTMLIFrameElement, term: string) {
+      const { sw, conn, sj } = getSWStuff();
+      await setTransport(conn, localStorage.getItem(Settings.ProxySettings.transport) as string);
+      iframe.classList.remove("hidden");
+      const url = proxy(term, sj, "sj");
+      if (url) {
+          iframe.src = url;
+      }
   }
   //we need to rerun this on every page load
   pageLoad(async () => {
@@ -111,9 +100,7 @@ import { VERSION } from "astro:env/client";
     input?.addEventListener("keypress", async function (event: any) {
       if (event.key === "Enter") {
         copyright.classList.add("hidden");
-        if (
-          localStorage.getItem(Settings.ProxySettings.proxy) === "automatic"
-        ) {
+        if (localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
           const key = SupportedSites[input?.value];
           switch (key) {
             case "uv":
@@ -123,10 +110,12 @@ import { VERSION } from "astro:env/client";
               uv(iframe, input?.value);
               break;
           }
-        } else if (
-          localStorage.getItem(Settings.ProxySettings.proxy) === "uv"
-        ) {
+        } 
+        else if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
           uv(iframe, input?.value);
+        }
+        else if (localStorage.getItem(Settings.ProxySettings.proxy) === "sj") {
+            sj(iframe, input?.value);
         }
       }
     });
@@ -195,5 +184,5 @@ import { VERSION } from "astro:env/client";
         }
       }
     });
-  });
+  }, true);
 </script>

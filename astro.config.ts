@@ -2,12 +2,12 @@ import { fileURLToPath } from "node:url";
 import node from "@astrojs/node";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
-import sitemap from "@astrojs/sitemap";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import playformCompress from "@playform/compress";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import { scramjetPath } from "@mercuryworkshop/scramjet";
 import icon from "astro-icon";
 import { defineConfig, envField } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";
@@ -73,6 +73,11 @@ export default defineConfig({
                         src: `${libcurlPath}/**/*`.replace(/\\/g, "/"),
                         dest: "libcurl",
                         overwrite: false
+                    },
+                    {
+                        src: `${scramjetPath}/**/*`.replace(/\\/g, "/"),
+                        dest: "scram",
+                        overwrite: false 
                     },
                     {
                         src: `${baremuxPath}/**/*`.replace(/\\/g, "/"),
