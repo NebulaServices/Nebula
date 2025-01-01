@@ -1,12 +1,12 @@
+type Event = "astro:page-load" | "astro:before-swap" | "astro:after-swap" | "DOMContentLoaded";
 interface Events {
-    functions: {
-        load?: () => unknown;
-        bSwap?: () => unknown;
-        aSwap?: () => unknown;
-        dom?: () => unknown;
-    }
-    event: "astro:page-load" | "astro:before-swap" | "astro:after-swap" | "DOMContentLoaded";
-    logging?: boolean 
+    events: {
+        "astro:page-load"?: () => unknown; 
+        "astro:before-swap"?: () => unknown;
+        "astro:after-swap"?: () => unknown;
+        "DOMContentLoaded"?: () => unknown;
+    };
+    logging: boolean;
 }
 
 class EventHandler {
@@ -14,28 +14,28 @@ class EventHandler {
     constructor(items: Events) {
         this.#eventItems = items;
     }
-    #attachEvent(items: Events, fn: () => unknown) {
-        if (items.logging) return document.addEventListener(items.event, () => fn());
-        try { document.addEventListener(items.event, () => fn()) } catch (_) {};
+    #attachEvent(items: Events, eventType: Event, fn: () => unknown) {
+        if (items.logging) return document.addEventListener(eventType, () => fn());
+        try { document.addEventListener(eventType, () => fn()) } catch (_) {};
     }
-    #throwErrorOnUnspecified(fn: "load" | "bSwap" | "aSwap" | "dom") {
-        throw new Error(`No ${fn} specified`);
+    #throwErrorOnUnspecified(fn: Event) {
+        throw new Error(`No function specified for ${fn}`);
     }
     pageLoad() {
-        if (!this.#eventItems.functions.load) return this.#throwErrorOnUnspecified("load");
-        this.#attachEvent(this.#eventItems, this.#eventItems.functions.load);
+        if (!this.#eventItems.events["astro:page-load"]) return this.#throwErrorOnUnspecified("astro:page-load");
+        this.#attachEvent(this.#eventItems, "astro:page-load", this.#eventItems.events["astro:page-load"]);
     }
     beforeSwap() {
-        if (!this.#eventItems.functions.bSwap) return this.#throwErrorOnUnspecified("bSwap");
-        this.#attachEvent(this.#eventItems, this.#eventItems.functions.bSwap);
+        if (!this.#eventItems.events["astro:before-swap"]) return this.#throwErrorOnUnspecified("astro:before-swap");
+        this.#attachEvent(this.#eventItems, "astro:before-swap", this.#eventItems.events["astro:before-swap"]);
     }
     afterSwap() {
-        if (!this.#eventItems.functions.aSwap) return this.#throwErrorOnUnspecified("aSwap");
-        this.#attachEvent(this.#eventItems, this.#eventItems.functions.aSwap);
+        if (!this.#eventItems.events["astro:after-swap"]) return this.#throwErrorOnUnspecified("astro:after-swap");
+        this.#attachEvent(this.#eventItems, "astro:after-swap", this.#eventItems.events["astro:after-swap"]);
     }
     domContent() {
-        if (!this.#eventItems.functions.dom) return this.#throwErrorOnUnspecified("dom"); 
-        this.#attachEvent(this.#eventItems, this.#eventItems.functions.dom);
+        if (!this.#eventItems.events.DOMContentLoaded) return this.#throwErrorOnUnspecified("DOMContentLoaded"); 
+        this.#attachEvent(this.#eventItems, "DOMContentLoaded", this.#eventItems.events.DOMContentLoaded);
     }
 }
 
