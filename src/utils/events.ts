@@ -9,6 +9,26 @@ interface Events {
     logging: boolean;
 }
 
+/**
+ * This class creates an event handler for us with optional logging
+ *
+ * @example
+ * const eventHandler = new EventHandler({
+ *     events: {
+ *         "astro:page-load": () => { console.log("After page load") },
+ *         "astro:before-swap": () => {},
+ *         "astro:after-swap": () => {},
+ *         "DOMContentLoaded": () => {}
+ *     }, // Do note: these are optional to pass. But if you try to call the method associated with the event, it WILL throw an error.
+ *     logging: false // Set this to true to enable logging when things go wrong.
+ * });
+ *
+ * eventHandler.pageLoad(); // For astro:page-load
+ * eventHandler.beforeSwap(); // For astro:before-swap
+ * eventHandler.afterSwap(); // For astro:after-swap
+ * eventHandler.domContent(); // For DOMContentLoaded
+ * // NOTE: If you do not pass a function in the events: {} associated with these events, it WILL throw an error.
+ */
 class EventHandler {
     #eventItems: Events;
     constructor(items: Events) {
