@@ -40,6 +40,6 @@ interface SJOptions {
 
 declare class ScramjetController {
     constructor(opts: SJOptions);
-    async init(sw: string): any;
+    init(): Promise<void>;
     encodeUrl(term: string): string;
 }
