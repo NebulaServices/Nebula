@@ -27,6 +27,8 @@ const createScript = (src: string, defer?: boolean): HTMLScriptElement => {
 function* createProxyScripts() {
     const uv = createScript("/uv/uv.bundle.js", true);
     yield uv;
+    const uvConfig = createScript("/uv/uv.config.js", true);
+    yield uvConfig;
     const sj = createScript("/scram/scramjet.controller.js", true);
     yield sj;
 };
@@ -78,7 +80,7 @@ type SWInit = {
 class SW {
     #init!: SWInit;
     constructor(conn: BareMuxConnection) {
-        const sj = async (): Promise<ScramjetController> => {
+        const sj = (): ScramjetController => {
             const sj = new ScramjetController({
                 prefix: '/~/scramjet',
                 files: {
@@ -89,13 +91,14 @@ class SW {
                     sync: "/scram/scramjet.sync.js"
                 }
             });
-            await sj.init();
             return sj;
         }
         if ("serviceWorker" in navigator) {
+            const scram = sj();
+            (async () => await scram.init())();
             navigator.serviceWorker.ready.then(async (reg) => {
                 console.log("Service worker ready and active!");
-                this.#init = { serviceWorker: reg, sj: await sj(), bareMuxConn: conn }
+                this.#init = { serviceWorker: reg, sj: scram, bareMuxConn: conn }
             });
             navigator.serviceWorker.register("/sw.js", { scope: '/' });
         }
@@ -114,8 +117,9 @@ class SW {
     /**
         * Returns an object with the service worker, scramjet controller and baremux connection all in one method.
     */
-    getSWInfo(): SWInit {
-        return this.#init;
+    getSWInfo(): SWInit | Error {
+        if (this.#init !== undefined) return this.#init;
+        return new Error("this object is undefined!");
     }
 }
 
