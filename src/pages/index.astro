@@ -7,41 +7,47 @@ import Layout from "@layouts/Layout.astro";
     <Loading />
 </Layout>
 <script>
-  import { pageLoad } from "@utils/events";
-  pageLoad(() => {
-    let currentLang = localStorage.getItem("selectedLanguage");
-    const redirect = (loc: any) => (window.location.href = loc);
-    if (currentLang) {
-        try {
-            let parsed = JSON.parse(currentLang).value;
-            switch (parsed) {
-                case "en_US":
-                    redirect("/en_US/");
-                    break;
-                case "jp":
-                    redirect("/jp/");
-                    break;
-            default:
-                redirect("/en_US/");
-                break;
+    import { EventHandler } from "@utils/events";
+    import { defaultStore } from "@utils/storage";
+    import { navigate } from "astro:transitions/client";
+    const eHandler = new EventHandler({
+        events: {
+            "astro:page-load": () => {
+                let currentLang = localStorage.getItem("selectedLanguage");
+                if (currentLang) {
+                    try {
+                        let parsed = JSON.parse(currentLang).value;
+                        switch (parsed) {
+                            case "en_US":
+                                navigate("/en_US/");
+                                break;
+                            case "jp":
+                                navigate("/jp/");
+                                break;
+                            default:
+                                navigate("/en_US/");
+                        }
+                    } 
+                    catch {
+                        localStorage.clear();
+                        window.location.reload();
+                    }
+                } 
+                else {
+                    if (navigator.language.includes("ja")) {
+                        defaultStore.setVal("selectedLanguage", JSON.stringify({ value: "jp" }));
+                        navigate("/jp/");
+                    } 
+                    else {
+                        defaultStore.setVal("selectedLanguage", JSON.stringify({ value: "en_US" }));
+                        navigate("/en_US/");
+                    }
+                }
             }
-        } catch {
-            localStorage.clear();
-            window.location.reload();
-        }
-        } else {
-            if (navigator.language.includes("ja")) {
-                localStorage.setItem("selectedLanguage", JSON.stringify({ value: "jp" }));
-                redirect("/jp/");
-            } else {
-                localStorage.setItem(
-                    "selectedLanguage",
-                    JSON.stringify({ value: "en_US" })
-                );
-                redirect("/en_US/");
-            }
-        }
-  });
+        },
+        logging: false
+    });
+    eHandler.handleEvents();
 </script>
 <noscript>
     JavaScript is required to run this app.
