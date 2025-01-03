@@ -1,5 +1,5 @@
 type TType = "success" | "error" | "multiline";
-type Position = "top" 
+type ToastPosition = "top" 
     | "top-start"
     | "top-end"
     | "center"
@@ -8,6 +8,7 @@ type Position = "top"
     | "bottom"
     | "bottom-start"
     | "bottom-end";
+
 interface Props {
     TType: TType;
     text: string;
@@ -15,7 +16,7 @@ interface Props {
     id?: string;
     duration?: number;
     emoji?: any;
-    position?: Position;
+    position?: ToastPosition;
 }
 
 function toast(query: string) {
@@ -27,4 +28,21 @@ function toast(query: string) {
     element.click();
 }
 
-export { type TType, type Position, type Props, toast };
+function search(input: string, template: string) {
+    try { return new URL(input).toString() } catch (_) {};
+
+    try {
+        const url = new URL(`http://${input}`);
+        if (url.hostname.includes(".")) return url.toString();
+    } catch (_) {};
+
+    return template.replace("%s", encodeURIComponent(input));
+}
+
+export { 
+    type TType, 
+    type ToastPosition, 
+    type Props, 
+    toast,
+    search
+};
