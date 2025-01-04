@@ -30,7 +30,20 @@ const SupportedSites: Record<string, "uv" | "sj"> = {
 */
 const SettingsVals = {
     proxy: {
-        wispServer: "wispServerUrl"
+        wispServer: "wispServerUrl",
+        proxy: "proxy",
+        searchEngine: "searchEngine",
+        transport: "transport"
+    },
+    tab: {
+        cloak: "cloak"
+    },
+    marketPlace: {
+        appearance: {
+            video: "video",
+            image: "image",
+            themeName: "themeName"
+        }
     }
 }
 
