@@ -33,6 +33,25 @@ function* createProxyScripts() {
     yield sj;
 };
 
+/**
+    * Function that resolves ONLY when uv and Scramjet are not undefined. This prevents us from using these values before they are added and executed.
+    *
+    * @example
+    * await checkProxyScripts();
+    * @example 
+    * checkProxyScripts().then(() => { // Do something });
+*/
+const checkProxyScripts = (): Promise<void> => {
+    return new Promise((resolve) => {
+        const checkScript = setInterval(() => {
+            if (typeof __uv$config !== "undefined" && typeof ScramjetController !== "undefined") {
+                clearInterval(checkScript);
+                resolve();
+            }
+        }, 100);
+    });
+};
+
 /** 
     * Creates a bareMux connection an returns it the instantiated instance as a promise.
     *
@@ -79,6 +98,7 @@ type SWInit = {
 */
 class SW {
     #init!: SWInit;
+    #ready: boolean = false;
     constructor(conn: BareMuxConnection) {
         const sj = (): ScramjetController => {
             const sj = new ScramjetController({
@@ -98,7 +118,8 @@ class SW {
             (async () => await scram.init())();
             navigator.serviceWorker.ready.then(async (reg) => {
                 console.log("Service worker ready and active!");
-                this.#init = { serviceWorker: reg, sj: scram, bareMuxConn: conn }
+                this.#init = { serviceWorker: reg, sj: scram, bareMuxConn: conn };
+                this.#ready = true;
             });
             navigator.serviceWorker.register("/sw.js", { scope: '/' });
         }
@@ -111,16 +132,31 @@ class SW {
         * Allows you to overrid the items set. Should be used sparingly or never.
     */
     setSWInfo(items: SWInit): void {
-        this.#init = { serviceWorker: items.serviceWorker, sj: items.sj, bareMuxConn: items.bareMuxConn }
+        this.#init = { serviceWorker: items.serviceWorker, sj: items.sj, bareMuxConn: items.bareMuxConn };
+        this.#ready = true;
     }
     
     /**
-        * Returns an object with the service worker, scramjet controller and baremux connection all in one method.
+        * Returns a promise that resolves to the serviceWorker, scramjet controller and bareMux Connection ONLY when these values are ready.
+        *
+        * @example
+        * const sw = new SW(conn); // "conn" must be a baremux connection that you created.
+        * const swInfo = await sw.getSWInfo();
+        *
+        * @example
+        * const sw = new SW(conn); // "conn" must be a baremux connection that you created
+        * sw.getInfo().then((info) => { // Do something with said info }
     */
-    getSWInfo(): SWInit | Error {
-        if (this.#init !== undefined) return this.#init;
-        return new Error("this object is undefined!");
+    getSWInfo(): Promise<SWInit> {
+        return new Promise((resolve) => {
+            const checkState = setInterval(() => {
+                if (this.#ready) {
+                    clearInterval(checkState);
+                    resolve(this.#init);
+                }
+            }, 100);
+        });
     }
 }
 
-export { createScript, createProxyScripts, createBareMuxConn, setTransport, SW }; 
+export { createScript, createProxyScripts, checkProxyScripts, createBareMuxConn, setTransport, SW }; 

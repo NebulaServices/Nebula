@@ -23,7 +23,7 @@ interface Events {
  *     logging: false // Set this to true to enable logging when things go wrong.
  * });
  *
- * eventHandler.handleEvents(); // Attaches every event you passed.
+ * eventHandler.bind(); // Attaches every event you passed.
  */
 class EventHandler {
     #eventItems: Events;
@@ -37,7 +37,7 @@ class EventHandler {
     /**
      * Attatches the events you passed when creating the class. If none are passed, an error is thrown.
     */
-    handleEvents() {
+    bind(): void | Error {
         const events = Object.entries(this.#eventItems.events);
         if (!events || events.length === 0) throw new Error('No events added!');
         events.map((event) => {

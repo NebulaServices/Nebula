@@ -8,7 +8,7 @@ import Layout from "@layouts/Layout.astro";
 </Layout-->
 <script>
     import { EventHandler } from "@utils/events";
-import { createBareMuxConn, createProxyScripts, SW } from "@utils/serviceWorker";
+    import { checkProxyScripts, createBareMuxConn, createProxyScripts, SW } from "@utils/serviceWorker";
     import { navigate } from "astro:transitions/client";
     function isComingFromIframe() {
         try {
@@ -25,24 +25,12 @@ import { createBareMuxConn, createProxyScripts, SW } from "@utils/serviceWorker"
                 const isIframe = isComingFromIframe();
                 if (!isIframe) {
                     console.log("Assuming request isn't coming from iframe. Redirecting...");
-                    //navigate("/");
+                    navigate("/");
                 }
             }),
-            "DOMContentLoaded": (async () => {
-                for (let item of createProxyScripts()) {
-                        document.body.appendChild(item);
-                }
-                const checkScript = setInterval(async () => {
-                    if (typeof __uv$config !== "undefined" && typeof ScramjetController !== "undefined") {
-                        clearInterval(checkScript);
-                        const conn = await createBareMuxConn("/baremux/worker.js");
-                        window.sw = new SW(conn);
-                    }
-                }, 100); 
-            })
         },
         logging: false
     });
-    //Handle the events.
-    eHandle.handleEvents(); 
+    //Handle the events
+    eHandle.bind();
 </script>
