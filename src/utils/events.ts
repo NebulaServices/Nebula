@@ -35,7 +35,7 @@ class EventHandler {
         try { document.addEventListener(eventType, () => fn()) } catch (_) {};
     }
     /**
-     * Attatches the events you passed when creating the class. If none are passed, an error is thrown.
+     * Binds the events you passed when creating the class to the document. If none are passed, an error is thrown.
     */
     bind(): void | Error {
         const events = Object.entries(this.#eventItems.events);
