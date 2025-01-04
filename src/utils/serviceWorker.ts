@@ -78,7 +78,7 @@ const setTransport = (conn: BareMuxConnection,  transport?: "libcurl" | "epoxy")
     return new Promise((resolve) => {
         console.log(`Set wisp server at: ${server ? WispServers[server]: WispServers.default }`);
         if (transport === "epoxy") return resolve(conn.setTransport("/epoxy/index.mjs", [ { wisp: server ? WispServers[server] : WispServers.default }]));
-        if (transport === "libcurl") return resolve(conn.setTransport("/libcurl/index.msj", [ { wisp: server ? WispServers[server] : WispServers.default }]));
+        if (transport === "libcurl") return resolve(conn.setTransport("/libcurl/index.mjs", [ { wisp: server ? WispServers[server] : WispServers.default }]));
     });
 };
 

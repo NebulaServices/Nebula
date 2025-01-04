@@ -1,5 +1,5 @@
 <script>
-    import { settings, Settings } from "@utils/settings/index";
+    /* import { settings, Settings } from "@utils/settings/index";
     import { loadProxyScripts, setTransport, initSw, setSWStuff } from "@utils/registerSW";
     // This loads the settings in a nice way
     settings.tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
@@ -22,4 +22,28 @@
         const sw = await initSw();
         await setSWStuff({sw: sw.sw, conn, sj: sw.sj });
     });
+    */
+    import { EventHandler } from "@utils/events";
+    import { SW, createProxyScripts, checkProxyScripts, createBareMuxConn, setTransport } from "@utils/serviceWorker";
+    
+    const init = async () => {
+        for (const script of createProxyScripts()) {
+            document.body.appendChild(script);
+        }
+        await checkProxyScripts();
+        const conn = await createBareMuxConn("/baremux/worker.js");
+        await setTransport(conn, "libcurl");
+        window.sw = new SW(conn);
+    }
+
+    const eventHandler = new EventHandler({
+        events: {
+            "DOMContentLoaded": (async () => {
+                await init();
+            })
+        },
+        logging: true 
+    });
+    //bind the events
+    eventHandler.bind();
 </script>

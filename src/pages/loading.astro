@@ -3,12 +3,11 @@ import LoadingComponent from "@components/Loading.astro";
 import Layout from "@layouts/Layout.astro";
 ---
 
-<!-- Layout title="Loading page..." noHeader="true">
+<Layout title="Loading page..." noHeader="true">
     <LoadingComponent />
-</Layout-->
+</Layout>
 <script>
     import { EventHandler } from "@utils/events";
-    import { checkProxyScripts, createBareMuxConn, createProxyScripts, SW } from "@utils/serviceWorker";
     import { navigate } from "astro:transitions/client";
     function isComingFromIframe() {
         try {
@@ -25,7 +24,7 @@ import Layout from "@layouts/Layout.astro";
                 const isIframe = isComingFromIframe();
                 if (!isIframe) {
                     console.log("Assuming request isn't coming from iframe. Redirecting...");
-                    navigate("/");
+                    //navigate("/");
                 }
             }),
         },
