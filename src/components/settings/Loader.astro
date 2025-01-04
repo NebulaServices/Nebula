@@ -47,13 +47,12 @@
         const conn = await createBareMuxConn("/baremux/worker.js");
         await setTransport(conn, "libcurl");
         window.sw = new SW(conn);
-        log("info", { bg: true, prefix: true }, "General init completed");
+        const { serviceWorker, bareMuxConn, sj } = await window.sw.getSWInfo();
+        log("info", { bg: true, prefix: true }, `General init completed! \n\nInit info: \nServiceWorker: ${serviceWorker.active?.state} \nBareMux Transport: ${await bareMuxConn.getTransport()} \nScramjetController: ${sj ? 'Active' : 'Not active'}`);
     }
 
-    const settingsInit = async () => {
-        log("info", { bg: true, prefix: true }, "Initializing settings...");
-        log("info", { bg: true, prefix: true }, "Initialized Settings!");
-    };
+    log("info", { bg: true, prefix: true }, "Initializing settings...");
+    log("info", { bg: true, prefix: true }, "Initialized Settings!");
 
     const eventHandler = new EventHandler({
         events: {
@@ -61,7 +60,6 @@
                 await init();
             }),
             "astro:page-load": (async () => {
-                await settingsInit();
             })
         },
         logging: true 
