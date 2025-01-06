@@ -1,3 +1,4 @@
+import { log } from "./index";
 /**
     * This class will create a new StoreManager with an appended prefix to it. The generic is there to tell you what that prefix ***is***
     *
@@ -15,16 +16,18 @@
     * </code>
 */
 class StoreManager<Prefix extends string /* This is here so I know what prefix is appended. It's inferred from the constructor */> {
-    prefix: Prefix;
+    #prefix: Prefix;
     constructor(pref: Prefix) {
-        this.prefix = pref;
-    }
+        this.#prefix = pref;
+    }  
     getVal(key: string): string {
-        return localStorage.getItem(`${this.prefix}||${key}`) as string;
+        log({ type: 'info', bg: true, prefix: true }, `Getting key: ${key} \nFull key: ${this.#prefix}||${key}`);
+        return localStorage.getItem(`${this.#prefix}||${key}`) as string;
     }
     setVal(key: string, val: string): void {
-        localStorage.setItem(key, val);
+        localStorage.setItem(`${this.#prefix}||${key}`, val);
     }
+
 }
 
 //this is done so I can see the prefix used.

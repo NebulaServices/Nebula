@@ -8,19 +8,13 @@ import { VERSION } from "astro:env/client";
 ---
 
 <Layout title="Home">
-  <div
-    class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center"
-  >
-    <div
-      class="w-full flex flex-col justify-center items-center content-center h-2/4"
-    >
+  <div class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center">
+    <div class="w-full flex flex-col justify-center items-center content-center h-2/4">
       <div class="flex flex-row items-center mb-8">
         <div class="h-32 w-32 fill-navbar-text-color">
           <Logo />
         </div>
-        <h1
-          class="font-roboto whitespace-nowrap text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
-        >
+        <h1 class="font-roboto whitespace-nowrap text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto">
           nebula.
         </h1>
       </div>
@@ -49,140 +43,68 @@ import { VERSION } from "astro:env/client";
   </div>
 </Layout>
 <script>
-  import { setTransport, getSWStuff } from "@utils/registerSW"; //../../utils/registerSW.ts
-  import { pageLoad } from "@utils/events";
-  import { SupportedSites } from "@utils/siteSupport";
-  import {
-    SearchEngines,
-    Settings,
-    cloak,
-    settings,
-  } from "@utils/settings/index";
-  import { search } from "@utils/search"; //../../utils/search.ts
-  import { BareClient } from "@mercuryworkshop/bare-mux";
-  type Suggestion = {
-    phrase: string;
-  };
-  function proxy(term: string, scram: typeof ScramjetController, pr: "uv" | "sj"): string {
-      const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
-      const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-      return pr === "uv" ? `${__uv$config!.prefix}${__uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg))}` : scram.encodeUrl(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg ))
-  }
-  async function uv(iframe: HTMLIFrameElement, term: string) {
-    const { sw, conn, sj } = getSWStuff(); 
-    await setTransport(
-      conn,
-      localStorage.getItem(Settings.ProxySettings.transport) as string
-    );
-    await settings.marketPlaceSettings.handlePlugins(sw);
-    iframe.classList.remove("hidden");
-    const url = proxy(term, sj, "uv");
-    if (url) {
-      iframe.src = url;
+    import { EventHandler } from "@utils/events";
+    import { SupportedSites, SearchEngines, SettingsVals } from "@utils/values";
+    import { search, Elements } from "@utils/index";
+    import { BareClient } from "@mercuryworkshop/bare-mux";
+import { defaultStore } from "@utils/storage";
+
+    type Suggestion = {
+        phrase: string;
+    };
+
+    const init = async (): Promise<void> => {
+        const bc = new BareClient();
+        const se = Elements.select([
+            { type: 'id', val: 'nebula-input' },
+            { type: 'id', val: 'omnibox' },
+            { type: 'id', val: 'version' },
+            { type: 'id', val: 'neb-iframe' }
+        ]);
+
+        const input = Elements.exists<HTMLInputElement>(await se.next());
+        const omnibox = Elements.exists<HTMLDivElement>(await se.next());
+        const copyright = Elements.exists<HTMLDivElement>(await se.next());
+        const iframe = Elements.exists<HTMLIFrameElement>(await se.next());
+        input.addEventListener("keypress", async (event: any) => {
+            if (event.key === "Enter") {
+                copyright.classList.add("hidden");
+                if (defaultStore.getVal(SettingsVals.proxy.proxy.key) === SettingsVals.proxy.proxy.available.automatic) {
+                    switch(SupportedSites[input.value]) {
+                        case "uv":
+                            iframe.classList.remove("hidden");
+                            iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(
+                                search(
+                                    input.value, 
+                                    defaultStore.getVal(SettingsVals.proxy.searchEngine)
+                                    ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)] 
+                                    : SearchEngines.ddg
+                                ))}
+                            `
+                            break;
+                        case "sj":
+                            const { sj } = await window.sw.getSWInfo();
+                            iframe.classList.remove("hidden");
+                            iframe.src = sj.encodeUrl(
+                                search(
+                                    input.value,
+                                    defaultStore.getVal(SettingsVals.proxy.searchEngine) ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)]: SearchEngines.ddg
+                                )
+                            );
+                            break;
+                    }
+                }
+            }
+        }); 
     }
-  }
-  async function sj(iframe: HTMLIFrameElement, term: string) {
-      const { sw, conn, sj } = getSWStuff();
-      await setTransport(conn, localStorage.getItem(Settings.ProxySettings.transport) as string);
-      iframe.classList.remove("hidden");
-      const url = proxy(term, sj, "sj");
-      if (url) {
-          iframe.src = url;
-      }
-  }
-  //we need to rerun this on every page load
-  pageLoad(async () => {
-    const input = document.getElementById("nebula-input") as HTMLInputElement;
-    const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
-    const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-    const copyright = document.getElementById("version") as HTMLDivElement;
-    const client = new BareClient();
-    input?.addEventListener("keypress", async function (event: any) {
-      if (event.key === "Enter") {
-        copyright.classList.add("hidden");
-        if (localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
-          const key = SupportedSites[input?.value];
-          switch (key) {
-            case "uv":
-              uv(iframe, input?.value);
-              break;
-            default:
-              uv(iframe, input?.value);
-              break;
-          }
-        } 
-        else if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
-          uv(iframe, input?.value);
-        }
-        else if (localStorage.getItem(Settings.ProxySettings.proxy) === "sj") {
-            sj(iframe, input?.value);
-        }
-      }
-    });
-    input?.addEventListener("input", async function () {
-      omnibox.innerHTML = "";
-      const value = input?.value;
-      input.classList.remove("rounded-b-2xl");
-      omnibox.classList.remove("hidden");
-      if (value.length === 0) {
-        input.classList.add("rounded-b-2xl");
-        omnibox.classList.add("hidden");
-      }
-      if (value.length >= 3) {
-        const data = await client.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
-        const dataRes = await data.json();
-        const filteredData = dataRes.slice(0, 8); //Trim to only about 8 results. Any more and our omnibox dies
-        if (filteredData) {
-          omnibox.innerHTML = "";
-          filteredData.map((results: Suggestion) => {
-            let span = document.createElement("span");
-            let pTag = document.createElement("p");
-            span.classList.add(
-              "cursor-pointer",
-              "font-roboto",
-              "border-b",
-              "border-input-border-color",
-              "last:rounded-b-xl",
-              "last:border-none",
-              "text-ellipsis",
-              "whitespace-nowrap",
-              "w-full",
-              "text-input-text",
-              "h-9",
-              "text-xl",
-              "text-align-center",
-              "overflow-hidden",
-              "flex",
-              "items-center",
-              "justify-center",
-              "hover:bg-lighter",
-              "active:bg-primary"
-            );
-            span.addEventListener("click", function () {
-              //When the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
-              const event = new KeyboardEvent("keypress", {
-                key: "Enter",
-                code: "Enter",
-                which: 13,
-                keyCode: 13,
-              });
-              input.value = results.phrase;
-              input.dispatchEvent(event);
-            });
-            pTag.classList.add(
-              "cursor-pointer",
-              "text-ellipsis",
-              "text-center",
-              "w-full",
-              "overflow-hidden",
-              "whitespace-nowrap"
-            );
-            pTag.innerText = results.phrase;
-            span.appendChild(pTag);
-            omnibox.appendChild(span);
-          });
-        }
-      }
-    });
-  }, true);
+
+    new EventHandler({
+        events: {
+            "astro:page-load": async () => { 
+                await init() 
+            }
+        },
+        logging: true
+    })
+    .bind();
 </script>

@@ -34,12 +34,12 @@
     |_| \\_|\\___|_.__/ \\__,_|_|\\__,_| |____/ \\___|_|    \\_/ |_|\\___\\___||___/
     `;
     const info = "Hello developer or curious individual & welcome to the console! \nThere isn't a whole lot here for you unless you have run into an error.";
-        const sysInfo = `In which case please include the info below when opening the issue: \n\nOS: ${navigator.platform} \nBrowser: ${navigator.userAgent} \nService workers: ${"serviceWorker" in navigator ? "Yes" : "No"}`
+    const sysInfo = `In which case please include the info below when opening the issue: \n\nOS: ${navigator.platform} \nBrowser: ${navigator.userAgent} \nService workers: ${"serviceWorker" in navigator ? "Yes" : "No"}`
     const init = async () => {
-        log("normal", { bg: false, prefix: false }, titleText);
-        log("normal", { bg: true, prefix: false }, info);
-        log("normal", { bg: true, prefix: false }, sysInfo);
-        log("info", { bg: true, prefix: true }, "General init...");
+        log({ type: 'normal', bg: false, prefix: false }, titleText);
+        log({ type: 'normal', bg: true, prefix: false }, info);
+        log({ type: 'normal', bg: true, prefix: false }, sysInfo);
+        log({ type: 'info', bg: true, prefix: true }, "General init...");
         for (const script of createProxyScripts()) {
             document.body.appendChild(script);
         }
@@ -48,18 +48,20 @@
         await setTransport(conn, "libcurl");
         window.sw = new SW(conn);
         const { serviceWorker, bareMuxConn, sj } = await window.sw.getSWInfo();
-        log("info", { bg: true, prefix: true }, `General init completed! \n\nInit info: \nServiceWorker: ${serviceWorker.active?.state} \nBareMux Transport: ${await bareMuxConn.getTransport()} \nScramjetController: ${sj ? 'Active' : 'Not active'}`);
+        log({ type: 'info', bg: true, prefix: true }, `General init completed! \n\nServiceWorker: ${serviceWorker.active?.state} \nBareMuxConn: ${bareMuxConn ? 'Active': 'Not active'} \nScramjetController: ${sj ? 'Active' : 'Not active'}`);
+    } 
+    const initSettings = async () => {
+        log({ type: 'info', bg: true, prefix: true }, "Initializing settings...");
+        log({ type: 'info', bg: true, prefix: true }, "Initialized Settings!");
     }
-
-    log("info", { bg: true, prefix: true }, "Initializing settings...");
-    log("info", { bg: true, prefix: true }, "Initialized Settings!");
 
     const eventHandler = new EventHandler({
         events: {
             "DOMContentLoaded": (async () => {
                 await init();
+                await initSettings();
             }),
-            "astro:page-load": (async () => {
+            "astro:after-swap": (async () => { 
             })
         },
         logging: true 

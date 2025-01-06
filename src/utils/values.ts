@@ -22,18 +22,77 @@ const SupportedSites: Record<string, "uv" | "sj"> = {
     "spotify.com": "sj",
     "spotify.link": "sj",
     "youtube.com": "uv",
-    "youtu.be": "uv"
+    "youtu.be": "uv",
+    "google.com": "uv"
 };
 
+interface SettingsVals {
+    i18n: {
+        lang: "selectedLanguage",
+        languages: {
+            en: string,
+            jp: string
+        }
+    },
+    proxy: {
+        wispServer: string,
+        proxy: {
+            key: string,
+            available: {
+                uv: string;
+                sj: string;
+                automatic: string
+            }
+        },
+        searchEngine: string,
+        transport: {
+            key: string,
+            available: { 
+                epoxy: string; 
+                libcurl: string;
+            }
+        },
+    },
+    tab: {
+        cloak: string
+    },
+    marketPlace: {
+        appearance: {
+            video: string;
+            image: string;
+            themeName: string;
+        }
+    }
+}
 /**
     * This object allows us to access things such as the wisp server url and other things that aren't just one offs
 */
-const SettingsVals = {
+const SettingsVals: SettingsVals = {
+    i18n: {
+        lang: "selectedLanguage",
+        languages: {
+            en: "en_US",
+            jp: "jp"
+        }
+    },
     proxy: {
         wispServer: "wispServerUrl",
-        proxy: "proxy",
+        proxy: { 
+            key: "proxy",
+            available: {
+                sj: "sj",
+                uv: "uv",
+                automatic: "automatic"
+            }
+        },
         searchEngine: "searchEngine",
-        transport: "transport"
+        transport: {
+            key: "transport",
+            available: {
+                epoxy: "epoxy",
+                libcurl: "libcurl"
+            }
+        }
     },
     tab: {
         cloak: "cloak"

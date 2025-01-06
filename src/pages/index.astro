@@ -9,15 +9,15 @@ import Layout from "@layouts/Layout.astro";
 <script>
     import { EventHandler } from "@utils/events";
     import { defaultStore } from "@utils/storage";
+    import { SettingsVals } from "@utils/values";
     import { navigate } from "astro:transitions/client";
     const eHandler = new EventHandler({
         events: {
             "astro:page-load": () => {
-                let currentLang = localStorage.getItem("selectedLanguage");
+                let currentLang = defaultStore.getVal(SettingsVals.i18n.lang);
                 if (currentLang) {
                     try {
-                        let parsed = JSON.parse(currentLang).value;
-                        switch (parsed) {
+                        switch (currentLang) {
                             case "en_US":
                                 navigate("/en_US/");
                                 break;
@@ -35,11 +35,11 @@ import Layout from "@layouts/Layout.astro";
                 } 
                 else {
                     if (navigator.language.includes("ja")) {
-                        defaultStore.setVal("selectedLanguage", JSON.stringify({ value: "jp" }));
+                        defaultStore.setVal("selectedLanguage", SettingsVals.i18n.languages.jp);
                         navigate("/jp/");
                     } 
                     else {
-                        defaultStore.setVal("selectedLanguage", JSON.stringify({ value: "en_US" }));
+                        defaultStore.setVal("selectedLanguage", SettingsVals.i18n.languages.en);
                         navigate("/en_US/");
                     }
                 }

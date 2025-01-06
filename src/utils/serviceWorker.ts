@@ -109,11 +109,15 @@ class SW {
                     client: "/scram/scramjet.client.js",
                     shared: "/scram/scramjet.shared.js",
                     sync: "/scram/scramjet.sync.js"
+                },
+                flags: {
+                    rewriterLogs: false
                 }
             });
             return sj;
         }
         if ("serviceWorker" in navigator) {
+            (async () => { await navigator.serviceWorker.getRegistrations() })();
             const scram = sj();
             (async () => await scram.init())();
             navigator.serviceWorker.ready.then(async (reg) => {
