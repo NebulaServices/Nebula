@@ -114,7 +114,7 @@ import { VERSION } from "astro:env/client";
             input.classList.remove("rounded-b-2xl");
             const data = await bc.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(input.value)}&format=json`);
             const res = await data.json();
-            const fData = res.slice(0, 6); // Trim to only the first 8 results.
+            const fData = res.slice(0, 6); // Trim to only the first 6 results.
             if (fData.length <= 0) {
                 omnibox.classList.add("hidden");
                 input.classList.add("rounded-b-2xl");
