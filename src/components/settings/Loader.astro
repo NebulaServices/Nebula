@@ -25,6 +25,7 @@
     */
     import { EventHandler } from "@utils/events";
     import { SW, createProxyScripts, checkProxyScripts, createBareMuxConn, setTransport } from "@utils/serviceWorker";
+    import { Settings } from "@utils/settings";
     import { log } from "@utils/index";
     const titleText = ` 
      _   _      _           _         ____                  _               
@@ -45,8 +46,8 @@
         }
         await checkProxyScripts();
         const conn = await createBareMuxConn("/baremux/worker.js");
-        await setTransport(conn, "libcurl");
         window.sw = new SW(conn);
+        for await (const _ of Settings.initDefaults()) {};
         const { serviceWorker, bareMuxConn, sj } = await window.sw.getSWInfo();
         log({ type: 'info', bg: true, prefix: true }, `General init completed! \n\nServiceWorker: ${serviceWorker.active?.state} \nBareMuxConn: ${bareMuxConn ? 'Active': 'Not active'} \nScramjetController: ${sj ? 'Active' : 'Not active'}`);
     } 

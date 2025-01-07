@@ -48,6 +48,8 @@ import { VERSION } from "astro:env/client";
     import { search, Elements } from "@utils/index";
     import { BareClient } from "@mercuryworkshop/bare-mux";
     import { defaultStore } from "@utils/storage";
+    import { Settings } from "@utils/settings";
+    import { setTransport } from "@utils/serviceWorker";
 
     type Suggestion = {
         phrase: string;
@@ -89,14 +91,28 @@ import { VERSION } from "astro:env/client";
                 copyright.classList.add("hidden");
                 if (defaultStore.getVal(SettingsVals.proxy.proxy.key) === SettingsVals.proxy.proxy.available.automatic) {
                     switch(SupportedSites[input.value]) {
-                        case "uv":
+                        case "uv": {
                             prox(input.value, "uv");
                             break;
-                        case "sj":
+                        }
+                        case "sj": {
                             prox(input.value, "sj");
                             break;
-                        default:
+                        }
+                        default: {
                             prox(input.value, "uv");
+                        }
+                    }
+                }
+
+                switch(defaultStore.getVal("proxy") as "uv" | "sj") {
+                    case "uv": {
+                        prox(input.value, "uv");
+                        break;
+                    }
+                    case "sj": {
+                        prox(input.value, "sj");
+                        break;
                     }
                 }
             }

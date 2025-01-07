@@ -57,6 +57,8 @@ interface SettingsVals {
         cloak: string
     },
     marketPlace: {
+        themes: string;
+        plugins: string;
         appearance: {
             video: string;
             image: string;
@@ -76,7 +78,7 @@ const SettingsVals: SettingsVals = {
         }
     },
     proxy: {
-        wispServer: "wispServerUrl",
+        wispServer: "wispServer",
         proxy: { 
             key: "proxy",
             available: {
@@ -98,6 +100,8 @@ const SettingsVals: SettingsVals = {
         cloak: "cloak"
     },
     marketPlace: {
+        themes: "themes",
+        plugins: "plugins",
         appearance: {
             video: "video",
             image: "image",

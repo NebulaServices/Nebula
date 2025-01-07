@@ -1,6 +1,7 @@
 import { BareMuxConnection } from "@mercuryworkshop/bare-mux";
 import { defaultStore } from "./storage";
 import { SettingsVals, WispServers } from "./values";
+import { log } from "./index";
 
 /**
     * Creates a script element and returns it for usage or more modification.
@@ -76,7 +77,8 @@ const createBareMuxConn = (worker: string): Promise<BareMuxConnection> => {
 const setTransport = (conn: BareMuxConnection,  transport?: "libcurl" | "epoxy"): Promise<void> => {
     const server = defaultStore.getVal(SettingsVals.proxy.wispServer); 
     return new Promise((resolve) => {
-        console.log(`Set wisp server at: ${server ? WispServers[server]: WispServers.default }`);
+        log({ type: 'info', bg: false, prefix: false }, `Set transport: ${transport ? transport : "libcurl"}`);
+        log({ type: 'info', bg: false, prefix: false }, `Set wisp server at: ${server ? WispServers[server]: WispServers.default }`);
         if (transport === "epoxy") return resolve(conn.setTransport("/epoxy/index.mjs", [ { wisp: server ? WispServers[server] : WispServers.default }]));
         if (transport === "libcurl") return resolve(conn.setTransport("/libcurl/index.mjs", [ { wisp: server ? WispServers[server] : WispServers.default }]));
     });
@@ -121,7 +123,7 @@ class SW {
             const scram = sj();
             (async () => await scram.init())();
             navigator.serviceWorker.ready.then(async (reg) => {
-                console.log("Service worker ready and active!");
+                log({ type: 'info', prefix: true, bg: false }, 'ServiceWorker ready and active!');
                 this.#init = { serviceWorker: reg, sj: scram, bareMuxConn: conn };
                 this.#ready = true;
             });
