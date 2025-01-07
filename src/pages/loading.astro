@@ -20,7 +20,7 @@ import Layout from "@layouts/Layout.astro";
 
     const eHandle = new EventHandler({
         events: {
-            "astro:page-load": (() => {
+            "DOMContentLoaded": (() => {
                 const isIframe = isComingFromIframe();
                 if (!isIframe) {
                     console.log("Assuming request isn't coming from iframe. Redirecting...");

@@ -13,7 +13,7 @@ import Layout from "@layouts/Layout.astro";
     import { navigate } from "astro:transitions/client";
     const eHandler = new EventHandler({
         events: {
-            "astro:page-load": () => {
+            "DOMContentLoaded": () => {
                 let currentLang = defaultStore.getVal(SettingsVals.i18n.lang);
                 if (currentLang) {
                     try {

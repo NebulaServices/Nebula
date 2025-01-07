@@ -47,7 +47,7 @@ import { VERSION } from "astro:env/client";
     import { SupportedSites, SearchEngines, SettingsVals } from "@utils/values";
     import { search, Elements } from "@utils/index";
     import { BareClient } from "@mercuryworkshop/bare-mux";
-import { defaultStore } from "@utils/storage";
+    import { defaultStore } from "@utils/storage";
 
     type Suggestion = {
         phrase: string;
@@ -66,35 +66,104 @@ import { defaultStore } from "@utils/storage";
         const omnibox = Elements.exists<HTMLDivElement>(await se.next());
         const copyright = Elements.exists<HTMLDivElement>(await se.next());
         const iframe = Elements.exists<HTMLIFrameElement>(await se.next());
+        const prox = async (input: string, prox: "uv" | "sj") => {
+            iframe.classList.remove("hidden");
+            const val = search(
+                input, 
+                defaultStore.getVal(SettingsVals.proxy.searchEngine) 
+                ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)]
+                : SearchEngines.ddg
+            );
+            switch(prox) {
+                case "uv":
+                    iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(val)}`;
+                    break;
+                case "sj":
+                    const { sj } = await window.sw.getSWInfo();
+                    iframe.src = sj.encodeUrl(val);
+                    break;
+            }
+        }
         input.addEventListener("keypress", async (event: any) => {
             if (event.key === "Enter") {
                 copyright.classList.add("hidden");
                 if (defaultStore.getVal(SettingsVals.proxy.proxy.key) === SettingsVals.proxy.proxy.available.automatic) {
                     switch(SupportedSites[input.value]) {
                         case "uv":
-                            iframe.classList.remove("hidden");
-                            iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(
-                                search(
-                                    input.value, 
-                                    defaultStore.getVal(SettingsVals.proxy.searchEngine)
-                                    ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)] 
-                                    : SearchEngines.ddg
-                                ))}
-                            `
+                            prox(input.value, "uv");
                             break;
                         case "sj":
-                            const { sj } = await window.sw.getSWInfo();
-                            iframe.classList.remove("hidden");
-                            iframe.src = sj.encodeUrl(
-                                search(
-                                    input.value,
-                                    defaultStore.getVal(SettingsVals.proxy.searchEngine) ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)]: SearchEngines.ddg
-                                )
-                            );
+                            prox(input.value, "sj");
                             break;
+                        default:
+                            prox(input.value, "uv");
                     }
                 }
             }
+        });
+
+        input.addEventListener("input", async () => {
+            if (input.value.length < 3) {
+                omnibox.innerHTML = "";
+                omnibox.classList.add("hidden");
+                input.classList.add("rounded-b-2xl");
+                return;
+            }
+
+            omnibox.classList.remove("hidden");
+            input.classList.remove("rounded-b-2xl");
+            const data = await bc.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(input.value)}&format=json`);
+            const res = await data.json();
+            const fData = res.slice(0, 6); // Trim to only the first 8 results.
+            if (fData.length <= 0) {
+                omnibox.classList.add("hidden");
+                input.classList.add("rounded-b-2xl");
+                return;
+            }
+            omnibox.innerHTML = "";
+            fData.map((res: Suggestion) => {
+                const span = document.createElement("span") as HTMLSpanElement;
+                const p = document.createElement("p") as HTMLParagraphElement;
+                p.classList.add(
+                    "cursor-pointer",
+                    "text-ellipsis",
+                    "text-center",
+                    "w-full",
+                    "overflow-hidden",
+                    "whitespace-nowrap"
+                );
+                p.innerText = res.phrase;
+
+                span.classList.add(
+                    "cursor-pointer",
+                    "font-roboto",
+                    "border-b",
+                    "border-input-border-color",
+                    "last:rounded-b-xl",
+                    "last:border-none",
+                    "text-ellipsis",
+                    "whitespace-nowrap",
+                    "w-full",
+                    "text-input-text",
+                    "h-9",
+                    "text-xl",
+                    "text-align-center",
+                    "overflow-hidden",
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                    "hover:bg-lighter",
+                    "active:bg-primary"
+                );
+                span.addEventListener("click", () => {
+                    input.value = res.phrase;
+                    input.dispatchEvent(
+                        new KeyboardEvent("keypress", { key: "Enter", code: "Enter" })
+                    );
+                });
+                span.appendChild(p);
+                omnibox.appendChild(span);
+            });
         }); 
     }
 
