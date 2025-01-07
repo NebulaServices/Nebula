@@ -57,10 +57,10 @@
 
     const eventHandler = new EventHandler({
         events: {
-            "DOMContentLoaded": (async () => {
+            "DOMContentLoaded": async () => {
                 await init();
                 await initSettings();
-            }),
+            },
             "astro:after-swap": (async () => { 
             })
         },

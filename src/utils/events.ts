@@ -31,8 +31,13 @@ class EventHandler {
         this.#eventItems = items;
     }
     #attachEvent(items: Events, eventType: Event, fn: () => unknown) {
-        if (items.logging) return document.addEventListener(eventType, () => fn());
-        try { document.addEventListener(eventType, () => fn()) } catch (_) {};
+        if (items.logging) return document.addEventListener(eventType, async () => await fn());
+        document.addEventListener(eventType, async () => {
+            try {
+                await fn();
+            }
+            catch (_) {}
+        });
     }
     /**
      * Binds the events you passed when creating the class to the document. If none are passed, an error is thrown.

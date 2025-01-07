@@ -169,11 +169,9 @@ import { VERSION } from "astro:env/client";
 
     new EventHandler({
         events: {
-            "astro:page-load": async () => { 
-                await init() 
-            }
+            "astro:page-load": init
         },
-        logging: true
+        logging: false
     })
     .bind();
 </script>
