@@ -69,6 +69,8 @@ import { VERSION } from "astro:env/client";
         const copyright = Elements.exists<HTMLDivElement>(await se.next());
         const iframe = Elements.exists<HTMLIFrameElement>(await se.next());
         const prox = async (input: string, prox: "uv" | "sj") => {
+            const sw = SW.getInstances().next().value as SW;
+            const { sj } = await sw.getSWInfo();
             iframe.classList.remove("hidden");
             const val = search(
                 input, 
@@ -81,8 +83,6 @@ import { VERSION } from "astro:env/client";
                     iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(val)}`;
                     break;
                 case "sj":
-                    const sw = SW.getInstances().next().value as SW;
-                    const { sj } = await sw.getSWInfo();
                     iframe.src = sj.encodeUrl(val);
                     break;
             }

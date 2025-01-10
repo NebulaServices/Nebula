@@ -117,6 +117,10 @@ class Marketplace {
         this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(themes));
     }
 
+    async getValueFromStore(val: string): Promise<string> {
+        return this.#storage.getVal(val);
+    }
+
     async installPlugin(plugin: Plug) {
         const plugins = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
 
@@ -127,7 +131,7 @@ class Marketplace {
         this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
     }
 
-    async uninstallTheme(theme: Theme) {
+    async uninstallTheme(theme: Omit<Theme, "payload" | "video" | "bgImage">) {
         const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
         if (!items.find((th: string) => th === theme.name)) { 
             return log({ type: 'error', bg: false, prefix: false, throw: true }, `Theme: ${theme.name} is not installed!`);
@@ -137,7 +141,7 @@ class Marketplace {
         this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(items));
     }
 
-    async uninstallPlugin(plug: Plug) {
+    async uninstallPlugin(plug: Omit<Plug, "src">) {
         const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
         const plugin = items.find(({ name }: { name: string }) => name === plug.name.toLowerCase());
         if (!plugin) return log({ type: 'error', bg: false, prefix: false, throw: true }, `Plugin: ${plug.name} is not installed!`);

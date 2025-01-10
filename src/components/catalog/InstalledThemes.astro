@@ -10,6 +10,9 @@
 </div>
 <div class="w-0 h-0 visibility-none hidden"> <asset-loader /> </div>
 <script>
+    import { SettingsVals } from "@utils/values";
+    import { Marketplace } from "@utils/marketplace";
+    const mp = Marketplace.getInstances().next().value as Marketplace;
     type Assets = {
         description: string,
         image: string,
@@ -21,8 +24,7 @@
         title: string,
         type: string,
         version: string
-    }
-    import { Settings, settings } from "@utils/settings";
+    } 
     async function getItem(item: any) {
         try {
             const res = await fetch(new URL(`/api/packages/${item}`, window.location.origin));
@@ -36,7 +38,7 @@
     }
 
     async function getAssets() {
-        const items = JSON.parse(localStorage.getItem(Settings.AppearanceSettings.themes) as string) || [];
+        const items = JSON.parse(await mp.getValueFromStore(SettingsVals.marketPlace.themes)) || [];
         const promises = items.map(getItem);
         const dataArray = await Promise.all(promises);
         const accumulatedData = dataArray.filter((data) => data !== null);
@@ -44,16 +46,16 @@
     }
 
     const attachThemeEvent = (elem: HTMLElement, def: boolean | Assets) => {
-        elem.addEventListener("click", () => {
-            if (def === true || def === false) return settings.marketPlaceSettings.changeTheme(def);
-            settings.marketPlaceSettings.changeTheme(false, def.payload, def.background_video, def.background_image, def.package_name);
+        elem.addEventListener("click", async () => {
+            if (def === true || def === false) return mp.theme({ type: "remove" })
+            await mp.theme({ type: "normal", payload: def.payload, sources: { video: def.background_video, bg: def.background_image }, name: def.package_name })
         });
     };
 
     const attachDeleteEvent = (elem: HTMLElement, mainElem: HTMLElement, parentElem: HTMLElement, asset: Assets) => {
-        elem.addEventListener("click", () => {
-            settings.marketPlaceSettings.uninstall("theme", asset.package_name);
-            settings.marketPlaceSettings.changeTheme(true);
+        elem.addEventListener("click", async () => {
+            await mp.uninstallTheme({ name: asset.package_name });
+            await mp.theme({ type: 'remove' });
             parentElem.removeChild(mainElem);
         });
     }

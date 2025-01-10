@@ -88,7 +88,8 @@ const t = useTranslations(lang);
                 await handleAB(v);
             }
         },
-        logging: true 
+        // Enable ONLY for debugging. Otherwise it will throw errors when we don't want them
+        logging: false 
     })
     .bind();
 </script>

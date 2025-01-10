@@ -81,23 +81,32 @@ const t = useTranslations(lang);
     client:load/>
   </ToastWrapper>
 <script>
-    import { toast } from "@utils/toast.ts";
-    import { settings, Settings as SettingsEnum } from "@utils/settings/index";
-    import { pageLoad } from "@utils/events";
+    import { EventHandler } from "@utils/events";
     import { navigate } from "astro:transitions/client";
-    function setup() {
-        const lang = JSON.parse(localStorage.getItem('selectedLanguage') as string) || JSON.parse('{"value": "en_US"}');
-        const languageVal = document.getElementById('lang') as HTMLSelectElement;
-        languageVal!.value = lang.value;
-    }
-    pageLoad(() => {
-        setup();
-        const languageChange = document.getElementById('setlang') as HTMLButtonElement;
-        const languageVal = document.getElementById('lang') as HTMLSelectElement;
-        languageChange?.addEventListener('click', () => {
-            const language = {value: languageVal.value}
-            localStorage.setItem("selectedLanguage", JSON.stringify(language));
-            navigate(`${window.location.origin}/${languageVal.value}/settings/misc`)
+    import { defaultStore } from "@utils/storage";
+    import { SettingsVals } from "@utils/values";
+    import { Elements } from "@utils/index";
+
+    const handler = async () => {
+        const els = Elements.select([
+            { type: 'id', val: 'lang' },
+            { type: 'id', val: 'setlang' }
+        ]);
+        const lang = defaultStore.getVal(SettingsVals.i18n.lang);
+        const val = Elements.exists<HTMLSelectElement>(await els.next());
+        const button = Elements.exists<HTMLButtonElement>(await els.next());
+        val.value = lang;
+        Elements.attachEvent(button, "click", () => {
+            defaultStore.setVal(SettingsVals.i18n.lang, val.value);
+            navigate(`${window.location.origin}/${val.value}/settings/misc`);
         });
+    }
+
+    new EventHandler({
+        events: {
+            "astro:page-load": handler
+        },
+        logging: true
     })
+    .bind();
 </script>

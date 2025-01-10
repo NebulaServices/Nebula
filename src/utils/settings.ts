@@ -97,6 +97,7 @@ async function* initDefaults() {
     yield proxy.change(defaultStore.getVal(SettingsVals.proxy.proxy.key) ? defaultStore.getVal(SettingsVals.proxy.proxy.key) as "uv" | "sj" | "automatic" : "automatic");
     yield proxy.wisp(defaultStore.getVal(SettingsVals.proxy.wispServer) ? defaultStore.getVal(SettingsVals.proxy.wispServer) : "default");
     yield proxy.transport(defaultStore.getVal(SettingsVals.proxy.transport.key) ? defaultStore.getVal(SettingsVals.proxy.transport.key) as "libcurl" | "epoxy" : "libcurl");
+    yield proxy.searchEngine(defaultStore.getVal(SettingsVals.proxy.searchEngine) ? defaultStore.getVal(SettingsVals.proxy.searchEngine) : "ddg");
 }
 
 const Settings = {

@@ -2,6 +2,9 @@
 </div>
 <div class="w-0 h-0 visibility-none hidden"> <asset-loader1 /> </div>
 <script>
+    import { SettingsVals } from "@utils/values";
+    import { Marketplace } from "@utils/marketplace";
+    const mp = Marketplace.getInstances().next().value as Marketplace;
     type Assets = {
         description: string,
         image: string,
@@ -14,7 +17,6 @@
         type: string,
         version: string
     }
-    import { Settings, settings } from "@utils/settings";
     async function getItem(item: any) {
         try {
             const res = await fetch(new URL(`/api/packages/${item}`, window.location.origin));
@@ -27,8 +29,8 @@
         }
     }
 
-    async function getAssets() {
-        const items = JSON.parse(localStorage.getItem(Settings.PluginSettings.plugins) as string) || [];
+    async function getAssets(mp: Marketplace) {
+        const items = JSON.parse(await mp.getValueFromStore(SettingsVals.marketPlace.plugins)) || [];
         const promises = items.map(getItem);
         const dataArray = await Promise.all(promises);
         const accumulatedData = dataArray.filter((data) => data !== null);
@@ -36,8 +38,8 @@
     } 
 
     const attachDeleteEvent = (elem: HTMLElement, mainElem: HTMLElement, parentElem: HTMLElement, asset: Assets) => {
-        elem.addEventListener("click", () => {
-            settings.marketPlaceSettings.uninstall(asset.type === "page" ? "plugin-page" : "plugin-sw", asset.package_name);
+        elem.addEventListener("click", async () => {
+            await mp.uninstallPlugin({ name: asset.package_name, type: asset.type === "page" ? "page" : "serviceWorker" })
             parentElem.removeChild(mainElem);
         });
     }
@@ -93,7 +95,7 @@
         constructor() {
             super();
             (async function() {
-                const assets = await getAssets();
+                const assets = await getAssets(Marketplace.getInstances().next().value as Marketplace);
                 console.log(assets);
                 assets.map((asset) => { createElem(asset); });
             })();
