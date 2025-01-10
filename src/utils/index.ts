@@ -70,6 +70,10 @@ class Elements {
         if (elem.value) return elem.value as RetType;
         throw new Error(`Something is WRONG. The element doesn't exist!`);
     }
+    
+    static attachEvent<Element extends HTMLElement, EType extends keyof HTMLElementEventMap>(item: Element, event: EType, fn: () => unknown) {
+        item.addEventListener(event, fn);
+    }
 }
 
 /**

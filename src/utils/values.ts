@@ -54,7 +54,8 @@ interface SettingsVals {
         },
     },
     tab: {
-        cloak: string
+        cloak: string;
+        ab: string;
     },
     marketPlace: {
         themes: string;
@@ -100,7 +101,8 @@ const SettingsVals: SettingsVals = {
         }
     },
     tab: {
-        cloak: "cloak"
+        cloak: "cloak",
+        ab: "aboutblank"
     },
     marketPlace: {
         themes: "themes",
