@@ -27,6 +27,7 @@
     import { SW, createProxyScripts, checkProxyScripts, createBareMuxConn, setTransport } from "@utils/serviceWorker";
     import { Settings } from "@utils/settings";
     import { log } from "@utils/index";
+    import { Marketplace } from "@utils/marketplace";
     const titleText = ` 
      _   _      _           _         ____                  _               
     | \\ | | ___| |__  _   _| | __ _  / ___|  ___ _ ____   _(_) ___ ___  ___ 
@@ -46,9 +47,11 @@
         }
         await checkProxyScripts();
         const conn = await createBareMuxConn("/baremux/worker.js");
-        window.sw = new SW(conn);
-        for await (const _ of Settings.initDefaults()) {};
-        const { serviceWorker, bareMuxConn, sj } = await window.sw.getSWInfo();
+        const sw = new SW(conn);
+        new Marketplace();
+        // We don't do anything with the values (they aren't even any), so we just are iterating.
+        for await (const _ of Settings.initDefaults());
+        const { serviceWorker, bareMuxConn, sj } = await sw.getSWInfo();
         log({ type: 'info', bg: true, prefix: true }, `General init completed! \n\nServiceWorker: ${serviceWorker.active?.state} \nBareMuxConn: ${bareMuxConn ? 'Active': 'Not active'} \nScramjetController: ${sj ? 'Active' : 'Not active'}`);
     } 
     const initSettings = async () => {

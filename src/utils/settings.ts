@@ -1,7 +1,7 @@
 import { defaultStore } from "./storage";
 import { SettingsVals, WispServers } from "./values";
 import { Marketplace } from "./marketplace";
-import { setTransport } from "./serviceWorker";
+import { setTransport, SW } from "./serviceWorker";
 
 const tab = {
     ab: (redirect: string) => {
@@ -86,7 +86,8 @@ const proxy = {
         defaultStore.setVal(SettingsVals.proxy.wispServer, s);
     },
     transport: async (t: "libcurl" | "epoxy") => {
-        const { bareMuxConn } = await window.sw.getSWInfo();
+        const sw = SW.getInstances().next().value!;
+        const { bareMuxConn } = await sw.getSWInfo();
         await setTransport(bareMuxConn, t as "libcurl" | "epoxy");
         defaultStore.setVal(SettingsVals.proxy.transport.key, t);
     }

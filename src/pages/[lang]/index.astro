@@ -49,7 +49,7 @@ import { VERSION } from "astro:env/client";
     import { BareClient } from "@mercuryworkshop/bare-mux";
     import { defaultStore } from "@utils/storage";
     import { Settings } from "@utils/settings";
-    import { setTransport } from "@utils/serviceWorker";
+    import { setTransport, SW } from "@utils/serviceWorker";
 
     type Suggestion = {
         phrase: string;
@@ -81,7 +81,8 @@ import { VERSION } from "astro:env/client";
                     iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(val)}`;
                     break;
                 case "sj":
-                    const { sj } = await window.sw.getSWInfo();
+                    const sw = SW.getInstances().next().value as SW;
+                    const { sj } = await sw.getSWInfo();
                     iframe.src = sj.encodeUrl(val);
                     break;
             }

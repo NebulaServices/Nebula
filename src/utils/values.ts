@@ -62,7 +62,10 @@ interface SettingsVals {
         appearance: {
             video: string;
             image: string;
-            themeName: string;
+            theme: {
+                payload: string;
+                name: string;
+            }
         }
     }
 }
@@ -105,7 +108,10 @@ const SettingsVals: SettingsVals = {
         appearance: {
             video: "video",
             image: "image",
-            themeName: "themeName"
+            theme: {
+                name: "themeName",
+                payload: "themePayload"
+            }
         }
     }
 }

@@ -101,7 +101,9 @@ type SWInit = {
 class SW {
     #init!: SWInit;
     #ready: boolean = false;
+    static #instances = new Set();
     constructor(conn: BareMuxConnection) {
+        SW.#instances.add(this);
         const sj = (): ScramjetController => {
             const sj = new ScramjetController({
                 prefix: '/~/scramjet',
@@ -133,7 +135,25 @@ class SW {
             throw new Error('Your browser is not supported! This website uses Service Workers heavily.');
         }
     }
-    
+
+    /**
+        * Static method to get an already existing SW class
+        *
+        *
+        * @example
+        * SW.getInstances.next().value // Get the first instance.
+        *
+        * @example 
+        * // Loop through every instance
+        * for (const sw of SW.getInstances()) {
+            * console.log(sw) // DO some real work
+        * }
+    */
+    static *getInstances() {
+        for (const value of SW.#instances.keys()) {
+            yield value as SW;
+        }
+    }
     /**
         * Allows you to overrid the items set. Should be used sparingly or never.
     */

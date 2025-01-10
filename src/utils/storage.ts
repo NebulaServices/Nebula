@@ -25,9 +25,13 @@ class StoreManager<Prefix extends string /* This is here so I know what prefix i
         return localStorage.getItem(`${this.#prefix}||${key}`) as string;
     }
     setVal(key: string, val: string): void {
+        log({ type: 'info', bg: false, prefix: true }, `Setting ${key} with value: ${val}`);
         localStorage.setItem(`${this.#prefix}||${key}`, val);
     }
-
+    removeVal(key: string): void {
+        log({ type: 'info', bg: true, prefix: true }, `Removing ${this.#prefix}||${key}`);
+        localStorage.removeItem(`${this.#prefix}||${key}`);
+    }
 }
 
 //this is done so I can see the prefix used.
