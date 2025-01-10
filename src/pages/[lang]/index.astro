@@ -35,9 +35,15 @@ import { VERSION } from "astro:env/client";
       src="/loading"></iframe>
     <div
       id="version"
-      class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between font-roboto"
+      class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between items-center font-roboto"
     >
       <p>Version: {VERSION}</p>
+      <p class="hidden md:block"> 
+        Having problems? 
+        <button id="reset" class="underline underline-offset-4 hover:decoration-input-border-color active:decoration-input-text">
+            Click here to reset your instance
+        </button> 
+      </p>
       <p>&copy; Nebula Services 2024</p>
     </div>
   </div>
@@ -50,6 +56,7 @@ import { VERSION } from "astro:env/client";
     import { defaultStore } from "@utils/storage";
     import { Settings } from "@utils/settings";
     import { setTransport, SW } from "@utils/serviceWorker";
+import { navigate } from "astro:transitions/client";
 
     type Suggestion = {
         phrase: string;
@@ -58,19 +65,29 @@ import { VERSION } from "astro:env/client";
     const init = async (): Promise<void> => {
         const bc = new BareClient();
         const se = Elements.select([
+            { type: 'id', val: 'reset' },
             { type: 'id', val: 'nebula-input' },
             { type: 'id', val: 'omnibox' },
             { type: 'id', val: 'version' },
             { type: 'id', val: 'neb-iframe' }
         ]);
+    
+        const reset = Elements.exists<HTMLButtonElement>(await se.next());
+        Elements.attachEvent(reset, "click", async () => {
+            const t = await navigator.serviceWorker.getRegistrations();
+            t.map(async (reg) => {
+                await reg.unregister();
+            });
+            localStorage.clear();
+            window.location.href = "/";
+        });
 
         const input = Elements.exists<HTMLInputElement>(await se.next());
         const omnibox = Elements.exists<HTMLDivElement>(await se.next());
         const copyright = Elements.exists<HTMLDivElement>(await se.next());
         const iframe = Elements.exists<HTMLIFrameElement>(await se.next());
         const prox = async (input: string, prox: "uv" | "sj") => {
-            const sw = SW.getInstances().next().value as SW;
-            const { sj } = await sw.getSWInfo();
+            const sw = SW.getInstances().next().value as SW; 
             iframe.classList.remove("hidden");
             const val = search(
                 input, 
@@ -79,12 +96,15 @@ import { VERSION } from "astro:env/client";
                 : SearchEngines.ddg
             );
             switch(prox) {
-                case "uv":
+                case "uv": {
                     iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(val)}`;
                     break;
-                case "sj":
+                }
+                case "sj": {
+                    const { sj } = await sw.getSWInfo();
                     iframe.src = sj.encodeUrl(val);
                     break;
+                }
             }
         }
         input.addEventListener("keypress", async (event: any) => {
