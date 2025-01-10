@@ -262,4 +262,15 @@ class Marketplace {
     }
 }
 
-export { Marketplace }
+export { 
+    Marketplace,
+    type PluginType,
+    type MarketplacePluginType,
+    type PackageType,
+    type Plug, 
+    type SWPagePlugin,
+    type SWPluginFunction,
+    type Events,
+    type SWPlugin,
+    type Theme
+}

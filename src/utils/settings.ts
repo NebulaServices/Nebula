@@ -105,6 +105,4 @@ const Settings = {
     initDefaults
 }
 
-window.settings = Settings;
-
 export { Settings };
