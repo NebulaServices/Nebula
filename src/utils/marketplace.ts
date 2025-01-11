@@ -94,8 +94,22 @@ class Marketplace {
     static *getInstances() {
         //Marketplace.instances.forEach((val) => yield val);
         for (const item of Marketplace.#instances.keys()) {
-            yield item;
+            yield item! as Marketplace;
         }
+    }
+
+    /**
+        * Detect if our Marketplace is ready or not. If it's not, don't resolve until it IS
+    */
+    static ready(): Promise<boolean> { 
+        return new Promise((resolve) => {
+            const t = setInterval(() => {
+                if (Marketplace.#instances.size !== 0) {
+                    clearInterval(t);
+                    resolve(true);
+                }
+            }, 100);
+        });
     }
     
     /**
@@ -132,11 +146,11 @@ class Marketplace {
     }
 
     async uninstallTheme(theme: Omit<Theme, "payload" | "video" | "bgImage">) {
-        const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
-        if (!items.find((th: string) => th === theme.name)) { 
+        const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.themes)) || [];
+        if (!items.find((th: string) => th === theme.name)) {
             return log({ type: 'error', bg: false, prefix: false, throw: true }, `Theme: ${theme.name} is not installed!`);
         }
-        const idx = items.indexOf(theme.name.toLowerCase());
+        const idx = items.indexOf(theme.name);
         items.splice(idx, 1);
         this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(items));
     }
@@ -257,8 +271,8 @@ class Marketplace {
            if (tsp !== opts.payload) {
                this.#storage.setVal(SettingsVals.marketPlace.appearance.theme.payload, opts.payload);
                this.#storage.setVal(SettingsVals.marketPlace.appearance.theme.name, opts.name);
-               s.href = `/packages/${opts.name}/${opts.payload}`;
            }
+           s.href = `/packages/${opts.name}/${opts.payload}`;
         }
         else {
             if (tsp) return s.href = `/packages/${tsn}/${tsp}`;

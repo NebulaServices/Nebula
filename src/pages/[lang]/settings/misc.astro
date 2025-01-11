@@ -30,57 +30,10 @@ const t = useTranslations(lang);
                 ]
             }}
             both={{enabled: false}}
-        />
-        <SettingsCard
-            title="Proxy Catalog"
-            description="Whether or not to proxy the Catalog"
-            input={{input: false}}
-            button={{name: 'Set', id: 'setmp' }}
-            select={{
-                select: true,
-                name: 'mp',
-                options: [
-                    {name: 'False', value: 'false', disabled: false},
-                    {name: 'True', value: 'true', disabled: false}
-                ]
-                }}
-                both={{enabled: false}}
-            />
-        <SettingsCard
-            title="Catalog URL"
-            description="Change which marketplace your using"
-            input={{
-                input: true,
-                required: true,
-                placeholder: `${origin}/api/catalog-assets`
-            }}
-            button={{name: 'Change', id: 'setcataloghostname' }}
-            select={{select: false}}
-            both={{enabled: false}}
-        />
+        /> 
     </SettingsSection>
   </SettingsLayout>
-  <ToastWrapper client:load>
-    <Toast toastProp={{
-            toastType: 'success',
-            text: 'Catalog is now proxied',
-            class: 'mpMessage'
-        }}
-    client:load />
-    <Toast toastProp={{
-        toastType: 'success',
-        text: 'Catalog URL set!',
-        class: 'cataloghostnameSuccess'
-        }}
-    client:load />
-    <Toast toastProp={{
-        toastType: 'error',
-        text: "Catalog doesn't exist!",
-        class: 'cataloghosnameError'
-      }}
-    client:load/>
-  </ToastWrapper>
-<script>
+ <script>
     import { EventHandler } from "@utils/events";
     import { navigate } from "astro:transitions/client";
     import { defaultStore } from "@utils/storage";
@@ -95,7 +48,7 @@ const t = useTranslations(lang);
         const lang = defaultStore.getVal(SettingsVals.i18n.lang);
         const val = Elements.exists<HTMLSelectElement>(await els.next());
         const button = Elements.exists<HTMLButtonElement>(await els.next());
-        val.value = lang;
+        val.value = lang || "en_US";
         Elements.attachEvent(button, "click", () => {
             defaultStore.setVal(SettingsVals.i18n.lang, val.value);
             navigate(`${window.location.origin}/${val.value}/settings/misc`);
@@ -106,7 +59,7 @@ const t = useTranslations(lang);
         events: {
             "astro:page-load": handler
         },
-        logging: true
+        logging: false
     })
     .bind();
 </script>

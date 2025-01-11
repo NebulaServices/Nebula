@@ -74,6 +74,20 @@ class Elements {
     static attachEvent<Element extends HTMLElement, EType extends keyof HTMLElementEventMap>(item: Element, event: EType, fn: () => unknown) {
         item.addEventListener(event, fn);
     }
+
+    static createCustomElement(name: string, fn: () => unknown) {
+        class CustomEl extends HTMLElement {
+            constructor() {
+                super();
+                (async () => await fn())();
+            }
+        }
+
+        if (customElements.get(name)) return log({ type: "error", bg: true, prefix: false, throw: false }, `An element with the name ${name} already exists! This WILL not work! And`);
+
+        log({ type: 'info', bg: false, prefix: true }, `Creating custom element with the name ${name}`);
+        customElements.define(name, CustomEl);
+    }
 }
 
 /**
