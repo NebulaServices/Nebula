@@ -38,12 +38,12 @@ import { VERSION } from "astro:env/client";
       class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between items-center font-roboto"
     >
       <p>Version: {VERSION}</p>
-      <p class="hidden md:block"> 
-        Having problems? 
+      <div class="hidden md:flex gap-2 flex-grow ml-16 justify-center items-center"> 
+          <p> Having problems? </p>
         <button id="reset" class="underline underline-offset-4 hover:decoration-input-border-color active:decoration-input-text">
             Click here to reset your instance
         </button> 
-      </p>
+      </div>
       <p>&copy; Nebula Services 2024</p>
     </div>
   </div>

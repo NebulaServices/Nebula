@@ -1,5 +1,5 @@
 <div id="parent" class="flex flex-row flex-wrap gap-4 items-center font-roboto justify-center">
-    <div id="main-theme" class="rounded-3xl border border-text-color border-2 bg-navbar-color w-64 flex flex-col cursor-pointer">
+    <div id="main-theme" class="rounded-3xl bg-navbar-color w-64 flex flex-col cursor-pointer">
         <div class="w-full">
             <img src="/classic_theme.png" alt="Classic nebula" class="aspect-[16/9] rounded-t-3xl" loading="eager" />
         </div>
@@ -84,16 +84,13 @@
         main.appendChild(click);
         main.appendChild(info);
         parent.appendChild(main);
-
+        
+        
         Elements.attachEvent(mainTheme, "click", () => {
-            main.classList.remove("border", "border-2");
-            mainTheme.classList.add("border", "border-2");
             marketplace.theme({ type: 'remove' });
         });
-
+        
         Elements.attachEvent(click, "click", async () => {
-            mainTheme.classList.remove("border", "border-2");
-            main.classList.add("border-2", "border");
             await marketplace.theme(
                 { 
                     type: 'normal', 
@@ -108,18 +105,10 @@
         });
 
         Elements.attachEvent(infoInnerDelete, "click", async () => {
-            main.classList.remove("border", "border-2");
-            mainTheme.classList.add("border-2", "border");
             await marketplace.uninstallTheme({ name: item.package_name });
             parent.removeChild(main);
             await marketplace.theme({ type: 'remove' });
         });
-        
-        const themeName = await marketplace.getValueFromStore(SettingsVals.marketPlace.appearance.theme.name);
-        if (themeName !== null && main.dataset.name === themeName) {
-            mainTheme.classList.remove("border-2", "border");
-            main.classList.add("border-2", "border");
-        }
     }
 
     const init = async () => {

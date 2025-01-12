@@ -58,7 +58,7 @@ if (parsedDoc.marketplace.enabled) {
 
 await app.register(fastifyMiddie);
 
-app.use(ssrHandler);
+//app.use(ssrHandler);
 
 const port: number =
     parseInt(process.env.PORT as string) || parsedDoc.server.server.port || parseInt("8080");

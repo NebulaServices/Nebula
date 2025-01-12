@@ -71,7 +71,7 @@ class Elements {
         throw new Error(`Something is WRONG. The element doesn't exist!`);
     }
     
-    static attachEvent<Element extends HTMLElement, EType extends keyof HTMLElementEventMap>(item: Element, event: EType, fn: () => unknown) {
+    static attachEvent<Element extends HTMLElement, EType extends keyof HTMLElementEventMap>(item: Element, event: EType, fn: (event?: Event) => unknown) {
         item.addEventListener(event, fn);
     }
 
