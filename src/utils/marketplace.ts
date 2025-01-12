@@ -157,7 +157,7 @@ class Marketplace {
 
     async uninstallPlugin(plug: Omit<Plug, "src">) {
         const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
-        const plugin = items.find(({ name }: { name: string }) => name === plug.name.toLowerCase());
+        const plugin = items.find(({ name }: { name: string }) => name === plug.name);
         if (!plugin) return log({ type: 'error', bg: false, prefix: false, throw: true }, `Plugin: ${plug.name} is not installed!`);
         plugin.remove = true;
         this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(items));
@@ -170,7 +170,7 @@ class Marketplace {
         if (plugins.length === 0) return log({ type: 'info', bg: false, prefix: true }, 'No plugins to add! Exiting.');
         plugins.map(async (plugin: Plug) => {
             if (plugin.type === "page") {
-                const script = await fetch(`/packages/${plugin.name.toLowerCase()}/${plugin.src}`);
+                const script = await fetch(`/packages/${plugin.name}/${plugin.src}`);
                 const scriptRes = await script.text();
                 const evaledScript = eval(scriptRes);
                 const inject = (await evaledScript()) as unknown as SWPagePlugin;
@@ -183,7 +183,7 @@ class Marketplace {
                     });
                 }
                 else {
-                    plugins = plugins.filter(({ name }: { name: string }) => name !== plugin.name.toLowerCase());
+                    plugins = plugins.filter(({ name }: { name: string }) => name !== plugin.name);
                     pagePlugins.push({
                         remove: true,
                         host: inject.host,
@@ -196,7 +196,7 @@ class Marketplace {
             }
             
             if (plugin.type === "serviceWorker") {
-                const s = await fetch(`/packages/${plugin.name.toLowerCase()}/${plugin.src}`);
+                const s = await fetch(`/packages/${plugin.name}/${plugin.src}`);
                 const sRes = await s.text();
                 const eScript = eval(sRes);
                 const inject = (await eScript()) as unknown as SWPlugin;
@@ -209,7 +209,7 @@ class Marketplace {
                     });
                 }
                 else {
-                    plugins = plugins.filter(({ name }: { name: string }) => name !== plugin.name.toLowerCase());
+                    plugins = plugins.filter(({ name }: { name: string }) => name !== plugin.name);
                     swPlugins.push({
                         remove: true,
                         function: inject.function.toString(),
