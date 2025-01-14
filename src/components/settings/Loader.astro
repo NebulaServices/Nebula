@@ -20,6 +20,7 @@
             localStorage.getItem(Settings.ProxySettings.transport) as string
         );
         const sw = await initSw();
+        //@ts-ignore
         await setSWStuff({sw: sw.sw, conn, sj: sw.sj });
     });
 </script>
