@@ -66,6 +66,7 @@ import { VERSION } from "astro:env/client";
   function proxy(term: string, scram: typeof ScramjetController, pr: "uv" | "sj"): string {
       const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
       const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
+      //@ts-ignore
       return pr === "uv" ? `${__uv$config!.prefix}${__uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg))}` : scram.encodeUrl(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg ))
   }
   async function uv(iframe: HTMLIFrameElement, term: string) {
