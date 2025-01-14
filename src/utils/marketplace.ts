@@ -111,6 +111,24 @@ class Marketplace {
             }, 100);
         });
     }
+
+    async getValueFromStore(val: string): Promise<string> {
+        return this.#storage.getVal(val);
+    }
+
+
+    async getThemes(name?: string): Promise<{themes: any, theme: string, exists: Boolean}> {
+        const themes = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.themes)) || [];
+        const theme = themes.find((t: any) => t === name);
+        const exists = themes.indexOf(name) !== -1;
+        return { themes, theme, exists };
+    } 
+
+    async getPlugins(pname?: string): Promise<{plugins: any, plug: any}> {
+        const plugins = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
+        const plug = plugins.find(({ name } : { name: string }) => name === pname );
+        return { plugins, plug }
+    }
     
     /**
         * Install a theme into both localstorage AND set the theme.
@@ -124,47 +142,39 @@ class Marketplace {
             * //bgImage: pass the BG image here if you have one
         * });
     */
-    async installTheme(theme: Theme) {
-        const themes = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.themes)) || [];
-        if (themes.find((t: any) => t === theme.name)) return log({ type: 'error', bg: false, prefix: false, throw: true }, `${theme.name} is already installed!`)
+    async installTheme(theme: Omit<Theme, "payload">) {
+        const { themes, exists } = await this.getThemes(theme.name);
+        if (exists) return log({ type: 'error', bg: false, prefix: false, throw: true }, `${theme.name} is already installed!`)
         themes.push(theme.name);
         this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(themes));
     }
 
-    async getValueFromStore(val: string): Promise<string> {
-        return this.#storage.getVal(val);
-    }
-
     async installPlugin(plugin: Plug) {
-        const plugins = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
-
-        const plug = plugins.find(({ name }: { name: string }) => name === plugin.name);
-        if (plug && plug.remove === false) return log({ type: 'error', bg: false, prefix: false, throw: true }, `${plugin.name} is already installed!`);
-        if (plug && plug.remove) { plug.remove = false; return this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins)) };
+        let { plugins, plug } = await this.getPlugins(plugin.name);
+        if (plug && plug.remove) { plug.remove = false; console.log(plug); return this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins)) };
         plugins.push({ name: plugin.name, src: plugin.src, type: plugin.type } as unknown as Plug);
         this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
     }
 
     async uninstallTheme(theme: Omit<Theme, "payload" | "video" | "bgImage">) {
-        const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.themes)) || [];
-        if (!items.find((th: string) => th === theme.name)) {
-            return log({ type: 'error', bg: false, prefix: false, throw: true }, `Theme: ${theme.name} is not installed!`);
-        }
+        const { themes: items, exists } = await this.getThemes(theme.name);
+        if (!exists) return log({ type: 'error', bg: false, prefix: false, throw: true }, `Theme: ${theme.name} is not installed!`);
         const idx = items.indexOf(theme.name);
         items.splice(idx, 1);
         this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(items));
     }
 
     async uninstallPlugin(plug: Omit<Plug, "src">) {
-        const items = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
-        const plugin = items.find(({ name }: { name: string }) => name === plug.name);
+        let { plugins: items, plug: plugin } = await this.getPlugins(plug.name);
+
         if (!plugin) return log({ type: 'error', bg: false, prefix: false, throw: true }, `Plugin: ${plug.name} is not installed!`);
         plugin.remove = true;
         this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(items));
     }
 
     async handlePlugins(worker: ServiceWorkerRegistration) {
-        let plugins = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
+        let { plugins } = await this.getPlugins();
+
         const pagePlugins: SWPagePlugin[] = [];
         const swPlugins: SWPlugin[] = [];
         if (plugins.length === 0) return log({ type: 'info', bg: false, prefix: true }, 'No plugins to add! Exiting.');
@@ -172,7 +182,9 @@ class Marketplace {
             if (plugin.type === "page") {
                 const script = await fetch(`/packages/${plugin.name}/${plugin.src}`);
                 const scriptRes = await script.text();
+                console.log(scriptRes);
                 const evaledScript = eval(scriptRes);
+                console.log(evaledScript);
                 const inject = (await evaledScript()) as unknown as SWPagePlugin;
                 if (!plugin.remove) {
                     pagePlugins.push({

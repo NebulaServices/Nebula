@@ -40,6 +40,11 @@ type Items = {
     val: string 
 }
 
+type ElementDatasets = {
+    name: string,
+    val: string | undefined 
+}
+
 class Elements {
     /** 
         * An async generator function to get your objects quickly and easily.
@@ -75,11 +80,17 @@ class Elements {
         item.addEventListener(event, fn);
     }
 
-    static createCustomElement(name: string, fn: () => unknown) {
+    static createCustomElement(name: string, fn: (datasets?: ElementDatasets[]) => unknown, datasets?: Omit<ElementDatasets, "val">[]) {
         class CustomEl extends HTMLElement {
+            dat: ElementDatasets[] = [];
             constructor() {
                 super();
-                (async () => await fn())();
+                if (datasets) {
+                    datasets.forEach((data) => {
+                        this.dat.push({ name: data.name, val: this.dataset[data.name] });
+                    });
+                }
+                (async () => await fn(this.dat))();
             }
         }
 

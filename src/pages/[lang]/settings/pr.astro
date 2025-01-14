@@ -178,10 +178,10 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
 <script>
   import { EventHandler } from "@utils/events";
   import { Elements, toast } from "@utils/index";
-import { defaultStore } from "@utils/storage";
-import { SettingsVals } from "@utils/values";
-import { Settings } from "@utils/settings";
-import { setTransport, SW } from "@utils/serviceWorker";
+  import { defaultStore } from "@utils/storage";
+  import { SettingsVals } from "@utils/values";
+  import { Settings } from "@utils/settings";
+  import { setTransport, SW } from "@utils/serviceWorker";
 
   const init = async (): Promise<AsyncGenerator> => {
       return Elements.select([

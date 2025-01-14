@@ -1,9 +1,7 @@
 ---
-import InstalledThemes from "@components/catalog/InstalledThemes.svelte";
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
-import { Icon } from "astro-icon/components";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

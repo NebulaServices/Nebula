@@ -54,9 +54,8 @@ import { VERSION } from "astro:env/client";
     import { search, Elements } from "@utils/index";
     import { BareClient } from "@mercuryworkshop/bare-mux";
     import { defaultStore } from "@utils/storage";
-    import { Settings } from "@utils/settings";
-    import { setTransport, SW } from "@utils/serviceWorker";
-import { navigate } from "astro:transitions/client";
+    import { SW } from "@utils/serviceWorker";
+    import { Marketplace } from "@utils/marketplace";
 
     type Suggestion = {
         phrase: string;
@@ -87,6 +86,8 @@ import { navigate } from "astro:transitions/client";
         const copyright = Elements.exists<HTMLDivElement>(await se.next());
         const iframe = Elements.exists<HTMLIFrameElement>(await se.next());
         const prox = async (input: string, prox: "uv" | "sj") => {
+            await Marketplace.ready();
+            const mp = Marketplace.getInstances().next().value!;
             const sw = SW.getInstances().next().value as SW; 
             iframe.classList.remove("hidden");
             const val = search(
@@ -95,6 +96,8 @@ import { navigate } from "astro:transitions/client";
                 ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)]
                 : SearchEngines.ddg
             );
+            const { serviceWorker } = await sw.getSWInfo();
+            mp.handlePlugins(serviceWorker);
             switch(prox) {
                 case "uv": {
                     iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(val)}`;
