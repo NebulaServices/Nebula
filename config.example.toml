@@ -3,6 +3,10 @@ enabled = false # Turn on or off the marketplace entirely
 psk = "CHANGEME" # Change this to something more secure.
 level = 1
 
+[seo]
+enabled = false
+domain = "https://nebulaproxy.io"
+
 [db]
 name = "database" # Your databsae name
 username = "username" # The username of your DB (SQLITE just ignores this)
@@ -17,7 +21,3 @@ port = 5432
 port = 8080
 wisp = true
 logging = true # Disable for the tons & tons of logs to go away (useful for debugging but otherwise eh)
-
-[seo]
-enabled = false
-domain =
