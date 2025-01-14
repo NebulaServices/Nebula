@@ -56,7 +56,7 @@ const t = useTranslations(lang);
       </HeaderButton>
     </div>
     {/* Mobile hamburger menu */}
-    <div class="flex lg:hidden" id="mobileNavTrigger" transition:persist>
+    <div class="flex lg:hidden cursor-pointer" id="mobileNavTrigger">
       <Icon
         name="ph:text-align-justify-bold"
         class="h-9 w-9 text-text-color"
@@ -70,50 +70,3 @@ const t = useTranslations(lang);
     </div>
   </div>
 </div>
-<script>
-  import { isMobileNavOpen } from "../store.js";
-  let isMobileNavOpenLocal = true;
-  const right_caret = document.getElementById("right_caret");
-  const hamburger_menu = document.getElementById("hamburger_menu");
-  const mobileNavTrigger = document.getElementById("mobileNavTrigger");
-  // Create a copy of the nano store so we can make this a toggle
-
-  // Set the store to true when the button is clicked
-  function openDialog() {
-    if (isMobileNavOpenLocal == false) {
-      isMobileNavOpen.set(true);
-      if (hamburger_menu && right_caret) {
-        hamburger_menu.style.display = "none";
-        right_caret.style.display = "block";
-      }
-    } else {
-      isMobileNavOpen.set(false);
-      if (hamburger_menu && right_caret) {
-        hamburger_menu.style.display = "block";
-        right_caret.style.display = "none";
-      }
-    }
-  }
-
-  isMobileNavOpen.subscribe((open) => {
-    if (open) {
-      isMobileNavOpenLocal = true;
-      if (hamburger_menu && right_caret) {
-        hamburger_menu.style.display = "none";
-        right_caret.style.display = "block";
-      }
-    } else {
-      isMobileNavOpenLocal = false;
-      if (hamburger_menu && right_caret) {
-        hamburger_menu.style.display = "block";
-        right_caret.style.display = "none";
-      }
-    }
-  });
-
-  // Add an event listener to the button
-
-  if (mobileNavTrigger) {
-    mobileNavTrigger.addEventListener("click", openDialog);
-  }
-</script>

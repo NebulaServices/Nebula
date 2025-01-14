@@ -1,5 +1,5 @@
 <script lang="ts">
-import { type Position, type Props, type ToastType } from "@utils/toast.ts";
+import { type ToastPosition, type Props, type TType } from "@utils/index";
 import toast from "svelte-french-toast";
 export let toastProp: Props;
 function handleToast(toastProp: Props) {

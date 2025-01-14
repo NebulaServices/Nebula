@@ -84,11 +84,7 @@ const Host = Astro.url.host;
     <div class="h-full z-10 w-full fixed">
       <slot />
     </div>
-    <div
-      id="mobileNavMenu"
-      class="w-full fixed inset-0 h-[calc(100%-4rem)] z-20"
-      transition:persist
-    >
+    <div id="mobilenavwrapper" class="w-full fixed inset-0 h-[calc(100%-4rem)] z-20">
       <MobileNavigation />
     </div>
     <video
@@ -106,32 +102,7 @@ const Host = Astro.url.host;
       class="absolute z-0 h-[calc(100%-4rem)] w-full object-cover hidden"
       id="nebulaImage"
       transition:persist
-    />
-    <script>
-      import { isMobileNavOpen } from "../store.js";
-      const mobileNavMenu = document.getElementById("mobileNavMenu");
-      // Listen to changes in the store, and show/hide the mobile navigation accordingly
-      isMobileNavOpen.subscribe((open) => {
-        if (open) {
-          if (mobileNavMenu) {
-            mobileNavMenu.style.display = "block";
-            mobileNavMenu.style.transform = "translateX(0%)";
-          }
-        } else {
-          if (mobileNavMenu) {
-            mobileNavMenu.style.transform = "translateX(100%)";
-          }
-        }
-      });
-    </script>
-    <style>
-      #mobileNavMenu {
-        -webkit-transition-duration: 600ms;
-        transition-duration: 600ms;
-        transform: translateX(100%);
-      }
-    </style>
-
+    /> 
     <style is:global>
       .roboto {
         font-family: var(--font-family), Roboto, sans-serif;
