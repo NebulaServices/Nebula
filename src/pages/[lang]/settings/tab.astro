@@ -1,0 +1,95 @@
+---
+import SettingsCard from "@components/settings/SettingsCard.astro";
+import Layout from "@layouts/Layout.astro";
+import SettingsLayout from "@layouts/SettingsLayout.astro";
+import SettingsSection from "@layouts/SettingsSection.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title="Settings">
+  <SettingsLayout title={t("settings.tab")}>
+    <SettingsSection title="Tab" subtitle="Customize and cloak your tab.">
+        <div class="w-full h-full flex flex-col items-center justify-center md:flex-row md:items-start md:justify-start gap-4">
+            <SettingsCard 
+                title="Cloaking" 
+                description="Choose how your tab looks" 
+                input={{input: false}} 
+                button={{name: "Cloak!", id: "cloak"}} 
+                select={{ select: true, name: 'cloakselect', options: [
+                    {name: 'Default', value: 'reset', disabled: false},
+                    {name: 'Google', value: 'google', disabled: false },
+                    {name: 'Wikipedia', value: 'wikipedia', disabled: false},
+                    {name: 'Canvas', value: 'canvas', disabled: false},
+                    {name: 'Google Classroom', value: 'classroom', disabled: false},
+                    {name: 'Powerschool', value: 'powerschool', disabled: false}
+                    ] }}
+                    both={{enabled: false}}
+            />
+            <SettingsCard
+                title="A:B & Blob" 
+                description="Choose to open your tab in about:blank or blob" 
+                input={{input: false}} 
+                button={{name: "Go!", id: "aboutblankbutton"}} 
+                select={{ select: true, name: 'aboutblank', options: [
+                    {name: 'About:Blank', value: 'a:b', disabled: false}, 
+                    {name: 'Blob', value: 'blob', disabled: false}
+                    ] }}
+                    both={{enabled: false}}
+            />
+        </div>
+    </SettingsSection>
+  </SettingsLayout> 
+</Layout>
+
+<script>
+    import { Elements } from "@utils/index";
+    import { EventHandler } from "@utils/events";
+    import { defaultStore } from "@utils/storage";
+    import { Settings } from "@utils/settings";
+    import { SettingsVals } from "@utils/values";
+
+    const init = async (): Promise<AsyncGenerator> => {
+        const vals = Elements.select([
+            { type: 'id', val: 'cloak' },
+            { type: 'id', val: 'cloakselect' },
+            { type: 'id', val: 'aboutblankbutton' },
+            { type: 'id', val: 'aboutblank' }
+        ]);
+        return vals;
+    }
+
+    const handleCloak = async (vals: AsyncGenerator) => { 
+        const button = Elements.exists<HTMLButtonElement>(await vals.next());
+        const val = Elements.exists<HTMLSelectElement>(await vals.next());
+        defaultStore.getVal(SettingsVals.tab.cloak) === "default" ? val.value = "reset" : val.value = defaultStore.getVal(SettingsVals.tab.cloak) || "reset";
+        // These have generics, but they can be inferred
+        Elements.attachEvent(button, "click", () => {
+            Settings.tab.cloak(val.value);
+        });
+    };
+
+    const handleAB = async (vals: AsyncGenerator) => {
+        const button = Elements.exists<HTMLButtonElement>(await vals.next()); 
+        const val = Elements.exists<HTMLSelectElement>(await vals.next());
+        val.value = defaultStore.getVal(SettingsVals.tab.ab) || 'a:b';
+        Elements.attachEvent(button, "click", () => {
+            if (val.value === "a:b") return Settings.tab.ab("https://www.google.com");
+            Settings.tab.blob("https://www.google.com");
+        });
+    }
+ 
+    new EventHandler({
+        events: {
+            "astro:page-load": async () => {
+                const v = await init();
+                await handleCloak(v);
+                await handleAB(v);
+            }
+        },
+        // Enable ONLY for debugging. Otherwise it will throw errors when we don't want them
+        logging: false 
+    })
+    .bind();
+</script>

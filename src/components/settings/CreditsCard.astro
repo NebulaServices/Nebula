@@ -1,0 +1,19 @@
+--- 
+import { Image } from "astro:assets";
+import { type ImageMetadata } from "astro";
+const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/assets/credits/*.{jpeg,jpg,png,gif,webp}"
+);
+
+interface Props {
+    image?: string;
+    name: string;
+    link: string;
+}
+
+const { image, name, link } = Astro.props;
+---
+<a class="rounded-md bg-navbar-color h-50 w-50 p-2 flex flex-col items-center" href={link} target="_blank" rel="noopener noreferrer">
+    {image && <Image loading='lazy' class='w-32 h-32 object-cover rounded-md' src={images[image]()} alt={name} />}
+    <p class="h-12 w-full text-text-color flex items-center justify-center text-xl font-semibold">{name}</p>
+</a>

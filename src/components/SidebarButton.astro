@@ -1,0 +1,17 @@
+---
+const { title, route } = Astro.props;
+---
+
+<a
+  href={route}
+  class="snap-center snap-always group flex flex-col items-center md:p-0 max-sm:p-3 sm:p-3 bg-navbar-color w-full rounded-3xl md:flex-row md:bg-none md:rounded-none"
+>
+  <div class="xl:p-2 max-sm:p-2 sm:p-2 md:p-0">
+    <slot />
+  </div>
+  <div
+    class="max-md:min-w-24 font-roboto text-center font-bold text-text-color roboto transition duration-500 group-hover:text-text-hover-color md:text-xl text-nowrap"
+  >
+    {title}
+  </div>
+</a>

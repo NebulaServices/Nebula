@@ -1,0 +1,32 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
+    "files": {
+        "ignore": ["~/", "**/dist/**", ".github/**"],
+        "include": ["**/**", "server/**"]
+    },
+    "formatter": {
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 100,
+        "ignore": ["pnpm-lock.yaml", "package.json"]
+    },
+    "organizeImports": { "enabled": true },
+    "linter": { "enabled": false },
+    "javascript": {
+        "formatter": {
+            "trailingCommas": "none",
+            "quoteStyle": "double",
+            "semicolons": "always"
+        }
+    },
+    "json": {
+        "parser": {
+            "allowComments": true,
+            "allowTrailingCommas": true
+        },
+        "formatter": {
+            "indentStyle": "space",
+            "trailingCommas": "none"
+        }
+    }
+}

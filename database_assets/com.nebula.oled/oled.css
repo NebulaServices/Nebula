@@ -1,0 +1,19 @@
+:root {
+    --background-primary: #000000;
+    --background-lighter: #000000;
+    --navbar-color: #00000f;
+    --navbar-height: 60px;
+    --navbar-text-color: #4763ff;
+    --navbar-link-color: #4763ff;
+    --navbar-link-hover-color: gray;
+    --navbar-font: "Roboto";
+    --input-text-color: #4763ff;
+    --input-placeholder-color: white;
+    --input-background-color: #000000;
+    --input-border-color: #4763ff;
+    --input-border-size: 1.3px;
+    --navbar-logo-filter: none;
+    --dropdown-option-hover-color: #000000;
+    --tab-color: #000000;
+    --border-color: #4763ff;
+}

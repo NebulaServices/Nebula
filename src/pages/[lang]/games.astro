@@ -1,0 +1,27 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Chango Games">
+    <iframe id="chango" class="w-full h-full" src="/loading"></iframe>
+</Layout>
+<script>
+    import { EventHandler } from "@utils/events";
+    import { Elements } from "@utils/index";
+    
+    const init = async () => {
+        const el = Elements.select([
+            { type: 'id', val: 'chango' }
+        ]);
+        const chango = Elements.exists<HTMLIFrameElement>(await el.next());
+        chango.src = `${__uv$config.prefix}${__uv$config.encodeUrl!("https://radon.games/games/")}`
+    };
+
+    new EventHandler({
+        events: {
+            "astro:page-load": init
+        },
+        logging: false
+    })
+    .bind();
+</script>

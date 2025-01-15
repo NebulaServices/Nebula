@@ -1,0 +1,58 @@
+---
+interface Props {
+    page: number | string | undefined;
+    lang: string;
+}
+interface Asset {
+    title: string;
+    description: string;
+    author: string;
+    image: string;
+    tags: [];
+    version: string;
+    background_image: string | null;
+    background_video: string | null;
+    payload: string;
+    type: "theme" | "plugin-sw" | "plugin-page";
+}
+const { page, lang } = Astro.props;
+const getAssets = async () => {
+    const res = await fetch(new URL(`/api/catalog-assets?page=${page}`, Astro.url));
+    const data = await res.json();
+    return data.assets;
+};
+const assets = await getAssets();
+---
+<div class="text-3xl font-roboto font-bold text-text-color p-10">
+    {Object.keys(assets).length > 0 && (
+        <div class="flex flex-row gap-6 flex-wrap justify-center">
+            {Object.entries(assets).map((asset) => {
+                const pName = asset[0];
+                const a = asset[1] as unknown as Asset;
+                return (
+                    <a href={`/${lang}/catalog/package/${pName}`}>
+                            <div class="bg-navbar-color w-64 rounded-3xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 text-text-color">
+                                <img src={`/packages/${pName}/${a.image}`} alt={a.title} class="w-full h-40 object-cover" />
+                                <div class="p-6 text-sm">
+                                    <p class="font-semibold text-2xl mb-2"> {a.title} </p>
+                                    <p class="mb-4"> {a.description} </p>
+                                    <div class="flex flex-wrap gap-2 mb-4 w-full">
+                                        {a.tags.map((tag) => (
+                                            <p class="bg-navbar-text-color text-navbar-color font-bold px-3 py-1 rounded-md text-center"> { tag } </p>
+                                        ))}
+                                    </div>
+                                    <p> 
+                                        <strong>Version: </strong> { a.version } 
+                                    </p>
+                                    <p> 
+                                        <strong>Type: </strong> { a.type === "plugin-page" || a.type === "plugin-sw" ? "plugin" : a.type } 
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    )
+                }
+            )}
+        </div>
+    )}
+</div>

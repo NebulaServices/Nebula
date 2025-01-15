@@ -1,0 +1,12 @@
+{
+    "header.home": "ホーム",
+    "header.games": "ゲーム",
+    "header.settings": "設定",
+    "header.morelinks": "リンク一覧",
+    "header.catalog": "Nebula Catalog",
+    "home.placeholder": "検索欄",
+    "settings.settings": "Settings",
+    "settings.appearance": "Appearance",
+    "settings.proxy": "Proxy",
+    "settings.tab": "Tab"
+}

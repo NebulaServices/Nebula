@@ -1,0 +1,167 @@
+---
+import { ClientRouter } from "astro:transitions";
+import Header from "@components/Header.astro";
+import MobileNavigation from "@components/MobileNavigation.astro";
+import SettingsLoader from "@components/settings/Loader.astro";
+import { SEO } from "astro-seo";
+import { SEO as SEOC } from "astro:env/client";
+interface Props {
+  title: string;
+  noHeader?: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, noHeader, description, image } = Astro.props;
+const SEOConfig = JSON.parse(SEOC);
+const Host = Astro.url.host;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SettingsLoader transition:persist />
+    <meta charset="UTF-8" />
+    <SEO
+        title={title},
+        titleTemplate={SEOConfig.enabled && Host === SEOConfig.domain  ? 'Nebula | %s': '%s'},
+        titleDefault={SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula': ''},
+        description={SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : ''},
+        charset="UTF-8",
+        openGraph={{
+            basic: {
+                title: SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula' :'',
+                type: 'website',
+                url: SEOConfig.enabled && Host === SEOConfig.domain ? 'https://nebulaproxy.io' : '',
+                image: SEOConfig.enabled && Host === SEOConfig.domain ? image ? image : '/logo.png': ''
+            },
+            optional: {
+                description: SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : ''
+            }
+        }},
+        twitter={{
+            card: "summary_large_image",
+            title: SEOConfig.enabled && Host === SEOConfig.domain ? 'Nebula' : '',
+            description: SEOConfig.enabled && Host === SEOConfig.domain ? description ? description : 'A stunning and sleek web proxy with support for hundreds of popular sites.' : '',
+            image: SEOConfig.enabled && Host === SEOConfig.domain ? image ? image : '/logo.png': '',
+            imageAlt: image ? 'Catalog image' : `${SEOConfig.enabled && Host === SEOConfig.domain && "Nebula services's"} logo`
+        }},
+        extend={{
+            link: [
+                { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg', id: 'favicon' },
+                SEOConfig.enabled && Host === SEOConfig.domain && { rel: 'sitemap', href: '/sitemap-index.xml' },
+                { 
+                    rel: 'preload', 
+                    href: "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap",
+                    as: 'style',
+                    crossorigin: 'anonymous'
+                },
+                {
+                    rel: 'preload',
+                    href: "https://fonts.gstatic.com/s/roboto/v32/KFOmCnqEu92Fr1Mu4mxK.woff2",
+                    as: 'font',
+                    type: 'font/woff2',
+                    crossorigin: 'anonymous'
+                }
+            ],
+            meta: [
+                { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+                { name: 'generator', content: `${Astro.generator}` }
+            ]
+        }}
+        />
+    {/* I left this out of the SEO component as we need it to persist properly : D */}
+    <link
+      rel="stylesheet"
+      href="/nebula.css"
+      id="stylesheet"
+      transition:persist
+    />
+    <ClientRouter fallback="animate" />
+  </head>
+  <body class="h-full bg-primary">
+    {!noHeader && <Header />}
+    <div class="h-full z-10 w-full fixed">
+      <slot />
+    </div>
+    <div id="mobilenavwrapper" class="w-full fixed inset-0 h-[calc(100%-4rem)] z-20">
+      <MobileNavigation />
+    </div>
+    <video
+      autoplay
+      muted
+      loop
+      id="nebulaVideo"
+      class="absolute z-0 h-[calc(100%-4rem)] w-full object-cover"
+      transition:persist
+    >
+      <source type="video/mp4" id="videosource" transition:persist />
+    </video>
+    <img
+      src=""
+      class="absolute z-0 h-[calc(100%-4rem)] w-full object-cover hidden"
+      id="nebulaImage"
+      transition:persist
+    /> 
+    <style is:global>
+      .roboto {
+        font-family: var(--font-family), Roboto, sans-serif;
+        font-weight: 200;
+        font-style: normal;
+      }
+      /* Custom scrollbar because the default ones look like ASS */
+      ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--navbar-color);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--navbar-text-color);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--navbar-link-color);
+      }
+      ::-moz-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+      ::-moz-scrollbar-track {
+        background: var(--navbar-color);
+      }
+      ::-moz-scrollbar-thumb {
+        background: var(--navbar-text-color);
+      }
+      ::-moz-scrollbar-thumb:hover {
+        background: var(--navbar-link-color);
+      }
+      ::-ms-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+      ::-ms-scrollbar-track {
+        background: var(--navbar-color);
+      }
+      ::-ms-scrollbar-thumb {
+        background: var(--navbar-text-color);
+      }
+      ::-ms-scrollbar-thumb:hover {
+        background: var(--navbar-link-color);
+      }
+      ::-o-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+      ::-o-scrollbar-track {
+        background: var(--navbar-color);
+      }
+      ::-o-scrollbar-thumb {
+        background: var(--navbar-text-color);
+      }
+      ::-o-scrollbar-thumb:hover {
+        background: var(--navbar-link-color);
+      }
+    </style>
+  </body>
+</html>

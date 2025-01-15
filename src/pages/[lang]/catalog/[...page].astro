@@ -1,0 +1,53 @@
+---
+import CatalogCard from "@components/catalog/CatalogCard.astro";
+import Layout from "@layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import Pagination from "./pagination.astro";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { page } = Astro.params;
+
+const response = await fetch(new URL("/api/catalog-assets/", Astro.url));
+const assetsJson = await response.json();
+
+const nextPage = parseInt(page!) + 1;
+const previousPage = parseInt(page!) - 1;
+const lastPage = assetsJson.pages;
+---
+
+<Layout title="Catalog">
+  <div class="flex mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center overflow-auto font-roboto">
+      <div class="w-full flex flex-col gap-4 jusitfy-center items-center text-text-color mt-9"> 
+          <h1 class="text-3xl md:text-5xl font-bold"> Nebula Catalog </h1>
+          <p class="text-l md:text-xl max-md:text-center max-md:p-2"> The Nebula Catalog is a place for you to find user-created themes and plugins. </p>
+      </div>
+      <CatalogCard page={page} lang={lang} />
+    <div class="flex flex-row pb-8 gap-4 font-roboto">
+      {/* The first page. If the user is on this page, or the one after it, don't show it. */}
+      {parseInt(page!) > 2 && (
+      <a href={`/${lang}/catalog/${1}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md"> 1 </a>
+        )
+      }
+      {previousPage > 0 && (
+      <a href={`/${lang}/catalog/${previousPage}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{previousPage}</a>
+        )
+      }
+      {/* The greyed out page the user is currently on */}
+      <a class="w-8 h-8 bg-lighter items-center text-center content-center text-text-color rounded-md">{page}</a>
+      {nextPage < lastPage && (
+      <a href={`/${lang}/catalog/${nextPage}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{nextPage}</a>
+        )
+      }
+      {/* Pagination input */}
+      <Pagination />
+      {/* The last page. If the user is on this page, don't show it. */}
+      {page != lastPage && (
+      <a href={`/${lang}/catalog/${assetsJson.pages}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">
+            {assetsJson.pages}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</Layout>

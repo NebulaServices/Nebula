@@ -1,0 +1,24 @@
+:root {
+    --background-primary: #000000;
+    --background-lighter: #000000;
+    --navbar-color: #020805;
+    --navbar-height: 60px;
+    --navbar-text-color: #3cb371;
+    --navbar-link-color: #3cb371;
+    --navbar-link-hover-color: white;
+    --input-text-color: #3cb371;
+    --input-placeholder-color: white;
+    --input-background-color: #000000;
+    --input-border-color: #3cb371;
+    --input-border-size: 1.3px;
+    --navbar-logo-filter: none;
+    --dropdown-option-hover-color: #000000;
+    --tab-color: #000000;
+    --border-color: #3cb371;
+    --font-family: "terminal";
+}
+
+@font-face {
+    font-family: terminal;
+    src: url("./terminal.ttf");
+}

@@ -1,0 +1,55 @@
+---
+import Loading from "@components/Loading.astro";
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="" noHeader="true">
+    <Loading />
+</Layout>
+<script>
+    import { EventHandler } from "@utils/events";
+    import { defaultStore } from "@utils/storage";
+    import { SettingsVals } from "@utils/values";
+    import { navigate } from "astro:transitions/client";
+    const eHandler = new EventHandler({
+        events: {
+            "DOMContentLoaded": () => {
+                let currentLang = defaultStore.getVal(SettingsVals.i18n.lang);
+                if (currentLang) {
+                    try {
+                        switch (currentLang) {
+                            case "en_US":
+                                navigate("/en_US/");
+                                break;
+                            case "jp":
+                                navigate("/jp/");
+                                break;
+                            default:
+                                navigate("/en_US/");
+                        }
+                    } 
+                    catch {
+                        localStorage.clear();
+                        window.location.reload();
+                    }
+                } 
+                else {
+                    if (navigator.language.includes("ja")) {
+                        defaultStore.setVal("selectedLanguage", SettingsVals.i18n.languages.jp);
+                        navigate("/jp/");
+                    } 
+                    else {
+                        defaultStore.setVal("selectedLanguage", SettingsVals.i18n.languages.en);
+                        navigate("/en_US/");
+                    }
+                }
+            }
+        },
+        logging: false
+    });
+    //Bind the events.
+    eHandler.bind();
+</script>
+<noscript>
+    JavaScript is required to run this app.
+</noscript>

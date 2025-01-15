@@ -1,0 +1,267 @@
+---
+import InstalledPlugins from "@components/catalog/InstalledPlugins.astro";
+import SettingsCard from "@components/settings/SettingsCard.astro";
+import Toast from "@components/toasts/Toast.svelte";
+import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
+import Layout from "@layouts/Layout.astro";
+import SettingsLayout from "@layouts/SettingsLayout.astro";
+import SettingsSection from "@layouts/SettingsSection.astro";
+import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+import { MARKETPLACE_ENABLED } from "astro:env/client";
+---
+
+<Layout title="Settings">
+  <SettingsLayout title={t("settings.proxy")}>
+    <SettingsSection
+      title="Proxy"
+      subtitle="A wide variety of settings for the proxy/rewriter itself."
+    >
+      <div
+        class="w-full h-full flex flex-col items-center justify-center flex-wrap md:flex-row md:items-start md:justify-start gap-4"
+      >
+        <SettingsCard
+          title="Proxy"
+          description="Choose the proxy/rewriter that fits your needs"
+          input={{ input: false }}
+          button={{ name: "Change", id: "setproxy" }}
+          select={{
+            select: true,
+            name: "proxy",
+            options: [
+              { name: "Automatic", value: "automatic", disabled: false },
+              { name: "Ultraviolet", value: "uv", disabled: false },
+              { name: "Scramjet (BETA)", value: "sj", disabled: false },
+            ],
+            }}
+            both={{enabled: false}}
+        />
+        <!-- SettingsCard
+          title="Open in"
+          description="Choose how to open your sites"
+          input={{ input: false }}
+          button={{ name: "Set", id: "setopenin" }}
+          select={{
+            select: true,
+            name: "openin",
+            options: [
+              { name: "Embed", value: "embed", disabled: false },
+              { name: "Direct", value: "direct", disabled: false },
+              { name: "About:Blank", value: "a:b", disabled: false },
+              { name: "Blob", value: "blob", disabled: false },
+            ],
+            }}
+            both={{enabled: false}}
+        / -->
+        <SettingsCard
+          title="Search Engine"
+          description="Choose your search engine"
+          input={{ input: false }}
+          button={{ name: "Set Search Engine", id: "setsearchengine" }}
+          select={{
+            select: true,
+            name: "searchengine",
+            options: [
+              { name: "DuckDuckGo", value: "ddg", disabled: false },
+              { name: "Google", value: "google", disabled: false },
+              { name: "Bing", value: "bing", disabled: false },
+            ],
+            }} 
+            both={{enabled: false}}
+        />
+        <SettingsCard
+          title="Wisp Server"
+          description="Choose the wisp server you feel is the fastest"
+          input={{ input: true, required: false, placeholder: 'wss://nebulaproxy.io/wisp' }}
+          button={{ name: "Select", id: "setwispurl" }}
+          select={{
+            select: true,
+            name: "wispurl",
+            options: [
+              { name: "Default", value: "default", disabled: false },
+              { name: "Ruby Network (US)", value: "ruby", disabled: false },
+              { name: "Custom", value: "custom", disabled: false }
+            ],
+            }}
+            both={{
+                enabled: true,
+                showOnSelect: {value: 'custom'}
+            }}
+        />
+        <SettingsCard
+          title="Transport"
+          description="Select the transport to use"
+          input={{ input: false }}
+          button={{ name: "Set transport", id: "settransport" }}
+          select={{
+            select: true,
+            name: "transport",
+            options: [
+              { name: "Libcurl", value: "libcurl", disabled: false },
+              { name: "Epoxy", value: "epoxy", disabled: false },
+            ],
+            }}
+            both={{enabled: false}}
+        />
+      </div>
+    </SettingsSection>
+    {
+      MARKETPLACE_ENABLED && (
+        <SettingsSection
+          title="Plugins"
+          subtitle="Plugins allow you to modify the way the proxy works (UV only, plugins are auto applied)"
+        >
+          <div class="flex flex-row gap-6 justify-center md:justify-normal">
+            <InstalledPlugins />
+            <a
+              href={`/${lang}/catalog/1`}
+              class="rounded-3xl bg-navbar-color w-64 flex flex-col"
+            >
+              <div class="w-full items-center justify-center flex aspect-[16/9]">
+                <Icon name="ph:plus-bold" class="h-16 w-16" />
+              </div>
+              <div class="h-2/6 text-center content-center p-3 font-semibold">
+                Get more plugins in the <strong>Nebula Catalog!</strong>
+              </div>
+            </a>
+          </div>
+        </SettingsSection>
+      )
+    }
+  </SettingsLayout>
+  <ToastWrapper client:load>
+    <Toast
+      toastProp={{
+        toastType: "success",
+        text: "Successfully changed proxy!",
+        class: "proxyMessage",
+      }}
+      client:load
+    />
+    <!-- Toast
+      toastProp={{
+        toastType: "success",
+        text: "Saved selection!",
+        class: "openInMessage",
+      }}
+      client:load
+    /-->
+    <Toast
+      toastProp={{
+        toastType: "success",
+        text: "Saved Search Engine Selection!",
+        class: "searchEngineMessage",
+      }}
+      client:load
+    />
+    <Toast
+      toastProp={{
+        toastType: "success",
+        text: "Wisp server selected!",
+        class: "wispUrlMessage",
+      }}
+      client:load
+      />
+    <Toast
+      toastProp={{
+        toastType: "success",
+        text: "Transport set!",
+        class: "transportMessage",
+      }}
+      client:load
+    />
+  </ToastWrapper>
+</Layout>
+<script>
+  import { EventHandler } from "@utils/events";
+  import { Elements, toast } from "@utils/index";
+  import { defaultStore } from "@utils/storage";
+  import { SettingsVals } from "@utils/values";
+  import { Settings } from "@utils/settings";
+  import { setTransport, SW } from "@utils/serviceWorker";
+
+  const init = async (): Promise<AsyncGenerator> => {
+      return Elements.select([
+          { type: 'id', val: 'setproxy' },
+          { type: 'id', val: 'proxy' },
+          { type: 'id', val: 'setsearchengine' },
+          { type: 'id', val: 'searchengine' },
+          { type: 'id', val: 'setwispurl' },
+          { type: 'id', val: 'wispurl' },
+          { type: 'id', val: 'inputOnSelectValuecustom' },
+          { type: 'id', val: 'settransport' },
+          { type: 'id', val: 'transport' },
+      ]);
+  }
+
+  const handleProxy = async (vals: AsyncGenerator) => {
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.proxy.key);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.change(selectEl.value as "uv" | "sj" | "automatic");
+          toast(".proxyMessage");
+      });
+  }
+
+  const handleSearchEngine = async (vals: AsyncGenerator) => {
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.searchEngine);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.searchEngine(selectEl.value);
+          toast(".searchEngineMessage");
+      });
+  }
+
+  const handleWispServers = async (vals: AsyncGenerator) => {
+
+      const handleCustom = async (c: HTMLInputElement, removeClass: boolean) => { 
+          if (!removeClass) return c.classList.add("hidden");
+          const sw = SW.getInstances().next().value as SW;
+          const { bareMuxConn } = await sw.getSWInfo();
+          c.classList.remove("hidden");
+          if (c.value === "") return c.value = defaultStore.getVal("customWispUrl");
+          defaultStore.setVal("customWispUrl", c.value);
+          await setTransport(bareMuxConn);
+          toast(".wispUrlMessage");
+      }
+    
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      const custom = Elements.exists<HTMLInputElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.wispServer);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.wisp(selectEl.value);
+          selectEl.value === "custom" ? handleCustom(custom, true) : handleCustom(custom, false)
+          toast(".wispUrlMessage");
+      });
+  };
+
+  const handleTransports = async (vals: AsyncGenerator) => {
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.transport.key);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.transport(selectEl.value as "libcurl" | "epoxy");
+          toast(".transportMessage");
+      });
+  };
+
+  new EventHandler({
+      events: {
+          "astro:page-load": async () => {
+              const v = await init();
+              await handleProxy(v);
+              await handleSearchEngine(v);
+              await handleWispServers(v);
+              await  handleTransports(v);
+          }
+      },
+      logging: false
+  })
+  .bind();
+</script>

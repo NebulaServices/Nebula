@@ -1,0 +1,13 @@
+---
+const { image, title } = Astro.props;
+import { Image } from "astro:assets";
+---
+
+<div class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+  <div class="w-full">
+    <Image src={image} alt="Theme" class="aspect-[16/9] rounded-t-3xl" />
+  </div>
+  <div class="h-2/6 text-center content-center p-3 font-semibold">
+    {title}
+  </div>
+</div>

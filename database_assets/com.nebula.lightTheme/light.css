@@ -1,0 +1,18 @@
+:root {
+    --background-primary: hsl(310 50% 90%);
+    --background-lighter: hsl(310 50% 90%);
+    --navbar-color: hsl(310 50% 100%);
+    --navbar-height: 60px;
+    --navbar-text-color: hsl(310 50% 15%);
+    --navbar-link-color: hsl(310 50% 15%);
+    --navbar-link-hover-color: hsl(310 50% 90%);
+    --navbar-font: "Roboto";
+    --input-text-color: hsl(310 50% 15%);
+    --input-placeholder-color: white;
+    --input-background-color: hsl(310 50% 100%);
+    --input-border-color: hsl(310 50% 25%);
+    --input-border-size: 1.3px;
+    --navbar-logo-filter: none;
+    --tab-color: var(--black);
+    --border-color: hsl(310 50% 25%);
+}

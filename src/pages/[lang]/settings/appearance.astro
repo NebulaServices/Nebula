@@ -1,0 +1,36 @@
+---
+import InstalledThemes from "@components/catalog/InstalledThemes.astro";
+import Layout from "@layouts/Layout.astro";
+import SettingsLayout from "@layouts/SettingsLayout.astro";
+import SettingsSection from "@layouts/SettingsSection.astro";
+import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+import { MARKETPLACE_ENABLED } from "astro:env/client";
+---
+
+<Layout title="Settings">
+  <SettingsLayout title={t("settings.appearance")}>
+    <SettingsSection
+      title="Theme"
+      subtitle="Choose a theme so your eyes don't hate us.">
+      <div class="flex flex-row flex-wrap gap-4 items-center font-roboto">
+        <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
+            <InstalledThemes />
+          {MARKETPLACE_ENABLED && 
+            <a href={`/${lang}/catalog/1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+                <div class="w-full items-center justify-center flex aspect-[16/9]">
+                    <Icon name="ph:plus-bold" class="h-16 w-16" />
+                </div>
+                <div class="h-2/6 text-center content-center p-3 font-semibold">
+                    Get more themes in the <strong>Nebula Catalog!</strong>
+                </div>
+            </a>
+          }
+        </div>
+        <div class="text-3xl font-roboto font-bold text-text-color"></div>
+      </div>
+    </SettingsSection>
+  </SettingsLayout>
+</Layout>

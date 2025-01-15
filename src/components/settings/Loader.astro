@@ -1,0 +1,70 @@
+<script>
+    import { EventHandler } from "@utils/events";
+    import { SW, createProxyScripts, checkProxyScripts, createBareMuxConn, setTransport } from "@utils/serviceWorker";
+    import { Settings } from "@utils/settings";
+    import { log } from "@utils/index";
+    import { Marketplace } from "@utils/marketplace";
+    import { SettingsVals } from "@utils/values";
+    const titleText = ` 
+     _   _      _           _         ____                  _               
+    | \\ | | ___| |__  _   _| | __ _  / ___|  ___ _ ____   _(_) ___ ___  ___ 
+    |  \\| |/ _ \\ '_ \\| | | | |/ _' | \\___ \\ / _ \\ '__\\ \\ / / |/ __/ _ \\/ __|
+    | |\\  |  __/ |_) | |_| | | (_| |  ___) |  __/ |   \\ V /| | (_|  __/\\__ \\
+    |_| \\_|\\___|_.__/ \\__,_|_|\\__,_| |____/ \\___|_|    \\_/ |_|\\___\\___||___/
+    `;
+    const info = "Hello developer or curious individual & welcome to the console! \nThere isn't a whole lot here for you unless you have run into an error.";
+    const sysInfo = `In which case please include the info below when opening the issue: \n\nOS: ${navigator.platform} \nBrowser: ${navigator.userAgent} \nService workers: ${"serviceWorker" in navigator ? "Yes" : "No"}`
+    const init = async (): Promise<Marketplace> => {
+        log({ type: 'normal', bg: false, prefix: false }, titleText);
+        log({ type: 'normal', bg: true, prefix: false }, info);
+        log({ type: 'normal', bg: true, prefix: false }, sysInfo);
+        log({ type: 'info', bg: true, prefix: true }, "General init...");
+        for (const script of createProxyScripts()) {
+            document.body.appendChild(script);
+        }
+        await checkProxyScripts();
+        const conn = await createBareMuxConn("/baremux/worker.js");
+        const sw = new SW(conn);
+        const mp = new Marketplace();
+        const { serviceWorker, bareMuxConn, sj } = await sw.getSWInfo();
+        log({ type: 'info', bg: true, prefix: true }, `General init completed! \n\nServiceWorker: ${serviceWorker.active?.state} \nBareMuxConn: ${bareMuxConn ? 'Active': 'Not active'} \nScramjetController: ${sj ? 'Active' : 'Not active'}`);
+        return mp;
+    }
+    
+    const handleTheme = async (marketplace: Marketplace) => {
+        const name = await marketplace.getValueFromStore(SettingsVals.marketPlace.appearance.theme.name);
+        const payload = await marketplace.getValueFromStore(SettingsVals.marketPlace.appearance.theme.payload);
+        const video = await marketplace.getValueFromStore(SettingsVals.marketPlace.appearance.video);
+        const image = await marketplace.getValueFromStore(SettingsVals.marketPlace.appearance.image);
+        if (name !== null) {
+            marketplace.theme({
+                type: 'normal',
+                name: name,
+                payload: payload,
+                sources: {
+                    video: video,
+                    bg: image 
+                }
+            });
+        }
+    }
+
+    const initSettings = async (marketplace: Marketplace) => {
+        log({ type: 'info', bg: true, prefix: true }, "Initializing settings...");
+        for await (const _ of Settings.initDefaults());
+        await handleTheme(marketplace);
+        log({ type: 'info', bg: true, prefix: true }, "Initialized Settings!");
+    }
+
+    const eventHandler = new EventHandler({
+        events: {
+            "DOMContentLoaded": async () => {
+                const mp = await init();
+                await initSettings(mp);
+            }
+        },
+        logging: true 
+    });
+    //bind the events
+    eventHandler.bind();
+</script>

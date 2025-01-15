@@ -1,0 +1,102 @@
+---
+import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import HeaderButton from "./HeaderButton.astro";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+import { MARKETPLACE_ENABLED } from "astro:env/client";
+---
+
+<div class="h-full mt-16 flex w-full flex-col justify-evenly bg-navbar-color m-auto" id="mobilenav">
+  <HeaderButton text={t("header.home")} route={`/${lang}/`}>
+    <Icon
+      name="ph:house-bold"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+  <HeaderButton text={t("header.games")} route={`/${lang}/games/`}>
+    <Icon
+      name="ph:cube"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+  <HeaderButton
+    text={t("header.settings")}
+    route={`/${lang}/settings/appearance`}
+  >
+    <Icon
+      name="ph:wrench-fill"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+  {MARKETPLACE_ENABLED &&
+    <HeaderButton text={t("header.catalog")} route={`/${lang}/catalog/1`}>
+        <Icon
+            name="ph:shopping-bag-open-fill"
+        class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+    </HeaderButton>
+  }
+  <HeaderButton text={t("header.morelinks")}>
+    <Icon
+      name="ph:link-bold"
+      class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+    />
+  </HeaderButton>
+</div>
+<style is:global>
+    #mobilenav {
+        -webkit-transition-duration: 600ms;
+        transition-duration: 600ms;
+        transform: translateX(100%);
+    }
+    #mobilenavwrapper {
+        -webkit-transition-duration: 600ms;
+        transition-duration: 600ms;
+        transform: translateX(100%);
+    }
+</style>
+<script>
+    import { EventHandler } from "@utils/events";
+    import { Elements } from "@utils/index";
+    
+    const init = async () => {
+        const els = Elements.select([
+            { type: 'id', val: 'mobileNavTrigger' },
+            { type: 'id', val: 'right_caret' },
+            { type: 'id', val: 'hamburger_menu' },
+            { type: 'id', val: 'mobilenavwrapper' },
+            { type: 'id', val: 'mobilenav' }
+        ]);
+        const trigger = Elements.exists<HTMLDivElement>(await els.next());
+        const rightCaret = Elements.exists<SVGElement>(await els.next());
+        const hamburgerMenu = Elements.exists<SVGElement>(await els.next());
+        const wrapper = Elements.exists<HTMLDivElement>(await els.next());
+        const mnm = Elements.exists<HTMLDivElement>(await els.next());
+        let isOpen = false;
+        Elements.attachEvent(trigger, "click", async () => {
+            console.log(isOpen); 
+            if (isOpen) {
+                rightCaret.style.display = "none";
+                hamburgerMenu.style.display = "block"; 
+                mnm.style.transform = "translateX(100%)";
+                wrapper.style.transform = "translateX(100%)";
+                isOpen = false;
+            }
+            else { 
+                hamburgerMenu.style.display = "none";
+                rightCaret.style.display = "block";
+                mnm.style.display = "flex";
+                mnm.style.transform = "translateX(0%)";
+                wrapper.style.transform = "translateX(0%)";
+                isOpen = true;
+            }
+        });
+    }
+    new EventHandler({
+        events: {
+            "astro:page-load": init 
+        },
+        logging: false 
+    }).bind();
+</script>

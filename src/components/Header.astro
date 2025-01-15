@@ -1,0 +1,71 @@
+---
+import { MARKETPLACE_ENABLED } from "astro:env/client";
+import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import HeaderButton from "./HeaderButton.astro";
+import Logo from "./Logo.astro";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<div
+  id="navbar"
+  class="flex h-16 flex-row items-center justify-end border-b-2 border-border-color bg-navbar-color px-4 z-30 relative"
+>
+  <div class="w-1/8">
+    {/* Typical desktop menu */}
+    <div class="relative flex-row hidden lg:flex">
+      <HeaderButton text={t("header.home")} route={`/${lang}/`}>
+        <Icon
+          name="ph:house-bold"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </HeaderButton>
+      <HeaderButton text={t("header.games")} route={`/${lang}/games/`}>
+        <Icon
+          name="ph:cube"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+        {
+          /* Astro won't let us pass the icon as a prop so it's going into the outlet here. */
+        }
+      </HeaderButton>
+      <HeaderButton
+        text={t("header.settings")}
+        route={`/${lang}/settings/appearance`}
+      >
+        <Icon
+          name="ph:wrench-fill"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </HeaderButton>
+      {MARKETPLACE_ENABLED &&
+        <HeaderButton text={t("header.catalog")} route={`/${lang}/catalog/1`}>
+            <Icon
+                name="ph:shopping-bag-open-fill"
+                class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+             />
+        </HeaderButton>
+      }
+      <HeaderButton text={t("header.morelinks")}>
+        <Icon
+          name="ph:link-bold"
+          class="h-6 w-6 text-text-color transition duration-500 group-hover:text-text-hover-color md:h-6 md:w-6"
+        />
+      </HeaderButton>
+    </div>
+    {/* Mobile hamburger menu */}
+    <div class="flex lg:hidden cursor-pointer" id="mobileNavTrigger">
+      <Icon
+        name="ph:text-align-justify-bold"
+        class="h-9 w-9 text-text-color"
+        id="hamburger_menu"
+      />
+      <Icon
+        name="ph:caret-right-bold"
+        class="h-9 w-9 text-text-color hidden"
+        id="right_caret"
+      />
+    </div>
+  </div>
+</div>

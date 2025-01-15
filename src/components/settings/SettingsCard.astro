@@ -1,0 +1,67 @@
+---
+interface Inputs {
+    input: boolean;
+    required?: boolean;
+    placeholder?: string;
+    validate?: boolean;
+    validateString?: string;
+}
+interface SelectOptions {
+    value: string;
+    name: string;
+    disabled: boolean;
+}
+
+interface Both {
+    enabled: boolean;
+    showOnSelect?: {
+        value: string;
+    };
+    showOnInput?: boolean;
+}
+interface Selects {
+    select: boolean;
+    name?: string;
+    multiple?: boolean;
+    options?: SelectOptions[];
+}
+interface Buttons {
+    name: string;
+    id: string;
+}
+interface Props {
+    title: string;
+    description: string;
+    input: Inputs;
+    select: Selects;
+    both: Both;
+    button: Buttons;
+}
+
+const { title, description, input, select, both, button } = Astro.props;
+---
+
+<div class={`${both.enabled ? "h-72" : "h-64"} w-64 rounded-3xl bg-navbar-color flex flex-col items-center p-4`}>
+    <h1 class="text-3xl font-bold mb-2"> { title } </h1>
+    <p class="text-md w-full text-ellipsis text-center"> { description } </p>
+    <div class="w-full h-full flex-grow flex justify-center items-center flex-col gap-4">
+        <!-- We only want to render an input if it's enabled -->
+        {(input.input && !both.enabled) &&
+            <input class="text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" required={input.required} placeholder={input.placeholder}></input>
+        }
+        <!-- Same with dropdown selections -->
+        {select.select &&
+            <select id={select.name?.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} class="text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" multiple={select.multiple} name={select.name}>
+                {select.options!.map((option) => (
+                    <option id={option.value} disabled={option.disabled} value={option.value}>{option.name}</option>
+                ))}
+            </select>      
+        }
+        {(both.enabled && both.showOnSelect?.value) && 
+                <input id={'inputOnSelectValue' + both.showOnSelect?.value} class="hidden text-md w-full h-10 p-2 bg-input border border-input-border-color rounded-md text-input-text" required={input.required} placeholder={input.placeholder}></input>
+        }
+        <button id={button.id.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()} class="w-36 h-10 rounded-md border border-input-border-color text-input-text bg-input hover:border-input hover:bg-input-border-color hover:text-input hover:font-bold active:bg-input active:text-input-text transition-all duration-200"> 
+            {button.name}
+        </button>
+    </div>
+</div>

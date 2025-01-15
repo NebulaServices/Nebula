@@ -1,0 +1,35 @@
+---
+import LoadingComponent from "@components/Loading.astro";
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Loading page..." noHeader="true">
+    <LoadingComponent />
+</Layout>
+<script>
+    import { EventHandler } from "@utils/events";
+    import { navigate } from "astro:transitions/client";
+    function isComingFromIframe() {
+        try {
+            return window.self !== window.top;
+        }
+        catch (e) {
+            return true;
+        }
+    }
+
+    const eHandle = new EventHandler({
+        events: {
+            "DOMContentLoaded": (() => {
+                const isIframe = isComingFromIframe();
+                if (!isIframe) {
+                    console.log("Assuming request isn't coming from iframe. Redirecting...");
+                    //navigate("/");
+                }
+            }),
+        },
+        logging: false
+    });
+    //Handle the events
+    eHandle.bind();
+</script>

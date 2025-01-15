@@ -1,24 +1,43 @@
-# Logs
-logs
-*.log
+# build output
+dist/
+server/*.js
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+package-lock.json
+
+#external assets
+database_assets/
+!database_assets/com.nebula.gruvbox/
+!database_assets/com.nebula.lightTheme/
+!database_assets/com.nebula.oled/
+!database_assets/com.nebula.retro/
+
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-package-lock.json
+# environment variables
+.env
+.env.production
 
-dist-ssr
-dist
-*.local
-
-# Editor directories and files
-.idea
+# macOS-specific files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# jetbrains setting folder
+.idea/
+
+# nebula catalog database
+database.sqlite
+
+
+# YOUR config
+config.toml
+
+# Goofy PNPM problem
+~/

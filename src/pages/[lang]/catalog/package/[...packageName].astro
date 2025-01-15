@@ -1,0 +1,185 @@
+---
+const { packageName } = Astro.params;
+import Layout from "@layouts/Layout.astro";
+const response = await fetch(
+  new URL("/api/packages/" + packageName, Astro.url)
+);
+const assetsJson = await response.json();
+---
+
+<Layout
+  title={`Package: ${assetsJson.title}`}
+  description=`${assetsJson.title} is a package on Nebula. Start using this package on Nebula today!`
+  image={`/packages/${packageName}/${assetsJson.image}`}
+>
+  <div
+    class="flex flex-wrap min-[1032px]:mt-16 mt-8 w-full fixed inset-0 h-full md:h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center lg:pb-64 font-roboto max-md:p-4"
+  >
+    {
+      assetsJson.error && (
+        <h1 class="text-text-color text-3xl font-bold">
+          {" "}
+          Unexpected error. Is the name right?{" "}
+        </h1>
+      )
+    }
+    {
+      !assetsJson.error && (
+        <div class="flex flex-col max-md:min-[1032px]:justify-center md:min-[1032px]:flex-row items-center text-text-color bg-navbar-color rounded-2xl">
+          {assetsJson.background_video && (
+            <video
+              src={`/packages/${packageName}/${assetsJson.background_video}`}
+              controls
+              class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover rounded-xl"
+            >
+              Your browser does not support the video tag.
+            </video>
+          )}
+          {assetsJson.backgroundImage && (
+            <div
+              style={{
+                backgroundImage: `url(/packages/${packageName}/${assetsJson.backgroundImage})`,
+              }}
+              class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover bg-center rounded-xl"
+            />
+          )}
+          {!assetsJson.background_video && !assetsJson.backgroundImage && (
+            <img
+              loading="lazy"
+              src={`/packages/${packageName}/${assetsJson.image}`}
+              alt={assetsJson.title}
+              class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover rounded-xl"
+            />
+          )}
+          <div class="flex flex-col ml-7 md:p-16 p-10">
+            <p class="text-xl">
+              {assetsJson.type === "plugin-page" ||
+              assetsJson.type === "plugin-sw"
+                ? "plugin"
+                : assetsJson.type}
+            </p>
+            <h1 class="text-4xl font-roboto font-semibold">
+              {assetsJson.title}
+            </h1>
+            <p class="text-xl">
+              {" "}
+              By: <strong>{assetsJson.author}</strong>
+            </p>
+            <p class="text-xl">{assetsJson.description}</p>
+            <button
+              class="bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9"
+              id="install"
+            >
+              Install
+            </button>
+            <button
+              class="hidden bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9"
+              id="uninstall"
+            >
+              Uninstall
+            </button>
+            <a
+              href="../1"
+              class="w-full bg-background text-text-color border-none rounded-lg text-l max-md:mt-7 px-4 py-4 h-full flex-grow md:text-right text-center font-bold underline underline-offset-4 decoration-2 hover:decoration-border-color transition-colors duration-300"
+            >
+              Go Back
+            </a>
+          </div>
+        </div>
+      )
+    }
+  </div>
+  <package-vars data-assets={JSON.stringify(assetsJson)} data-name={packageName} data-type={assetsJson.type}></package-vars>
+</Layout>
+<script>
+    import { Elements } from "@utils/index";
+    import { Marketplace } from "@utils/marketplace"; 
+
+    const init = async () => {
+        await Marketplace.ready();
+        const marketplace = Marketplace.getInstances().next().value!;
+        const elements = Elements.select([
+            { type: 'id', val: 'install' },
+            { type: 'id', val: 'uninstall' }
+        ]);
+        return { marketplace, elements };
+    }; 
+
+     const handleThemes = async (marketplace: Marketplace, name: string, assets: any) => {
+        const { exists } = await marketplace.getThemes(name);
+        if (!exists) {
+            await marketplace.installTheme({ name: name });
+            await marketplace.theme({
+                type: 'normal',
+                payload: assets.payload,
+                name: name,
+                sources: {
+                    video: assets.background_video,
+                    bg: assets.background_image
+                }
+            });
+        }
+        else {
+            await marketplace.theme({ type: 'remove', name: name });
+            await marketplace.uninstallTheme({ name: name });
+        }
+    } 
+
+     const handlePlugins = async (marketplace: Marketplace, name: string, assets: any) => {
+         const { plug } = await marketplace.getPlugins(name);
+         console.log(plug);
+         console.log(assets);
+         if (!plug || plug.remove === true) {
+             await marketplace.installPlugin({
+                 name: name,
+                 src: assets.payload,
+                 type: assets.type === "plugin-page" ? "page": "serviceWorker"
+             });
+             return;
+         }
+         await marketplace.uninstallPlugin({
+             name: name,
+             type: assets.type === "plugin-page" ? "page": "serviceWorker"
+         });
+     }
+
+    Elements.createCustomElement("package-vars", 
+        async(datasets) => { 
+            const { marketplace, elements } = await init();
+            const { dataAssets, dataName, dataType } = { dataAssets: datasets![0].val, dataName: datasets![1].val, dataType: datasets![2].val };
+            const { exists: themeExists } = await marketplace.getThemes(dataName!);
+            const { plug } = await marketplace.getPlugins(dataName!);
+            console.log(dataName);
+            const installButton = Elements.exists<HTMLButtonElement>(await elements.next());
+            const uninstallButton = Elements.exists<HTMLButtonElement>(await elements.next());
+
+            Elements.attachEvent(installButton, "click", async () => {
+                dataType?.startsWith("plugin") 
+                    ? await handlePlugins(marketplace, dataName!, JSON.parse(dataAssets!) || []) 
+                    : await handleThemes(marketplace, dataName!, JSON.parse(dataAssets!) || []);
+                installButton.classList.add("hidden");
+                uninstallButton.classList.remove("hidden");
+            });
+
+            Elements.attachEvent(uninstallButton, "click", async () => {
+                dataType?.startsWith("plugin") 
+                    ? await handlePlugins(marketplace, dataName!, JSON.parse(dataAssets!) || [])
+                    : await handleThemes(marketplace, dataName!, JSON.parse(dataAssets!) || []);
+                uninstallButton.classList.add("hidden");
+                installButton.classList.remove("hidden");
+            });
+            
+            if (themeExists || (plug && plug.remove === false || plug.remove === undefined)) {
+                installButton.classList.add("hidden");
+                uninstallButton.classList.remove("hidden");
+            }
+        },
+        //Pull in the data elements.
+        [
+            { name: 'assets' },
+            { name: 'name' },
+            { name: 'type' }
+        ]
+    );
+
+</script>
