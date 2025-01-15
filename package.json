@@ -43,7 +43,6 @@
     "chalk": "^5.4.1",
     "fastify": "^5.2.0",
     "gradient-string": "^3.0.0",
-    "nanostores": "^0.11.3",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",

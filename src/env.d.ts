@@ -21,15 +21,15 @@ interface SJOptions {
         sync: string;
     };
     flags?: {
-        serviceworkers: boolean;
-        syncxhr: boolean;
-        naiiveRewriter: boolean;
-        strictRewrites: boolean;
-        rewriterLogs: boolean;
-        captureErrors: boolean;
-        cleanErrors: boolean;
-        scramitize: boolean;
-        sourcemaps: boolean;
+        serviceworkers?: boolean;
+        syncxhr?: boolean;
+        naiiveRewriter?: boolean;
+        strictRewrites?: boolean;
+        rewriterLogs?: boolean;
+        captureErrors?: boolean;
+        cleanErrors?: boolean;
+        scramitize?: boolean;
+        sourcemaps?: boolean;
     };
     siteFlags?: {};
     codec?: {
@@ -40,6 +40,6 @@ interface SJOptions {
 
 declare class ScramjetController {
     constructor(opts: SJOptions);
-    async init(sw: string): any;
+    init(): Promise<void>;
     encodeUrl(term: string): string;
 }

@@ -176,90 +176,92 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
   </ToastWrapper>
 </Layout>
 <script>
-  import { toast } from "@utils/toast.ts";
-  import { settings, Settings as SettingsEnum } from "@utils/settings/index";
-  import { pageLoad } from "@utils/events";
-  function setup(
-    proxySelectVal: HTMLSelectElement,
-      //openInVal: HTMLSelectElement,
-    searchEngineVal: HTMLSelectElement,
-    wispServerVal: HTMLSelectElement,
-      transportVal: HTMLSelectElement,
-      customUrl: HTMLInputElement
-  ) {
-    proxySelectVal.value = localStorage.getItem(
-      SettingsEnum.ProxySettings.proxy
-    ) as string;
-      //openInVal.value = localStorage.getItem(
-          //SettingsEnum.ProxySettings.openIn
-          //) as string;
-    searchEngineVal.value = localStorage.getItem(
-      SettingsEnum.ProxySettings.searchEngine
-    ) as string;
-    wispServerVal.value = localStorage.getItem(SettingsEnum.ProxySettings.wispServerURL) as string;
-    if (wispServerVal.value === "custom") {
-        customUrl.classList.remove("hidden");
-        customUrl.value = localStorage.getItem("customWispUrl") as string;
-    }
-    transportVal.value = localStorage.getItem(
-      SettingsEnum.ProxySettings.transport
-    ) as string;
+  import { EventHandler } from "@utils/events";
+  import { Elements, toast } from "@utils/index";
+  import { defaultStore } from "@utils/storage";
+  import { SettingsVals } from "@utils/values";
+  import { Settings } from "@utils/settings";
+  import { setTransport, SW } from "@utils/serviceWorker";
+
+  const init = async (): Promise<AsyncGenerator> => {
+      return Elements.select([
+          { type: 'id', val: 'setproxy' },
+          { type: 'id', val: 'proxy' },
+          { type: 'id', val: 'setsearchengine' },
+          { type: 'id', val: 'searchengine' },
+          { type: 'id', val: 'setwispurl' },
+          { type: 'id', val: 'wispurl' },
+          { type: 'id', val: 'inputOnSelectValuecustom' },
+          { type: 'id', val: 'settransport' },
+          { type: 'id', val: 'transport' },
+      ]);
   }
-  pageLoad(() => {
-    const proxyButton = document.getElementById("setproxy") as HTMLButtonElement;
-    const proxySelectVal = document.getElementById("proxy") as HTMLSelectElement;
-      //const openInButton = document.getElementById("setopenin") as HTMLButtonElement;
-      //const openInVal = document.getElementById("openin") as HTMLSelectElement;
-    const searchEngineButton = document.getElementById("setsearchengine") as HTMLButtonElement;
-    const searchEngineVal = document.getElementById("searchengine") as HTMLSelectElement;
-    const wispServerButton = document.getElementById("setwispurl") as HTMLButtonElement;
-    const wispServerVal = document.getElementById("wispurl") as HTMLSelectElement;
-    const transportButton = document.getElementById("settransport") as HTMLButtonElement;
-    const transportVal = document.getElementById("transport") as HTMLSelectElement;
-    const customWispUrl = document.getElementById("inputOnSelectValuecustom") as HTMLInputElement;
-    setup(
-      proxySelectVal,
-        //openInVal,
-      searchEngineVal,
-      wispServerVal,
-        transportVal,
-        customWispUrl
-    );
-    proxyButton.addEventListener("click", () => {
-      settings.proxySettings.changeProxy(proxySelectVal.value);
-      toast(".proxyMessage");
-    });
-      //openInButton.addEventListener("click", () => {
-          //  settings.proxySettings.openIn(openInVal.value);
-          //toast(".openInMessage");
-          //});
-    searchEngineButton.addEventListener("click", () => {
-      settings.proxySettings.setSearchEngine(searchEngineVal.value);
-      toast(".searchEngineMessage");
-    });
-    wispServerButton.addEventListener("click", () => {
-        if (wispServerVal.value === "custom") {
-            settings.proxySettings.setWispURL(wispServerVal.value);
-            if (customWispUrl.classList.contains('hidden')) {
-                customWispUrl.classList.remove("hidden");
-                customWispUrl.value = localStorage.getItem("customWispUrl") as string;
-            }
-            else { 
-                localStorage.setItem("customWispUrl", customWispUrl.value);
-                toast(".wispUrlMessage");
-            }
-        }
-        else {
-            if (!customWispUrl.classList.contains('hidden')) {
-                customWispUrl.classList.add("hidden");
-            }
-            settings.proxySettings.setWispURL(wispServerVal.value);
-            toast(".wispUrlMessage");
-        }
-    });
-    transportButton.addEventListener("click", () => {
-      settings.proxySettings.setTransport(transportVal.value);
-      toast(".transportMessage");
-    });
-  });
+
+  const handleProxy = async (vals: AsyncGenerator) => {
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.proxy.key);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.change(selectEl.value as "uv" | "sj" | "automatic");
+          toast(".proxyMessage");
+      });
+  }
+
+  const handleSearchEngine = async (vals: AsyncGenerator) => {
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.searchEngine);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.searchEngine(selectEl.value);
+          toast(".searchEngineMessage");
+      });
+  }
+
+  const handleWispServers = async (vals: AsyncGenerator) => {
+
+      const handleCustom = async (c: HTMLInputElement, removeClass: boolean) => { 
+          if (!removeClass) return c.classList.add("hidden");
+          const sw = SW.getInstances().next().value as SW;
+          const { bareMuxConn } = await sw.getSWInfo();
+          c.classList.remove("hidden");
+          if (c.value === "") return c.value = defaultStore.getVal("customWispUrl");
+          defaultStore.setVal("customWispUrl", c.value);
+          await setTransport(bareMuxConn);
+          toast(".wispUrlMessage");
+      }
+    
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      const custom = Elements.exists<HTMLInputElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.wispServer);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.wisp(selectEl.value);
+          selectEl.value === "custom" ? handleCustom(custom, true) : handleCustom(custom, false)
+          toast(".wispUrlMessage");
+      });
+  };
+
+  const handleTransports = async (vals: AsyncGenerator) => {
+      const button = Elements.exists<HTMLButtonElement>(await vals.next());
+      const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
+      selectEl.value = defaultStore.getVal(SettingsVals.proxy.transport.key);
+      Elements.attachEvent(button, "click", () => {
+          Settings.proxy.transport(selectEl.value as "libcurl" | "epoxy");
+          toast(".transportMessage");
+      });
+  };
+
+  new EventHandler({
+      events: {
+          "astro:page-load": async () => {
+              const v = await init();
+              await handleProxy(v);
+              await handleSearchEngine(v);
+              await handleWispServers(v);
+              await  handleTransports(v);
+          }
+      },
+      logging: false
+  })
+  .bind();
 </script>

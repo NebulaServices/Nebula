@@ -2,7 +2,7 @@
 import CatalogCard from "@components/catalog/CatalogCard.astro";
 import Layout from "@layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
-import Pagnation from "./pagnation.astro";
+import Pagination from "./pagination.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -39,8 +39,8 @@ const lastPage = assetsJson.pages;
       <a href={`/${lang}/catalog/${nextPage}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">{nextPage}</a>
         )
       }
-      {/* Pagnation input */}
-      <Pagnation />
+      {/* Pagination input */}
+      <Pagination />
       {/* The last page. If the user is on this page, don't show it. */}
       {page != lastPage && (
       <a href={`/${lang}/catalog/${assetsJson.pages}`} class="w-8 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md">

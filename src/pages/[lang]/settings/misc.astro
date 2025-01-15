@@ -32,72 +32,53 @@ const t = useTranslations(lang);
             both={{enabled: false}}
         />
         <SettingsCard
-            title="Proxy Catalog"
-            description="Whether or not to proxy the Catalog"
-            input={{input: false}}
-            button={{name: 'Set', id: 'setmp' }}
-            select={{
-                select: true,
-                name: 'mp',
-                options: [
-                    {name: 'False', value: 'false', disabled: false},
-                    {name: 'True', value: 'true', disabled: false}
-                ]
-                }}
-                both={{enabled: false}}
-            />
-        <SettingsCard
-            title="Catalog URL"
-            description="Change which marketplace your using"
-            input={{
-                input: true,
-                required: true,
-                placeholder: `${origin}/api/catalog-assets`
-            }}
-            button={{name: 'Change', id: 'setcataloghostname' }}
-            select={{select: false}}
-            both={{enabled: false}}
+            title="Reset instance"
+            description="Reset your instance if your having troubles or problems."
+            input={{ input: false }}
+            button={{ name: 'Reset', id: 'resetinstance' }}
+            select={{ select: false }}
+            both={{ enabled: false }}
         />
     </SettingsSection>
   </SettingsLayout>
-  <ToastWrapper client:load>
-    <Toast toastProp={{
-            toastType: 'success',
-            text: 'Catalog is now proxied',
-            class: 'mpMessage'
-        }}
-    client:load />
-    <Toast toastProp={{
-        toastType: 'success',
-        text: 'Catalog URL set!',
-        class: 'cataloghostnameSuccess'
-        }}
-    client:load />
-    <Toast toastProp={{
-        toastType: 'error',
-        text: "Catalog doesn't exist!",
-        class: 'cataloghosnameError'
-      }}
-    client:load/>
-  </ToastWrapper>
-<script>
-    import { toast } from "@utils/toast.ts";
-    import { settings, Settings as SettingsEnum } from "@utils/settings/index";
-    import { pageLoad } from "@utils/events";
+ <script>
+    import { EventHandler } from "@utils/events";
     import { navigate } from "astro:transitions/client";
-    function setup() {
-        const lang = JSON.parse(localStorage.getItem('selectedLanguage') as string) || JSON.parse('{"value": "en_US"}');
-        const languageVal = document.getElementById('lang') as HTMLSelectElement;
-        languageVal!.value = lang.value;
-    }
-    pageLoad(() => {
-        setup();
-        const languageChange = document.getElementById('setlang') as HTMLButtonElement;
-        const languageVal = document.getElementById('lang') as HTMLSelectElement;
-        languageChange?.addEventListener('click', () => {
-            const language = {value: languageVal.value}
-            localStorage.setItem("selectedLanguage", JSON.stringify(language));
-            navigate(`${window.location.origin}/${languageVal.value}/settings/misc`)
+    import { defaultStore } from "@utils/storage";
+    import { SettingsVals } from "@utils/values";
+    import { Elements } from "@utils/index";
+
+    const handler = async () => {
+        const els = Elements.select([
+            { type: 'id', val: 'lang' },
+            { type: 'id', val: 'setlang' },
+            { type: 'id', val: 'resetinstance' }
+        ]);
+        const lang = defaultStore.getVal(SettingsVals.i18n.lang);
+        const val = Elements.exists<HTMLSelectElement>(await els.next());
+        const button = Elements.exists<HTMLButtonElement>(await els.next());
+        val.value = lang || "en_US";
+        Elements.attachEvent(button, "click", () => {
+            defaultStore.setVal(SettingsVals.i18n.lang, val.value);
+            navigate(`${window.location.origin}/${val.value}/settings/misc`);
         });
+
+        const resetButton = Elements.exists<HTMLButtonElement>(await els.next());
+        Elements.attachEvent(resetButton, "click", async () => {
+            const t = await navigator.serviceWorker.getRegistrations();
+            t.map(async (reg) => {
+                await reg.unregister();
+            });
+            localStorage.clear();
+            window.location.href = "/";
+        });
+    }
+
+    new EventHandler({
+        events: {
+            "astro:page-load": handler
+        },
+        logging: false
     })
+    .bind();
 </script>

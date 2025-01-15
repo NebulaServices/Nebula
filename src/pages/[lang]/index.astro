@@ -8,19 +8,13 @@ import { VERSION } from "astro:env/client";
 ---
 
 <Layout title="Home">
-  <div
-    class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center"
-  >
-    <div
-      class="w-full flex flex-col justify-center items-center content-center h-2/4"
-    >
+  <div class="flex flex-wrap mt-16 justify-center content-center w-full bg-primary fixed inset-0 h-[calc(100%-4rem)] z-0 flex-col items-center">
+    <div class="w-full flex flex-col justify-center items-center content-center h-2/4">
       <div class="flex flex-row items-center mb-8">
         <div class="h-32 w-32 fill-navbar-text-color">
           <Logo />
         </div>
-        <h1
-          class="font-roboto whitespace-nowrap text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto"
-        >
+        <h1 class="font-roboto whitespace-nowrap text-navbar-text-color sm:visible text-5xl sm:text-7xl roboto">
           nebula.
         </h1>
       </div>
@@ -41,148 +35,183 @@ import { VERSION } from "astro:env/client";
       src="/loading"></iframe>
     <div
       id="version"
-      class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between font-roboto"
+      class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between items-center font-roboto"
     >
       <p>Version: {VERSION}</p>
+      <div class="hidden md:flex gap-2 flex-grow ml-16 justify-center items-center"> 
+          <p> Having problems? </p>
+        <button id="reset" class="underline underline-offset-4 hover:decoration-input-border-color active:decoration-input-text">
+            Click here to reset your instance
+        </button> 
+      </div>
       <p>&copy; Nebula Services 2024</p>
     </div>
   </div>
 </Layout>
 <script>
-  import { setTransport, getSWStuff } from "@utils/registerSW"; //../../utils/registerSW.ts
-  import { pageLoad } from "@utils/events";
-  import { SupportedSites } from "@utils/siteSupport";
-  import {
-    SearchEngines,
-    Settings,
-    cloak,
-    settings,
-  } from "@utils/settings/index";
-  import { search } from "@utils/search"; //../../utils/search.ts
-  import { BareClient } from "@mercuryworkshop/bare-mux";
-  type Suggestion = {
-    phrase: string;
-  };
-  function proxy(term: string, scram: typeof ScramjetController, pr: "uv" | "sj"): string {
-      const searchEngine = localStorage.getItem(Settings.ProxySettings.searchEngine);
-      const openIn = localStorage.getItem(Settings.ProxySettings.openIn);
-      return pr === "uv" ? `${__uv$config!.prefix}${__uv$config.encodeUrl!(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg))}` : scram.encodeUrl(search(term, searchEngine ? SearchEngines[searchEngine] : SearchEngines.ddg ))
-  }
-  async function uv(iframe: HTMLIFrameElement, term: string) {
-    const { sw, conn, sj } = getSWStuff(); 
-    await setTransport(
-      conn,
-      localStorage.getItem(Settings.ProxySettings.transport) as string
-    );
-    await settings.marketPlaceSettings.handlePlugins(sw);
-    iframe.classList.remove("hidden");
-    const url = proxy(term, sj, "uv");
-    if (url) {
-      iframe.src = url;
-    }
-  }
-  async function sj(iframe: HTMLIFrameElement, term: string) {
-      const { sw, conn, sj } = getSWStuff();
-      await setTransport(conn, localStorage.getItem(Settings.ProxySettings.transport) as string);
-      iframe.classList.remove("hidden");
-      const url = proxy(term, sj, "sj");
-      if (url) {
-          iframe.src = url;
-      }
-  }
-  //we need to rerun this on every page load
-  pageLoad(async () => {
-    const input = document.getElementById("nebula-input") as HTMLInputElement;
-    const iframe = document.getElementById("neb-iframe") as HTMLIFrameElement;
-    const omnibox = document.getElementById("omnibox") as HTMLDivElement;
-    const copyright = document.getElementById("version") as HTMLDivElement;
-    const client = new BareClient();
-    input?.addEventListener("keypress", async function (event: any) {
-      if (event.key === "Enter") {
-        copyright.classList.add("hidden");
-        if (localStorage.getItem(Settings.ProxySettings.proxy) === "automatic") {
-          const key = SupportedSites[input?.value];
-          switch (key) {
-            case "uv":
-              uv(iframe, input?.value);
-              break;
-            default:
-              uv(iframe, input?.value);
-              break;
-          }
-        } 
-        else if (localStorage.getItem(Settings.ProxySettings.proxy) === "uv") {
-          uv(iframe, input?.value);
-        }
-        else if (localStorage.getItem(Settings.ProxySettings.proxy) === "sj") {
-            sj(iframe, input?.value);
-        }
-      }
-    });
-    input?.addEventListener("input", async function () {
-      omnibox.innerHTML = "";
-      const value = input?.value;
-      input.classList.remove("rounded-b-2xl");
-      omnibox.classList.remove("hidden");
-      if (value.length === 0) {
-        input.classList.add("rounded-b-2xl");
-        omnibox.classList.add("hidden");
-      }
-      if (value.length >= 3) {
-        const data = await client.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(value)}&format=json`);
-        const dataRes = await data.json();
-        const filteredData = dataRes.slice(0, 8); //Trim to only about 8 results. Any more and our omnibox dies
-        if (filteredData) {
-          omnibox.innerHTML = "";
-          filteredData.map((results: Suggestion) => {
-            let span = document.createElement("span");
-            let pTag = document.createElement("p");
-            span.classList.add(
-              "cursor-pointer",
-              "font-roboto",
-              "border-b",
-              "border-input-border-color",
-              "last:rounded-b-xl",
-              "last:border-none",
-              "text-ellipsis",
-              "whitespace-nowrap",
-              "w-full",
-              "text-input-text",
-              "h-9",
-              "text-xl",
-              "text-align-center",
-              "overflow-hidden",
-              "flex",
-              "items-center",
-              "justify-center",
-              "hover:bg-lighter",
-              "active:bg-primary"
-            );
-            span.addEventListener("click", function () {
-              //When the box is clicked, we want to fill the omnibox and hit enter. This allows us to re-use the existing event listener on the input.
-              const event = new KeyboardEvent("keypress", {
-                key: "Enter",
-                code: "Enter",
-                which: 13,
-                keyCode: 13,
-              });
-              input.value = results.phrase;
-              input.dispatchEvent(event);
+    import { EventHandler } from "@utils/events";
+    import { SupportedSites, SearchEngines, SettingsVals } from "@utils/values";
+    import { search, Elements } from "@utils/index";
+    import { BareClient } from "@mercuryworkshop/bare-mux";
+    import { defaultStore } from "@utils/storage";
+    import { SW } from "@utils/serviceWorker";
+    import { Marketplace } from "@utils/marketplace";
+
+    type Suggestion = {
+        phrase: string;
+    };
+
+    const init = async (): Promise<void> => {
+        const bc = new BareClient();
+        const se = Elements.select([
+            { type: 'id', val: 'reset' },
+            { type: 'id', val: 'nebula-input' },
+            { type: 'id', val: 'omnibox' },
+            { type: 'id', val: 'version' },
+            { type: 'id', val: 'neb-iframe' }
+        ]);
+    
+        const reset = Elements.exists<HTMLButtonElement>(await se.next());
+        Elements.attachEvent(reset, "click", async () => {
+            const t = await navigator.serviceWorker.getRegistrations();
+            t.map(async (reg) => {
+                await reg.unregister();
             });
-            pTag.classList.add(
-              "cursor-pointer",
-              "text-ellipsis",
-              "text-center",
-              "w-full",
-              "overflow-hidden",
-              "whitespace-nowrap"
+            localStorage.clear();
+            window.location.href = "/";
+        });
+
+        const input = Elements.exists<HTMLInputElement>(await se.next());
+        const omnibox = Elements.exists<HTMLDivElement>(await se.next());
+        const copyright = Elements.exists<HTMLDivElement>(await se.next());
+        const iframe = Elements.exists<HTMLIFrameElement>(await se.next());
+        const prox = async (input: string, prox: "uv" | "sj") => {
+            await Marketplace.ready();
+            const mp = Marketplace.getInstances().next().value!;
+            const sw = SW.getInstances().next().value as SW; 
+            iframe.classList.remove("hidden");
+            const val = search(
+                input, 
+                defaultStore.getVal(SettingsVals.proxy.searchEngine) 
+                ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)]
+                : SearchEngines.ddg
             );
-            pTag.innerText = results.phrase;
-            span.appendChild(pTag);
-            omnibox.appendChild(span);
-          });
+            const { serviceWorker } = await sw.getSWInfo();
+            mp.handlePlugins(serviceWorker);
+            switch(prox) {
+                case "uv": {
+                    iframe.src = `${__uv$config.prefix}${__uv$config.encodeUrl!(val)}`;
+                    break;
+                }
+                case "sj": {
+                    const { sj } = await sw.getSWInfo();
+                    iframe.src = sj.encodeUrl(val);
+                    break;
+                }
+            }
         }
-      }
-    });
-  }, true);
+        input.addEventListener("keypress", async (event: any) => {
+            if (event.key === "Enter") {
+                copyright.classList.add("hidden");
+                if (defaultStore.getVal(SettingsVals.proxy.proxy.key) === SettingsVals.proxy.proxy.available.automatic) {
+                    switch(SupportedSites[input.value]) {
+                        case "uv": {
+                            prox(input.value, "uv");
+                            break;
+                        }
+                        case "sj": {
+                            prox(input.value, "sj");
+                            break;
+                        }
+                        default: {
+                            prox(input.value, "uv");
+                        }
+                    }
+                }
+
+                switch(defaultStore.getVal("proxy") as "uv" | "sj") {
+                    case "uv": {
+                        prox(input.value, "uv");
+                        break;
+                    }
+                    case "sj": {
+                        prox(input.value, "sj");
+                        break;
+                    }
+                }
+            }
+        });
+
+        input.addEventListener("input", async () => {
+            if (input.value.length < 3) {
+                omnibox.innerHTML = "";
+                omnibox.classList.add("hidden");
+                input.classList.add("rounded-b-2xl");
+                return;
+            }
+
+            omnibox.classList.remove("hidden");
+            input.classList.remove("rounded-b-2xl");
+            const data = await bc.fetch(`https://api.duckduckgo.com/ac?q=${encodeURIComponent(input.value)}&format=json`);
+            const res = await data.json();
+            const fData = res.slice(0, 6); // Trim to only the first 6 results.
+            if (fData.length <= 0) {
+                omnibox.classList.add("hidden");
+                input.classList.add("rounded-b-2xl");
+                return;
+            }
+            omnibox.innerHTML = "";
+            fData.map((res: Suggestion) => {
+                const span = document.createElement("span") as HTMLSpanElement;
+                const p = document.createElement("p") as HTMLParagraphElement;
+                p.classList.add(
+                    "cursor-pointer",
+                    "text-ellipsis",
+                    "text-center",
+                    "w-full",
+                    "overflow-hidden",
+                    "whitespace-nowrap"
+                );
+                p.innerText = res.phrase;
+
+                span.classList.add(
+                    "cursor-pointer",
+                    "font-roboto",
+                    "border-b",
+                    "border-input-border-color",
+                    "last:rounded-b-xl",
+                    "last:border-none",
+                    "text-ellipsis",
+                    "whitespace-nowrap",
+                    "w-full",
+                    "text-input-text",
+                    "h-9",
+                    "text-xl",
+                    "text-align-center",
+                    "overflow-hidden",
+                    "flex",
+                    "items-center",
+                    "justify-center",
+                    "hover:bg-lighter",
+                    "active:bg-primary"
+                );
+                span.addEventListener("click", () => {
+                    input.value = res.phrase;
+                    input.dispatchEvent(
+                        new KeyboardEvent("keypress", { key: "Enter", code: "Enter" })
+                    );
+                });
+                span.appendChild(p);
+                omnibox.appendChild(span);
+            });
+        }); 
+    }
+
+    new EventHandler({
+        events: {
+            "astro:page-load": init
+        },
+        logging: false
+    })
+    .bind();
 </script>

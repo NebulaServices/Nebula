@@ -7,7 +7,7 @@ import Layout from "@layouts/Layout.astro";
     <LoadingComponent />
 </Layout>
 <script>
-    import { pageLoad } from "@utils/events";
+    import { EventHandler } from "@utils/events";
     import { navigate } from "astro:transitions/client";
     function isComingFromIframe() {
         try {
@@ -17,11 +17,19 @@ import Layout from "@layouts/Layout.astro";
             return true;
         }
     }
-    pageLoad(() => {
-        const isIframe = isComingFromIframe();
-        if (!isIframe) {
-            console.log("Assuming request isn't coming from iFrame. Redirecting...");
-            navigate('/');
-        }
+
+    const eHandle = new EventHandler({
+        events: {
+            "DOMContentLoaded": (() => {
+                const isIframe = isComingFromIframe();
+                if (!isIframe) {
+                    console.log("Assuming request isn't coming from iframe. Redirecting...");
+                    //navigate("/");
+                }
+            }),
+        },
+        logging: false
     });
+    //Handle the events
+    eHandle.bind();
 </script>

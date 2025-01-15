@@ -7,10 +7,7 @@ const t = useTranslations(lang);
 import { MARKETPLACE_ENABLED } from "astro:env/client";
 ---
 
-<div
-  class="h-full mt-16 flex w-full flex-col justify-evenly bg-navbar-color m-auto"
-  id="mobileNavMenu"
->
+<div class="h-full mt-16 flex w-full flex-col justify-evenly bg-navbar-color m-auto" id="mobilenav">
   <HeaderButton text={t("header.home")} route={`/${lang}/`}>
     <Icon
       name="ph:house-bold"
@@ -47,12 +44,59 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
     />
   </HeaderButton>
 </div>
+<style is:global>
+    #mobilenav {
+        -webkit-transition-duration: 600ms;
+        transition-duration: 600ms;
+        transform: translateX(100%);
+    }
+    #mobilenavwrapper {
+        -webkit-transition-duration: 600ms;
+        transition-duration: 600ms;
+        transform: translateX(100%);
+    }
+</style>
 <script>
-  import { fade } from "astro:transitions";
-  import { isMobileNavOpen } from "../store.js";
-  function closeMobileNav() {
-    isMobileNavOpen.set(false);
-  }
-  const mobileNavMenu = document.getElementById("mobileNavMenu");
-  mobileNavMenu!.addEventListener("click", closeMobileNav);
+    import { EventHandler } from "@utils/events";
+    import { Elements } from "@utils/index";
+    
+    const init = async () => {
+        const els = Elements.select([
+            { type: 'id', val: 'mobileNavTrigger' },
+            { type: 'id', val: 'right_caret' },
+            { type: 'id', val: 'hamburger_menu' },
+            { type: 'id', val: 'mobilenavwrapper' },
+            { type: 'id', val: 'mobilenav' }
+        ]);
+        const trigger = Elements.exists<HTMLDivElement>(await els.next());
+        const rightCaret = Elements.exists<SVGElement>(await els.next());
+        const hamburgerMenu = Elements.exists<SVGElement>(await els.next());
+        const wrapper = Elements.exists<HTMLDivElement>(await els.next());
+        const mnm = Elements.exists<HTMLDivElement>(await els.next());
+        let isOpen = false;
+        Elements.attachEvent(trigger, "click", async () => {
+            console.log(isOpen); 
+            if (isOpen) {
+                rightCaret.style.display = "none";
+                hamburgerMenu.style.display = "block"; 
+                mnm.style.transform = "translateX(100%)";
+                wrapper.style.transform = "translateX(100%)";
+                isOpen = false;
+            }
+            else { 
+                hamburgerMenu.style.display = "none";
+                rightCaret.style.display = "block";
+                mnm.style.display = "flex";
+                mnm.style.transform = "translateX(0%)";
+                wrapper.style.transform = "translateX(0%)";
+                isOpen = true;
+            }
+        });
+    }
+    new EventHandler({
+        events: {
+            "astro:page-load": init 
+        },
+        logging: false 
+    }).bind();
 </script>

@@ -1,0 +1,27 @@
+<input
+  class="w-10 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+  type="number"
+  id="pageinationInput"
+  placeholder="..."
+/>
+<script>
+    import { EventHandler } from "@utils/events";
+    import { Elements } from "@utils/index";
+    import { navigate } from "astro:transitions/client";
+    new EventHandler({
+        events: {
+            "astro:page-load": async () => {
+                const el = Elements.select([
+                    { type: 'id', val: 'pageinationInput' }
+                ]);
+                const input = Elements.exists<HTMLInputElement>(await el.next());
+                Elements.attachEvent(input, "keyup", (event?: Event) => {
+                    const e = event as KeyboardEvent | undefined;
+                    if (e?.key) return navigate(`${input.value}`);
+                });
+            }
+        },
+        logging: false
+    })
+    .bind();
+</script>
