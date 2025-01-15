@@ -1,0 +1,23 @@
+[marketplace]
+enabled = true # Turn on or off the marketplace entirely
+psk = "CHANGEME" # Change this to something more secure.
+level = 1
+
+[db]
+name = "database" # Your databsae name
+username = "username" # The username of your DB (SQLITE just ignores this)
+password = "password" # The password to your DB (SQLITE ignores this)
+postgres = false # Enable to use postgres over sqlite (recommended for large prod instances)
+
+[postgres] # Set the "domain" to either and ip address or a actual domain 
+domain = ""
+port = 5432
+
+[seo]
+enabled = true # Disabled by default as you probably don't want it
+domain = "http://localhost:4321" # Set to YOUR domain. Make sure to include http or https://
+
+[server.server]
+port = 8080
+wisp = true
+logging = false # Disable for the tons & tons of logs to go away (useful for debugging but otherwise eh)
