@@ -74,7 +74,7 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             payload: "retro.css",
             type: "theme"
         },
-        {
+        /* {
             package_name: 'gyatt',
             title: 'gyatt',
             image: 'gyatt',
@@ -84,7 +84,7 @@ async function setupDB(db: ModelStatic<CatalogModel>) {
             tags: [ "e" ],
             payload: "gyatt.js",
             type: "plugin-page"
-        }
+        } */
         //To add plugins: plugin types consist of plugin-sw (workerware) & plugin-page (uv.config.inject)
     ];
     const dbItems = await db.findAll();
