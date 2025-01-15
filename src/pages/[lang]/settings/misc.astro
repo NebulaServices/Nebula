@@ -30,7 +30,15 @@ const t = useTranslations(lang);
                 ]
             }}
             both={{enabled: false}}
-        /> 
+        />
+        <SettingsCard
+            title="Reset instance"
+            description="Reset your instance if your having troubles or problems."
+            input={{ input: false }}
+            button={{ name: 'Reset', id: 'resetinstance' }}
+            select={{ select: false }}
+            both={{ enabled: false }}
+        />
     </SettingsSection>
   </SettingsLayout>
  <script>
@@ -43,7 +51,8 @@ const t = useTranslations(lang);
     const handler = async () => {
         const els = Elements.select([
             { type: 'id', val: 'lang' },
-            { type: 'id', val: 'setlang' }
+            { type: 'id', val: 'setlang' },
+            { type: 'id', val: 'resetinstance' }
         ]);
         const lang = defaultStore.getVal(SettingsVals.i18n.lang);
         const val = Elements.exists<HTMLSelectElement>(await els.next());
@@ -52,6 +61,16 @@ const t = useTranslations(lang);
         Elements.attachEvent(button, "click", () => {
             defaultStore.setVal(SettingsVals.i18n.lang, val.value);
             navigate(`${window.location.origin}/${val.value}/settings/misc`);
+        });
+
+        const resetButton = Elements.exists<HTMLButtonElement>(await els.next());
+        Elements.attachEvent(resetButton, "click", async () => {
+            const t = await navigator.serviceWorker.getRegistrations();
+            t.map(async (reg) => {
+                await reg.unregister();
+            });
+            localStorage.clear();
+            window.location.href = "/";
         });
     }
 
