@@ -19,7 +19,9 @@ jobs:
       packages: write
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Setup docker buildx
         uses: docker/setup-buildx-action@v3
       - name: Login To registry ${{ env.REGISTRY }}
