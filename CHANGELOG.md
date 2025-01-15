@@ -26,3 +26,11 @@
 - General Bugfixes
 - Removes Svelte except for 2 componenents
 - Scramjet :rocket:
+
+# 9.1.0
+
+- Rewrites everything in the [utils/](./src/utils) folder
+- Bugfixes
+- Better logging
+- Mobile nav jank is gone
+- Component cleanup
