@@ -1,4 +1,5 @@
 <script>
+<<<<<<< HEAD
     import { EventHandler } from "@utils/events";
     import { SW, createProxyScripts, checkProxyScripts, createBareMuxConn, setTransport } from "@utils/serviceWorker";
     import { Settings } from "@utils/settings";
@@ -64,6 +65,30 @@
             }
         },
         logging: true 
+=======
+    import { settings, Settings } from "@utils/settings/index";
+    import { loadProxyScripts, setTransport, initSw, setSWStuff } from "@utils/registerSW";
+    // This loads the settings in a nice way
+    settings.tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
+    settings.proxySettings.changeProxy(localStorage.getItem(Settings.ProxySettings.proxy) as string || "automatic");
+    settings.proxySettings.openIn(localStorage.getItem(Settings.ProxySettings.openIn) as string || "embed");
+    settings.proxySettings.setSearchEngine(localStorage.getItem(Settings.ProxySettings.searchEngine) as string || "ddg");
+    settings.proxySettings.setWispURL(localStorage.getItem(Settings.ProxySettings.wispServerURL) as string || "default");
+    settings.proxySettings.setTransport(localStorage.getItem(Settings.ProxySettings.transport) as string || "libcurl");
+    settings.marketPlaceSettings.changeTheme(false, undefined, localStorage.getItem(Settings.AppearanceSettings.video) as string, localStorage.getItem(Settings.AppearanceSettings.image) as string, localStorage.getItem(Settings.AppearanceSettings.themeName) as string);
+    document.addEventListener("astro:after-swap", function() {
+        settings.tabSettings.cloakTab(localStorage.getItem(Settings.TabSettings.tabCloak) as string || "default");
+        //settings.marketPlaceSettings.changeTheme(false);
+    });
+    document.addEventListener("DOMContentLoaded", async () => {
+        const conn = await loadProxyScripts();
+        await setTransport(
+            conn,
+            localStorage.getItem(Settings.ProxySettings.transport) as string
+        );
+        const sw = await initSw();
+        await setSWStuff({sw: sw.sw, conn, sj: sw.sj });
+>>>>>>> parent of 2c4ea3e (Stupid types)
     });
     //bind the events
     eventHandler.bind();
