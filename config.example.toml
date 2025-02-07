@@ -8,7 +8,7 @@ enabled = false
 domain = "https://nebulaproxy.io"
 
 [db]
-name = "database" # Your databsae name
+name = "database" # Your database name
 username = "username" # The username of your DB (SQLITE just ignores this)
 password = "password" # The password to your DB (SQLITE ignores this)
 postgres = false # Enable to use postgres over sqlite (recommended for large prod instances)
