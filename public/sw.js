@@ -1,6 +1,5 @@
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");
-importScripts('/scram/scramjet.wasm.js');
 importScripts('/scram/scramjet.shared.js');
 importScripts('/scram/scramjet.worker.js');
 importScripts("/workerware/workerware.js");
