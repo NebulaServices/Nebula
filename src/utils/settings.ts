@@ -5,37 +5,42 @@ import { setTransport, SW } from "./serviceWorker";
 
 const tab = {
     ab: (redirect: string) => {
-        window.location.replace(redirect);
         const win = window.open();
-        const iframe = win!.document.createElement("iframe") as HTMLIFrameElement;
-        win!.document.body.setAttribute('style', 'margin: 0; height: 100vh; width: 100%;');
+        if (!win) return;
+        window.location.replace(redirect);
+        const iframe = win.document.createElement("iframe") as HTMLIFrameElement;
+        win.document.body.setAttribute('style', 'margin: 0; height: 100vh; width: 100%;');
         iframe.setAttribute('style', 'border: none; width: 100%; height: 100%; margin: 0;');
         iframe.src = window.location.href;
-        win!.document.body.appendChild(iframe);
+        win.document.body.appendChild(iframe);
     },
     blob: (redirect: string) => {
-        const content = `
-            <!DOCTYPE html>
-            <html>
-                <head>
-                    <style type="text/css">
-                        body, html {
-                            margin: 0;
-                            padding: 0;
-                            height: 100%;
-                            width: 100%;
-                            overflow: hidden;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <iframe style="border: none; width: 100%; height: 100%;" src="${window.location.href}"></iframe>
-                </body>
-            </html>
-        `;
+        const win = window.open();
+        if (!win) return;
         window.location.replace(redirect);
+        const content = `
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <style type="text/css">
+                    body, html {
+                        margin: 0;
+                        padding: 0;
+                        height: 100%;
+                        width: 100%;
+                        overflow: hidden;
+                    }
+                </style>
+            </head>
+            <body>
+                <iframe style="border: none; width: 100%; height: 100%;" src="${window.location.href}"></iframe>
+            </body>
+        </html>
+    `;
         const blob = new Blob([content], { type: 'text/html' });
-        window.open(URL.createObjectURL(blob), "_blank");
+        const url = URL.createObjectURL(blob);
+        win.location.href = url;
+
     },
     cloak: (cloak: string) => {
         const fElem = document.getElementById("favicon")! as HTMLLinkElement;
@@ -43,7 +48,7 @@ const tab = {
             document.title = title;
             fElem.href = href;
         }
-        switch(cloak) {
+        switch (cloak) {
             case "google": {
                 c("Google", "/cloaks/google.png");
                 break;
@@ -57,7 +62,7 @@ const tab = {
                 break;
             }
             case "classroom": {
-                c("Home", "/cloaks/classroom.ico");
+                c("Home", "/cloaks/classroom.png");
                 break;
             }
             case "powerschool": {
