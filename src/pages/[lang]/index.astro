@@ -5,6 +5,11 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 import { VERSION } from "astro:env/client";
+
+let currentYear = getCurrentYear();
+function getCurrentYear() {
+  return new Date().getFullYear(); // We would do this client side but doing it at build time won't require importing another framework
+}
 ---
 
 <Layout title="Home">
@@ -44,7 +49,7 @@ import { VERSION } from "astro:env/client";
             Click here to reset your instance
         </button> 
       </div>
-      <p>&copy; Nebula Services 2025</p>
+      <p>&copy; Nebula Services {currentYear}</p>
     </div>
   </div>
 </Layout>
