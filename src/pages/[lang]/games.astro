@@ -14,7 +14,7 @@ import Layout from "@layouts/Layout.astro";
             { type: 'id', val: 'chango' }
         ]);
         const chango = Elements.exists<HTMLIFrameElement>(await el.next());
-        chango.src = `${__uv$config.prefix}${__uv$config.encodeUrl!("https://games.nebulaservices.org/games/")}`
+        chango.src = `${__uv$config.prefix}${__uv$config.encodeUrl!("https://radon.games/games")}`
     };
 
     new EventHandler({
