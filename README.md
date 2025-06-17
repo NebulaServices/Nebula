@@ -72,7 +72,6 @@
 
 - By default, the marketplace is enabled and uses SQLite
     - If you encounter any issues with SQLite3, please run the `fix_sqlite3.sh` script
-    - Currently the script only works if you are using an arch-based distro and requires you to have https://nvm.sh installed
 - If you would like to disable the catalog, see [#config](#config)
 - For big production instances, I recommend using PostgreSQL rather than SQLite. To do this see [#config](#config)
 - To use PostgreSQL via the provided docker-compose files, see [#docker](#docker)
@@ -378,7 +377,7 @@ There are a couple of configuration options for Nebula. The defaults are fine mo
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
 | `masqr` | The below options are to configure masqr. | `object` | N/A |
 | `enabled` | Enable masqr | `boolean` | `false` |
-| `failed` | Default masqr failed page (For using per-site failed pages, create a Masqrd folder and create a DOMAIN.html file inside (Ex. www.example.com.html)| `string` | `failed.html` |
+| `failed` | Default masqr failed page (For using per-site failed pages, create a create a DOMAIN.html file (Ex. www.example.com.html) inside the root project directory| `string` | `failed.html` |
 | `whitelisted` | List of domains to skip masqr| `object` | `[""]` |
 | `url` | URL for validating masqr licenses | `string` | `` |
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
