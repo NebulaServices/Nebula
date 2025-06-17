@@ -10,6 +10,7 @@ import fastifyStatic from "@fastify/static";
 import chalk from "chalk";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import gradient from "gradient-string";
+import { masqr } from '@rubynetwork/corlink-fastify';
 //@ts-ignore WHY would I want this typechecked AT ALL
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
 import { parsedDoc } from "./config.js";
@@ -29,10 +30,10 @@ await app.register(fastifyCompress, {
 });
 
 await app.register(fastifyMultipart, {
-  limits: {
-    fileSize: 25 * 1024 * 1024,
-    parts: Infinity
-  },
+    limits: {
+        fileSize: 25 * 1024 * 1024,
+        parts: Infinity
+    },
 });
 
 await app.register(fastifyHelmet, {
@@ -41,6 +42,17 @@ await app.register(fastifyHelmet, {
     crossOriginOpenerPolicy: true,
     contentSecurityPolicy: false //Disabled because astro DOES NOT LIKE IT
 });
+
+if (parsedDoc.masqr.enabled) {
+    await app.register(masqr, {
+        deniedFilePath: parsedDoc.masqr.failed,
+        v3: true,
+        unlockedPaths: ['/wisp/', '/packages/', '/api/'],
+        whiteListedURLs: parsedDoc.masqr.whitelisted,
+        masqrUrl: parsedDoc.masqr.url,
+        builtinCookieParser: true,
+    });
+}
 
 await app.register(fastifyStatic, {
     root: fileURLToPath(new URL("../dist/client", import.meta.url))

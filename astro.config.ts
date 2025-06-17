@@ -39,7 +39,7 @@ export default defineConfig({
                         enabled: parsedDoc.seo.enabled,
                         domain: new URL(parsedDoc.seo.domain).host
                     })
-                })
+                }),
             }
         },
     integrations: [

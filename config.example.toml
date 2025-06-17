@@ -21,3 +21,9 @@ port = 5432
 port = 8080
 wisp = true
 logging = true # Disable for the tons & tons of logs to go away (useful for debugging but otherwise eh)
+
+[masqr]
+enabled = true
+failed = "failed.html" # Default masqr failed page. For per-site failed pages, create a folder named "Masqrd" and create DOMAIN.TLD.html
+whitelisted = ["https://nebulaservices.org"] # List of domains to skip masqr
+url = "https://masqr.example.com/validate?license=" # Masqr license URL

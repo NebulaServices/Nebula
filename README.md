@@ -223,6 +223,7 @@ git clone https://github.com/nebulaservices/nebula --recursive && cd nebula
 2. Install all of the dependencies:
 ```bash
 npm i
+# If you encounter issues with sqlite3 (AND ARE USING ARCH AND HAVE https://nvm.sh INSTALLED), run ./fix_sqlite3.sh
 ```
 
 3. Create a `config.toml` file
@@ -360,6 +361,13 @@ There are a couple of configuration options for Nebula. The defaults are fine mo
 | `port` | What port the server should listen on. *(Note: Can also be configured via environment variable `PORT`)* | `number` | `8080` |
 | `wisp` | Whether the server should use the inbuilt wisp server. (Disabled if your using an external wisp server) | `boolean` | `true` |
 | `logging` | Whether or not to enable logging. *Note: Logs are massive* | `boolean` | `true` |
+|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
+| `masqr` | The below options are to configure masqr. | `object` | N/A |
+| `enabled` | Enable masqr | `boolean` | `true` |
+| `failed` | Default masqr failed page (For using per-site failed pages, create a Masqrd folder and create a DOMAIN.html file inside (Ex. www.example.com.html)| `string` | `failed.html` |
+| `whitelisted` | List of domains to skip masqr| `object` | `[""]` |
+| `url` | URL for validating masqr licenses | `string` | `https://DOMAIN.TLD/validate?license=` |
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
 
 ## Deploying

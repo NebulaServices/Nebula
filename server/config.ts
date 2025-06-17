@@ -29,6 +29,12 @@ interface TomlData {
         domain: string;
         port: number;
     };
+    masqr: {
+        enabled: boolean;
+        failed: string;
+        whitelisted: string[];
+        url: string;
+    }
 }
 
 interface Verify {
@@ -66,15 +72,17 @@ verify([
     { name: "server.server.logging", typeOF: parsedDoc.server.server.logging, type: "boolean" },
     { name: "seo", typeOF: parsedDoc.seo, type: "object" },
     { name: "seo.enabled", typeOF: parsedDoc.seo.enabled, type: "boolean" },
-    { name: "seo.domain", typeOF: parsedDoc.seo.domain, type: "string", verifyExtras: () => {
-        try {
-            new URL(parsedDoc.seo.domain);
+    {
+        name: "seo.domain", typeOF: parsedDoc.seo.domain, type: "string", verifyExtras: () => {
+            try {
+                new URL(parsedDoc.seo.domain);
+            }
+            catch (e) {
+                return Error(e);
+            }
+            return true;
         }
-        catch (e) {
-            return Error(e);
-        }
-        return true;
-    }},
+    },
     { name: "db", typeOF: parsedDoc.db, type: "object" },
     { name: "db.name", typeOF: parsedDoc.db.name, type: "string" },
     { name: "db.username", typeOF: parsedDoc.db.username, type: "string" },
@@ -82,7 +90,12 @@ verify([
     { name: "db.postgres", typeOF: parsedDoc.db.postgres, type: "boolean" },
     { name: "postgres", typeOF: parsedDoc.postgres, type: "object" },
     { name: "postgres.domain", typeOF: parsedDoc.postgres.domain, type: "string" },
-    { name: "postgres.port", typeOF: parsedDoc.postgres.port, type: "number" }
+    { name: "postgres.port", typeOF: parsedDoc.postgres.port, type: "number" },
+    { name: "masqr", typeOF: parsedDoc.masqr, type: "object" },
+    { name: "masqr.enabled", typeOF: parsedDoc.masqr.enabled, type: "boolean" },
+    { name: "masqr.failed", typeOF: parsedDoc.masqr.failed, type: "string" },
+    { name: "masqr.whitelisted", typeOF: parsedDoc.masqr.whitelisted, type: "object" },
+    { name: "masqr.url", typeOF: parsedDoc.masqr.url, type: "string" },
 ]);
 
 if (parsedDoc.marketplace.psk === "CHANGEME") {
