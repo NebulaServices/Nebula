@@ -66,7 +66,6 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
             name: "searchengine",
             options: [
               { name: "DuckDuckGo", value: "ddg", disabled: false },
-              { name: "Google", value: "google", disabled: false },
               { name: "Bing", value: "bing", disabled: false },
             ],
             }} 
@@ -75,14 +74,13 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
         <SettingsCard
           title="Wisp Server"
           description="Choose the wisp server you feel is the fastest"
-          input={{ input: true, required: false, placeholder: 'wss://nebulaproxy.io/wisp' }}
+          input={{ input: true, required: false, placeholder: 'wss://nebulaservices.org/wisp/' }}
           button={{ name: "Select", id: "setwispurl" }}
           select={{
             select: true,
             name: "wispurl",
             options: [
               { name: "Default", value: "default", disabled: false },
-              { name: "Ruby Network (US)", value: "ruby", disabled: false },
               { name: "Custom", value: "custom", disabled: false }
             ],
             }}

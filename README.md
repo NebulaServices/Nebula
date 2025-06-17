@@ -36,11 +36,18 @@
 
 ---
 
+## Contact
+
+-   You can E-Mail us at:
+    -   Legal concerns: legal@nebulaservices.org
+    -   Contact: contact@nebulaservices.org
+---
+
 ## Features
 
 -   Multiple Proxy "Backends":
     -   [Ultraviolet](https://github.com/titaniumnetwork-dev/ultraviolet)
-    -   [RammerHead](https://github.com/binary-person/rammerhead)
+    -   [Scramjet](https://github.com/mercuryworkshop/scramjet)
 ---
 
 ## Contributors
@@ -52,17 +59,20 @@
 ## Tech Stack
 
 -   [Astro](https://astro.build)
+-   [Tailwind](https://tailwindcss.com/)
+-   [Svelte](https://svelte.dev/)
 -   [Fastify](https://fastify.dev)
 -   [Ultraviolet](https://github.com/titaniumnetwork-dev/ultraviolet)
--   [RammerHead](https://github.com/binary-person/rammerhead)
+-   [Scramjet](https://github.com/mercuryworkshop/scramjet)
 -   [Epoxy](https://github.com/mercuryworkshop/epoxy-tls)
 -   [Libcurl.js](https://github.com/ading2210/libcurl.js)
--   HTML, CSS, and JavaScript (DUH)
 ---
 
 ## Catalog/Marketplace
 
 - By default, the marketplace is enabled and uses SQLite
+    - If you encounter any issues with SQLite3, please run the `fix_sqlite3.sh` script
+    - Currently the script only works if you are using an arch-based distro and requires you to have https://nvm.sh installed
 - If you would like to disable the catalog, see [#config](#config)
 - For big production instances, I recommend using PostgreSQL rather than SQLite. To do this see [#config](#config)
 - To use PostgreSQL via the provided docker-compose files, see [#docker](#docker)
@@ -212,8 +222,13 @@ self.entryFunc = example; //DO NOT run the function here. That will cause errors
 ### Terminal
 
 Prerequisites:
-- Node & npm
+- Node & npm (pnpm recommended!)
 - Git
+
+0. Install pnpm
+```bash
+npm i -g pnpm
+```
 
 1. Clone the repo:
 ```bash
@@ -222,8 +237,7 @@ git clone https://github.com/nebulaservices/nebula --recursive && cd nebula
 
 2. Install all of the dependencies:
 ```bash
-npm i
-# If you encounter issues with sqlite3 (AND ARE USING ARCH AND HAVE https://nvm.sh INSTALLED), run ./fix_sqlite3.sh
+pnpm i
 ```
 
 3. Create a `config.toml` file
@@ -238,20 +252,20 @@ nano config.toml
 
 5. Build the front end & server:
 ```bash
-npm run build
+pnpm build
 ```
 
 6. Start the server
 ```bash
-npm start
+pnpm start
 ```
 
 > [!NOTE]
-> You can run `npm run bstart` to build and start together
+> You can run `pnpm bstart` to build and start together
 ---
 
 ### Docker
-
+**CURRENTLY DOCKER DOES NOT WORK!! For some reason the docker image doesn't exist in Dockhub**
 - There are two ways to deploy with docker:
     - [Normal docker](#normal-docker)
     - [Docker Compose](#docker-compose)
@@ -362,12 +376,11 @@ There are a couple of configuration options for Nebula. The defaults are fine mo
 | `wisp` | Whether the server should use the inbuilt wisp server. (Disabled if your using an external wisp server) | `boolean` | `true` |
 | `logging` | Whether or not to enable logging. *Note: Logs are massive* | `boolean` | `true` |
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
-|----------------------------| ----------------------------------------------------------------------------|------------|--------------|
 | `masqr` | The below options are to configure masqr. | `object` | N/A |
-| `enabled` | Enable masqr | `boolean` | `true` |
+| `enabled` | Enable masqr | `boolean` | `false` |
 | `failed` | Default masqr failed page (For using per-site failed pages, create a Masqrd folder and create a DOMAIN.html file inside (Ex. www.example.com.html)| `string` | `failed.html` |
 | `whitelisted` | List of domains to skip masqr| `object` | `[""]` |
-| `url` | URL for validating masqr licenses | `string` | `https://DOMAIN.TLD/validate?license=` |
+| `url` | URL for validating masqr licenses | `string` | `` |
 |----------------------------| ----------------------------------------------------------------------------|------------|--------------|
 
 ## Deploying
