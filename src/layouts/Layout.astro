@@ -4,6 +4,7 @@ import Header from "@components/Header.astro";
 import MobileNavigation from "@components/MobileNavigation.astro";
 import SettingsLoader from "@components/settings/Loader.astro";
 import { SEO } from "astro-seo";
+import { SimpleAnalytics } from 'astro-simpleanalytics-plugin';
 import { SEO as SEOC } from "astro:env/client";
 interface Props {
   title: string;
@@ -163,5 +164,6 @@ const Host = Astro.url.host;
         background: var(--navbar-link-color);
       }
     </style>
-  </body>
+    <SimpleAnalytics />  
+</body>
 </html>
