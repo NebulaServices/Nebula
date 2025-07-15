@@ -34,7 +34,7 @@
     "@mercuryworkshop/epoxy-transport": "^2.1.27",
     "@mercuryworkshop/libcurl-transport": "^1.3.15",
     "@mercuryworkshop/scramjet": "https://github.com/MercuryWorkshop/scramjet/releases/download/latest/mercuryworkshop-scramjet-1.0.2-dev.tgz",
-    "@playform/compress": "^0.1.6",
+    "@playform/compress": "^0.2.0",
     "@rubynetwork/corlink-fastify": "https://github.com/NebulaServices/corlink/releases/download/2.0.2/rubynetwork-corlink-fastify-2.0.2.tgz",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "@types/node": "^22.10.2",
