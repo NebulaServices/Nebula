@@ -1,11 +1,13 @@
 importScripts("/uv/uv.bundle.js");
 importScripts("/uv/uv.config.js");
-importScripts('/scram/scramjet.shared.js');
-importScripts('/scram/scramjet.worker.js');
+//importScripts('/scram/scramjet.shared.js');
+//importScripts('/scram/scramjet.worker.js');
+importScripts('/scram/scramjet.all.js');
 importScripts("/workerware/workerware.js");
 importScripts(__uv$config.sw || "/uv/uv.sw.js");
 const uv = new UVServiceWorker();
 const ww = new WorkerWare({ debug: false });
+const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const sj = new ScramjetServiceWorker();
 (async function () {
         await sj.loadConfig();

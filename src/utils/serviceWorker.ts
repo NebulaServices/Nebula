@@ -30,7 +30,7 @@ function* createProxyScripts() {
     yield uv;
     const uvConfig = createScript("/uv/uv.config.js", true);
     yield uvConfig;
-    const sj = createScript("/scram/scramjet.controller.js", true);
+    const sj = createScript("/scram/scramjet.all.js", true);
     yield sj;
 };
 
@@ -45,7 +45,7 @@ function* createProxyScripts() {
 const checkProxyScripts = (): Promise<void> => {
     return new Promise((resolve) => {
         const checkScript = setInterval(() => {
-            if (typeof __uv$config !== "undefined" && typeof ScramjetController !== "undefined") {
+            if (typeof __uv$config !== "undefined" && typeof $scramjetLoadController !== "undefined") {
                 clearInterval(checkScript);
                 resolve();
             }
@@ -105,13 +105,12 @@ class SW {
     constructor(conn: BareMuxConnection) {
         SW.#instances.add(this);
         const sj = (): ScramjetController => {
+            const { ScramjetController } = $scramjetLoadController();
             const sj = new ScramjetController({
                 prefix: '/~/scramjet',
                 files: {
                     wasm: "/scram/scramjet.wasm.wasm",
-                    worker: "/scram/scramjet.worker.js",
-                    client: "/scram/scramjet.client.js",
-                    shared: "/scram/scramjet.shared.js",
+                    all: "/scram/scramjet.all.js",
                     sync: "/scram/scramjet.sync.js"
                 },
                 flags: {
