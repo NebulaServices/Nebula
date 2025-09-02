@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@mercuryworkshop/scramjet'
+  - bufferutil
+  - esbuild
+  - sharp
+  - sqlite3
+  - utf-8-validate
