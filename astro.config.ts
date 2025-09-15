@@ -7,7 +7,7 @@ import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { libcurlPath } from "@mercuryworkshop/libcurl-transport";
 import playformCompress from "@playform/compress";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
-import { scramjetPath } from "@mercuryworkshop/scramjet";
+import { scramjetPath } from "@mercuryworkshop/scramjet/path";
 import icon from "astro-icon";
 import { defineConfig, envField } from "astro/config";
 import { viteStaticCopy } from "vite-plugin-static-copy";

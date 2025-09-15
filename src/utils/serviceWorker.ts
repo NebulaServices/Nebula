@@ -86,6 +86,9 @@ const setTransport = (conn: BareMuxConnection,  transport?: "libcurl" | "epoxy")
 
 type SWInit = {
     serviceWorker: ServiceWorkerRegistration;
+    
+    // TODO: Fix types
+    //@ts-ignore
     sj: ScramjetController;
     bareMuxConn: BareMuxConnection;
 }
@@ -104,6 +107,9 @@ class SW {
     static #instances = new Set();
     constructor(conn: BareMuxConnection) {
         SW.#instances.add(this);
+
+        // TODO: Fix types
+        //@ts-ignore
         const sj = (): ScramjetController => {
             const { ScramjetController } = $scramjetLoadController();
             const sj = new ScramjetController({
