@@ -54,6 +54,8 @@
 
 - [Rifting](https://github.com/rifting) - Owner & Maintainer
 - [MotorTruck1221](https://motortruck1221.com) - Maintainer
+- [Scaratek](https://github.com/scaratech) - Maintainer
+- [Skylink](https://skylinkhosting.com) - Providing hosting
 ---
 
 ## Tech Stack
