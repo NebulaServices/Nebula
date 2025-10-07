@@ -54,7 +54,7 @@
     "svelte": "^5.16.0",
     "svelte-french-toast": "^1.2.0",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.2",
+    "typescript": "^5.9.2",
     "vite-plugin-static-copy": "^2.2.0",
     "wisp-server-node": "^1.1.7"
   },
