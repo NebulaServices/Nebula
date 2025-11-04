@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/node": "^9.0.0",
+    "@astrojs/node": "^9.4.4",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/svelte": "^7.0.2",
     "@astrojs/tailwind": "^5.1.4",
@@ -39,7 +39,7 @@
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "@types/node": "^22.10.2",
     "@types/sequelize": "^4.28.20",
-    "astro": "^5.1.1",
+    "astro": "^5.13.10",
     "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
     "astro-simpleanalytics-plugin": "^0.3.20",
