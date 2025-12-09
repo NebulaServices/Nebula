@@ -37,7 +37,7 @@
     "@playform/compress": "^0.1.6",
     "@rubynetwork/corlink-fastify": "https://github.com/NebulaServices/corlink/releases/download/2.0.2/rubynetwork-corlink-fastify-2.0.2.tgz",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.19.1",
     "@types/sequelize": "^4.28.20",
     "astro": "^5.1.1",
     "astro-icon": "^1.1.5",
