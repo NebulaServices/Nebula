@@ -34,3 +34,7 @@
 - Better logging
 - Mobile nav jank is gone
 - Component cleanup
+
+# 9.1.1
+
+- Fixes up a small issue with postgres connections and Unix sockets
