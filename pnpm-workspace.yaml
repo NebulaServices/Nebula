@@ -1,5 +1,3 @@
-packages:
-  - "."
 onlyBuiltDependencies:
   - '@biomejs/biome'
   - '@mercuryworkshop/scramjet'
