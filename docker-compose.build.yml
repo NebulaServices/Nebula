@@ -1,6 +1,6 @@
 services:
   nebula:
-    image: ghcr.io/nebulaservices/nebula:latest
+    image: motortruck1221/nebula:latest
     container_name: nebula
     build: .
     restart: unless-stopped
