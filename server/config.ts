@@ -90,7 +90,7 @@ verify([
     { name: "db.postgres", typeOF: parsedDoc.db.postgres, type: "boolean" },
     { name: "postgres", typeOF: parsedDoc.postgres, type: "object" },
     { name: "postgres.domain", typeOF: parsedDoc.postgres.domain, type: "string" },
-    { name: "postgres.port", typeOF: parsedDoc.postgres.port, type: },
+    { name: "postgres.port", typeOF: parsedDoc.postgres.port, type: "number" },
     { name: "masqr", typeOF: parsedDoc.masqr, type: "object" },
     { name: "masqr.enabled", typeOF: parsedDoc.masqr.enabled, type: "boolean" },
     { name: "masqr.failed", typeOF: parsedDoc.masqr.failed, type: "string" },
