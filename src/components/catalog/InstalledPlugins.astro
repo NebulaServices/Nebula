@@ -21,7 +21,7 @@
 
     const getItem = async (item: any) => {
         try {
-            const res = await fetch(new URL(`api/packages/${item.name}`, window.location.origin));
+            const res = await fetch(new URL(`/api/packages/${item.name}`, window.location.origin));
             const data = await res.json();
             return { ...data, package_name: item.name }
         }

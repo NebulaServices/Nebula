@@ -8,8 +8,7 @@ const t = useTranslations(lang);
 
 const { page } = Astro.params;
 
-console.log(new URL("/api/catalog-assets/", Astro.url));
-const response = await fetch(new URL("api/catalog-assets/", Astro.url));
+const response = await fetch(new URL("/api/catalog-assets/", Astro.url));
 const assetsJson = await response.json();
 
 const nextPage = parseInt(page!) + 1;
