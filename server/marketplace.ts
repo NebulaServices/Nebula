@@ -8,7 +8,7 @@ import { parsedDoc } from "./config.js";
 
 const db = new Sequelize(parsedDoc.db.name, parsedDoc.db.username, parsedDoc.db.password, {
     host: parsedDoc.db.postgres ? `${parsedDoc.postgres.domain}` : "localhost",
-    port: parsedDoc.db.postgres ? parsedDoc.postgres.port : undefined,
+    port: parsedDoc.db.postgres ? parsedDoc.postgres.port || null : null,
     dialect: parsedDoc.db.postgres ? "postgres" : "sqlite",
     logging: parsedDoc.server.server.logging,
     storage: "database.sqlite" //this is sqlite only

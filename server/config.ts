@@ -27,7 +27,7 @@ interface TomlData {
     };
     postgres: {
         domain: string;
-        port: number | null | undefined;
+        port: number | null;
     };
     masqr: {
         enabled: boolean;
