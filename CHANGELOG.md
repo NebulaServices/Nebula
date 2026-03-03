@@ -41,3 +41,6 @@
 
 # 9.1.2
 - Allows unix sockets without a port
+
+# 9.1.3
+- Fixes some more bugs
