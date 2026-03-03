@@ -38,3 +38,6 @@
 # 9.1.1
 
 - Fixes up a small issue with postgres connections and Unix sockets
+
+# 9.1.2
+- Allows unix sockets without a port
