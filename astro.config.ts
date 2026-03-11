@@ -19,6 +19,12 @@ export default defineConfig({
     site: parsedDoc.seo.enabled ? parsedDoc.seo.domain || process.env.SITE : 'http://localhost:4321',
         env: {
             schema: {
+                API_URL: envField.string({
+                    context: "server",
+                    access: "secret",
+                    optional: true,
+                    default: `http://localhost:${parsedDoc.server.server.port}`
+                }),
                 VERSION: envField.string({
                     context: "client",
                     access: "public",
