@@ -44,3 +44,7 @@
 
 # 9.1.3
 - Fixes some more bugs
+
+# 9.1.4
+- Fixes an issue with the marketplace API failing to fetch on some instances.
+- Now avoids a hairpin call with the marketplace API

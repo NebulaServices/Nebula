@@ -10,7 +10,7 @@ services:
     volumes:
       - ./config.toml:/app/config.toml
   nebula-2:
-    image: motortruck1221/nebula:9.1.3
+    image: motortruck1221/nebula:9.1.4
     container_name: nebula
     build: .
     restart: unless-stopped
