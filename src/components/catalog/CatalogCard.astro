@@ -1,4 +1,6 @@
 ---
+import { API_URL } from "astro:env/server";
+
 interface Props {
     page: number | string | undefined;
     lang: string;
@@ -17,7 +19,7 @@ interface Asset {
 }
 const { page, lang } = Astro.props;
 const getAssets = async () => {
-const res = await fetch(new URL(`/api/catalog-assets?page=${page}`, Astro.url));
+const res = await fetch(new URL(`/api/catalog-assets?page=${page}`, API_URL));
     const data = await res.json();
     return data.assets;
 };
