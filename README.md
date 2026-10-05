@@ -31,7 +31,7 @@
 
 ## How to get links
 
-[![Nebula Services Discord](https://invidget.switchblade.xyz/nebula-services-1182761819832586320?theme=darl)](https://discord.gg/nebula-services-1182761819832586320)
+[![Nebula Services Discord](https://invidget.switchblade.xyz/webproxy?theme=darl)](https://discord.gg/webproxy)
 [![Titanium Network Discord](https://invidget.switchblade.xyz/unblock?theme=dark)](https://discord.gg/unblock)
 
 ---
@@ -82,7 +82,7 @@
 - Themes allow you to customize Nebula's *look*.
 
 #### Prerequisites:
-  - Make sure you have our [Discord server](https://discord.gg/nebula-services-1182761819832586320) so you can submit your theme
+  - Make sure you have our [Discord server](https://discord.gg/webproxy) so you can submit your theme
 
 ##### Making the themes:
 
@@ -124,7 +124,7 @@
 
 2. Add your colors and test! (Either with a self-hosted version of Nebula OR via a live preview (no clue when this will happen)
 
-3. Once you're satisfied with the colors, submit your theme to the [Discord Server](https://discord.gg/nebula-services-1182761819832586320)!
+3. Once you're satisfied with the colors, submit your theme to the [Discord Server](https://discord.gg/webproxy)!
 
 ---
 ### How to make a plugin
@@ -133,7 +133,7 @@
 - This guide provides an incredibly basic example of how to make either.
 
 #### Prerequisites:
-  - Make sure you have joined our [Discord server](https://discord.gg/nebula-services-1182761819832586320) so you can submit your plugin.
+  - Make sure you have joined our [Discord server](https://discord.gg/webproxy) so you can submit your plugin.
   - Some knowledge of JS/TS
 
 ##### Serviceworker plugin:
