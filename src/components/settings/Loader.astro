@@ -145,10 +145,10 @@
             marketplace.theme({
                 type: 'normal',
                 name: name,
-                payload: payload,
+                payload: payload ?? '',
                 sources: {
-                    video: video,
-                    bg: image 
+                    video: video ?? undefined,
+                    bg: image ?? undefined
                 }
             });
         }

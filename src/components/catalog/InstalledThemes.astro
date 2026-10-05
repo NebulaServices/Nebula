@@ -118,7 +118,7 @@
             { type: 'id', val: 'main-theme' },
             { type: 'id', val: 'parent' }
         ]);
-        const itemsJSON = JSON.parse(await mp.getValueFromStore(SettingsVals.marketPlace.themes)) || [];
+        const itemsJSON = JSON.parse((await mp.getValueFromStore(SettingsVals.marketPlace.themes)) ?? '[]') || [];
         const itemPromises = itemsJSON.map(getItem);
         const itemsArray = await Promise.all(itemPromises);
         return {

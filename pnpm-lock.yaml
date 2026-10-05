@@ -89,6 +89,9 @@ importers:
       chalk:
         specifier: ^5.4.1
         version: 5.4.1
+      entities:
+        specifier: ^4.5.0
+        version: 4.5.0
       fastify:
         specifier: ^5.2.0
         version: 5.4.0
@@ -2600,8 +2603,8 @@ packages:
     resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
     engines: {node: '>=0.12'}
 
-  entities@8.1.0:
-    resolution: {integrity: sha512-kxL7msIffSuh9aaFAMD7rxAIuTRMAHMeBtgHW2yUdWw732ZNh4MehkF2gdjvtdmikkaIP9bFDDJOPlsvm7avrA==}
+  entities@8.0.0:
+    resolution: {integrity: sha512-zwfzJecQ/Uej6tusMqwAqU/6KL2XaB2VZ2Jg54Je6ahNBGNH6Ek6g3jjNCF0fG9EWQKGZNddNjU5F1ZQn/sBnA==}
     engines: {node: '>=20.19.0'}
 
   env-paths@2.2.1:
@@ -7990,7 +7993,7 @@ snapshots:
     dependencies:
       domelementtype: 3.0.0
       domhandler: 6.0.1
-      entities: 8.1.0
+      entities: 8.0.0
 
   domelementtype@2.3.0: {}
 
@@ -8087,7 +8090,7 @@ snapshots:
 
   entities@6.0.1: {}
 
-  entities@8.1.0: {}
+  entities@8.0.0: {}
 
   env-paths@2.2.1: {}
 
@@ -8611,7 +8614,7 @@ snapshots:
       domelementtype: 3.0.0
       domhandler: 6.0.1
       domutils: 4.0.2
-      entities: 8.1.0
+      entities: 8.0.0
 
   htmlparser2@9.1.0:
     dependencies:

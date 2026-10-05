@@ -5,7 +5,7 @@ import { join } from "node:path";
 // PURE functions (no internal dynamic imports) and do file I/O ourselves —
 // scrubArtifact() dynamically imports node:fs/promises, which fails at Astro's
 // build:done ("Vite module runner has been closed").
-import { scrubBuffer, scrubJavaScript, protectLiterals } from "../../srv/vite/scrub";
+import { scrubBuffer, scrubJavaScript, protectLiterals } from "./scrub-pure";
 
 // Proxy-stack "tell" words to rename in the built static output. Ordered
 // longest-first so a shorter word that is a substring of a longer one

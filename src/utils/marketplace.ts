@@ -174,6 +174,9 @@ class Marketplace {
     }
 
     async handlePlugins(frame: Frame) {
+        // Plugin notifications go to the page's controlling service worker.
+        // (A bare `worker` global was removed with window.sw; there is no
+        // other provider, so the controller is the only valid target.)
         let { plugins } = await this.getPlugins();
 
         const pagePlugins: SWPagePlugin[] = [];
@@ -205,7 +208,7 @@ class Marketplace {
                         type: 'page'
                     });
                 }
-                worker.active?.postMessage(pagePlugins);
+                navigator.serviceWorker.controller?.postMessage(pagePlugins);
             }
             
             if (plugin.type === "serviceWorker") {
@@ -231,7 +234,7 @@ class Marketplace {
                         type: 'serviceWorker'
                     });
                 }
-                worker.active?.postMessage(swPlugins);
+                navigator.serviceWorker.controller?.postMessage(swPlugins);
             }
             await this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
         });

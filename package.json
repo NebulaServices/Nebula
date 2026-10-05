@@ -49,6 +49,7 @@
     "chalk": "^5.4.1",
     "fastify": "^5.2.0",
     "gradient-string": "^3.0.0",
+    "entities": "^4.5.0",
     "localforage": "^1.10.0",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",

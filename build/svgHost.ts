@@ -1,4 +1,4 @@
-import { convertHtmlToSvg } from '../../srv/vite/svg.ts';
+import { convertHtmlToSvg } from "./svg";
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, relative, dirname, sep } from 'node:path';
 

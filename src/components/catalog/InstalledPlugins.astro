@@ -87,7 +87,7 @@
         const els = Elements.select([
             { type: 'id', val: 'parent' }
         ]);
-        const itemsJSON = JSON.parse(await mp.getValueFromStore(SettingsVals.marketPlace.plugins)) || [];
+        const itemsJSON = JSON.parse((await mp.getValueFromStore(SettingsVals.marketPlace.plugins)) ?? '[]') || [];
         const filteredItems = itemsJSON.filter((dat: any) => dat.remove !== true);
         const itemPromises = filteredItems.map(getItem);
         const itemsArray = await Promise.all(itemPromises);

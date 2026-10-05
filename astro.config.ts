@@ -9,7 +9,7 @@ import { defineConfig, envField } from 'astro/config';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { version } from './package.json';
 import { parsedDoc } from './server/config.js';
-import { svgWrapperPlugin, convertHtmlToSvg } from '../srv/vite/svg';
+import { svgWrapperPlugin, convertHtmlToSvg } from './build/svg';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fontObfuscationPlugin } from './build/font/index';
 import { nebulaScrub } from './build/scrub';
@@ -20,7 +20,8 @@ import {
 	staticSvgSourcePath
 } from './build/svgHost';
 // Build-time artifact copy only. Client imports resolve solely inside Nebula.
-await import('./build/copyProxyContext.mjs');
+import { runCopyProxyContext } from './build/copyProxyContext.mjs';
+await runCopyProxyContext(fileURLToPath(new URL('./', import.meta.url)));
 const STATIC_BUILD = process.env.STATIC_BUILD === '1';
 
 export default defineConfig({
