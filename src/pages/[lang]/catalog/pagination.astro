@@ -1,3 +1,7 @@
+---
+import { STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
+---
 <input
   class="w-10 h-8 bg-navbar-color items-center text-center content-center text-text-color rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
   type="number"
@@ -17,7 +21,7 @@
                 const input = Elements.exists<HTMLInputElement>(await el.next());
                 Elements.attachEvent(input, "keyup", (event?: Event) => {
                     const e = event as KeyboardEvent | undefined;
-                    if (e?.key) return navigate(`${input.value}`);
+                    if (e?.key) return navigate(`?page=${input.value}`);
                 });
             }
         },

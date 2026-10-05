@@ -3,7 +3,8 @@ import SettingsCard from "@components/settings/SettingsCard.astro";
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations, STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
@@ -63,7 +64,8 @@ const t = useTranslations(lang);
     const handleCloak = async (vals: AsyncGenerator) => { 
         const button = Elements.exists<HTMLButtonElement>(await vals.next());
         const val = Elements.exists<HTMLSelectElement>(await vals.next());
-        defaultStore.getVal(SettingsVals.tab.cloak) === "default" ? val.value = "reset" : val.value = defaultStore.getVal(SettingsVals.tab.cloak) || "reset";
+        const cloak = await defaultStore.getVal(SettingsVals.tab.cloak);
+        cloak === "default" ? val.value = "reset" : val.value = cloak || "reset";
         // These have generics, but they can be inferred
         Elements.attachEvent(button, "click", () => {
             Settings.tab.cloak(val.value);
@@ -73,7 +75,7 @@ const t = useTranslations(lang);
     const handleAB = async (vals: AsyncGenerator) => {
         const button = Elements.exists<HTMLButtonElement>(await vals.next()); 
         const val = Elements.exists<HTMLSelectElement>(await vals.next());
-        val.value = defaultStore.getVal(SettingsVals.tab.ab) || 'a:b';
+        val.value = await defaultStore.getVal(SettingsVals.tab.ab) || 'a:b';
         Elements.attachEvent(button, "click", () => {
             if (val.value === "a:b") return Settings.tab.ab("https://www.google.com");
             Settings.tab.blob("https://www.google.com");

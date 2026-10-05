@@ -5,9 +5,9 @@ import ToastWrapper from "@components/toasts/ToastWrapper.svelte";
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations, STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 
-const origin = Astro.url.origin;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
@@ -54,12 +54,12 @@ const t = useTranslations(lang);
             { type: 'id', val: 'setlang' },
             { type: 'id', val: 'resetinstance' }
         ]);
-        const lang = defaultStore.getVal(SettingsVals.i18n.lang);
+        const lang = await defaultStore.getVal(SettingsVals.i18n.lang);
         const val = Elements.exists<HTMLSelectElement>(await els.next());
         const button = Elements.exists<HTMLButtonElement>(await els.next());
         val.value = lang || "en_US";
-        Elements.attachEvent(button, "click", () => {
-            defaultStore.setVal(SettingsVals.i18n.lang, val.value);
+        Elements.attachEvent(button, "click", async () => {
+            await defaultStore.setVal(SettingsVals.i18n.lang, val.value);
             navigate(`${window.location.origin}/${val.value}/settings/misc`);
         });
 
@@ -69,7 +69,7 @@ const t = useTranslations(lang);
             t.map(async (reg) => {
                 await reg.unregister();
             });
-            localStorage.clear();
+            await defaultStore.clear();
             window.location.href = "/";
         });
     }

@@ -2,7 +2,8 @@
 import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations, STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 import CreditsCard from "@components/settings/CreditsCard.astro";
@@ -34,9 +35,14 @@ import CreditsCard from "@components/settings/CreditsCard.astro";
             link="https://github.com/scaratech"
           />
           <CreditsCard
-            image="/src/assets/credits/skylink.png"
-            name="Skylink"
-            link="https://skylinkhosting.com"
+            image="/src/assets/credits/amplify.jpg"
+            name="amplify.dev"
+            link="https://amplifydev.tech"
+          />
+          <CreditsCard
+            image="/src/assets/credits/night-network.png"
+            name=" Hosted by Night Network"
+            link="https://night-x.com"
           />
         </div>
       </div>

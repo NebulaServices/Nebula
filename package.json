@@ -1,13 +1,14 @@
 {
   "name": "nebula",
   "type": "module",
-  "version": "9.1.4",
+  "version": "10.0.0",
   "private": true,
   "scripts": {
     "dev": "astro dev --host 0.0.0.0 & tsx --watch server/server.ts",
     "start": "node server/server.js",
     "build:server": "tsc -p server",
     "build:client": "astro check && astro build",
+    "build:static": "STATIC_BUILD=1 astro build",
     "build": "npm run build:server & npm run build:client",
     "bstart": "npm run build && npm run start",
     "preview": "astro preview",
@@ -15,6 +16,7 @@
     "format:code": "biome format . --write",
     "format:imports": "biome check . --write",
     "format": "npm run format:code && npm run format:imports",
+    "test:font-lifecycle": "node --test build/font/lifecycle.test.mjs",
     "version": "changeset version"
   },
   "dependencies": {
@@ -44,10 +46,10 @@
     "astro": "^5.16.3",
     "astro-icon": "^1.1.5",
     "astro-seo": "^0.8.4",
-    "astro-simpleanalytics-plugin": "^0.3.20",
     "chalk": "^5.4.1",
     "fastify": "^5.2.0",
     "gradient-string": "^3.0.0",
+    "localforage": "^1.10.0",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.5",
@@ -63,8 +65,10 @@
     "@biomejs/biome": "^1.9.4",
     "@changesets/cli": "^2.27.11",
     "bufferutil": "^4.0.9",
+    "opentype.js": "^2.0.0",
     "ora": "^8.1.1",
     "sharp": "^0.33.5",
-    "tsx": "^4.19.2"
+    "tsx": "^4.19.2",
+    "ttf2woff2": "^8.0.1"
   }
 }

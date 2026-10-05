@@ -4,7 +4,8 @@ import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
 import { Icon } from "astro-icon/components";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations, STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 import { MARKETPLACE_ENABLED } from "astro:env/client";
@@ -19,7 +20,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
         <div class="justify-center flex flex-row gap-6 flex-wrap md:justify-normal">
             <InstalledThemes />
           {MARKETPLACE_ENABLED && 
-            <a href={`/${lang}/catalog/1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
+            <a href={`/${lang}/catalog/?page=1`} class="rounded-3xl bg-navbar-color w-64 flex flex-col">
                 <div class="w-full items-center justify-center flex aspect-[16/9]">
                     <Icon name="ph:plus-bold" class="h-16 w-16" />
                 </div>

@@ -7,7 +7,8 @@ import Layout from "@layouts/Layout.astro";
 import SettingsLayout from "@layouts/SettingsLayout.astro";
 import SettingsSection from "@layouts/SettingsSection.astro";
 import { Icon } from "astro-icon/components";
-import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations, STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -65,6 +66,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
             name: "wispurl",
             options: [
               { name: "Default", value: "default", disabled: false },
+              { name: "Generated", value: "generated", disabled: false },
               { name: "Custom", value: "custom", disabled: false }
             ],
             }}
@@ -99,7 +101,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
           <div class="flex flex-row gap-6 justify-center md:justify-normal">
             <InstalledPlugins />
             <a
-              href={`/${lang}/catalog/1`}
+              href={`/${lang}/catalog/?page=1`}
               class="rounded-3xl bg-navbar-color w-64 flex flex-col"
             >
               <div class="w-full items-center justify-center flex aspect-[16/9]">
@@ -180,7 +182,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
   const handleSearchEngine = async (vals: AsyncGenerator) => {
       const button = Elements.exists<HTMLButtonElement>(await vals.next());
       const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
-      selectEl.value = defaultStore.getVal(SettingsVals.proxy.searchEngine);
+      selectEl.value = await defaultStore.getVal(SettingsVals.proxy.searchEngine) ?? "";
       Elements.attachEvent(button, "click", () => {
           Settings.proxy.searchEngine(selectEl.value);
           toast(".searchEngineMessage");
@@ -191,15 +193,15 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
       const handleCustom = async (c: HTMLInputElement, removeClass: boolean) => { 
           if (!removeClass) return c.classList.add("hidden");
           c.classList.remove("hidden");
-          if (c.value === "") return c.value = defaultStore.getVal("customWispUrl");
-          defaultStore.setVal("customWispUrl", c.value);
+          if (c.value === "") return c.value = await defaultStore.getVal("customWispUrl") ?? "";
+          await defaultStore.setVal("customWispUrl", c.value);
           toast(".wispUrlMessage");
       }
     
       const button = Elements.exists<HTMLButtonElement>(await vals.next());
       const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
       const custom = Elements.exists<HTMLInputElement>(await vals.next());
-      selectEl.value = defaultStore.getVal(SettingsVals.proxy.wispServer);
+      selectEl.value = await defaultStore.getVal(SettingsVals.proxy.wispServer) ?? "";
       Elements.attachEvent(button, "click", () => {
           Settings.proxy.wisp(selectEl.value);
           selectEl.value === "custom" ? handleCustom(custom, true) : handleCustom(custom, false)
@@ -210,7 +212,7 @@ import { MARKETPLACE_ENABLED } from "astro:env/client";
   const handleTransports = async (vals: AsyncGenerator) => {
       const button = Elements.exists<HTMLButtonElement>(await vals.next());
       const selectEl = Elements.exists<HTMLSelectElement>(await vals.next());
-      selectEl.value = defaultStore.getVal(SettingsVals.proxy.transport.key);
+      selectEl.value = await defaultStore.getVal(SettingsVals.proxy.transport.key) ?? "";
       Elements.attachEvent(button, "click", () => {
           Settings.proxy.transport(selectEl.value as "libcurl" | "epoxy");
           toast(".transportMessage");

@@ -1,7 +1,13 @@
+[services]
+# Set the actual HTTP(S) Space deployment origin (mount paths are supported).
+# Blank uses https://gointospace.app; explicit custom origins are preserved.
+space_origin = ""
+
 [marketplace]
 enabled = false # Turn on or off the marketplace entirely
 psk = "CHANGEME" # Change this to something more secure.
 level = 1
+origin = "" # Static builds only: origin whose /api/* + /packages/ are fetched through the proxy (e.g. https://nebulaproxy.io). Empty = same-origin (SSR).
 
 [seo]
 enabled = false

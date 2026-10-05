@@ -1,0 +1,131 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { getLangFromUrl, STATIC_PATHS } from "../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
+const lang = getLangFromUrl(Astro.url);
+---
+
+<Layout title="Catalog">
+  <div
+    class="flex mt-16 w-full fixed inset-0 h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center overflow-auto font-roboto"
+  >
+    <div
+      class="w-full flex flex-col gap-4 justify-center items-center text-text-color mt-9"
+    >
+      <h1 class="text-3xl md:text-5xl font-bold">Nebula Catalog</h1>
+      <p class="text-l md:text-xl max-md:text-center max-md:p-2">
+        The Nebula Catalog is a place for you to find user-created themes and
+        plugins.
+      </p>
+    </div>
+    <div
+      id="catalog-cards"
+      class="text-2xl font-roboto font-bold text-text-color p-10"
+      data-lang={lang}
+    >
+      Loading catalog…
+    </div>
+    <div id="catalog-pagination" class="flex flex-row pb-8 gap-4 font-roboto">
+    </div>
+  </div>
+</Layout>
+<script>
+  import { catalogFetch, applyCatalogMedia } from "@utils/catalogFetch";
+  import { EventHandler } from "@utils/events";
+
+  interface Asset {
+    title: string;
+    description: string;
+    author: string;
+    image: string;
+    tags: string[];
+    version: string;
+    type: "theme" | "plugin-sw" | "plugin-page";
+  }
+
+  const esc = (s: string) =>
+    String(s ?? "").replace(
+      /[&<>"']/g,
+      (c) =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+          c
+        ]!,
+    );
+
+  const currentPage = (): number => {
+    const p = parseInt(new URLSearchParams(location.search).get("page") || "1");
+    return Number.isFinite(p) && p > 0 ? p : 1;
+  };
+
+  const renderCards = (lang: string, assets: Record<string, Asset>) => {
+    const root = document.getElementById("catalog-cards")!;
+    const names = Object.keys(assets || {});
+    if (names.length === 0) {
+      root.textContent = "No packages found.";
+      return;
+    }
+    root.classList.remove("p-10");
+    root.innerHTML = `<div class="flex flex-row gap-6 flex-wrap justify-center">${names
+      .map((pName) => {
+        const a = assets[pName];
+        const type =
+          a.type === "plugin-page" || a.type === "plugin-sw" ? "plugin" : a.type;
+        const tags = (a.tags || [])
+          .map(
+            (t) =>
+              `<p class="bg-navbar-text-color text-navbar-color font-bold px-3 py-1 rounded-md text-center">${esc(t)}</p>`,
+          )
+          .join("");
+        return `<a href="/${esc(lang)}/catalog/package/?pkg=${encodeURIComponent(pName)}">
+          <div class="bg-navbar-color w-64 rounded-3xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 text-text-color">
+            <img data-catalog-src="${esc(`/packages/${pName}/${a.image}`)}" alt="${esc(a.title)}" class="w-full h-40 object-cover bg-navbar-text-color/10" />
+            <div class="p-6 text-sm">
+              <p class="font-semibold text-2xl mb-2">${esc(a.title)}</p>
+              <p class="mb-4">${esc(a.description)}</p>
+              <div class="flex flex-wrap gap-2 mb-4 w-full">${tags}</div>
+              <p><strong>Version: </strong>${esc(a.version)}</p>
+              <p><strong>Type: </strong>${esc(type)}</p>
+            </div>
+          </div>
+        </a>`;
+      })
+      .join("")}</div>`;
+    // Proxy each card image through the transport (blob: URL) so cross-origin
+    // catalog images aren't blocked by COEP.
+    void applyCatalogMedia(root);
+  };
+
+  const renderPagination = (lang: string, page: number, pages: number) => {
+    const root = document.getElementById("catalog-pagination")!;
+    const link = (n: number, label: string, active = false) =>
+      `<a href="/${esc(lang)}/catalog/?page=${n}" class="w-8 h-8 ${active ? "bg-lighter" : "bg-navbar-color"} items-center text-center content-center text-text-color rounded-md">${esc(label)}</a>`;
+    const parts: string[] = [];
+    if (page > 2) parts.push(link(1, "1"));
+    if (page - 1 > 0) parts.push(link(page - 1, String(page - 1)));
+    parts.push(link(page, String(page), true));
+    if (page + 1 < pages) parts.push(link(page + 1, String(page + 1)));
+    if (page !== pages && pages > 0) parts.push(link(pages, String(pages)));
+    root.innerHTML = parts.join("");
+  };
+
+  const load = async () => {
+    const root = document.getElementById("catalog-cards");
+    if (!root) return;
+    const lang = root.getAttribute("data-lang") || "en_US";
+    const page = currentPage();
+    try {
+      const res = await catalogFetch(`/api/catalog-assets?page=${page}`);
+      const data = await res.json();
+      renderCards(lang, data.assets || {});
+      renderPagination(lang, page, parseInt(data.pages) || 1);
+    } catch (e) {
+      root.textContent = "Failed to load the catalog.";
+      console.error("[catalog] load failed", e);
+    }
+  };
+
+  new EventHandler({
+    events: { "astro:page-load": load },
+    logging: false,
+  }).bind();
+</script>

@@ -1,5 +1,5 @@
 import { defaultStore } from "./storage";
-import { SettingsVals, WispServers } from "./values";
+import { SettingsVals, WispServers, preferredWispServer } from "./values";
 import { Marketplace } from "./marketplace";
 import { SW } from "./serviceWorker";
 
@@ -42,7 +42,7 @@ const tab = {
         win.location.href = url;
 
     },
-    cloak: (cloak: string) => {
+    cloak: async (cloak: string) => {
         const fElem = document.getElementById("favicon")! as HTMLLinkElement;
         const c = (title: string, href: string) => {
             document.title = title;
@@ -70,7 +70,7 @@ const tab = {
                 break;
             }
             case "reset": {
-                defaultStore.setVal(SettingsVals.tab.cloak, "default");
+                await defaultStore.setVal(SettingsVals.tab.cloak, "default");
                 window.location.reload();
             }
             default: {
@@ -81,21 +81,23 @@ const tab = {
 }
 
 const proxy = {
-    searchEngine: (s: string) => {
-        defaultStore.setVal(SettingsVals.proxy.searchEngine, s);
+    searchEngine: async (s: string) => {
+        await defaultStore.setVal(SettingsVals.proxy.searchEngine, s);
     },
-    wisp: (s: string) => {
-        defaultStore.setVal(SettingsVals.proxy.wispServer, s);
+    wisp: async (s: string) => {
+        await defaultStore.setVal(SettingsVals.proxy.wispServer, s);
     },
     transport: async (t: "libcurl" | "epoxy") => {
-        defaultStore.setVal(SettingsVals.proxy.transport.key, t);
+        await defaultStore.setVal(SettingsVals.proxy.transport.key, t);
     }
 }
 
 async function* initDefaults() {
-    yield proxy.searchEngine(defaultStore.getVal(SettingsVals.proxy.searchEngine) ? defaultStore.getVal(SettingsVals.proxy.searchEngine) : "ddg");
-    yield proxy.wisp(defaultStore.getVal(SettingsVals.proxy.wispServer) ? defaultStore.getVal(SettingsVals.proxy.wispServer) : "default");
-    yield proxy.transport(defaultStore.getVal(SettingsVals.proxy.transport.key) ? defaultStore.getVal(SettingsVals.proxy.transport.key) as "libcurl" | "epoxy" : "libcurl");
+    const engine = await defaultStore.getVal(SettingsVals.proxy.searchEngine);
+    yield proxy.searchEngine(engine || "ddg");
+    yield proxy.wisp(preferredWispServer(await defaultStore.getVal(SettingsVals.proxy.wispServer)));
+    const transport = await defaultStore.getVal(SettingsVals.proxy.transport.key);
+    yield proxy.transport(transport ? transport as "libcurl" | "epoxy" : "libcurl");
 }
 
 const Settings = {

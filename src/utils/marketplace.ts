@@ -113,20 +113,20 @@ class Marketplace {
         });
     }
 
-    async getValueFromStore(val: string): Promise<string> {
+    async getValueFromStore(val: string): Promise<string | null> {
         return this.#storage.getVal(val);
     }
 
 
     async getThemes(name?: string): Promise<{themes: any, theme: string, exists: Boolean}> {
-        const themes = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.themes)) || [];
+        const themes = JSON.parse((await this.#storage.getVal(SettingsVals.marketPlace.themes)) ?? '[]') || [];
         const theme = themes.find((t: any) => t === name);
         const exists = themes.indexOf(name) !== -1;
         return { themes, theme, exists };
     } 
 
     async getPlugins(pname?: string): Promise<{plugins: any, plug: any}> {
-        const plugins = JSON.parse(this.#storage.getVal(SettingsVals.marketPlace.plugins)) || [];
+        const plugins = JSON.parse((await this.#storage.getVal(SettingsVals.marketPlace.plugins)) ?? '[]') || [];
         const plug = plugins.find(({ name } : { name: string }) => name === pname );
         return { plugins, plug }
     }
@@ -147,14 +147,14 @@ class Marketplace {
         const { themes, exists } = await this.getThemes(theme.name);
         if (exists) return log({ type: 'error', bg: false, prefix: false, throw: true }, `${theme.name} is already installed!`)
         themes.push(theme.name);
-        this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(themes));
+        await this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(themes));
     }
 
     async installPlugin(plugin: Plug) {
         let { plugins, plug } = await this.getPlugins(plugin.name);
         if (plug && plug.remove) { plug.remove = false; console.log(plug); return this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins)) };
         plugins.push({ name: plugin.name, src: plugin.src, type: plugin.type } as unknown as Plug);
-        this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
+        await this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
     }
 
     async uninstallTheme(theme: Omit<Theme, "payload" | "video" | "bgImage">) {
@@ -162,7 +162,7 @@ class Marketplace {
         if (!exists) return log({ type: 'error', bg: false, prefix: false, throw: true }, `Theme: ${theme.name} is not installed!`);
         const idx = items.indexOf(theme.name);
         items.splice(idx, 1);
-        this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(items));
+        await this.#storage.setVal(SettingsVals.marketPlace.themes, JSON.stringify(items));
     }
 
     async uninstallPlugin(plug: Omit<Plug, "src">) {
@@ -170,7 +170,7 @@ class Marketplace {
 
         if (!plugin) return log({ type: 'error', bg: false, prefix: false, throw: true }, `Plugin: ${plug.name} is not installed!`);
         plugin.remove = true;
-        this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(items));
+        await this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(items));
     }
 
     async handlePlugins(frame: Frame) {
@@ -233,7 +233,7 @@ class Marketplace {
                 }
                 worker.active?.postMessage(swPlugins);
             }
-            this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
+            await this.#storage.setVal(SettingsVals.marketPlace.plugins, JSON.stringify(plugins));
         });
     }
     
@@ -247,43 +247,43 @@ class Marketplace {
         const nv = Elements.exists<HTMLVideoElement>(await elems.next());
         const ni = Elements.exists<HTMLImageElement>(await elems.next());
         
-        const nvl = this.#storage.getVal(SettingsVals.marketPlace.appearance.video);
-        const nil = this.#storage.getVal(SettingsVals.marketPlace.appearance.image);
-        const tsp = this.#storage.getVal(SettingsVals.marketPlace.appearance.theme.payload);
-        const tsn = this.#storage.getVal(SettingsVals.marketPlace.appearance.theme.name);
-        
-        const reset = (style: boolean) => {
+        const nvl = await this.#storage.getVal(SettingsVals.marketPlace.appearance.video);
+        const nil = await this.#storage.getVal(SettingsVals.marketPlace.appearance.image);
+        const tsp = await this.#storage.getVal(SettingsVals.marketPlace.appearance.theme.payload);
+        const tsn = await this.#storage.getVal(SettingsVals.marketPlace.appearance.theme.name);
+
+        const reset = async (style: boolean) => {
             const st = this.#storage;
             if (style) {
-                st.removeVal(SettingsVals.marketPlace.appearance.theme.name);
-                st.removeVal(SettingsVals.marketPlace.appearance.theme.payload);
+                await st.removeVal(SettingsVals.marketPlace.appearance.theme.name);
+                await st.removeVal(SettingsVals.marketPlace.appearance.theme.payload);
                 s.href = "/nebula.css";
             }
-            st.removeVal(SettingsVals.marketPlace.appearance.video);
+            await st.removeVal(SettingsVals.marketPlace.appearance.video);
             nv.src = "";
-            st.removeVal(SettingsVals.marketPlace.appearance.image);
+            await st.removeVal(SettingsVals.marketPlace.appearance.image);
             ni.style.display = "none";
             ni.src = "";
         }
 
         if (opts.type === 'remove') return reset(true);
-        
+
         if (opts.sources?.video || nvl) {
-            reset(false);
-            if (!nvl) this.#storage.setVal(SettingsVals.marketPlace.appearance.video, opts.sources?.video || nvl);
+            await reset(false);
+            if (!nvl && opts.sources?.video) await this.#storage.setVal(SettingsVals.marketPlace.appearance.video, opts.sources.video);
             nv.src = `/packages/${opts.name}/${opts.sources?.video ? opts.sources.video : nvl}`
         }
         if (opts.sources?.bg || nil) {
-            reset(false);
-            if (!nil) this.#storage.setVal(SettingsVals.marketPlace.appearance.image, opts.sources?.bg || nil);
+            await reset(false);
+            if (!nil && opts.sources?.bg) await this.#storage.setVal(SettingsVals.marketPlace.appearance.image, opts.sources.bg);
             ni.style.display = "block";
             ni.src = `/packages/${opts.name}/${opts.sources?.bg ? opts.sources.bg : nil}`
         }
 
         if (opts.payload) {
            if (tsp !== opts.payload) {
-               this.#storage.setVal(SettingsVals.marketPlace.appearance.theme.payload, opts.payload);
-               this.#storage.setVal(SettingsVals.marketPlace.appearance.theme.name, opts.name);
+               await this.#storage.setVal(SettingsVals.marketPlace.appearance.theme.payload, opts.payload);
+               await this.#storage.setVal(SettingsVals.marketPlace.appearance.theme.name, opts.name);
            }
            s.href = `/packages/${opts.name}/${opts.payload}`;
         }

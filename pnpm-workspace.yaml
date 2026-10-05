@@ -1,8 +1,9 @@
 allowBuilds:
   '@biomejs/biome': true
-  '@mercuryworkshop/scramjet@https://github.com/MercuryWorkshop/scramjet/releases/download/v1.1.0/mercuryworkshop-scramjet-1.1.0.tgz': true
+  '@mercuryworkshop/scramjet': true
   bufferutil: true
   esbuild: true
   sharp: true
   sqlite3: true
+  ttf2woff2: true
   utf-8-validate: true

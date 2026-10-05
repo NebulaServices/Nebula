@@ -1,7 +1,8 @@
 ---
 import Logo from "@components/Logo.astro";
 import Layout from "@layouts/Layout.astro";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { getLangFromUrl, useTranslations, STATIC_PATHS } from "../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 import { VERSION } from "astro:env/client";
@@ -37,7 +38,7 @@ function getCurrentYear() {
     <iframe
       id="neb-iframe"
       class="hidden z-100 w-full h-full absolute top-0 bottom-0 bg-primary"
-      src="/loading"></iframe>
+      src="/loading/"></iframe>
     <div
       id="version"
       class="flex flex-row w-full absolute bottom-4 pr-4 pl-4 text-text-color h-6 justify-between items-center font-roboto"
@@ -81,7 +82,7 @@ function getCurrentYear() {
             t.map(async (reg) => {
                 await reg.unregister();
             });
-            localStorage.clear();
+            await defaultStore.clear();
             window.location.href = "/";
         });
 
@@ -94,10 +95,11 @@ function getCurrentYear() {
             await Marketplace.ready();
             const mp = Marketplace.getInstances().next().value!;
             iframe.classList.remove("hidden");
+            const engineKey = await defaultStore.getVal(SettingsVals.proxy.searchEngine);
             const val = search(
                 input, 
-                defaultStore.getVal(SettingsVals.proxy.searchEngine) 
-                ? SearchEngines[defaultStore.getVal(SettingsVals.proxy.searchEngine)]
+                engineKey 
+                ? SearchEngines[engineKey]
                 : SearchEngines.ddg
             );
             const frame = window.controller.createFrame(iframe);

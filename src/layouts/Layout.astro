@@ -4,7 +4,6 @@ import Header from "@components/Header.astro";
 import MobileNavigation from "@components/MobileNavigation.astro";
 import SettingsLoader from "@components/settings/Loader.astro";
 import { SEO } from "astro-seo";
-import { SimpleAnalytics } from 'astro-simpleanalytics-plugin';
 import { SEO as SEOC } from "astro:env/client";
 interface Props {
   title: string;
@@ -23,6 +22,32 @@ const Host = Astro.url.host;
   <head>
     <SettingsLoader transition:persist />
     <meta charset="UTF-8" />
+    {/* Font obfuscation config. is:inline so Astro doesn't bundle it. */}
+    <script is:inline>
+      window.FONT_OBFUSCATION_CONFIG = {
+        enabled: true,
+        defaultFont: "roboto",
+        excludeInputs: false,
+        obfuscateTitle: false,
+        obfuscatePlaceholders: false,
+      };
+    </script>
+    {/* Google tag (gtag.js), loaded directly; never server-proxied. */}
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-5CFVV589W6"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5CFVV589W6');
+    </script>
+    <link
+      rel="stylesheet"
+      href="/ob-fonts.css"
+      id="obfuscated-font-stylesheet"
+      transition:persist
+    />
+    <script is:inline src="/ob-fonts.js"></script>
     <SEO
         title={title},
         titleTemplate={SEOConfig.enabled && Host === SEOConfig.domain  ? 'Nebula | %s': '%s'},
@@ -164,6 +189,5 @@ const Host = Astro.url.host;
         background: var(--navbar-link-color);
       }
     </style>
-    <SimpleAnalytics />  
 </body>
 </html>

@@ -1,15 +1,18 @@
 <script>
     import { EventHandler } from "@utils/events";
     import { SW, createProxyScripts, checkProxyScripts } from "@utils/serviceWorker";
+    import { staticAssetLocation } from "@utils/staticAssetLocation";
     import { defaultStore } from "@utils/storage";
     import { Settings } from "@utils/settings";
-    import { SettingsVals, WispServers } from "@utils/values";
+    import { SettingsVals, resolveWispServer } from "@utils/values";
     import { log } from "@utils/index";
     import { Marketplace } from "@utils/marketplace";
+    import { installMarketplaceBridge } from "@utils/marketplaceBridge";
+    import { installProxyContext } from "@utils/proxyContext";
+    import { CATALOG_ORIGIN, STATIC_MARKETPLACE } from "astro:env/client";
     import { BareCompatibleClient, type ProxyTransport } from "@mercuryworkshop/proxy-transports";
     import LibcurlClient from "@mercuryworkshop/libcurl-transport";
     import EpoxyClient from "@mercuryworkshop/epoxy-transport";
-import type { ProcessedCreateParams } from "astro:schema";
     const titleText = ` 
      _   _      _           _         ____                  _               
     | \\ | | ___| |__  _   _| | __ _  / ___|  ___ _ ____   _(_) ___ ___  ___ 
@@ -39,30 +42,96 @@ import type { ProcessedCreateParams } from "astro:schema";
         }
         await checkProxyScripts();
         const sw = new SW();
-        const mp = new Marketplace();
         const { serviceWorker } = await sw.getSWInfo();
-        const server = defaultStore.getVal(SettingsVals.proxy.wispServer);
-        const transportType = defaultStore.getVal(SettingsVals.proxy.transport.key);
+        const server = await defaultStore.getVal(SettingsVals.proxy.wispServer);
+        const transportType = await defaultStore.getVal(SettingsVals.proxy.transport.key);
+        // Resolve the wisp URL (the "generated" option validates a live
+        // nightwisp endpoint; "default"/"custom" resolve synchronously).
+        const wispUrl = await resolveWispServer(server);
         let transport: ProxyTransport;
         switch (transportType) {
             case 'epoxy':
-                transport = new EpoxyClient({ wisp: server ? WispServers[server] : WispServers.default });
+                transport = new EpoxyClient({ wisp: wispUrl });
                 break;
             case 'libcurl':
             default:
-                transport = new LibcurlClient({ wisp: server ? WispServers[server] : WispServers.default });
+                transport = new LibcurlClient({ wisp: wispUrl });
                 break;
         }
         window.client = new BareCompatibleClient(transport);
+        if (STATIC_MARKETPLACE && CATALOG_ORIGIN) {
+            const marketplaceClient = transportType === "epoxy"
+                ? new BareCompatibleClient(new LibcurlClient({ wisp: wispUrl }))
+                : window.client;
+            installMarketplaceBridge(navigator.serviceWorker, marketplaceClient, CATALOG_ORIGIN);
+            if (!navigator.serviceWorker.controller) {
+                await new Promise<void>((resolve) => {
+                    const timeout = setTimeout(resolve, 5000);
+                    navigator.serviceWorker.addEventListener("controllerchange", () => {
+                        clearTimeout(timeout);
+                        resolve();
+                    }, { once: true });
+                });
+                if (!navigator.serviceWorker.controller) {
+                    if (!sessionStorage.getItem("nebula-marketplace-worker-reload")) {
+                        sessionStorage.setItem("nebula-marketplace-worker-reload", "1");
+                        location.reload();
+                    }
+                    throw new Error("Marketplace service worker did not take control");
+                }
+            }
+            sessionStorage.removeItem("nebula-marketplace-worker-reload");
+        }
+        const mp = new Marketplace();
         window.controller = new $scramjetController.Controller({
-          serviceworker: serviceWorker.active!,
+          serviceworker: sw.getActiveWorker(),
           transport: transport,
           config: {
-            scramjetPath: "/scram/scramjet.js",
-            injectPath: "/scram-controller/controller.inject.js",
-            wasmPath: "/scram/scramjet.wasm",
+            scramjetPath: staticAssetLocation("/scram/scramjet.js", location.href),
+            injectPath: staticAssetLocation("/scram-controller/controller.inject.js", location.href),
+            wasmPath: staticAssetLocation("/scram/scramjet.wasm", location.href),
+            // Custom rewrite prefix (was the default "/~/sj/" — a scramjet
+            // fingerprint). The SW learns this via the controller's
+            // registration message, so routing stays in sync.
+            prefix: new URL(staticAssetLocation("/study/science/", location.href)).pathname,
+            // Base32 (RFC 4648, no padding) URL codec. These functions are
+            // serialized with .toString() into the injected frame scripts, so
+            // they MUST be fully self-contained (only language + Web globals
+            // like TextEncoder/TextDecoder/Uint8Array).
+            codec: {
+              encode: (url: string) => {
+                if (!url) return url;
+                const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+                const bytes = new TextEncoder().encode(url);
+                let bits = 0, value = 0, out = "";
+                for (let i = 0; i < bytes.length; i++) {
+                  value = (value << 8) | bytes[i];
+                  bits += 8;
+                  while (bits >= 5) { out += A[(value >>> (bits - 5)) & 31]; bits -= 5; }
+                }
+                if (bits > 0) out += A[(value << (5 - bits)) & 31];
+                return out;
+              },
+              decode: (encoded: string) => {
+                if (!encoded) return encoded;
+                const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+                const lookup: Record<string, number> = {};
+                for (let i = 0; i < A.length; i++) lookup[A[i]] = i;
+                let bits = 0, value = 0;
+                const bytes: number[] = [];
+                for (let i = 0; i < encoded.length; i++) {
+                  const c = lookup[encoded[i]];
+                  if (c === undefined) continue;
+                  value = (value << 5) | c;
+                  bits += 5;
+                  if (bits >= 8) { bytes.push((value >>> (bits - 8)) & 255); bits -= 8; }
+                }
+                return new TextDecoder().decode(new Uint8Array(bytes));
+              },
+            },
           }
         });
+        installProxyContext(window.controller);
         log({ type: 'info', bg: true, prefix: true }, `General init completed! \n\nServiceWorker: ${serviceWorker.active?.state}`);
         return mp;
     }

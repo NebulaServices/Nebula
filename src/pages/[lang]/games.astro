@@ -1,21 +1,36 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { STATIC_PATHS } from "../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
 ---
 
 <Layout title="Chango Games">
+    <p id="space-config-error" role="alert" hidden></p>
     <iframe id="chango" class="w-full h-full" src="/loading"></iframe>
 </Layout>
 <script>
     import { EventHandler } from "@utils/events";
     import { Elements } from "@utils/index";
+    import { SPACE_ORIGIN } from "astro:env/client";
+    import { spaceGamesUrl, waitForProxyController } from "@utils/proxyContext";
     
     const init = async () => {
         const el = Elements.select([
             { type: 'id', val: 'chango' }
         ]);
         const chango = Elements.exists<HTMLIFrameElement>(await el.next());
-        const frame = window.controller.createFrame(chango);
-        frame.go("https://truffled.lol/g")
+        try {
+            const url = spaceGamesUrl(SPACE_ORIGIN || "");
+            const controller = await waitForProxyController(window);
+            await controller.wait();
+            const frame = controller.createFrame(chango);
+            frame.go(url);
+        } catch (error) {
+            chango.hidden = true;
+            const message = document.getElementById("space-config-error")!;
+            message.hidden = false;
+            message.textContent = error instanceof Error ? error.message : "Configure services.space_origin with an HTTP(S) Space origin.";
+        }
     };
 
     new EventHandler({

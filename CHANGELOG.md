@@ -1,3 +1,12 @@
+# v10.0.0
+
+- Nebula V10! Major release:
+  - Static build target (`STATIC_BUILD=1`) — deployable to any static host, with an SVG bootloader, vocabulary scrub, and font obfuscation
+  - Marketplace/catalog can be served through the proxy from a remote origin (`marketplace.origin`)
+  - Custom Scramjet rewrite prefix + Base32 URL codec
+  - Deterministic font obfuscation (cache-stable across builds)
+  - Credits refresh: Night Network + amplify.dev
+
 # v9.0.0
 
 - The first release of Nebula V9! And with it bring a whole host of changes:

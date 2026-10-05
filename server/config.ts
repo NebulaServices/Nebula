@@ -4,9 +4,16 @@ import chalk from "chalk";
 import { TomlPrimitive, parse } from "smol-toml";
 
 interface TomlData {
+    services?: {
+        space_origin?: string;
+    };
     marketplace: {
         enabled: boolean;
         psk: String;
+        // Origin that serves the marketplace API (/api/*) and /packages/.
+        // Empty = same-origin (SSR deploy). On a STATIC build this is exposed
+        // to the client as CATALOG_ORIGIN and fetched through the libcurl proxy.
+        origin?: string;
     };
     server: {
         server: {

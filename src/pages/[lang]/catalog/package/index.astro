@@ -1,0 +1,156 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { STATIC_PATHS } from "../../../../i18n/utils";
+export const getStaticPaths = () => STATIC_PATHS;
+---
+
+<Layout title="Package">
+  <div
+    id="package-root"
+    class="flex flex-wrap min-[1032px]:mt-16 mt-8 w-full fixed inset-0 h-full md:h-[calc(100%-4rem)] z-0 bg-primary flex-col items-center content-center justify-center lg:pb-64 font-roboto max-md:p-4 text-text-color"
+  >
+    <h1 class="text-2xl font-bold">Loading package…</h1>
+  </div>
+</Layout>
+<script>
+  import { catalogFetch, applyCatalogMedia } from "@utils/catalogFetch";
+  import { Elements } from "@utils/index";
+  import { Marketplace } from "@utils/marketplace";
+  import { EventHandler } from "@utils/events";
+
+  const esc = (s: string) =>
+    String(s ?? "").replace(
+      /[&<>"']/g,
+      (c) =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+          c
+        ]!,
+    );
+
+  const pkgParam = () =>
+    new URLSearchParams(location.search).get("pkg") || "";
+
+  const media = (pkg: string, a: any): string => {
+    if (a.background_video)
+      return `<video data-catalog-src="${esc(`/packages/${pkg}/${a.background_video}`)}" controls class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover rounded-xl">Your browser does not support the video tag.</video>`;
+    if (a.backgroundImage)
+      return `<div data-catalog-bg="${esc(`/packages/${pkg}/${a.backgroundImage}`)}" class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover bg-center rounded-xl"></div>`;
+    return `<img loading="lazy" data-catalog-src="${esc(`/packages/${pkg}/${a.image}`)}" alt="${esc(a.title)}" class="md:w-[44rem] md:h-[25rem] h-[12rem] w-full object-cover rounded-xl" />`;
+  };
+
+  const renderDetail = (pkg: string, a: any) => {
+    const root = document.getElementById("package-root")!;
+    if (!a || a.error) {
+      root.innerHTML = `<h1 class="text-text-color text-3xl font-bold">Unexpected error. Is the name right?</h1>`;
+      return;
+    }
+    const type =
+      a.type === "plugin-page" || a.type === "plugin-sw" ? "plugin" : a.type;
+    root.innerHTML = `
+      <div class="flex flex-col max-md:min-[1032px]:justify-center md:min-[1032px]:flex-row items-center text-text-color bg-navbar-color rounded-2xl">
+        ${media(pkg, a)}
+        <div class="flex flex-col ml-7 md:p-16 p-10">
+          <p class="text-xl">${esc(type)}</p>
+          <h1 class="text-4xl font-roboto font-semibold">${esc(a.title)}</h1>
+          <p class="text-xl">By: <strong>${esc(a.author)}</strong></p>
+          <p class="text-xl">${esc(a.description)}</p>
+          <button class="bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="install">Install</button>
+          <button class="hidden bg-primary text-text-color border border-transparent rounded-lg px-6 py-3 hover:bg-navbar-color transition-colors duration-300 mt-9" id="uninstall">Uninstall</button>
+          <a href="../" class="w-full bg-background text-text-color border-none rounded-lg text-l max-md:mt-7 px-4 py-4 h-full flex-grow md:text-right text-center font-bold underline underline-offset-4 decoration-2 hover:decoration-border-color transition-colors duration-300">Go Back</a>
+        </div>
+      </div>`;
+    // Proxy the package media (image/video/bg) through the transport so it
+    // isn't COEP-blocked cross-origin.
+    void applyCatalogMedia(root);
+  };
+
+  const handleThemes = async (marketplace: any, name: string, assets: any) => {
+    const { exists } = await marketplace.getThemes(name);
+    if (!exists) {
+      await marketplace.installTheme({ name });
+      await marketplace.theme({
+        type: "normal",
+        payload: assets.payload,
+        name,
+        sources: { video: assets.background_video, bg: assets.background_image },
+      });
+    } else {
+      await marketplace.theme({ type: "remove", name });
+      await marketplace.uninstallTheme({ name });
+    }
+  };
+
+  const handlePlugins = async (marketplace: any, name: string, assets: any) => {
+    const { plug } = await marketplace.getPlugins(name);
+    if (!plug || plug.remove === true) {
+      await marketplace.installPlugin({
+        name,
+        src: assets.payload,
+        type: assets.type === "plugin-page" ? "page" : "serviceWorker",
+      });
+      return;
+    }
+    await marketplace.uninstallPlugin({
+      name,
+      type: assets.type === "plugin-page" ? "page" : "serviceWorker",
+    });
+  };
+
+  const wire = async (pkg: string, a: any) => {
+    await Marketplace.ready();
+    const marketplace: any = Marketplace.getInstances().next().value!;
+    const installButton = document.getElementById("install") as HTMLButtonElement | null;
+    const uninstallButton = document.getElementById("uninstall") as HTMLButtonElement | null;
+    if (!installButton || !uninstallButton) return;
+
+    const toggle = async () => {
+      a.type?.startsWith("plugin")
+        ? await handlePlugins(marketplace, pkg, a)
+        : await handleThemes(marketplace, pkg, a);
+    };
+    Elements.attachEvent(installButton, "click", async () => {
+      await toggle();
+      installButton.classList.add("hidden");
+      uninstallButton.classList.remove("hidden");
+    });
+    Elements.attachEvent(uninstallButton, "click", async () => {
+      await toggle();
+      uninstallButton.classList.add("hidden");
+      installButton.classList.remove("hidden");
+    });
+
+    const { exists: themeExists } = await marketplace.getThemes(pkg);
+    const { plug } = await marketplace.getPlugins(pkg);
+    if (
+      themeExists ||
+      (plug && (plug.remove === false || plug.remove === undefined))
+    ) {
+      installButton.classList.add("hidden");
+      uninstallButton.classList.remove("hidden");
+    }
+  };
+
+  const load = async () => {
+    const root = document.getElementById("package-root");
+    if (!root) return;
+    const pkg = pkgParam();
+    if (!pkg) {
+      root.innerHTML = `<h1 class="text-3xl font-bold">No package specified.</h1>`;
+      return;
+    }
+    try {
+      const res = await catalogFetch(`/api/packages/${encodeURIComponent(pkg)}`);
+      const a = await res.json();
+      renderDetail(pkg, a);
+      if (!a.error) await wire(pkg, a);
+    } catch (e) {
+      root.innerHTML = `<h1 class="text-3xl font-bold">Failed to load package.</h1>`;
+      console.error("[package] load failed", e);
+    }
+  };
+
+  new EventHandler({
+    events: { "astro:page-load": load },
+    logging: false,
+  }).bind();
+</script>
