@@ -186,7 +186,7 @@ touch index.js
 >
 > If a named function is used where it shouldn't be, your plugin will not be approved, nor will it work properly.
 
-3. Submit your plugin in the [Discord](https://discord.gg/unblocker)!
+3. Submit your plugin in the [Discord](https://discord.gg/webproxy)!
 
 ##### Proxied page plugins
 
@@ -213,7 +213,7 @@ function example() {
 self.entryFunc = example; //DO NOT run the function here. That will cause errors. Only assign the reference to the function here.
 ```
 
-3. Submit it in our [Discord](https://discord.gg/unblocker)!
+3. Submit it in our [Discord](https://discord.gg/webproxy)!
 
 ---
 
